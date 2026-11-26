@@ -1,6 +1,6 @@
 """Аблация: вклад каждого агента в точность. Работает только на кэше LLM, в сеть не ходит и квоту не тратит.
 
-Запуск (после `python tools/eval_score.py eval` и `... eval_holdout`, которые наполнили кэш):
+Запуск (после `python tools/eval_score.py eval`, `... eval_holdout` и `... eval_blind`, которые наполнили кэш):
     python tools/ablation.py [--model gemini-3.5-flash-lite]
 
 Варианты прогона на тех же размеченных документах:
@@ -31,7 +31,7 @@ from reqcheck.llm import GeminiClient  # noqa: E402
 from reqcheck.pipeline import Options  # noqa: E402
 from tools.eval_score import score_document  # noqa: E402
 
-FOLDERS = ("eval", "eval_holdout")
+FOLDERS = ("eval", "eval_holdout", "eval_blind")
 
 
 class _NoNetwork:

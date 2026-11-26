@@ -1,0 +1,68 @@
+[
+  {
+    "document": "blind_card_block.md",
+    "gold_defects": 16,
+    "found": 13,
+    "recall": 0.812,
+    "agent_findings": 22,
+    "precision": 0.773,
+    "precision_items": 0.773,
+    "false_major_on_clean": 1,
+    "questions": 18,
+    "gold_covered_by_questions": 13,
+    "question_coverage": 0.812,
+    "by_type": {
+      "ambiguity": "2/2",
+      "contradiction": "2/2",
+      "design_in_req": "1/1",
+      "empty_section": "1/1",
+      "incomplete": "2/4",
+      "no_version": "1/1",
+      "non_singular": "1/1",
+      "units": "2/3",
+      "unverifiable": "1/1"
+    },
+    "missed": [
+      "Не описано поведение для карт, заблокированных банком или оператором.",
+      "Лимит указан без периода действия.",
+      "Не описано, что делать, если push не доставлен или отключён."
+    ],
+    "model": "gemini-3.5-flash-lite",
+    "dropped_ungrounded": 0,
+    "merged_by_critic": 2,
+    "merged_overlap": 0,
+    "merged_singular": 0,
+    "rejected_by_critic": 0
+  },
+  {
+    "document": "blind_payroll.md",
+    "gold_defects": 16,
+    "found": 16,
+    "recall": 1.0,
+    "agent_findings": 24,
+    "precision": 0.833,
+    "precision_items": 0.833,
+    "false_major_on_clean": 2,
+    "questions": 15,
+    "gold_covered_by_questions": 15,
+    "question_coverage": 0.938,
+    "by_type": {
+      "ambiguity": "1/1",
+      "api": "4/4",
+      "contradiction": "2/2",
+      "design_in_req": "1/1",
+      "empty_section": "1/1",
+      "incomplete": "3/3",
+      "non_singular": "1/1",
+      "units": "2/2",
+      "unverifiable": "1/1"
+    },
+    "missed": [],
+    "model": "gemini-3.5-flash-lite",
+    "dropped_ungrounded": 0,
+    "merged_by_critic": 0,
+    "merged_overlap": 3,
+    "merged_singular": 0,
+    "rejected_by_critic": 0
+  }
+]
