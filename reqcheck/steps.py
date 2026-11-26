@@ -182,13 +182,18 @@ class ReviewStep(_NeedsRequirements):
     def run(self, ctx: RunContext) -> Any:
         reviewer = Reviewer(ctx.llm, ctx.doc, ctx.grounder)
         assessments, req_findings = reviewer.run(ctx.reqs, {b.bid: b for b in ctx.blocks})
-        return assessments, req_findings, list(reviewer.errors)
+        return assessments, req_findings, list(reviewer.errors), list(reviewer.skipped)
 
     def apply(self, ctx: RunContext, out: Any) -> None:
-        assessments, req_findings, errors = out
+        assessments, req_findings, errors, skipped = out
         for err in errors:
             ctx.diag("warning", "LLM_STEP_FAILED", f"Часть требований не оценена моделью: {err}",
                      "Отмечены в разделе 3 как «не оценено»; повторите запуск позже.")
+        if skipped:
+            ctx.diag("warning", "REVIEW_INCOMPLETE",
+                     f"Модель не оценила требования даже после переспроса: {', '.join(skipped[:20])}"
+                     + (" …" if len(skipped) > 20 else ""),
+                     "Отмечены в разделе 3 как «не оценено»; проверьте их вручную или повторите запуск.")
         ctx.result.assessments = assessments
         # «Нет идентификатора / не по шаблону» по каждому пункту сводит правило missing_ids — убираем шум
         noise = [f for f in req_findings if f.criterion in ("traceable", "conforming") and f.severity == "minor"]
@@ -290,10 +295,16 @@ class CriticStep(Step):
         return ctx.opts.critic and bool(ctx.findings)
 
     def run(self, ctx: RunContext) -> Any:
-        return Critic(ctx.llm, ctx.doc).run(ctx.findings)
+        critic = Critic(ctx.llm, ctx.doc)
+        out = critic.run(ctx.findings)
+        self._errors = critic.errors
+        return out
 
     def apply(self, ctx: RunContext, out: Any) -> None:
         ctx.findings, dropped = out
+        for err in self._errors:
+            ctx.diag("warning", "LLM_STEP_FAILED", f"Часть находок не перепроверена критиком: {err}",
+                     "Эти находки вошли в отчёт без перепроверки.")
         m = ctx.metrics
         m["merged_duplicates"] = sum(1 for f in dropped if f.critic.startswith("дубль"))
         m["dropped_by_critic"] = len(dropped) - m["merged_duplicates"]

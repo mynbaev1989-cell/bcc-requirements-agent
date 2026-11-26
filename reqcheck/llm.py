@@ -212,13 +212,13 @@ class GeminiClient:
         last_error = ""
         bad_json = 0
         contents = prompt
+        self.stats.add(role, calls=1)  # один запрос — один вызов; повторы считаются отдельно (retries)
         for attempt in range(self.retries + 1):
             wait = self.min_interval - (time.monotonic() - self._last_call)
             if wait > 0:
                 time.sleep(wait)
             started = time.perf_counter()
             self._last_call = time.monotonic()
-            self.stats.add(role, calls=1)
             try:
                 model = self.model
                 with self._parallel:

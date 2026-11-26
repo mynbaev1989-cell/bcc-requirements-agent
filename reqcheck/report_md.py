@@ -151,7 +151,7 @@ def render_markdown(result: RunResult) -> str:
         score = f"{LIGHT.get(asm.light, '')} {asm.score}/100" if asm else ""
         a(f"### {r.rid} · {r.source_id or 'без номера'} · {score}")
         a("")
-        a(f"> {r.quote.strip()} ({_where(result, r.line_start)})")
+        a(f"> {' '.join(r.quote.split())} ({_where(result, r.line_start)})")
         a("")
         if asm:
             ok = [criteria.name(m.criterion) for m in asm.marks if m.status == OK]

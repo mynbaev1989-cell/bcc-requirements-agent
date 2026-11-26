@@ -12,8 +12,8 @@
     "document_title": "Уведомление о расходах по карте",
     "file": "requirements.md",
     "input_path": "input/requirements.md",
-    "run_at": "2026-11-26T17:31:13+05:00",
-    "agent_version": "0.1.0 (b04f698-dirty)",
+    "run_at": "2026-11-26T17:48:42+05:00",
+    "agent_version": "0.1.0 (339b06a-dirty)",
     "model": "gemini-3.5-flash + gemini-3.5-flash-lite (переключение из-за квоты/доступности)",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -24,7 +24,7 @@
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
     "answers_file": "reports/demo_answers/answers.md",
-    "duration_sec": 6.38,
+    "duration_sec": 0.85,
     "report_questions_file": "report_after_answers_questions.md"
   },
   "requirements": [
@@ -4865,19 +4865,12 @@
       "resolution": "закрыто ответом Q-04: Подтверждено единое поведение (404) для отсутствующей и чужой карты во избежание раскрытия информации."
     }
   ],
-  "diagnostics": [
-    {
-      "level": "info",
-      "code": "LLM_FALLBACK",
-      "message": "дневная квота gemini-3.5-flash исчерпана, переключаюсь на gemini-3.5-flash-lite",
-      "hint": "Модель сменилась во время прогона."
-    }
-  ],
+  "diagnostics": [],
   "metrics": {
     "dropped_ungrounded": 1,
     "dropped_by_critic": 0,
     "downgraded_by_critic": 0,
-    "llm_calls": 2,
+    "llm_calls": 0,
     "journal": [
       {
         "stage": "1",
@@ -4901,7 +4894,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 0.81,
+        "seconds": 0.78,
         "status": "ok",
         "out": "gemini-3.5-flash",
         "roles": []
@@ -5024,7 +5017,7 @@
         "stage": "13",
         "step": "Учёт ответов автора",
         "agent": "Resolver (LLM)",
-        "seconds": 5.5,
+        "seconds": 0.01,
         "status": "ok",
         "out": "решений по находкам 9",
         "roles": [
@@ -5050,13 +5043,13 @@
       "critical": 4,
       "major": 20
     },
-    "llm_cache_hits": 13,
+    "llm_cache_hits": 14,
     "llm_retries": 0,
     "llm_failures": 0,
-    "input_tokens": 5589,
-    "output_tokens": 1152,
+    "input_tokens": 0,
+    "output_tokens": 0,
     "thinking_tokens": 0,
-    "llm_seconds": 5.5,
+    "llm_seconds": 0.0,
     "llm_by_role": {
       "extractor": {
         "calls": 0,
@@ -5076,18 +5069,18 @@
         "thinking_tokens": 0,
         "seconds": 0.0
       },
-      "reviewer": {
+      "analyst_checklist": {
         "calls": 0,
-        "cache_hits": 6,
+        "cache_hits": 1,
         "failures": 0,
         "input_tokens": 0,
         "output_tokens": 0,
         "thinking_tokens": 0,
         "seconds": 0.0
       },
-      "analyst_checklist": {
+      "reviewer": {
         "calls": 0,
-        "cache_hits": 1,
+        "cache_hits": 6,
         "failures": 0,
         "input_tokens": 0,
         "output_tokens": 0,
@@ -5131,37 +5124,37 @@
         "seconds": 0.0
       },
       "resolver": {
-        "calls": 2,
-        "cache_hits": 0,
+        "calls": 0,
+        "cache_hits": 1,
         "failures": 0,
-        "input_tokens": 5589,
-        "output_tokens": 1152,
+        "input_tokens": 0,
+        "output_tokens": 0,
         "thinking_tokens": 0,
-        "seconds": 4.7
+        "seconds": 0.0
       }
     },
-    "duration_sec": 6.38,
+    "duration_sec": 0.85,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
       "manual_min_per_requirement": 6.0,
       "check_min_per_finding": 1.5,
       "manual_hours": 5.0,
-      "agent_hours": 0.002,
-      "check_hours": 0.55,
-      "saved_hours": 4.45,
-      "saved_kzt": 22241,
-      "critical_found": 2,
-      "major_found": 14,
+      "agent_hours": 0.0,
+      "check_hours": 0.78,
+      "saved_hours": 4.22,
+      "saved_kzt": 21124,
+      "critical_found": 4,
+      "major_found": 20,
       "fix_hours_at_requirements": 1.0,
       "escalation_factor": 7.0,
       "precision": 0.85,
-      "avoided_rework_hours": 45.9,
-      "avoided_rework_kzt": 229500,
-      "tokens_total": 6741,
+      "avoided_rework_hours": 71.4,
+      "avoided_rework_kzt": 357000,
+      "tokens_total": 0,
       "llm_cost_kzt": 0.0,
       "llm_price_note": "бесплатный тариф (цена токенов не задана)",
-      "roi": 91.5
+      "roi": 97.6
     },
     "requirements": 45,
     "findings": 22,

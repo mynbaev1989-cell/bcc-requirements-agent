@@ -337,3 +337,111 @@ def test_nonstandard_resolver_status_counts_as_partial(tmp_path):
     effects = Resolver(llm, doc).run([(q, {"qid": "Q-01", "question": "GET или POST?", "answer": "POST"})], [f])
     assert [(e["fid"], e["status"]) for e in effects] == [("F-001", "partial")]
     assert len(llm.prompts) == 1  # решение есть — переспрашивать не нужно
+
+
+def test_docx_auto_numbering_keeps_requirement_ids(tmp_path):
+    import docx
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    d = docx.Document()
+    d.add_heading("Требования", level=1)
+    paras = [d.add_paragraph(t, style="List Number") for t in
+             ("Система должна сохранять порог.", "Порог задаётся в тенге.", "Клиент видит итог.")]
+    # Шаблон уровней как в банковских ТЗ: «ФТ-1.» и вложенный «ФТ-1.1.»
+    num_id = d.styles["List Number"].element.pPr.numPr.numId.val
+    root = d.part.numbering_part.element
+    num = next(n for n in root.findall(qn("w:num")) if n.get(qn("w:numId")) == str(num_id))
+    abs_id = num.find(qn("w:abstractNumId")).get(qn("w:val"))
+    an = next(a for a in root.findall(qn("w:abstractNum")) if a.get(qn("w:abstractNumId")) == abs_id)
+    if len(an.findall(qn("w:lvl"))) < 2:  # в шаблоне python-docx список одноуровневый — добавляем второй уровень
+        import copy
+        lvl1 = copy.deepcopy(an.find(qn("w:lvl")))
+        lvl1.set(qn("w:ilvl"), "1")
+        an.find(qn("w:lvl")).addnext(lvl1)
+    for lvl in an.findall(qn("w:lvl")):
+        ilvl = int(lvl.get(qn("w:ilvl")))
+        lvl.find(qn("w:numFmt")).set(qn("w:val"), "decimal")
+        lvl.find(qn("w:lvlText")).set(qn("w:val"), "ФТ-%1." if ilvl == 0 else "ФТ-%1.%2.")
+    p_pr = paras[1]._p.get_or_add_pPr()  # второй пункт — вложенный уровень
+    num_pr = OxmlElement("w:numPr")
+    il, nid = OxmlElement("w:ilvl"), OxmlElement("w:numId")
+    il.set(qn("w:val"), "1")
+    nid.set(qn("w:val"), str(num_id))
+    num_pr.append(il)
+    num_pr.append(nid)
+    p_pr.append(num_pr)
+    path = tmp_path / "tz.docx"
+    d.save(path)
+    doc, _ = load_document(path)
+    lines = [ln for ln in doc.lines if ln.strip()]
+    assert "ФТ-1. Система должна сохранять порог." in lines
+    assert "ФТ-1.1. Порог задаётся в тенге." in lines
+    assert "ФТ-2. Клиент видит итог." in lines
+    blocks = segment(doc)
+    assert {b.source_id for b in blocks if b.source_id} >= {"ФТ-1", "ФТ-2"}
+
+
+def test_ellipsis_quote_pieces_must_be_close_and_in_order(tmp_path):
+    far = "# ТЗ\n\nСервис должен сохранять порог.\n" + "\n".join(f"Строка {i} про другое." for i in range(60)) \
+          + "\nОтвет приходит в течение 5 секунд.\n"
+    g = Grounder(_doc(tmp_path, far))
+    assert not g.locate("Сервис должен ... в течение 5 секунд").found  # части из разных мест документа
+    near = _doc(tmp_path, "# ТЗ\n\nСервис должен сохранять порог и отвечать в течение 5 секунд.\n")
+    assert Grounder(near).locate("Сервис должен ... в течение 5 секунд").found
+
+
+def test_decimal_number_is_not_requirement_id():
+    from reqcheck.segmenter import extract_source_id
+    assert extract_source_id("0.5 секунды — максимум задержки") is None
+    assert extract_source_id("1.5 млн тенге — лимит") is None
+    assert extract_source_id("4.2.1 Система должна сохранять порог") == "4.2.1"
+
+
+def test_reviewer_asks_again_about_skipped_requirements(tmp_path):
+    from reqcheck.agents import Reviewer
+    from reqcheck.models import Requirement
+    doc = _doc(tmp_path, "# ТЗ\n\nФ-1. Система должна сохранять порог.\n\nФ-2. Порог задаётся в тенге.\n")
+    reqs = [Requirement(rid="R-001", source_id="Ф-1", source_id_assigned=False, summary="a", quote="Ф-1. Система",
+                        line_start=3, line_end=3, section="", kind="functional", block_ids=[]),
+            Requirement(rid="R-002", source_id="Ф-2", source_id_assigned=False, summary="b", quote="Ф-2. Порог",
+                        line_start=5, line_end=5, section="", kind="functional", block_ids=[])]
+    calls = []
+
+    def answer(prompt):
+        calls.append(1)
+        rid = "R-001" if len(calls) == 1 else "R-002"  # первый ответ пропускает R-002, переспрос его оценивает
+        return {"assessments": [{"rid": rid, "marks": [{"criterion": "verifiable", "status": "ok"}], "findings": []}]}
+
+    rv = Reviewer(FakeLLM({"reviewer": answer}), doc, Grounder(doc))
+    assessments, _ = rv.run(reqs, {})
+    assert set(assessments) == {"R-001", "R-002"} and len(calls) == 2 and not rv.skipped
+
+
+def test_critic_keeps_verdicts_of_batches_that_answered(tmp_path):
+    from reqcheck.agents import CRITIC_BATCH
+    doc = _doc(tmp_path, "# ТЗ\n\nСистема должна сохранять порог.\n")
+    fs = [Finding(fid=f"T-{i:03d}", scope="set", criterion="set_consistent", severity="major", title=f"Находка {i}",
+                  explanation="", source="llm", verified=True) for i in range(1, CRITIC_BATCH + 6)]
+    calls = []
+
+    def answer(prompt):
+        calls.append(1)
+        if len(calls) > 1:
+            raise LLMError("503")
+        return {"verdicts": [{"fid": "T-001", "verdict": "reject", "reason": "нет дефекта"}]}
+
+    critic = Critic(FakeLLM({"critic": answer}), doc)
+    kept, dropped = critic.run(fs)
+    assert [f.fid for f in dropped] == ["T-001"] and len(kept) == CRITIC_BATCH + 4 and critic.errors
+
+
+def test_no_green_verdict_when_semantic_check_is_incomplete(tmp_path):
+    from reqcheck.models import Diagnostic, Requirement, RunResult
+    from reqcheck.pipeline import _finalize
+    result = RunResult(document=load_document(_doc(tmp_path, "# ТЗ\n\nСистема должна сохранять порог.\n").path)[0])
+    result.requirements = [Requirement(rid="R-001", source_id="", source_id_assigned=True, summary="a", quote="a",
+                                       line_start=3, line_end=3, section="", kind="functional", block_ids=[])]
+    result.diagnostics.append(Diagnostic("warning", "LLM_STEP_FAILED", "Шаг «Оценка каждого требования» не выполнен"))
+    _finalize(result)
+    assert result.verdict_dev.startswith("Условно") and "Оценка неполная" in result.verdict_dev
+    assert result.verdict_test.startswith("Условно")

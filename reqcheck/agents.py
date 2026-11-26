@@ -185,6 +185,7 @@ class Reviewer:
     def __init__(self, llm: JsonLLM, doc: Document, grounder: Grounder):
         self.llm, self.doc, self.grounder = llm, doc, grounder
         self.errors: list[str] = []
+        self.skipped: list[str] = []  # требования, которые модель не оценила и после переспроса
 
     def run(self, reqs: list[Requirement], blocks_by_id: dict[str, Block]) -> tuple[dict[str, RequirementAssessment], list[Finding]]:
         context = numbered_document(self.doc)
@@ -233,31 +234,49 @@ class Reviewer:
         if batches and all(a is None for a in answers):
             raise LLMError(self.errors[0] if self.errors else "Reviewer не получил ответов")
         for data in answers:
-            if data is None:
-                continue
-            for item in _list(data.get("assessments") if isinstance(data, dict) else data):
-                if not isinstance(item, dict):
-                    continue
-                rid = _s(item.get("rid"), 10)
-                if rid not in known:
-                    continue
-                marks: dict[str, CriterionMark] = {}
-                for m in _list(item.get("marks")):
-                    if not isinstance(m, dict):
-                        continue
-                    code = criteria.normalize_code(_s(m.get("criterion"), 40), "requirement")
-                    status = _s(m.get("status"), 12).lower()
-                    if code in criteria.REQ_CODES:
-                        marks[code] = CriterionMark(code, status if status in (OK, VIOLATION, NA) else NA, _s(m.get("comment"), 400))
-                for code in criteria.REQ_CODES:
-                    marks.setdefault(code, CriterionMark(code, NA, "модель не дала оценку"))
-                assessments[rid] = RequirementAssessment(rid, [marks[c] for c in criteria.REQ_CODES])
-                for f in _list(item.get("findings")):
-                    fnd = _finding_from(f, "requirement", self.grounder, [rid], line_of)
-                    if fnd:
-                        fnd.rids = [rid]
-                        findings.append(fnd)
+            if data is not None:
+                self._collect(data, known, line_of, assessments, findings)
+        # Модель могла пропустить требования пакета. Переспрашиваем один раз только о них; что осталось без
+        # оценки — честно помечаем и сообщаем (self.skipped → диагностика REVIEW_INCOMPLETE), а не молчим
+        omitted = [r for i, b in enumerate(batches) if answers[i] is not None for r in b if r.rid not in assessments]
+        for start in range(0, len(omitted), REVIEW_BATCH):
+            chunk = omitted[start:start + REVIEW_BATCH]
+            try:  # из ответа берём только переспрошенные требования: остальные уже оценены
+                self._collect(ask(chunk), {r.rid for r in chunk}, line_of, assessments, findings)
+            except LLMError as exc:
+                self.errors.append(str(exc))
+        for r in omitted:
+            if r.rid not in assessments:
+                self.skipped.append(r.rid)
+                assessments[r.rid] = RequirementAssessment(
+                    r.rid, [CriterionMark(c, NA, "не оценено: модель пропустила требование") for c in criteria.REQ_CODES])
         return assessments, findings
+
+    def _collect(self, data: Any, accept: set[str], line_of: dict[str, int],
+                 assessments: dict[str, RequirementAssessment], findings: list[Finding]) -> None:
+        """Разобрать ответ модели по пакету: оценки по критериям и находки (только по известным требованиям)."""
+        for item in _list(data.get("assessments") if isinstance(data, dict) else data):
+            if not isinstance(item, dict):
+                continue
+            rid = _s(item.get("rid"), 10)
+            if rid not in accept:
+                continue
+            marks: dict[str, CriterionMark] = {}
+            for m in _list(item.get("marks")):
+                if not isinstance(m, dict):
+                    continue
+                code = criteria.normalize_code(_s(m.get("criterion"), 40), "requirement")
+                status = _s(m.get("status"), 12).lower()
+                if code in criteria.REQ_CODES:
+                    marks[code] = CriterionMark(code, status if status in (OK, VIOLATION, NA) else NA, _s(m.get("comment"), 400))
+            for code in criteria.REQ_CODES:
+                marks.setdefault(code, CriterionMark(code, NA, "модель не дала оценку"))
+            assessments[rid] = RequirementAssessment(rid, [marks[c] for c in criteria.REQ_CODES])
+            for f in _list(item.get("findings")):
+                fnd = _finding_from(f, "requirement", self.grounder, [rid], line_of)
+                if fnd:
+                    fnd.rids = [rid]
+                    findings.append(fnd)
 
 
 class ConsistencyReviewer:
@@ -316,6 +335,7 @@ class Critic:
 
     def __init__(self, llm: JsonLLM, doc: Document):
         self.llm, self.doc = llm, doc
+        self.errors: list[str] = []  # сбои отдельных пакетов
 
     def run(self, findings: list[Finding]) -> tuple[list[Finding], list[Finding]]:
         targets = [f for f in findings if f.source == "llm" and f.severity in ("critical", "major")]
@@ -332,8 +352,14 @@ class Critic:
                 + (f"\nПример: {f.example}" if f.example else "")
                 for f in batch
             )
-            data = self.llm.generate_json("critic", prompts.BASE_SYSTEM,
-                                          f"{prompts.CRITIC}{listing}\n\nВесь документ (номер строки: текст):\n{context}")
+            try:
+                data = self.llm.generate_json("critic", prompts.BASE_SYSTEM,
+                                              f"{prompts.CRITIC}{listing}\n\nВесь документ (номер строки: текст):\n{context}")
+            except LLMError as exc:
+                if len(targets) <= CRITIC_BATCH:
+                    raise  # единственный пакет: оркестратор включит запасной вариант шага
+                self.errors.append(str(exc))  # решения других пакетов сохраняем
+                continue
             by_id = {f.fid: f for f in batch}
             verdicts = [v for v in _list(data.get("verdicts") if isinstance(data, dict) else data) if isinstance(v, dict)]
             # Сначала отклонения и понижения, потом дубли: иначе дубль сливается в находку, которую критик

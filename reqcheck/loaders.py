@@ -176,6 +176,79 @@ def _read_pdf(raw: bytes, max_pages: int) -> tuple[str, list[int], int, list[Dia
     return text, line_pages, n_pages, diags
 
 
+class _DocxNumbering:
+    """Автонумерация Word (w:numPr): номер пункта не хранится в тексте, его считает редактор.
+
+    Без неё «1.2.», «ФТ-3.» из многоуровневого списка пропадают: агент решил бы, что у требований нет
+    идентификаторов. Считаем номера сами: счётчик на каждый уровень списка, шаблон lvlText («%1.%2.», «ФТ-%1.»)."""
+
+    LETTERS = {"lowerLetter": "abcdefghijklmnopqrstuvwxyz", "upperLetter": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+               "russianLower": "абвгдежзиклмнопрстуфхцчшщэюя", "russianUpper": "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ"}
+
+    def __init__(self, document) -> None:  # noqa: ANN001 — docx.Document
+        from docx.oxml.ns import qn
+        self.qn = qn
+        self.levels: dict[str, dict[int, tuple[str, str, int]]] = {}  # numId → ilvl → (numFmt, lvlText, start)
+        self.counters: dict[str, list[int]] = {}
+        try:
+            root = document.part.numbering_part.element
+        except (AttributeError, KeyError, NotImplementedError):
+            return
+        val = qn("w:val")
+        abstract: dict[str, dict[int, tuple[str, str, int]]] = {}
+        for an in root.findall(qn("w:abstractNum")):
+            lv = {}
+            for lvl in an.findall(qn("w:lvl")):
+                fmt, text, start = lvl.find(qn("w:numFmt")), lvl.find(qn("w:lvlText")), lvl.find(qn("w:start"))
+                lv[int(lvl.get(qn("w:ilvl"), 0))] = (fmt.get(val) if fmt is not None else "decimal",
+                                                     text.get(val) if text is not None else "",
+                                                     int(start.get(val)) if start is not None else 1)
+            abstract[an.get(qn("w:abstractNumId"))] = lv
+        for num in root.findall(qn("w:num")):
+            ref = num.find(qn("w:abstractNumId"))
+            if ref is not None and ref.get(val) in abstract:
+                self.levels[num.get(qn("w:numId"))] = abstract[ref.get(val)]
+
+    def _num_pr(self, para):  # noqa: ANN001, ANN202 — абзац, затем цепочка стилей
+        p_pr = para._p.pPr
+        if p_pr is not None and p_pr.numPr is not None:
+            return p_pr.numPr
+        style = para.style
+        while style is not None:
+            s_pr = style.element.pPr
+            if s_pr is not None and s_pr.numPr is not None:
+                return s_pr.numPr
+            style = style.base_style
+        return None
+
+    def label(self, para) -> str | None:  # noqa: ANN001
+        """Номер пункта («1.2.», «ФТ-3.»); «» — маркированный список; None — абзац не в списке."""
+        num_pr = self._num_pr(para)
+        if num_pr is None or num_pr.numId is None:
+            return None
+        num_id = str(num_pr.numId.val)
+        ilvl = int(num_pr.ilvl.val) if num_pr.ilvl is not None else 0
+        levels = self.levels.get(num_id)
+        if not levels or ilvl not in levels:
+            return None
+        fmt, text, _ = levels[ilvl]
+        if fmt in ("bullet", "none") or not text:
+            return ""
+        cnt = self.counters.setdefault(num_id, [0] * 9)
+        for k in range(9):
+            if k < ilvl and cnt[k] == 0:
+                cnt[k] = levels.get(k, ("", "", 1))[2]  # пропущенный верхний уровень начинается со своего start
+        cnt[ilvl] = levels[ilvl][2] if cnt[ilvl] == 0 else cnt[ilvl] + 1
+        for k in range(ilvl + 1, 9):
+            cnt[k] = 0  # новый пункт уровня сбрасывает вложенные
+        return re.sub(r"%(\d)", lambda m: self._fmt(levels.get(int(m.group(1)) - 1, ("decimal",))[0],
+                                                    cnt[int(m.group(1)) - 1]), text)
+
+    def _fmt(self, fmt: str, n: int) -> str:
+        letters = self.LETTERS.get(fmt)
+        return letters[(n - 1) % len(letters)] if letters and n > 0 else str(n)
+
+
 def _read_docx(raw: bytes) -> str:
     import docx  # python-docx
 
@@ -184,6 +257,7 @@ def _read_docx(raw: bytes) -> str:
     except Exception as exc:  # noqa: BLE001
         raise _fail("DOCX_CORRUPTED", f"DOCX повреждён: {exc}", "Откройте файл в Word и сохраните заново.")
     out: list[str] = []
+    numbering = _DocxNumbering(document)
     # Абзацы и таблицы в порядке следования в документе
     body = document.element.body
     for child in body.iterchildren():
@@ -193,11 +267,15 @@ def _read_docx(raw: bytes) -> str:
             text = para.text.strip()
             style = (para.style.name if para.style is not None else "") or ""
             m = re.match(r"(?:Heading|Заголовок)\s*(\d)", style)
+            label = numbering.label(para) if text else None  # номер из автонумерации Word
             if m and text:
-                out.append("#" * int(m.group(1)) + " " + text)
+                out.append("#" * int(m.group(1)) + " " + (f"{label} " if label else "") + text)
             elif text:
-                prefix = "* " if "List" in style or "Список" in style else ""
-                out.append(prefix + text)
+                if label:
+                    out.append(f"{label} {text}")  # «1.2. Система должна…», «ФТ-3. …» — номер виден сегментатору
+                else:
+                    prefix = "* " if label == "" or "List" in style or "Список" in style else ""
+                    out.append(prefix + text)
             out.append("")
         elif tag == "tbl":
             table = docx.table.Table(child, document)

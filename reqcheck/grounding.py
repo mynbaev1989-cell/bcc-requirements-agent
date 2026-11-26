@@ -30,6 +30,7 @@ class Grounder:
 
     FUZZY_THRESHOLD = 0.86
     MIN_FUZZY_LEN = 12
+    ELLIPSIS_GAP = 400  # «…» в цитате пропускает не больше ~400 символов (несколько строк)
 
     def __init__(self, doc: Document):
         self.doc = doc
@@ -81,10 +82,19 @@ class Grounder:
         # Цитата с многоточием: ищем по частям
         if "..." in q or "…" in q:
             pieces = [p.strip() for p in re.split(r"\.\.\.|…", q) if len(p.strip()) >= 6]
-            if pieces:
-                first = self.joined.find(pieces[0])
-                if first >= 0 and all(self.joined.find(p) >= 0 for p in pieces[1:]):
-                    return Quote(text=quote, line=self._line_at(first), found=True)
+            # Части ищем по порядку и рядом друг с другом: иначе цитату можно склеить из фраз разных разделов
+            start = self.joined.find(pieces[0]) if pieces else -1
+            while start >= 0:
+                pos, ok = start + len(pieces[0]), True
+                for p in pieces[1:]:
+                    nxt = self.joined.find(p, pos)
+                    if nxt < 0 or nxt - pos > self.ELLIPSIS_GAP:
+                        ok = False
+                        break
+                    pos = nxt + len(p)
+                if ok:
+                    return Quote(text=quote, line=self._line_at(start), found=True)
+                start = self.joined.find(pieces[0], start + 1)
         if len(q) < self.MIN_FUZZY_LEN:
             return Quote(text=quote, found=False)
         best_ratio, best_line = 0.0, None

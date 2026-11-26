@@ -25,6 +25,10 @@ from reqcheck.value import estimate
 __all__ = ["Options", "agent_version", "run", "write_outputs"]
 
 
+# Диагностики, после которых смысловая проверка считается неполной (вердикт не может быть «Да»)
+INCOMPLETE_CODES = ("LLM_UNAVAILABLE", "OFFLINE", "LLM_STEP_FAILED", "REVIEW_INCOMPLETE", "DOC_TRUNCATED")
+
+
 def agent_version() -> str:
     """Версия агента: __version__ + git describe (тег/коммит), если доступно."""
     env = os.environ.get("REQCHECK_VERSION")
@@ -131,10 +135,16 @@ def _finalize(result: RunResult) -> None:
         result.verdict_dev = "Нет — документ не проверен (см. диагностику в Приложении E)."
         result.verdict_test = "Нет — документ не проверен."
     else:
+        # Смысловая проверка неполная: LLM не было, модель не оценила требования или упал смысловой шаг.
+        # Тогда «Да» не даём: отсутствие дефектов у правил не значит, что их нет.
+        incomplete = not llm_assessed or any(d.code in INCOMPLETE_CODES for d in result.diagnostics)
         if n_crit:
             result.verdict_dev = f"Нет — найдено критичных дефектов: {n_crit}. Начинать разработку до их устранения нельзя."
         elif n_major:
             result.verdict_dev = f"Условно — критичных дефектов нет, но есть существенные ({n_major}); разработку можно начинать после их уточнения."
+        elif incomplete:
+            result.verdict_dev = ("Условно — критичных и существенных дефектов не найдено, но смысловая проверка "
+                                  "выполнена не полностью; повторите запуск с доступной LLM.")
         else:
             result.verdict_dev = "Да — критичных и существенных дефектов не найдено."
         unverifiable = [f for f in findings if f.criterion in ("verifiable", "set_validatable") and f.severity in (CRITICAL, MAJOR)]
@@ -142,12 +152,12 @@ def _finalize(result: RunResult) -> None:
         if contradictions or any(f.severity == CRITICAL and f.criterion == "verifiable" for f in findings):
             result.verdict_test = ("Нет — есть противоречивые или непроверяемые требования: по ним нельзя однозначно "
                                    "сформулировать ожидаемый результат теста.")
-        elif unverifiable or n_major:
+        elif unverifiable or n_major or incomplete:
             result.verdict_test = "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения."
         else:
             result.verdict_test = "Да — требования проверяемы."
-        if any(d.code in ("LLM_UNAVAILABLE", "OFFLINE") for d in result.diagnostics):
-            result.verdict_dev += " (Оценка неполная: смысловая проверка LLM не выполнялась.)"
+        if incomplete:
+            result.verdict_dev += " (Оценка неполная: смысловая проверка LLM выполнена не полностью, см. Приложение E.)"
 
     ranked = sorted(findings, key=lambda f: (SEV_RANK.get(f.severity, 9),
                                              0 if f.scope != "requirement" else 1, -len(f.rids)))
@@ -155,7 +165,10 @@ def _finalize(result: RunResult) -> None:
 
     agent_sec = result.metrics.get("duration_sec", 0.0)
     mt = result.metrics
-    result.metrics["value"] = estimate(len(reqs), len(findings), n_crit, agent_sec, n_major=n_major,
+    # Находка, закрытая ответом автора, — тоже дефект, найденный до разработки: в ценности её учитываем
+    found = findings + result.resolved
+    result.metrics["value"] = estimate(len(reqs), len(found), sum(1 for f in found if f.severity == CRITICAL), agent_sec,
+                                       n_major=sum(1 for f in found if f.severity == MAJOR),
                                        tokens_in=mt.get("input_tokens", 0),
                                        tokens_out=mt.get("output_tokens", 0) + mt.get("thinking_tokens", 0)).as_dict()
     result.metrics.update({"requirements": len(reqs), "findings": len(findings), "critical": n_crit, "major": n_major,
