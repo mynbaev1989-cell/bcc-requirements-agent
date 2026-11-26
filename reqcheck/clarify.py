@@ -65,6 +65,55 @@ def _number(questions: list[Question]) -> list[Question]:
     return kept
 
 
+_STOP_STEMS = {"строк", "котор", "какой", "какая", "какие", "каков", "долже", "должн", "докум", "требо", "почем",
+               "нужно", "можно", "также", "други", "этого", "чтобы", "сейча", "имени", "именн"}
+
+
+def _stems(text: str) -> set[str]:
+    """Грубые основы слов (первые 5 букв слов от 5 букв) — для сравнения тем двух вопросов."""
+    return {w[:5] for w in re.findall(r"[a-zа-яё]{5,}", text.lower())} - _STOP_STEMS
+
+
+def merge_contained(questions: list[Question], fmap: dict[str, Finding]) -> list[Question]:
+    """Вопрос, все строки которого уже разбирает другой вопрос того же или более высокого приоритета, сливается в него.
+
+    Модель иногда задаёт про одно место два вопроса: «почему GET вместо POST (строки 52, 103, 104, 120)» и «какую
+    операцию выполняет метод (строка 103)». Автору это одно решение. Находки второго вопроса переходят к первому,
+    так что каждая по-прежнему покрыта вопросом; порядок остальных вопросов не меняется.
+
+    Одних общих строк мало: в строке может быть несколько разных дефектов («метод GET» и «идемпотентность» в одном
+    пункте интеграции). Поэтому вопросы ещё должны говорить об одном и том же — не меньше двух общих основ слов."""
+    rank = {p: i for i, p in enumerate(PRIORITIES)}
+    merged: set[int] = set()
+    for i, q in enumerate(questions):
+        lines = set(q.lines)
+        if not lines:
+            continue
+        host = next((h for j, h in enumerate(questions)
+                     if j != i and j not in merged and lines <= set(h.lines)
+                     and rank.get(h.priority, 9) <= rank.get(q.priority, 9)
+                     and (len(h.lines) > len(lines) or j < i)
+                     and len(_stems(q.text) & _stems(h.text)) >= 2), None)
+        if host is None:
+            continue
+        host.fids += [f for f in q.fids if f not in host.fids]
+        host.lines = _lines(host.fids, fmap)
+        merged.add(i)
+    return [q for i, q in enumerate(questions) if i not in merged]
+
+
+# Технический вопрос (HTTP-коды, методы, URL, протоколы) решает не бизнес-заказчик, а архитектор
+# (номера HTTP-кодов отдельно не ищем: «строка 126» выглядела бы как код ответа)
+_TECH_TOPIC = re.compile(r"\bhttp\b|\brest\b|\bapi\b|эндпоинт|\burl\b|код\w* ответа|статус\w*[- ]?код"
+                         r"|\b(?:get|post|put|patch|delete)\b|протокол|таймаут|\bjson\b|\bquery\b", re.I)
+
+
+def route_addressee(q: Question) -> Question:
+    if q.addressee.lower().startswith("бизнес") and _TECH_TOPIC.search(q.text):
+        q.addressee = "Архитектор"
+    return q
+
+
 def questions_from_findings(findings: list[Finding]) -> list[Question]:
     """Запасной вариант без LLM: вопросы из полей question критичных и существенных находок."""
     fmap = {f.fid: f for f in findings}
@@ -132,7 +181,8 @@ class Clarifier:
         covered = {fid for q in out for fid in q.fids}
         missing = [f for f in findings if f.severity in (CRITICAL, MAJOR) and f.fid not in covered]
         out += questions_from_findings(missing)
-        return _number([complete_question(q, fmap) for q in out])
+        out = merge_contained(out, fmap)
+        return _number([route_addressee(complete_question(q, fmap)) for q in out])
 
 
 # --- Файл ответов ---------------------------------------------------------------------------------

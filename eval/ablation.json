@@ -121,7 +121,7 @@
         "precision": 0.828,
         "precision_items": 0.8,
         "false_major_on_clean": 0,
-        "questions": 15,
+        "questions": 13,
         "gold_covered_by_questions": 13,
         "question_coverage": 0.867,
         "by_type": {
@@ -306,7 +306,7 @@
         "precision": 0.828,
         "precision_items": 0.8,
         "false_major_on_clean": 0,
-        "questions": 15,
+        "questions": 13,
         "gold_covered_by_questions": 13,
         "question_coverage": 0.867,
         "by_type": {
@@ -491,7 +491,7 @@
         "precision": 0.828,
         "precision_items": 0.8,
         "false_major_on_clean": 0,
-        "questions": 15,
+        "questions": 13,
         "gold_covered_by_questions": 13,
         "question_coverage": 0.867,
         "by_type": {
