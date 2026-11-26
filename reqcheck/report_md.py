@@ -65,6 +65,37 @@ def _finding_md(result: RunResult, f: Finding, rid_map: dict) -> list[str]:
     return out
 
 
+def _summary_box(result: RunResult) -> list[str]:
+    """Врезка «Кратко» над паспортом: вердикт и главное на первом экране.
+
+    Разделы 1–6 идут строго по §6 ТЗ, и вердикт оказывается в конце длинного отчёта. Врезка не заменяет
+    разделы 5 и 6, а только повторяет их итог со ссылками на них."""
+    if result.document is None or not result.requirements:
+        return []  # документ не проверен — всё сказано в диагностике
+    findings = result.findings
+    sev = Counter(f.severity for f in findings)
+    score = f"; балл документа **{result.document_score} из 100**" if result.document_score is not None else ""
+    out = [f"> **Кратко.** Требований: {len(result.requirements)}; находок: {len(findings)} (критичных {sev[CRITICAL]}, "
+           f"существенных {sev['major']}, мелких {sev['minor']}){score}.",
+           ">",
+           f"> **Разработка:** {result.verdict_dev}",
+           ">",
+           f"> **Тестирование:** {result.verdict_test}"]
+    critical = [f for f in findings if f.severity == CRITICAL]
+    if critical:
+        out += [">", "> **Критичные дефекты:**"]
+        for f in critical:
+            where = f" ({_where(result, f.quotes[0].line)})" if f.quotes and f.quotes[0].line else ""
+            out.append(f"> - **{f.fid}** — {f.title}{where}")
+    if result.questions:
+        open_q = [q for q in result.questions if not q.answer]
+        blockers = sum(1 for q in open_q if q.priority == "blocker")
+        out += [">", f"> **Вопросы автору:** {len(result.questions)}, без ответа {len(open_q)}, блокируют разработку "
+                     f"{blockers} — Приложение A и файл `*_questions.md` для ответов."]
+    out += [">", "> Подробности: сводка — раздел 5, итог и что исправить первым — раздел 6.", ""]
+    return out
+
+
 def render_markdown(result: RunResult) -> str:
     doc = result.document
     p = result.passport
@@ -80,6 +111,7 @@ def render_markdown(result: RunResult) -> str:
       "Каждое нарушение ссылается на место в документе (номер строки; для PDF — страница и строка); "
       "цитаты сверены с исходным текстом кодом агента.")
     a("")
+    L.extend(_summary_box(result))
 
     # 1. Паспорт ------------------------------------------------------------------------------------
     a(REQUIRED_SECTIONS[0])

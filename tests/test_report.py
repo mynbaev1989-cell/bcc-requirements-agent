@@ -39,3 +39,31 @@ def test_llm_role_table_follows_plan_order_not_call_order():
     result = RunResult(document=None)
     _llm_metrics(llm, result)
     assert list(result.metrics["llm_by_role"]) == ["extractor", "reviewer", "analyst_tests", "critic", "custom"]
+
+
+def test_summary_box_comes_first_and_repeats_verdict(sample_md, tmp_path):
+    # Вердикт по §6 стоит в конце длинного отчёта; врезка «Кратко» повторяет его на первом экране, не ломая порядок 1–6
+    from test_pipeline import _fake
+
+    from reqcheck.models import CRITICAL
+    from reqcheck.pipeline import Options, run
+    from reqcheck.report_md import REQUIRED_SECTIONS, render_markdown
+
+    result = run(str(sample_md), Options(), llm=_fake(sample_md))
+    md = render_markdown(result)
+    box, section1 = md.index("> **Кратко.**"), md.index(REQUIRED_SECTIONS[0])
+    assert box < section1
+    head = md[box:section1]
+    assert result.verdict_dev in head and result.verdict_test in head
+    for f in result.findings:
+        if f.severity == CRITICAL:
+            assert f.fid in head
+
+
+def test_summary_box_absent_when_document_not_checked(tmp_path):
+    from reqcheck.pipeline import Options, run
+    from reqcheck.report_md import render_markdown
+
+    broken = tmp_path / "broken.pdf"
+    broken.write_bytes(b"%PDF-1.4\n%broken")
+    assert "**Кратко.**" not in render_markdown(run(str(broken), Options(offline=True)))
