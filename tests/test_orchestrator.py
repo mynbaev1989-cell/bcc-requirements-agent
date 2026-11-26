@@ -42,6 +42,14 @@ def test_parallel_stage_applies_in_plan_order():
     assert [j["stage"] for j in ctx.metrics["journal"]] == ["1", "2.1", "2.2", "3"]
 
 
+def test_auxiliary_step_failure_does_not_mark_check_incomplete():
+    step = _Broken("Вопросы автору", uses_llm=True)
+    step.finds_defects = False
+    ctx = _ctx()
+    Orchestrator([step]).run(ctx)
+    assert [d.code for d in ctx.result.diagnostics] == ["LLM_AUX_FAILED"]  # не входит в INCOMPLETE_CODES
+
+
 def test_llm_error_gives_diagnostic_and_fallback():
     ctx = _ctx()
     Orchestrator([_Broken("Шаг X", uses_llm=True)]).run(ctx)

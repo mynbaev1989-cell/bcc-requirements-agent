@@ -180,34 +180,56 @@ class _DocxNumbering:
     """Автонумерация Word (w:numPr): номер пункта не хранится в тексте, его считает редактор.
 
     Без неё «1.2.», «ФТ-3.» из многоуровневого списка пропадают: агент решил бы, что у требований нет
-    идентификаторов. Считаем номера сами: счётчик на каждый уровень списка, шаблон lvlText («%1.%2.», «ФТ-%1.»)."""
+    идентификаторов. Считаем номера как Word: счётчики общие для всех w:num одного w:abstractNum (список
+    продолжается), w:startOverride начинает уровень заново; шаблон lvlText («%1.%2.», «ФТ-%1.»)."""
 
     LETTERS = {"lowerLetter": "abcdefghijklmnopqrstuvwxyz", "upperLetter": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                "russianLower": "абвгдежзиклмнопрстуфхцчшщэюя", "russianUpper": "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ"}
+    ROMAN = ((1000, "m"), (900, "cm"), (500, "d"), (400, "cd"), (100, "c"), (90, "xc"), (50, "l"), (40, "xl"),
+             (10, "x"), (9, "ix"), (5, "v"), (4, "iv"), (1, "i"))
 
     def __init__(self, document) -> None:  # noqa: ANN001 — docx.Document
-        from docx.oxml.ns import qn
-        self.qn = qn
         self.levels: dict[str, dict[int, tuple[str, str, int]]] = {}  # numId → ilvl → (numFmt, lvlText, start)
+        self.abstract_of: dict[str, str] = {}  # numId → abstractNumId: по нему общие счётчики
+        self.overrides: dict[str, dict[int, int]] = {}  # numId → ilvl → startOverride
         self.counters: dict[str, list[int]] = {}
+        self.pending: dict[str, dict[int, int]] = {}  # abstractNumId → ilvl → с какого номера начать заново
+        self.started: set[str] = set()
         try:
             root = document.part.numbering_part.element
         except (AttributeError, KeyError, NotImplementedError):
             return
+        try:
+            self._parse(root)
+        except (ValueError, TypeError):  # битый numbering.xml: читаем документ без автонумерации, а не падаем
+            self.levels, self.abstract_of, self.overrides = {}, {}, {}
+
+    def _parse(self, root) -> None:  # noqa: ANN001
+        from docx.oxml.ns import qn
         val = qn("w:val")
+
+        def num_val(el, default: int) -> int:  # noqa: ANN001
+            return int(el.get(val)) if el is not None else default
+
         abstract: dict[str, dict[int, tuple[str, str, int]]] = {}
         for an in root.findall(qn("w:abstractNum")):
             lv = {}
             for lvl in an.findall(qn("w:lvl")):
-                fmt, text, start = lvl.find(qn("w:numFmt")), lvl.find(qn("w:lvlText")), lvl.find(qn("w:start"))
+                fmt, text = lvl.find(qn("w:numFmt")), lvl.find(qn("w:lvlText"))
                 lv[int(lvl.get(qn("w:ilvl"), 0))] = (fmt.get(val) if fmt is not None else "decimal",
                                                      text.get(val) if text is not None else "",
-                                                     int(start.get(val)) if start is not None else 1)
+                                                     num_val(lvl.find(qn("w:start")), 1))
             abstract[an.get(qn("w:abstractNumId"))] = lv
         for num in root.findall(qn("w:num")):
             ref = num.find(qn("w:abstractNumId"))
-            if ref is not None and ref.get(val) in abstract:
-                self.levels[num.get(qn("w:numId"))] = abstract[ref.get(val)]
+            if ref is None or ref.get(val) not in abstract:
+                continue
+            num_id = num.get(qn("w:numId"))
+            self.levels[num_id], self.abstract_of[num_id] = abstract[ref.get(val)], ref.get(val)
+            for ov in num.findall(qn("w:lvlOverride")):
+                so = ov.find(qn("w:startOverride"))
+                if so is not None:
+                    self.overrides.setdefault(num_id, {})[int(ov.get(qn("w:ilvl"), 0))] = num_val(so, 1)
 
     def _num_pr(self, para):  # noqa: ANN001, ANN202 — абзац, затем цепочка стилей
         p_pr = para._p.pPr
@@ -234,19 +256,37 @@ class _DocxNumbering:
         fmt, text, _ = levels[ilvl]
         if fmt in ("bullet", "none") or not text:
             return ""
-        cnt = self.counters.setdefault(num_id, [0] * 9)
-        for k in range(9):
-            if k < ilvl and cnt[k] == 0:
+        key = self.abstract_of[num_id]
+        cnt = self.counters.setdefault(key, [0] * 9)
+        pending = self.pending.setdefault(key, {})
+        if num_id not in self.started:  # первый абзац этого w:num: его startOverride начинает уровни заново
+            self.started.add(num_id)
+            pending.update(self.overrides.get(num_id, {}))
+        for k in range(ilvl):
+            if cnt[k] == 0:
                 cnt[k] = levels.get(k, ("", "", 1))[2]  # пропущенный верхний уровень начинается со своего start
-        cnt[ilvl] = levels[ilvl][2] if cnt[ilvl] == 0 else cnt[ilvl] + 1
+        if ilvl in pending:
+            cnt[ilvl] = pending.pop(ilvl)
+        else:
+            cnt[ilvl] = levels[ilvl][2] if cnt[ilvl] == 0 else cnt[ilvl] + 1
         for k in range(ilvl + 1, 9):
             cnt[k] = 0  # новый пункт уровня сбрасывает вложенные
         return re.sub(r"%(\d)", lambda m: self._fmt(levels.get(int(m.group(1)) - 1, ("decimal",))[0],
                                                     cnt[int(m.group(1)) - 1]), text)
 
     def _fmt(self, fmt: str, n: int) -> str:
+        if n <= 0:
+            return str(n)
+        if fmt in ("lowerRoman", "upperRoman"):
+            out, rest = "", n
+            for value, sym in self.ROMAN:
+                while rest >= value:
+                    out, rest = out + sym, rest - value
+            return out.upper() if fmt == "upperRoman" else out
+        if fmt == "decimalZero":
+            return f"{n:02d}"
         letters = self.LETTERS.get(fmt)
-        return letters[(n - 1) % len(letters)] if letters and n > 0 else str(n)
+        return letters[(n - 1) % len(letters)] if letters else str(n)
 
 
 def _read_docx(raw: bytes) -> str:

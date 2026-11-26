@@ -84,6 +84,7 @@ class Grounder:
             pieces = [p.strip() for p in re.split(r"\.\.\.|…", q) if len(p.strip()) >= 6]
             # Части ищем по порядку и рядом друг с другом: иначе цитату можно склеить из фраз разных разделов
             start = self.joined.find(pieces[0]) if pieces else -1
+            lines: list[int] = []
             while start >= 0:
                 pos, ok = start + len(pieces[0]), True
                 for p in pieces[1:]:
@@ -93,8 +94,13 @@ class Grounder:
                         break
                     pos = nxt + len(p)
                 if ok:
-                    return Quote(text=quote, line=self._line_at(start), found=True)
+                    lines.append(self._line_at(start))
+                    if not near:
+                        break
                 start = self.joined.find(pieces[0], start + 1)
+            if lines:  # как и у точной цитаты: из нескольких вхождений — ближайшее к требованию
+                best = min(lines, key=lambda ln: (min(abs(ln - n) for n in near), ln)) if near else lines[0]
+                return Quote(text=quote, line=best, found=True)
         if len(q) < self.MIN_FUZZY_LEN:
             return Quote(text=quote, found=False)
         best_ratio, best_line = 0.0, None

@@ -240,6 +240,7 @@ class SetCheckStep(_NeedsRequirements):
 
 class AnalystChecklistStep(_NeedsRequirements):
     name, agent, roles = "Чек-лист и трассировка", "Analyst (LLM)", ("analyst_checklist",)
+    finds_defects = False
 
     def run(self, ctx: RunContext) -> Any:
         checklist = copy.deepcopy(ctx.checklist)  # агент заполняет ответы; общий контекст меняем только в apply()
@@ -256,6 +257,7 @@ class AnalystChecklistStep(_NeedsRequirements):
 
 class AnalystTestsStep(_NeedsRequirements):
     name, agent, roles = "Черновики тест-кейсов", "Analyst (LLM)", ("analyst_tests",)
+    finds_defects = False
 
     def run(self, ctx: RunContext) -> Any:
         return Analyst(ctx.llm, ctx.doc, ctx.grounder).tests(ctx.reqs)
@@ -291,6 +293,7 @@ class GroundStep(Step):
 
 class CriticStep(Step):
     name, agent, roles, uses_llm = "Перепроверка находок", "Critic (LLM)", ("critic",), True
+    finds_defects = False
 
     def enabled(self, ctx: RunContext) -> bool:
         return ctx.opts.critic and bool(ctx.findings)
@@ -304,7 +307,7 @@ class CriticStep(Step):
     def apply(self, ctx: RunContext, out: Any) -> None:
         ctx.findings, dropped = out
         for err in self._errors:
-            ctx.diag("warning", "LLM_STEP_FAILED", f"Часть находок не перепроверена критиком: {err}",
+            ctx.diag("warning", "LLM_AUX_FAILED", f"Часть находок не перепроверена критиком: {err}",
                      "Эти находки вошли в отчёт без перепроверки.")
         m = ctx.metrics
         m["merged_duplicates"] = sum(1 for f in dropped if f.critic.startswith("дубль"))
@@ -367,6 +370,7 @@ class NumberStep(Step):
 
 class ClarifyStep(Step):
     name, agent, roles, uses_llm = "Вопросы автору", "Clarifier (LLM)", ("clarifier",), True
+    finds_defects = False
     fallback_agent = "Clarifier (запасной вариант: код)"
 
     def run(self, ctx: RunContext) -> Any:
@@ -430,6 +434,7 @@ class ReadAnswersStep(Step):
 
 class ResolveAnswersStep(Step):
     name, agent, roles, uses_llm = "Учёт ответов автора", "Resolver (LLM)", ("resolver",), True
+    finds_defects = False
     fallback_agent = "Resolver → ответы не применены"
 
     def enabled(self, ctx: RunContext) -> bool:

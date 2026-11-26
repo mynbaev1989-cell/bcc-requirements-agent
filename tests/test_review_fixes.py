@@ -438,6 +438,98 @@ def test_docx_auto_numbering_keeps_requirement_ids(tmp_path):
     assert {b.source_id for b in blocks if b.source_id} >= {"ФТ-1", "ФТ-2"}
 
 
+def _docx_list(tmp_path, texts, fmt="decimal", lvl_text="%1.", start=""):
+    """DOCX со списком «List Number»; возвращает (document, paragraphs, root numbering, numId, abstractNumId)."""
+    import docx
+    from docx.oxml.ns import qn
+    d = docx.Document()
+    d.add_heading("Требования", level=1)
+    paras = [d.add_paragraph(t, style="List Number") for t in texts]
+    num_id = str(d.styles["List Number"].element.pPr.numPr.numId.val)
+    root = d.part.numbering_part.element
+    num = next(n for n in root.findall(qn("w:num")) if n.get(qn("w:numId")) == num_id)
+    abs_id = num.find(qn("w:abstractNumId")).get(qn("w:val"))
+    an = next(a for a in root.findall(qn("w:abstractNum")) if a.get(qn("w:abstractNumId")) == abs_id)
+    lvl = an.find(qn("w:lvl"))
+    lvl.find(qn("w:numFmt")).set(qn("w:val"), fmt)
+    lvl.find(qn("w:lvlText")).set(qn("w:val"), lvl_text)
+    if start != "":
+        lvl.find(qn("w:start")).set(qn("w:val"), start)
+    return d, paras, root, num_id, abs_id
+
+
+def _add_num(root, num_id, abs_id, start_override=None):
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    num = OxmlElement("w:num")
+    num.set(qn("w:numId"), num_id)
+    ref = OxmlElement("w:abstractNumId")
+    ref.set(qn("w:val"), abs_id)
+    num.append(ref)
+    if start_override is not None:
+        ov, so = OxmlElement("w:lvlOverride"), OxmlElement("w:startOverride")
+        ov.set(qn("w:ilvl"), "0")
+        so.set(qn("w:val"), str(start_override))
+        ov.append(so)
+        num.append(ov)
+    root.append(num)
+
+
+def _use_num(para, num_id):
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    num_pr = OxmlElement("w:numPr")
+    il, nid = OxmlElement("w:ilvl"), OxmlElement("w:numId")
+    il.set(qn("w:val"), "0")
+    nid.set(qn("w:val"), num_id)
+    num_pr.append(il)
+    num_pr.append(nid)
+    para._p.get_or_add_pPr().append(num_pr)
+
+
+def test_docx_numbering_continues_across_nums_and_restarts_on_override(tmp_path):
+    d, paras, root, num_id, abs_id = _docx_list(tmp_path, ("Первый.", "Второй.", "Третий.", "Четвёртый."),
+                                                lvl_text="4.%1.")
+    _add_num(root, "901", abs_id)  # тот же список другим w:num — Word продолжает нумерацию
+    _add_num(root, "902", abs_id, start_override=1)  # явный перезапуск
+    _use_num(paras[1], "901")
+    _use_num(paras[2], "902")
+    _use_num(paras[3], "902")
+    path = tmp_path / "tz.docx"
+    d.save(path)
+    lines = [ln for ln in load_document(path)[0].lines if ln.strip()]
+    assert lines[1:] == ["4.1. Первый.", "4.2. Второй.", "4.1. Третий.", "4.2. Четвёртый."]
+
+
+def test_docx_roman_numbering_and_broken_numbering_part(tmp_path):
+    d, *_ = _docx_list(tmp_path, ("Цели.", "Требования."), fmt="upperRoman", lvl_text="%1.")
+    d.save(tmp_path / "roman.docx")
+    assert [ln for ln in load_document(tmp_path / "roman.docx")[0].lines if ln.strip()][1:] == ["I. Цели.", "II. Требования."]
+    d, *_ = _docx_list(tmp_path, ("Система должна сохранять порог.",), start="x")  # битый w:start
+    d.save(tmp_path / "broken.docx")
+    doc, _ = load_document(tmp_path / "broken.docx")  # документ читается, просто без автонумерации
+    assert "Система должна сохранять порог." in " ".join(doc.lines)
+
+
+def test_numbered_id_is_not_lost_on_words_starting_like_units():
+    from reqcheck.segmenter import extract_source_id
+    assert extract_source_id("4.2 Минимальная сумма перевода — 100 тенге.") == "4.2"
+    assert extract_source_id("1.4 Часовой пояс — Алматы.") == "1.4"
+    assert extract_source_id("2.1 XML-интерфейс обмена.") == "2.1"
+    assert extract_source_id("1.2 С 1 января система принимает заявки.") == "1.2"
+    assert extract_source_id("1.5 часа на ответ") is None and extract_source_id("2.5 млн тенге") is None
+
+
+def test_ellipsis_quote_picks_occurrence_nearest_to_requirement(tmp_path):
+    phrase = "Система должна отвечать клиенту в течение 5 секунд."
+    text = "\n\n".join(["# ТЗ", phrase] + [f"Пункт {i}." for i in range(20)] + [phrase])
+    doc = _doc(tmp_path, text)
+    g = Grounder(doc)
+    last = max(i for i, ln in enumerate(doc.lines, 1) if "5 секунд" in ln)
+    assert g.locate("Система должна … в течение 5 секунд", near=(last,)).line == last
+    assert g.locate("Система должна … в течение 5 секунд").line == 3
+
+
 def test_ellipsis_quote_pieces_must_be_close_and_in_order(tmp_path):
     far = "# ТЗ\n\nСервис должен сохранять порог.\n" + "\n".join(f"Строка {i} про другое." for i in range(60)) \
           + "\nОтвет приходит в течение 5 секунд.\n"

@@ -67,6 +67,9 @@ class Step:
     fallback_agent = ""  # кто выполняет запасной вариант
     roles: tuple[str, ...] = ()  # роли LLM (для таблицы нагрузки по ролям)
     uses_llm = False
+    # Ищет ли шаг дефекты. Сбой такого шага делает смысловую проверку неполной (вердикт не «Да»); сбой
+    # вспомогательного (вопросы автору, тесты, чек-лист, критик, учёт ответов) на полноту поиска не влияет
+    finds_defects = True
     failure_hint = "Отчёт дополнен детерминированными проверками; повторите запуск позже."
 
     def enabled(self, ctx: RunContext) -> bool:
@@ -110,7 +113,8 @@ class Orchestrator:
             for step, (status, out, seconds, error) in zip(steps, outcomes):
                 agent = step.agent
                 if status == "failed":
-                    ctx.diag("warning", "LLM_STEP_FAILED", f"Шаг «{step.name}» не выполнен: {error}", step.failure_hint)
+                    code = "LLM_STEP_FAILED" if step.finds_defects else "LLM_AUX_FAILED"
+                    ctx.diag("warning", code, f"Шаг «{step.name}» не выполнен: {error}", step.failure_hint)
                 if status in ("failed", "no_llm"):
                     out = step.fallback(ctx)
                     if out is None and status == "no_llm":
