@@ -453,7 +453,8 @@ def render_markdown(result: RunResult) -> str:
         a(f"| Экономия времени ревью на документ | **{v['saved_hours']} ч ≈ {sp(v['saved_kzt'])} ₸** при ставке {sp(v['rate_kzt_per_hour'])} ₸/ч |")
         if v.get("avoided_rework_hours") is not None:
             prec = f"{v.get('precision', 1):g}".replace(".", ",")
-            a(f"| Предотвращённые переделки: (критичных {v['critical_found']} + {v.get('major_found', 0)} существенных × 0,5) × "
+            wm = f"{v.get('major_weight', 0.5):g}".replace(".", ",")
+            a(f"| Предотвращённые переделки: (критичных {v['critical_found']} + {v.get('major_found', 0)} существенных × {wm}) × "
               f"точность находок {prec} × {v.get('fix_hours_at_requirements', 1):g} ч × ({v.get('escalation_factor', 7):g} − 1) | "
               f"**{v.get('avoided_rework_hours', 0)} ч ≈ {sp(v.get('avoided_rework_kzt', 0))} ₸** |")
         a(f"| Стоимость LLM на прогон ({v.get('tokens_total', 0)} токенов; {v.get('llm_price_note', '')}) | {v.get('llm_cost_kzt', 0)} ₸ |")

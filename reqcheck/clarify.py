@@ -171,7 +171,7 @@ def render_questions_file(questions: list[Question], title: str, input_path: str
     return "\n".join(L) + "\n"
 
 
-_BLOCK = re.compile(r"^##\s+(Q-\d+(?:\.\d+)?)\b[^\n]*\n(.*?)(?=^##\s+Q-|\Z)", re.M | re.S)
+_BLOCK = re.compile(r"^##\s+(Q-\d+(?:\.\d+)*)\b[^\n]*\n(.*?)(?=^##\s+Q-|\Z)", re.M | re.S)
 
 
 def parse_answers(text: str) -> list[dict]:

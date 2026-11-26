@@ -594,3 +594,35 @@ def test_no_green_verdict_when_semantic_check_is_incomplete(tmp_path):
     _finalize(result)
     assert result.verdict_dev.startswith("Условно") and "Оценка неполная" in result.verdict_dev
     assert result.verdict_test.startswith("Условно")
+
+
+def test_extractor_rejects_llm_id_that_is_a_reference(tmp_path):
+    """ID из середины текста или из чужой ячейки — ссылка на другой пункт, а не номер блока (иначе ложный дубль ID)."""
+    from reqcheck.agents import Extractor
+    doc = _doc(tmp_path, "# ТЗ\n\n**ФТ-3.** Система должна отправлять SMS.\n\n"
+                         "Проверка выполнения ФТ-3 проводится на тестовом стенде банка.\n\n"
+                         "Требование ФТ-4: система должна хранить историю переводов.\n\n"
+                         "| ID | Требование |\n|---|---|\n| ФТ-5 | Система должна вести журнал, см. ФТ-3 |\n")
+    blocks = segment(doc)
+    ref = next(b.bid for b in blocks if b.text.startswith("Проверка"))
+    own = next(b.bid for b in blocks if b.text.startswith("Требование ФТ-4"))
+    row = next(b.bid for b in blocks if b.kind == "table_row")
+    items = [{"block_ids": [ref], "source_id": "ФТ-3"}, {"block_ids": [own], "source_id": "ФТ-4"},
+             {"block_ids": [row], "source_id": "ФТ-5"}, {"block_ids": [row], "source_id": "ФТ-3"}]
+    ex = Extractor(FakeLLM(), doc, blocks)
+    got = [ex._to_requirement(i) for i in items]
+    assert [(r.source_id, r.source_id_assigned) for r in got] == [("", True), ("ФТ-4", False), ("ФТ-5", False), ("", True)]
+
+
+def test_answers_parse_nested_followup_ids():
+    """Уточнение к уточнению (Q-01.1.1) не склеивается с Q-01.1."""
+    from reqcheck.clarify import parse_answers
+    text = "## Q-01.1 · x\n\nВопрос: a\nОтвет: b\n\n## Q-01.1.1 · y\n\nВопрос: c\nОтвет: d\n"
+    assert [a["qid"] for a in parse_answers(text)] == ["Q-01.1", "Q-01.1.1"]
+
+
+def test_value_formula_shows_configured_major_weight(monkeypatch):
+    from reqcheck.value import estimate
+    monkeypatch.setenv("REQCHECK_MAJOR_WEIGHT", "0.3")
+    v = estimate(10, 5, 1, 60, n_major=4)
+    assert v.major_weight == 0.3 and v.avoided_rework_hours == round((1 + 0.3 * 4) * 0.85 * 1 * 6, 1)

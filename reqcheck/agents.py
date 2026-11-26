@@ -38,6 +38,21 @@ def _s(value: Any, limit: int = 1200) -> str:
     return value.strip()[:limit]
 
 
+def _own_id(sid: str, block: Block) -> bool:
+    """ID, названный моделью, — собственный номер блока, а не ссылка на другой пункт.
+
+    В строке таблицы он должен занимать ячейку целиком («ФТ-3 | …»), в тексте — стоять в начале
+    («Требование ФТ-3: …»). «Проверка ФТ-3 проводится…» — ссылка: иначе ложный дубль ID."""
+    n = normalize(sid).strip(" .:;)")
+    if not n:
+        return False
+    if block.kind == "table_row":
+        return any(normalize(c).strip(" .:;)") == n for c in block.cells or [])
+    t = normalize(block.text)
+    # В начале текста или как подпись в первых словах, с разделителем после: «Требование ФТ-4: …»
+    return t.startswith(n) or bool(re.match(r"^.{0,40}?(?<!\w)" + re.escape(n) + r"\s*[.:)\-]", t))
+
+
 def _list(value: Any) -> list:
     if isinstance(value, list):
         return value
@@ -114,8 +129,8 @@ class Extractor:
             quote = blocks[0].text[:300]
         sid_doc = blocks[0].source_id
         sid_llm = _s(item.get("source_id"), 30) or None
-        if sid_llm and normalize(sid_llm) not in normalize(block_text):
-            sid_llm = None  # идентификатор, которого нет в тексте, не принимаем
+        if sid_llm and not _own_id(sid_llm, blocks[0]):
+            sid_llm = None  # ID нет в тексте или это ссылка на другой пункт («согласно Ф-2…»): не принимаем
         source_id = sid_doc or sid_llm
         kind = _s(item.get("kind"), 20).lower()
         return Requirement(

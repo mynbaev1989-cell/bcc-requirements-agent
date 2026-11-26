@@ -39,6 +39,7 @@ class ValueEstimate:
     llm_cost_kzt: float = 0.0
     llm_price_note: str = ""
     roi: float | None = None
+    major_weight: float = 0.5
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -77,4 +78,4 @@ def estimate(n_requirements: int, n_findings: int, n_critical: int, agent_second
     roi = round(benefit / agent_cost, 1) if agent_cost > 0 else None
     return ValueEstimate(rate, base, per_req, per_finding, round(manual_h, 2), round(agent_h, 3), round(check_h, 2),
                          round(saved_h, 2), round(saved_h * rate), n_critical, n_major, fix_h, esc, precision, round(avoided_h, 1),
-                         round(avoided_h * rate), tokens_in + tokens_out, round(llm_cost, 1), note, roi)
+                         round(avoided_h * rate), tokens_in + tokens_out, round(llm_cost, 1), note, roi, weight_major)
