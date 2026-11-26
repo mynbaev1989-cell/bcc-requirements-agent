@@ -12,8 +12,8 @@
     "document_title": "Уведомление о расходах по карте",
     "file": "requirements.md",
     "input_path": "input/requirements.md",
-    "run_at": "2026-11-27T02:24:48+05:00",
-    "agent_version": "0.1.0 (f23bc69)",
+    "run_at": "2026-11-27T02:38:12+05:00",
+    "agent_version": "0.1.0 (3309a0a)",
     "model": "gemini-3.5-flash + gemini-3.5-flash-lite (переключение из-за квоты/доступности)",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -24,7 +24,7 @@
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
     "answers_file": "reports/independent_answers/answers.md",
-    "duration_sec": 0.82,
+    "duration_sec": 0.84,
     "report_questions_file": "report_after_answers_questions.md"
   },
   "requirements": [
@@ -4508,6 +4508,36 @@
       "outcome": ""
     },
     {
+      "qid": "Q-16",
+      "text": "Мелкие замечания (4: F-018, F-026, F-028, F-029): принять предложенные исправления или оставить формулировки документа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+      "options": [
+        "Принять все предложенные исправления",
+        "Принять, кроме перечисленных номеров находок",
+        "Оставить формулировки документа как есть"
+      ],
+      "assumption": "Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+      "fids": [
+        "F-018",
+        "F-026",
+        "F-028",
+        "F-029"
+      ],
+      "lines": [
+        29,
+        37,
+        38,
+        49,
+        147,
+        189
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
       "qid": "Q-03.1",
       "text": "Какой конкретно URL-адрес будет использоваться для продуктивной среды после согласования контура?",
       "priority": "blocker",
@@ -4952,7 +4982,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 0.74,
+        "seconds": 0.76,
         "status": "ok",
         "out": "gemini-3.5-flash",
         "roles": []
@@ -5192,7 +5222,7 @@
         "seconds": 0.0
       }
     },
-    "duration_sec": 0.82,
+    "duration_sec": 0.84,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
@@ -5247,7 +5277,7 @@
     "critical": 1,
     "major": 12,
     "minor": 5,
-    "questions": 20,
+    "questions": 21,
     "questions_blocker_open": 4
   },
   "document_score": 69,
