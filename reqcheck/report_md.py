@@ -142,10 +142,11 @@ def render_markdown(result: RunResult) -> str:
       "Балл 0–100 считается кодом: −35 за критичный, −20 за существенный, −8 за незначительный дефект.")
     a("")
     by_rid: dict[str, list[Finding]] = defaultdict(list)
+    grouped_by_rid: dict[str, list[Finding]] = defaultdict(list)  # сводные находки: у требования — только ссылка
     for f in findings:
-        if f.scope == "requirement":
+        if f.scope == "requirement" or f.grouped:
             for rid in f.rids:
-                by_rid[rid].append(f)
+                (grouped_by_rid if f.grouped else by_rid)[rid].append(f)
     for r in reqs:
         asm = result.assessments.get(r.rid)
         score = f"{LIGHT.get(asm.light, '')} {asm.score}/100" if asm else ""
@@ -173,8 +174,11 @@ def render_markdown(result: RunResult) -> str:
             for f in fs:
                 L.extend(_finding_md(result, f, rid_map))
             a("")
-        else:
+        elif not grouped_by_rid.get(r.rid):
             a("Дефектов не найдено.")
+            a("")
+        for f in grouped_by_rid.get(r.rid, []):
+            a(f"См. сводную находку **{f.fid}** в дефектах набора: {f.title}.")
             a("")
 
     # 4. Проверка набора ----------------------------------------------------------------------------
@@ -411,6 +415,8 @@ def render_markdown(result: RunResult) -> str:
         a(f"- Повторов одного дефекта от разных агентов (по требованию и по набору) слито кодом: {m['merged_overlap']}")
         for t in m.get("merged_overlap_titles", [])[:10]:
             a(f"  - {t}")
+    if m.get("merged_singular"):
+        a(f"- Незначительных замечаний «Единичность» по отдельным пунктам сведено в одну находку: {m['merged_singular']}")
     a("")
     journal = m.get("journal") or []
     if journal:

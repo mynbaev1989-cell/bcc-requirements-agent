@@ -76,12 +76,14 @@ def run_variant(name: str, model: str) -> dict:
         "found": sum(r["found"] for r in rows), "gold": gold,
         "findings": sum(r["agent_findings"] for r in rows),
         "precision": round(sum(r["precision"] for r in rows) / len(rows), 3),
+        "precision_items": round(sum(r.get("precision_items", r["precision"]) for r in rows) / len(rows), 3),
         "false_major_on_clean": sum(r["false_major_on_clean"] for r in rows),
         "cache_misses": sum(r["cache_misses"] for r in rows),
         "dropped_ungrounded": sum(r.get("dropped_ungrounded", 0) for r in rows),
         "merged_by_critic": sum(r.get("merged_by_critic", 0) for r in rows),
         "rejected_by_critic": sum(r.get("rejected_by_critic", 0) for r in rows),
-        "merged_overlap": sum(r.get("merged_overlap", 0) for r in rows),
+        # слито кодом: повторы между агентами + находки «Единичность», ушедшие в сводную (N находок → 1)
+        "merged_overlap": sum(r.get("merged_overlap", 0) + max(r.get("merged_singular", 0) - 1, 0) for r in rows),
         "docs": rows,
     }
 
@@ -91,11 +93,11 @@ def main() -> int:
     ap.add_argument("--model", default="gemini-3.5-flash-lite")
     args = ap.parse_args()
     results = [run_variant(v, args.model) for v in ("full", "no_critic", "no_grounding", "rules_only")]
-    print("| Вариант | Найдено дефектов | Находок | Точность | Ложные major на чистых | Отсеяно сверкой | "
+    print("| Вариант | Найдено дефектов | Находок | Точность | Точность по пунктам | Ложные major на чистых | Отсеяно сверкой | "
           "Слито критиком | Отклонено критиком | Слито кодом | Промахов кэша |")
-    print("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+    print("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
     for r in results:
-        print(f"| {r['variant']} | {r['found']}/{r['gold']} | {r['findings']} | {r['precision']:.0%} | "
+        print(f"| {r['variant']} | {r['found']}/{r['gold']} | {r['findings']} | {r['precision']:.0%} | {r['precision_items']:.0%} | "
               f"{r['false_major_on_clean']} | {r['dropped_ungrounded']} | {r['merged_by_critic']} | "
               f"{r['rejected_by_critic']} | {r['merged_overlap']} | {r['cache_misses']} |")
     out = ROOT / "eval" / "ablation.json"

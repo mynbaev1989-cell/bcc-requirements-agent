@@ -25,7 +25,8 @@ from pathlib import Path
 from typing import Any
 
 from reqcheck.agents import (
-    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, absorb, dedupe, number_requirements, overlap_duplicates,
+    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, absorb, collapse_singular, dedupe, number_requirements,
+    overlap_duplicates, union_quotes,
     requirements_from_blocks, sync_marks,
     visible_lines,
 )
@@ -316,7 +317,8 @@ class CriticStep(Step):
 
 
 class MergeOverlapStep(Step):
-    """Один дефект — одна находка: находка по набору, повторяющая находку по требованию, сливается с ней (код)."""
+    """Один дефект — одна находка: находка по набору, повторяющая находку по требованию, сливается с ней;
+    незначительные замечания «Единичность» сводятся в одну находку (код)."""
     name, agent = "Слияние повторов между агентами", "dedupe по требованиям и строкам (код)"
 
     def run(self, ctx: RunContext) -> Any:
@@ -326,16 +328,17 @@ class MergeOverlapStep(Step):
         dup_ids = set()
         for dup, main in out:
             absorb(main, dup)
-            seen = {(q.line, q.text) for q in main.quotes}
-            main.quotes += [q for q in dup.quotes if (q.line, q.text) not in seen]
+            main.quotes = union_quotes(main.quotes, dup.quotes)
             dup_ids.add(id(dup))
-        ctx.findings = [f for f in ctx.findings if id(f) not in dup_ids]
+        ctx.findings, self._singular = collapse_singular([f for f in ctx.findings if id(f) not in dup_ids])
         m = ctx.metrics
         m["merged_overlap"] = len(dup_ids)
         m["merged_overlap_titles"] = [f"{d.title} → {mn.title}" for d, mn in out]
+        m["merged_singular"] = self._singular
 
-    def summary(self, out: Any) -> str:
-        return f"слито повторов {len(out)}"
+    def summary(self, out: Any) -> str:  # вызывается после apply
+        singular = getattr(self, "_singular", 0)
+        return f"слито повторов {len(out)}" + (f"; замечаний «Единичность» сведено в одну: {singular}" if singular else "")
 
 
 class NumberStep(Step):

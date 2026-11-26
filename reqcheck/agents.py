@@ -19,8 +19,8 @@ from reqcheck import criteria, prompts
 from reqcheck.grounding import Grounder, normalize
 from reqcheck.llm import JsonLLM, LLMError
 from reqcheck.models import (
-    MAJOR, NA, OK, SEV_RANK, SEVERITIES, VIOLATION, Block, ChecklistItem, CriterionMark, Document, Finding,
-    Requirement, RequirementAssessment, TestDraft, TraceRow,
+    MAJOR, MINOR, NA, OK, SEV_RANK, SEVERITIES, VIOLATION, Block, ChecklistItem, CriterionMark, Document, Finding,
+    Quote, Requirement, RequirementAssessment, TestDraft, TraceRow, per_requirement,
 )
 
 EXTRACT_CHUNK_BLOCKS = 120
@@ -467,7 +467,7 @@ def sync_marks(findings: list[Finding], assessments: dict[str, RequirementAssess
     отдельно; без этой сверки отчёт показал бы у требования дефект «Корректность» рядом с «Соблюдено: Корректность».
     Обратная операция после ответов автора — clarify.close_marks."""
     for f in findings:
-        if f.scope != "requirement":
+        if not per_requirement(f):
             continue
         for rid in f.rids:
             a = assessments.get(rid)
@@ -513,6 +513,43 @@ def absorb(main: Finding, dup: Finding) -> None:
     main.rids = sorted(set(main.rids) | set(dup.rids))
     if SEV_RANK.get(dup.severity, 9) < SEV_RANK.get(main.severity, 9):
         main.severity = dup.severity
+
+
+def union_quotes(*lists: list[Quote]) -> list[Quote]:
+    """Цитаты нескольких находок без повторов (одна строка и тот же текст), в исходном порядке."""
+    return list({(q.line, q.text): q for quotes in lists for q in quotes}.values())
+
+
+def collapse_singular(findings: list[Finding]) -> tuple[list[Finding], int]:
+    """Незначительные замечания «Единичность» по разным требованиям — одной сводной находкой.
+
+    Reviewer помечает неатомарным каждый пункт со списком полей или двумя действиями; на размеченных документах
+    это 16 из 131 находки, и 7 из них не совпали ни с одним эталонным дефектом. Сводная находка (как «N требований
+    без идентификатора») сохраняет все требования, цитаты и варианты исправления; отметка ❌ и штраф в баллах остаются
+    у каждого требования (grouped, см. models.per_requirement). Существенные (major) не сводятся.
+    Возвращает новый список находок и число сведённых."""
+    group = [f for f in findings if f.criterion == "singular" and f.severity == MINOR]
+    if len(group) < 2:
+        return findings, 0
+    rids = sorted({r for f in group for r in f.rids})
+    labels = [", ".join(f.rids) or "—" for f in group]
+    per_item = "; ".join(f"{label} — {f.title}" for label, f in zip(labels, group))
+    fixes = "; ".join(f"{label}: {f.suggestion}" for label, f in zip(labels, group) if f.suggestion)
+    merged = Finding(
+        fid=group[0].fid, scope="set", criterion="singular", severity=MINOR, rids=rids,
+        quotes=union_quotes(*(f.quotes for f in group)), grouped=True,
+        title=f"Неатомарные требования: {len(rids)} (в одном пункте несколько действий или условий)",
+        explanation=f"Такой пункт приходится делить при оценке, реализации и тестировании. По пунктам: {per_item}.",
+        suggestion="Разбить каждый пункт на отдельные требования с собственными идентификаторами"
+                   + (f". Варианты: {fixes}" if fixes else "."),
+        # Вопрос автору — если он был хотя бы у одного замечания: один общий вместо нескольких мелких
+        question=(f"Можно ли разбить пункты {', '.join(rids)} на отдельные требования, по одному действию или условию "
+                  f"в каждом?") if any(f.question for f in group) else "",
+        addressee="Аналитик", source=group[0].source, verified=all(f.verified for f in group),
+        critic=next((f.critic for f in group if f.critic), ""),
+    )
+    ids = {id(f) for f in group}
+    return [f for f in findings if id(f) not in ids] + [merged], len(group)
 
 
 OVERLAP_TITLE_SIMILARITY = 0.25  # доля общих основ слов в заголовках (мера Жаккара)

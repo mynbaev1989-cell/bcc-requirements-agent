@@ -4,10 +4,11 @@
     "gold_defects": 15,
     "found": 14,
     "recall": 0.933,
-    "agent_findings": 30,
-    "precision": 0.8,
+    "agent_findings": 29,
+    "precision": 0.828,
+    "precision_items": 0.8,
     "false_major_on_clean": 0,
-    "questions": 14,
+    "questions": 15,
     "gold_covered_by_questions": 13,
     "question_coverage": 0.867,
     "by_type": {
@@ -29,6 +30,7 @@
     "dropped_ungrounded": 0,
     "merged_by_critic": 0,
     "merged_overlap": 4,
+    "merged_singular": 2,
     "rejected_by_critic": 0
   },
   {
@@ -36,8 +38,9 @@
     "gold_defects": 16,
     "found": 16,
     "recall": 1.0,
-    "agent_findings": 24,
-    "precision": 0.958,
+    "agent_findings": 22,
+    "precision": 0.955,
+    "precision_items": 0.958,
     "false_major_on_clean": 1,
     "questions": 18,
     "gold_covered_by_questions": 16,
@@ -61,6 +64,7 @@
     "dropped_ungrounded": 1,
     "merged_by_critic": 3,
     "merged_overlap": 0,
+    "merged_singular": 3,
     "rejected_by_critic": 0
   }
 ]

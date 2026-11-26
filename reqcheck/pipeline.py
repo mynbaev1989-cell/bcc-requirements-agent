@@ -17,7 +17,7 @@ from pathlib import Path
 from reqcheck import __version__, criteria
 from reqcheck.agents import score_requirement
 from reqcheck.llm import JsonLLM
-from reqcheck.models import CRITICAL, MAJOR, NA, SEV_RANK, CriterionMark, Diagnostic, Finding, RequirementAssessment, RunResult
+from reqcheck.models import CRITICAL, MAJOR, NA, SEV_RANK, CriterionMark, Diagnostic, Finding, RequirementAssessment, RunResult, per_requirement
 from reqcheck.orchestrator import Options, Orchestrator, RunContext
 from reqcheck.steps import build_plan
 from reqcheck.value import estimate
@@ -109,10 +109,9 @@ def _finalize(result: RunResult) -> None:
     reqs = result.requirements
     findings = result.findings
     by_rid: dict[str, list[Finding]] = {}
-    for f in findings:
-        if f.scope == "requirement":
-            for rid in f.rids:
-                by_rid.setdefault(rid, []).append(f)
+    for f in filter(per_requirement, findings):  # сводная находка штрафует каждое своё требование
+        for rid in f.rids:
+            by_rid.setdefault(rid, []).append(f)
     for r in reqs:
         a = result.assessments.get(r.rid)
         if a is None:
@@ -127,7 +126,8 @@ def _finalize(result: RunResult) -> None:
     llm_assessed = any(m.status != NA for a in result.assessments.values() for m in a.marks)
     if reqs and llm_assessed:
         mean = sum(result.assessments[r.rid].score for r in reqs) / len(reqs)
-        set_pen = sum({"critical": 8, "major": 4, "minor": 1}.get(f.severity, 2) for f in findings if f.scope != "requirement")
+        set_pen = sum({"critical": 8, "major": 4, "minor": 1}.get(f.severity, 2) for f in findings
+                      if not per_requirement(f))
         result.document_score = max(0, round(mean - set_pen))
 
     load_failed = result.document is None or not reqs

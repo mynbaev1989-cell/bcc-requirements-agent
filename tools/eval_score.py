@@ -47,6 +47,11 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
 
     hit_gold = [d for d, dl in gold if any(near(dl, fl) for _, fl in agent)]
     matched_agent = [f for f, fl in agent if any(near(fl, dl) for _, dl in gold)]
+    # Строже: сводная находка (collapse_singular) считается по пунктам — каждая её цитата отдельно,
+    # иначе одно совпавшее замечание закрыло бы несовпавшие соседние
+    items = [{q.line} if q.line else set() for f, fl in agent if f.grouped for q in f.quotes]
+    items += [fl for f, fl in agent if not f.grouped]
+    matched_items = [il for il in items if any(near(il, dl) for _, dl in gold)]
     clean_lines = set()
     for q in labels.get("clean_requirements", []):
         loc = g.locate(q)
@@ -70,6 +75,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
         "recall": round(len(hit_gold) / max(len(gold), 1), 3),
         "agent_findings": len(agent),
         "precision": round(len(matched_agent) / max(len(agent), 1), 3),
+        "precision_items": round(len(matched_items) / max(len(items), 1), 3),
         "false_major_on_clean": len(false_on_clean),
         "questions": len(result.questions),
         "gold_covered_by_questions": len(gold_asked),
@@ -80,6 +86,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
         "dropped_ungrounded": result.metrics.get("dropped_ungrounded", 0),
         "merged_by_critic": result.metrics.get("merged_duplicates", 0),
         "merged_overlap": result.metrics.get("merged_overlap", 0),
+        "merged_singular": result.metrics.get("merged_singular", 0),
         "rejected_by_critic": result.metrics.get("dropped_by_critic", 0),
     }
 
@@ -101,7 +108,8 @@ def main(argv: list[str]) -> int:
         tot_gold = sum(r["gold_defects"] for r in ok)
         tot_found = sum(r["found"] for r in ok)
         print(f"\nИТОГО: recall {tot_found}/{tot_gold} = {tot_found / max(tot_gold, 1):.0%}; "
-              f"средняя precision {sum(r['precision'] for r in ok) / len(ok):.0%}; "
+              f"средняя precision {sum(r['precision'] for r in ok) / len(ok):.0%} "
+              f"(сводные находки по пунктам: {sum(r['precision_items'] for r in ok) / len(ok):.0%}); "
               f"ложных major/critical на чистых требованиях: {sum(r['false_major_on_clean'] for r in ok)}; "
               f"эталонных дефектов, по которым задан вопрос автору: "
               f"{sum(r['gold_covered_by_questions'] for r in ok)}/{tot_gold}; "

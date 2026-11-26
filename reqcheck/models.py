@@ -97,6 +97,14 @@ class Finding:
     verified: bool = False  # все цитаты найдены в исходнике
     critic: str = ""  # вердикт агента-критика
     resolution: str = ""  # как на находку повлиял ответ автора (цикл уточнения)
+    grouped: bool = False  # сводная находка по нескольким требованиям (agents.collapse_singular)
+
+
+def per_requirement(f: Finding) -> bool:
+    """Находка про конкретные требования: ставит ❌ их критерию и штрафует их балл.
+
+    Сводная находка показывается в дефектах набора, но по смыслу — про каждое из своих требований."""
+    return f.scope == "requirement" or f.grouped
 
 
 @dataclass
