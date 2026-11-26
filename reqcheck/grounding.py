@@ -119,21 +119,32 @@ class Grounder:
                     window = window + " " + self.norm_lines[i + extra]
                 if not window:
                     continue
+                sm = SequenceMatcher(None, q, window, autojunk=False)
+                blocks = [b for b in sm.get_matching_blocks() if b.size]
                 if len(window) >= len(q):
                     # Совпавшие куски должны лежать рядом: делим на длину участка окна, который они покрывают.
                     # Иначе цитата, собранная из слов соседних строк, набрала бы высокий балл.
-                    sm = SequenceMatcher(None, q, window, autojunk=False)
-                    blocks = [b for b in sm.get_matching_blocks() if b.size]
                     matched = sum(b.size for b in blocks)
                     span = blocks[-1].b + blocks[-1].size - blocks[0].b if blocks else 0
                     ratio = matched / max(len(q), span)
                 else:
-                    ratio = SequenceMatcher(None, q, window, autojunk=False).ratio()
+                    ratio = sm.ratio()
                 if ratio > best_ratio:
-                    best_ratio, best_line = ratio, i + 1
+                    # Строка — та, где начинается совпадение, а не первая строка окна: окно «пустая/чужая строка +
+                    # нужная» набирает тот же балл и иначе сдвигало бы ссылку на строку выше
+                    best_ratio, best_line = ratio, self._window_line(i, extra, blocks[0].b if blocks else 0)
         if best_ratio >= self.FUZZY_THRESHOLD and best_line:
             return Quote(text=quote, line=best_line, found=True)
         return Quote(text=quote, found=False)
+
+    def _window_line(self, i: int, extra: int, offset: int) -> int:
+        """Номер строки (с 1) для позиции offset в окне из строк i..i+extra, склеенных пробелом."""
+        pos = 0
+        for k in range(extra + 1):
+            pos += len(self.norm_lines[i + k]) + 1
+            if offset < pos:
+                return i + k + 1
+        return i + extra + 1
 
     def page_of(self, line: int | None) -> int | None:
         if line is None or not self.doc.line_pages:

@@ -28,6 +28,9 @@ EXPLICIT_ID = re.compile(
 _UNIT = (r"(?:сек(?:унд\w*)?|мс|мин(?:ут\w*)?|ч|час(?:а|ов)?|сут(?:ок|ки)?|дн(?:я|ей)?|д(?:ень|ня|ней)|"
          r"тенге|руб(?:л\w*)?|млн|млрд|тыс(?:яч\w*)?|кб|мб|гб|раз(?:а)?|x|×)\.?(?!\w)")
 NUMBERED_ID = re.compile(r"^\s*(\d+\.\d+(?:\.\d+){0,3})\.?\s+(?!\s*(?:%|₸|" + _UNIT + r"))", re.I)
+# Начало нового пункта в PDF/TXT без маркеров списка: «Ф-2. …», «FR-3: …». Знак после ID обязателен, иначе
+# перенос строки вида «…согласно\nФТ-2 сумма…» резал бы абзац на ссылке
+ITEM_START = re.compile(r"^\s*(?:\*\*|__)?\s*[A-Za-zА-Яа-яЁё]{1,8}[-_–]\d{1,4}(?:\.\d{1,3})*\s*(?:\*\*|__)?\s*[.:)]\s+")
 
 
 def _strip_md(text: str) -> str:
@@ -145,7 +148,8 @@ def segment(doc: Document) -> list[Block]:
             parts = [m.group(3)]
             j = i + 1
             while j < n and lines[j].strip() and not LIST_ITEM.match(lines[j]) and not TABLE_ROW.match(lines[j]) \
-                    and not HEADING_MD.match(lines[j]) and (len(lines[j]) - len(lines[j].lstrip()) > indent or not is_md):
+                    and not HEADING_MD.match(lines[j]) and (len(lines[j]) - len(lines[j].lstrip()) > indent
+                                                             or not (is_md or ITEM_START.match(lines[j]))):
                 parts.append(lines[j].strip())
                 j += 1
             add("list_item", " ".join(parts), lineno, j)
@@ -156,7 +160,7 @@ def segment(doc: Document) -> list[Block]:
         parts = []
         while j < n and lines[j].strip() and not LIST_ITEM.match(lines[j]) and not TABLE_ROW.match(lines[j]) \
                 and not HEADING_MD.match(lines[j]) and not FENCE.match(lines[j]):
-            if not is_md and j > i and HEADING_NUM.match(lines[j]):
+            if not is_md and j > i and (HEADING_NUM.match(lines[j]) or ITEM_START.match(lines[j])):
                 break
             parts.append(lines[j].strip())
             j += 1

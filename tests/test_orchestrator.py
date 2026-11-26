@@ -3,7 +3,7 @@
 import time
 
 from reqcheck.llm import LLMError
-from reqcheck.models import RunResult
+from reqcheck.models import Finding, Quote, RunResult
 from reqcheck.orchestrator import Options, Orchestrator, RunContext, Step
 from reqcheck.steps import build_plan
 
@@ -104,3 +104,76 @@ def test_stats_are_thread_safe():
         list(pool.map(lambda _: [st.add("reviewer", calls=1, input_tokens=2) for _ in range(500)], range(8)))
     assert st.calls == 4000 and st.input_tokens == 8000
     assert st.by_role["reviewer"]["calls"] == 4000
+
+
+def test_merge_step_keeps_one_finding_with_both_quotes(sample_md):
+    from reqcheck.orchestrator import Options, RunContext
+    from reqcheck.models import RunResult
+    from reqcheck.steps import MergeOverlapStep
+    a = Finding(fid="T-1", scope="requirement", criterion="complete", severity="major", title="Отсутствует URL для среды Prod",
+                explanation="", rids=["R-020"], quotes=[Quote("Prod: —", 108, True)], source="llm")
+    b = Finding(fid="T-2", scope="set", criterion="set_complete", severity="critical", title="Отсутствие Prod URL для API",
+                explanation="", rids=["R-020"], quotes=[Quote("Request URL", 108, True)], source="llm")
+    ctx = RunContext(input_path=str(sample_md), opts=Options(), result=RunResult(document=None))
+    ctx.findings = [a, b]
+    step = MergeOverlapStep()
+    step.apply(ctx, step.run(ctx))
+    assert ctx.findings == [a] and a.severity == "critical" and len(a.quotes) == 2
+    assert ctx.metrics["merged_overlap"] == 1
+
+
+def test_merged_finding_marks_criterion_violated_at_added_requirement(sample_md):
+    from reqcheck.orchestrator import Options, RunContext
+    from reqcheck.models import RunResult, RequirementAssessment, CriterionMark
+    from reqcheck.steps import MergeOverlapStep, NumberStep
+    main = Finding(fid="T-1", scope="requirement", criterion="correct", severity="major", title="403 или 404 для чужой карты",
+                   explanation="", rids=["R-043"], quotes=[Quote("403", 175, True)], source="llm")
+    dup = Finding(fid="T-2", scope="set", criterion="set_consistent", severity="major", title="Противоречие 403 и 404 карты",
+                  explanation="", rids=["R-043", "R-045"], quotes=[Quote("403", 175, True), Quote("404", 189, True)], source="llm")
+    ctx = RunContext(input_path=str(sample_md), opts=Options(), result=RunResult(document=None))
+    ctx.result.assessments = {"R-043": RequirementAssessment("R-043", [CriterionMark("correct", "violation")]),
+                              "R-045": RequirementAssessment("R-045", [CriterionMark("correct", "ok")])}
+    ctx.findings = [main, dup]
+    for step in (MergeOverlapStep(), NumberStep()):  # оценки сверяются с окончательным составом находок
+        step.apply(ctx, step.run(ctx))
+    assert ctx.findings == [main] and main.rids == ["R-043", "R-045"]
+    assert ctx.result.assessments["R-045"].marks[0].status == "violation"
+
+
+def test_minor_singular_findings_collapse_into_one_but_keep_marks_and_scores(sample_md):
+    from reqcheck.orchestrator import Options, RunContext
+    from reqcheck.models import RunResult, RequirementAssessment, CriterionMark, Requirement
+    from reqcheck.pipeline import _finalize
+    from reqcheck.steps import MergeOverlapStep, NumberStep
+
+    def single(fid, rid, line, sev="minor"):
+        return Finding(fid=fid, scope="requirement", criterion="singular", severity=sev, title=f"Два действия в {rid}",
+                       explanation="", rids=[rid], quotes=[Quote(f"текст {rid}", line, True)], suggestion=f"Разделить {rid}",
+                       source="llm")
+    a, b, c = single("T-1", "R-001", 10), single("T-2", "R-002", 20), single("T-3", "R-003", 30, sev="major")
+    b.question = "Разделить ли R-002?"
+    other = Finding(fid="T-4", scope="requirement", criterion="correct", severity="major", title="Противоречие",
+                    explanation="", rids=["R-001"], quotes=[Quote("x", 10, True)], source="llm")
+    ctx = RunContext(input_path=str(sample_md), opts=Options(), result=RunResult(document=None))
+    ctx.reqs = [Requirement(rid=f"R-00{i}", source_id="", source_id_assigned=True, summary="", quote="", line_start=i * 10,
+                            line_end=i * 10, section="ТЗ") for i in (1, 2, 3)]
+    ctx.result.assessments = {r.rid: RequirementAssessment(r.rid, [CriterionMark("singular", "ok")]) for r in ctx.reqs}
+    ctx.findings = [a, b, c, other]
+    merge = MergeOverlapStep()
+    for step in (merge, NumberStep()):
+        step.apply(ctx, step.run(ctx))
+    assert merge.summary([]).endswith("сведено в одну: 2")  # журнал оркестратора показывает сведение
+    merged = [f for f in ctx.findings if f.scope == "set"]
+    assert len(ctx.findings) == 3 and c in ctx.findings and other in ctx.findings  # существенная не сводится
+    (m,) = merged
+    assert m.criterion == "singular" and m.rids == ["R-001", "R-002"] and [q.line for q in m.quotes] == [10, 20]
+    assert m.grouped and "R-002: Разделить R-002" in m.suggestion and ctx.metrics["merged_singular"] == 2
+    assert "R-001, R-002" in m.question  # вопрос автору не теряется: один общий вместо мелких
+    assert ctx.result.assessments["R-002"].marks[0].status == "violation"
+    # Балл требования тот же, что с отдельной находкой: −8 за незначительный дефект
+    ctx.result.requirements = ctx.reqs
+    _finalize(ctx.result)
+    assert ctx.result.assessments["R-002"].score == 92
+    from reqcheck.report_md import render_markdown
+    ctx.result.findings = ctx.findings
+    assert f"См. сводную находку **{m.fid}**" in render_markdown(ctx.result)

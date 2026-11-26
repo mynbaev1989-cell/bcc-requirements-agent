@@ -85,7 +85,7 @@ UNIT_GROUPS = {
     },
 }
 
-VERSION_RE = re.compile(r"(верси[яи]|version|ред\.|редакци[яи])\s*[:№#]?\s*v?\d+(\.\d+)*", re.I)
+VERSION_RE = re.compile(r"(верси[яи](?:\s+документа)?|version|ред\.|редакци[яи])\s*[:№#]?\s*v?\d+(\.\d+)*", re.I)
 DATE_RE = re.compile(r"\b\d{1,2}[./]\d{1,2}[./]\d{2,4}\b|\b\d{4}-\d{2}-\d{2}\b")
 YES_NO_CELL = re.compile(r"^\s*(да|нет)(\s*/\s*(да|нет|не требуется|н/п))+\s*$", re.I)
 

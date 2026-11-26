@@ -7,7 +7,7 @@
     "precision": 0.877,
     "precision_items": 0.849,
     "false_major_on_clean": 3,
-    "cache_misses": 3,
+    "cache_misses": 5,
     "dropped_ungrounded": 8,
     "merged_by_critic": 9,
     "rejected_by_critic": 0,
@@ -22,7 +22,7 @@
         "precision": 0.926,
         "precision_items": 0.929,
         "false_major_on_clean": 0,
-        "questions": 12,
+        "questions": 15,
         "gold_covered_by_questions": 12,
         "question_coverage": 0.857,
         "by_type": {
@@ -44,7 +44,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 0
+        "cache_misses": 2
       },
       {
         "document": "credit_card_application.md",
@@ -192,7 +192,7 @@
     "precision": 0.881,
     "precision_items": 0.854,
     "false_major_on_clean": 3,
-    "cache_misses": 3,
+    "cache_misses": 4,
     "dropped_ungrounded": 8,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
@@ -207,7 +207,7 @@
         "precision": 0.926,
         "precision_items": 0.929,
         "false_major_on_clean": 0,
-        "questions": 12,
+        "questions": 15,
         "gold_covered_by_questions": 12,
         "question_coverage": 0.857,
         "by_type": {
@@ -229,7 +229,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 0
+        "cache_misses": 1
       },
       {
         "document": "credit_card_application.md",
@@ -393,8 +393,8 @@
         "precision_items": 0.897,
         "false_major_on_clean": 0,
         "questions": 16,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.786,
+        "gold_covered_by_questions": 12,
+        "question_coverage": 0.857,
         "by_type": {
           "ambiguity": "2/2",
           "api": "2/2",

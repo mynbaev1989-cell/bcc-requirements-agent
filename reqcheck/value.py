@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 
 
 def _env_float(name: str, default: float) -> float:
@@ -40,6 +40,8 @@ class ValueEstimate:
     llm_price_note: str = ""
     roi: float | None = None
     major_weight: float = 0.5
+    # Чувствительность: та же формула при других допущениях (см. scenarios ниже)
+    scenarios: list[dict] = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -74,8 +76,22 @@ def estimate(n_requirements: int, n_findings: int, n_critical: int, agent_second
     note = ("бесплатный тариф (цена токенов не задана)" if not (price_in or price_out)
             else f"${price_in}/${price_out} за 1 млн токенов вход/выход, курс {usd_kzt:g} ₸/$")
     agent_cost = llm_cost + check_h * rate  # агент + время человека на проверку отчёта
-    benefit = saved_h * rate + avoided_h * rate
-    roi = round(benefit / agent_cost, 1) if agent_cost > 0 else None
+
+    def scenario(name: str, s_esc: float, s_prec: float) -> dict:
+        s_avoided = (n_critical + weight_major * n_major) * s_prec * fix_h * max(s_esc - 1, 0)
+        s_benefit = (saved_h + s_avoided) * rate
+        return {"name": name, "escalation": s_esc, "precision": s_prec, "avoided_rework_hours": round(s_avoided, 1),
+                "benefit_kzt": round(s_benefit), "roi": round(s_benefit / agent_cost, 1) if agent_cost > 0 else None}
+
+    # Выгода от переделок держится на допущениях, поэтому рядом с основной оценкой — осторожная (нижняя граница
+    # ×3 вместо ×7, точность 0,7 вместо измеренной) и «только время ревью», где переделки не учитываются вовсе
+    scenarios = [
+        scenario("основной", esc, precision),
+        scenario("осторожный", _env_float("REQCHECK_CONSERVATIVE_ESCALATION", 3.0),
+                 min(precision, _env_float("REQCHECK_CONSERVATIVE_PRECISION", 0.7))),
+        scenario("только время ревью", 1.0, precision),
+    ]
+    roi = scenarios[0]["roi"]
     return ValueEstimate(rate, base, per_req, per_finding, round(manual_h, 2), round(agent_h, 3), round(check_h, 2),
                          round(saved_h, 2), round(saved_h * rate), n_critical, n_major, fix_h, esc, precision, round(avoided_h, 1),
-                         round(avoided_h * rate), tokens_in + tokens_out, round(llm_cost, 1), note, roi, weight_major)
+                         round(avoided_h * rate), tokens_in + tokens_out, round(llm_cost, 1), note, roi, weight_major, scenarios)

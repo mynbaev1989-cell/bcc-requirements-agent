@@ -18,3 +18,5 @@ input/
 .vscode/
 .idea/
 .antigravity/
+.coverage
+htmlcov/

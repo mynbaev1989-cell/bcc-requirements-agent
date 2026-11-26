@@ -15,7 +15,7 @@ from datetime import datetime
 from pathlib import Path
 
 from reqcheck import __version__, criteria
-from reqcheck.agents import score_requirement
+from reqcheck.agents import score_requirement, sync_marks
 from reqcheck.llm import JsonLLM
 from reqcheck.models import CRITICAL, MAJOR, NA, SEV_RANK, CriterionMark, Diagnostic, Finding, RequirementAssessment, RunResult, per_requirement
 from reqcheck.orchestrator import Options, Orchestrator, RunContext
@@ -112,18 +112,21 @@ def _finalize(result: RunResult) -> None:
     for f in filter(per_requirement, findings):  # сводная находка штрафует каждое своё требование
         for rid in f.rids:
             by_rid.setdefault(rid, []).append(f)
+    # Оценивал ли требования Reviewer — до того, как ниже появятся отметки по находкам правил
+    llm_assessed = any(m.status != NA for a in result.assessments.values() for m in a.marks)
     for r in reqs:
         a = result.assessments.get(r.rid)
         if a is None:
             a = RequirementAssessment(r.rid, [CriterionMark(c, NA, "не оценено (LLM недоступна)") for c in criteria.REQ_CODES])
             result.assessments[r.rid] = a
+            # Reviewer не ответил, но находка правил у требования есть — её критерий нарушен, а не «не оценён»
+            sync_marks(by_rid.get(r.rid, []), {r.rid: a})
         a.score, a.light = score_requirement(a, by_rid.get(r.rid, []))
     if not result.set_marks:
         result.set_marks = [CriterionMark(c, NA, "не оценено (LLM недоступна)") for c in criteria.SET_CODES]
 
     n_crit = sum(1 for f in findings if f.severity == CRITICAL)
     n_major = sum(1 for f in findings if f.severity == MAJOR)
-    llm_assessed = any(m.status != NA for a in result.assessments.values() for m in a.marks)
     if reqs and llm_assessed:
         mean = sum(result.assessments[r.rid].score for r in reqs) / len(reqs)
         set_pen = sum({"critical": 8, "major": 4, "minor": 1}.get(f.severity, 2) for f in findings
@@ -152,7 +155,7 @@ def _finalize(result: RunResult) -> None:
         if contradictions or any(f.severity == CRITICAL and f.criterion == "verifiable" for f in findings):
             result.verdict_test = ("Нет — есть противоречивые или непроверяемые требования: по ним нельзя однозначно "
                                    "сформулировать ожидаемый результат теста.")
-        elif unverifiable or n_major or incomplete:
+        elif unverifiable or n_crit or n_major or incomplete:  # критичный дефект не может дать вердикт лучше существенного
             result.verdict_test = "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения."
         else:
             result.verdict_test = "Да — требования проверяемы."
