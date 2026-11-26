@@ -1,0 +1,80 @@
+[
+  {
+    "document": "autopay_utilities.md",
+    "gold_defects": 14,
+    "found": 14,
+    "recall": 1.0,
+    "agent_findings": 32,
+    "precision": 0.938,
+    "false_major_on_clean": 0,
+    "questions": 10,
+    "gold_covered_by_questions": 11,
+    "question_coverage": 0.786,
+    "by_type": {
+      "ambiguity": "2/2",
+      "api": "2/2",
+      "contradiction": "3/3",
+      "design_in_req": "1/1",
+      "empty_section": "1/1",
+      "incomplete": "1/1",
+      "no_version": "1/1",
+      "non_singular": "1/1",
+      "units": "1/1",
+      "unverifiable": "1/1"
+    },
+    "missed": [],
+    "model": "gemini-3.5-flash-lite"
+  },
+  {
+    "document": "credit_card_application.md",
+    "gold_defects": 13,
+    "found": 13,
+    "recall": 1.0,
+    "agent_findings": 29,
+    "precision": 0.793,
+    "false_major_on_clean": 1,
+    "questions": 13,
+    "gold_covered_by_questions": 11,
+    "question_coverage": 0.846,
+    "by_type": {
+      "ambiguity": "1/1",
+      "api": "2/2",
+      "contradiction": "3/3",
+      "design_in_req": "1/1",
+      "empty_section": "1/1",
+      "incomplete": "1/1",
+      "no_version": "1/1",
+      "non_singular": "1/1",
+      "units": "1/1",
+      "unverifiable": "1/1"
+    },
+    "missed": [],
+    "model": "gemini-3.5-flash-lite"
+  },
+  {
+    "document": "p2p_phone.md",
+    "gold_defects": 14,
+    "found": 14,
+    "recall": 1.0,
+    "agent_findings": 26,
+    "precision": 0.846,
+    "false_major_on_clean": 0,
+    "questions": 14,
+    "gold_covered_by_questions": 14,
+    "question_coverage": 1.0,
+    "by_type": {
+      "ambiguity": "2/2",
+      "api": "2/2",
+      "contradiction": "3/3",
+      "design_in_req": "1/1",
+      "empty_section": "1/1",
+      "incomplete": "1/1",
+      "no_version": "1/1",
+      "non_singular": "1/1",
+      "units": "1/1",
+      "unverifiable": "1/1"
+    },
+    "missed": [],
+    "model": "gemini-3.5-flash-lite"
+  }
+]

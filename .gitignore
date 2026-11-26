@@ -1,0 +1,20 @@
+# Секреты
+.env
+.env.*
+!.env.example
+
+# Окружение и кэш
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.reqcheck_cache/
+
+# Входной документ кейса не кладём в репозиторий (его выдают организаторы)
+input/
+
+# IDE
+.vscode/
+.idea/
+.antigravity/

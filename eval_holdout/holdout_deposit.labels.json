@@ -1,0 +1,163 @@
+{
+ "document": "holdout_deposit.md",
+ "defects": [
+  {
+   "id": "D1",
+   "type": "contradiction",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "critical",
+   "quote": "Депозит открывается на сумму от 100 000 тенге",
+   "related_quote": "Минимальная сумма открытия | 50 000 тенге",
+   "explanation": "Минимальная сумма в тексте 100 000 против 50 000 в таблице и критериях приёмки.",
+   "line": 28
+  },
+  {
+   "id": "D2",
+   "type": "non_singular",
+   "criterion": "29148 5.2.7 singular",
+   "severity": "minor",
+   "quote": "Система проверяет возраст клиента, рассчитывает индивидуальную ставку и формирует договор в формате PDF",
+   "related_quote": null,
+   "explanation": "Три действия в одном требовании; к тому же ставка в продукте фиксирована.",
+   "line": 30
+  },
+  {
+   "id": "D3",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "После подписания система списывает сумму открытия с текущего счёта клиента и зачисляет её на депозитный счёт",
+   "related_quote": null,
+   "explanation": "Не описан сценарий ошибки списания и откат.",
+   "line": 34
+  },
+  {
+   "id": "D4",
+   "type": "units",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "ставка, указанная в личном кабинете, равна 1,5% в месяц",
+   "related_quote": "Годовая ставка 12% пересчитывается в ежемесячную",
+   "explanation": "1,5% в месяц даёт 18% годовых, что противоречит 12% годовых; смешаны единицы.",
+   "line": 40
+  },
+  {
+   "id": "D5",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "Проценты рассчитываются с точностью до одного тиына",
+   "related_quote": null,
+   "explanation": "Не указано правило округления (вверх, вниз, математическое).",
+   "line": 41
+  },
+  {
+   "id": "D6",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "Капитализация выполняется в конце дня последнего числа месяца",
+   "related_quote": null,
+   "explanation": "Не указан часовой пояс для конца дня.",
+   "line": 42
+  },
+  {
+   "id": "D7",
+   "type": "contradiction",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "critical",
+   "quote": "При досрочном снятии вся сумма процентов не выплачивается, клиент получает только сумму вклада",
+   "related_quote": "При досрочном снятии клиенту выплачиваются сумма вклада и проценты, начисленные по ставке до востребования 0,5% годовых",
+   "explanation": "ФТ и критерий приёмки по выплате процентов при досрочном снятии противоречат друг другу.",
+   "line": 46
+  },
+  {
+   "id": "D8",
+   "type": "ambiguity",
+   "criterion": "29148 5.2.7 unambiguous",
+   "severity": "major",
+   "quote": "отправляются клиенту быстро и в удобном для него канале (SMS, push, e-mail и т.п.)",
+   "related_quote": null,
+   "explanation": "Размытые слова: быстро, удобном, и т.п.",
+   "line": 50
+  },
+  {
+   "id": "D9",
+   "type": "security",
+   "criterion": "29148 5.2.5 compliance",
+   "severity": "critical",
+   "quote": "Копия удостоверения личности клиента отправляется на его e-mail в открытом виде вместе с договором",
+   "related_quote": null,
+   "explanation": "Передача персональных данных по e-mail без защиты.",
+   "line": 54
+  },
+  {
+   "id": "D10",
+   "type": "unverifiable",
+   "criterion": "29148 5.2.4 verifiable",
+   "severity": "major",
+   "quote": "Интерфейс открытия депозита должен быть удобным для клиента",
+   "related_quote": null,
+   "explanation": "НФТ без измеримой метрики.",
+   "line": 58
+  },
+  {
+   "id": "D11",
+   "type": "design_in_req",
+   "criterion": "29148 5.2.8 implementation-free",
+   "severity": "minor",
+   "quote": "Расчёт процентов выполняется на языке Java с использованием библиотеки Apache Commons Math, данные хранятся в MongoDB",
+   "related_quote": null,
+   "explanation": "Диктуются язык, библиотека и СУБД без необходимости.",
+   "line": 59
+  },
+  {
+   "id": "D12",
+   "type": "empty_section",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "minor",
+   "quote": "(будет добавлено позже)",
+   "related_quote": null,
+   "explanation": "Раздел Отчётность является заглушкой.",
+   "line": 106
+  },
+  {
+   "id": "D13",
+   "type": "api",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "GET | /deposits/{id}/close | Закрытие депозита и досрочное снятие",
+   "related_quote": null,
+   "explanation": "GET используется для изменяющей операции закрытия.",
+   "line": 85
+  },
+  {
+   "id": "D14",
+   "type": "api",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "404 | Недостаточно средств на счёте списания",
+   "related_quote": null,
+   "explanation": "Код 404 не соответствует описанию (нужен 409 или 422).",
+   "line": 101
+  },
+  {
+   "id": "D15",
+   "type": "api",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "{\"deposit_id\": \"D-5521\", \"amount\": 15000000, \"term_months\": 12, \"interest_rate\": 12.0, \"status\": \"OPEN\"}",
+   "related_quote": "rate_percent | decimal | Годовая ставка в процентах",
+   "explanation": "Поле interest_rate в примере не совпадает с rate_percent в описании.",
+   "line": 91
+  }
+ ],
+ "clean_requirements": [
+  "Открыть депозит может только клиент, прошедший идентификацию по ЭЦП или биометрии",
+  "Клиент подписывает договор одноразовым кодом из SMS",
+  "Проценты начисляются ежедневно на остаток депозита, а капитализируются в последний день каждого месяца",
+  "Частичное снятие допускается, если остаток депозита после снятия не меньше минимальной суммы открытия",
+  "Время открытия депозита с момента подписания договора не превышает 5 секунд (95-й перцентиль) при нагрузке 200 операций в минуту",
+  "срок хранения журнала составляет 5 лет"
+ ]
+}

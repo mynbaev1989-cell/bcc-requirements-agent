@@ -1,0 +1,151 @@
+{
+  "document": "p2p_phone.md",
+  "defects": [
+    {
+      "id": "D1",
+      "type": "ambiguity",
+      "criterion": "29148 5.2.4 unambiguous",
+      "severity": "major",
+      "quote": "Перевод должен выполняться оперативно",
+      "line": 28,
+      "related_quote": null,
+      "explanation": "«Оперативно» не имеет числового значения."
+    },
+    {
+      "id": "D2",
+      "type": "unverifiable",
+      "criterion": "29148 5.2.5 verifiable",
+      "severity": "major",
+      "quote": "Интерфейс перевода должен быть интуитивно понятным",
+      "line": 37,
+      "related_quote": null,
+      "explanation": "Интуитивность не проверяема."
+    },
+    {
+      "id": "D3",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "Максимальная сумма одного перевода составляет 500 000 тенге",
+      "line": 24,
+      "related_quote": "Максимальная сумма разового перевода равна 1 000 000 тенге",
+      "explanation": "Два разных лимита одного перевода."
+    },
+    {
+      "id": "D4",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "с суммы сверх этого порога взимается комиссия 1%",
+      "line": 25,
+      "related_quote": "плюс комиссия 1 000 тенге",
+      "explanation": "С 200 000 при бесплатных 150 000 комиссия 1% равна 500, а не 1 000."
+    },
+    {
+      "id": "D5",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "код действителен 5 минут",
+      "line": 26,
+      "related_quote": "Одноразовый код отправлен 4 минуты назад",
+      "explanation": "Код живёт 5 минут, а по приёмке через 4 минуты он просрочен."
+    },
+    {
+      "id": "D6",
+      "type": "ambiguity",
+      "criterion": "29148 5.2.4 unambiguous",
+      "severity": "major",
+      "quote": "Система запрашивает дополнительное подтверждение при необходимости",
+      "line": 30,
+      "related_quote": null,
+      "explanation": "Не определено, когда необходимо подтверждение."
+    },
+    {
+      "id": "D7",
+      "type": "incomplete",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "Система находит получателя по номеру телефона среди клиентов банка",
+      "line": 23,
+      "related_quote": null,
+      "explanation": "Не описано поведение, если номер не найден или не принадлежит клиенту банка."
+    },
+    {
+      "id": "D8",
+      "type": "non_singular",
+      "criterion": "29148 5.2.5 singular",
+      "severity": "minor",
+      "quote": "Система списывает сумму с карты отправителя, зачисляет её получателю, отправляет чек обеим сторонам и сохраняет операцию в истории",
+      "line": 27,
+      "related_quote": null,
+      "explanation": "В одном пункте четыре действия."
+    },
+    {
+      "id": "D9",
+      "type": "design_in_req",
+      "criterion": "29148 5.2.8 appropriate (implementation-free)",
+      "severity": "minor",
+      "quote": "Сопоставление номера телефона со счётом выполнять через Redis-кэш с временем жизни записи 5 минут",
+      "line": 38,
+      "related_quote": null,
+      "explanation": "Навязано конкретное решение по кэшированию."
+    },
+    {
+      "id": "D10",
+      "type": "units",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "Сумма перевода в тысячах тенге",
+      "line": 72,
+      "related_quote": "Максимальная сумма одного перевода составляет 500 000 тенге",
+      "explanation": "В ФТ сумма в тенге, в API в тысячах тенге."
+    },
+    {
+      "id": "D11",
+      "type": "empty_section",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "6. Требования к отказоустойчивости",
+      "line": 53,
+      "related_quote": null,
+      "explanation": "Раздел об отказоустойчивости не заполнен."
+    },
+    {
+      "id": "D12",
+      "type": "no_version",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "minor",
+      "quote": "Статус | На согласовании",
+      "line": 9,
+      "related_quote": null,
+      "explanation": "Нет версии документа и даты."
+    },
+    {
+      "id": "D13",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "critical",
+      "quote": "Выполняет перевод и списывает средства с карты",
+      "line": 62,
+      "related_quote": null,
+      "explanation": "GET-метод выполняет списание средств."
+    },
+    {
+      "id": "D14",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "major",
+      "quote": "404 Not Found | Недостаточно средств на карте отправителя",
+      "line": 81,
+      "related_quote": null,
+      "explanation": "404 не подходит для недостатка средств."
+    }
+  ],
+  "clean_requirements": [
+    "Клиент выбирает получателя из списка контактов телефона или вводит номер вручную в международном формате",
+    "Клиент может отменить перевод до момента ввода одноразового кода",
+    "Данные о переводах шифруются при хранении алгоритмом AES-256",
+    "Время выполнения перевода от подтверждения до зачисления не превышает 5 секунд при нагрузке до 200 переводов в секунду"
+  ]
+}

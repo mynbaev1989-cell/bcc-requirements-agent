@@ -1,0 +1,173 @@
+{
+ "document": "holdout_installments.md",
+ "defects": [
+  {
+   "id": "D1",
+   "type": "no_version",
+   "criterion": "29148 5.2.1 identified",
+   "severity": "minor",
+   "quote": "Владелец документа | Продуктовая команда POS-кредитования",
+   "related_quote": null,
+   "explanation": "В документе нет версии и даты.",
+   "line": 14
+  },
+  {
+   "id": "D2",
+   "type": "contradiction",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "critical",
+   "quote": "Максимальная сумма покупки в рассрочку составляет 1 000 000 тенге",
+   "related_quote": "от 15 000 до 1 500 000 тенге",
+   "explanation": "Максимум суммы в ФТ-3 противоречит таблице параметров.",
+   "line": 26
+  },
+  {
+   "id": "D3",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "Система рассчитывает ежемесячный платёж как сумму покупки, делённую на 12",
+   "related_quote": null,
+   "explanation": "Не указано правило округления платежа.",
+   "line": 25
+  },
+  {
+   "id": "D4",
+   "type": "ambiguity",
+   "criterion": "29148 5.2.7 unambiguous",
+   "severity": "major",
+   "quote": "и при необходимости запрашивает дополнительные документы",
+   "related_quote": null,
+   "explanation": "Не определено, когда необходимо запрашивать документы.",
+   "line": 27
+  },
+  {
+   "id": "D5",
+   "type": "non_singular",
+   "criterion": "29148 5.2.7 singular",
+   "severity": "minor",
+   "quote": "запрашивает кредитный отчёт клиента в кредитном бюро, рассчитывает скоринговый балл и отправляет клиенту push-уведомление о решении",
+   "related_quote": null,
+   "explanation": "Три независимых действия в одном требовании.",
+   "line": 28
+  },
+  {
+   "id": "D6",
+   "type": "regulatory",
+   "criterion": "29148 5.2.5 compliance",
+   "severity": "critical",
+   "quote": "отдельное согласие клиента не запрашивается",
+   "related_quote": null,
+   "explanation": "Запрос в кредитное бюро без согласия клиента нарушает требования к персональным данным.",
+   "line": 29
+  },
+  {
+   "id": "D7",
+   "type": "contradiction",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "Решение по заявке выдаётся клиенту не позднее чем через 30 секунд после отправки заявки",
+   "related_quote": "Решение по заявке выдаётся клиенту в течение 60 секунд после отправки заявки",
+   "explanation": "ФТ-7 задаёт 30 секунд, критерий приёмки 60.",
+   "line": 30
+  },
+  {
+   "id": "D8",
+   "type": "units",
+   "criterion": "29148 5.2.7 unambiguous",
+   "severity": "major",
+   "quote": "пеня 0,5% в день от суммы платежа, предельный размер пени составляет 10% годовых от суммы покупки",
+   "related_quote": null,
+   "explanation": "Смешаны проценты в день и годовые, предел несопоставим.",
+   "line": 32
+  },
+  {
+   "id": "D9",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "При возврате товара магазин-партнёр инициирует отмену рассрочки",
+   "related_quote": null,
+   "explanation": "Не описано, что происходит с уже внесёнными платежами и графиком.",
+   "line": 33
+  },
+  {
+   "id": "D10",
+   "type": "incomplete",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "major",
+   "quote": "списывается со счёта клиента в конце дня 25 числа каждого месяца",
+   "related_quote": null,
+   "explanation": "Не указан часовой пояс для конца дня.",
+   "line": 35
+  },
+  {
+   "id": "D11",
+   "type": "design_in_req",
+   "criterion": "29148 5.2.8 implementation-free",
+   "severity": "minor",
+   "quote": "Данные заявок хранятся в базе данных PostgreSQL 14 в таблице installment_orders",
+   "related_quote": null,
+   "explanation": "Требование диктует конкретную СУБД и таблицу без необходимости.",
+   "line": 36
+  },
+  {
+   "id": "D12",
+   "type": "unverifiable",
+   "criterion": "29148 5.2.4 verifiable",
+   "severity": "major",
+   "quote": "Система должна работать быстро при пиковой нагрузке",
+   "related_quote": null,
+   "explanation": "НФТ без метрики и определения пиковой нагрузки.",
+   "line": 40
+  },
+  {
+   "id": "D13",
+   "type": "security",
+   "criterion": "29148 5.2.5 compliance",
+   "severity": "critical",
+   "quote": "Номер карты клиента записывается в журнал событий целиком для упрощения разбора инцидентов",
+   "related_quote": null,
+   "explanation": "Логирование полного номера карты нарушает PCI DSS.",
+   "line": 43
+  },
+  {
+   "id": "D14",
+   "type": "empty_section",
+   "criterion": "29148 5.2.5 complete",
+   "severity": "minor",
+   "quote": "ТБД, содержание раздела не определено.",
+   "related_quote": null,
+   "explanation": "Раздел Отчётность является заглушкой.",
+   "line": 88
+  },
+  {
+   "id": "D15",
+   "type": "api",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "GET | /installments/{id}/confirm | Подтверждение заявки кодом из SMS",
+   "related_quote": null,
+   "explanation": "GET используется для изменяющей операции подтверждения.",
+   "line": 66
+  },
+  {
+   "id": "D16",
+   "type": "api",
+   "criterion": "29148 5.2.6 consistent",
+   "severity": "major",
+   "quote": "{\"partner_id\": \"P-1042\", \"amount\": 250000, \"installment_months\": 12, \"client_id\": \"C-77\"}",
+   "related_quote": "term_months | integer | Срок рассрочки в месяцах",
+   "explanation": "Поле installment_months в примере не совпадает с term_months в описании.",
+   "line": 73
+  }
+ ],
+ "clean_requirements": [
+  "Клиент выбирает рассрочку 0-0-12 на экране оплаты после сканирования QR-кода магазина-партнёра",
+  "Клиент подтверждает рассрочку вводом одноразового кода из SMS, срок действия кода составляет 5 минут, допускается не более 3 попыток ввода",
+  "Клиент может погасить рассрочку досрочно, полностью или частично, в любой момент без комиссии и штрафов",
+  "Доступность сервиса оформления рассрочки составляет не менее 99,9% в календарный месяц, измеряется системой мониторинга",
+  "Время ответа API расчёта графика платежей не превышает 2 секунд (95-й перцентиль) при нагрузке 500 запросов в секунду",
+  "При покупке на 120 000 тенге ежемесячный платёж равен 10 000 тенге, переплата равна 0 тенге"
+ ]
+}

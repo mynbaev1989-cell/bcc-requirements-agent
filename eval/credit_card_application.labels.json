@@ -1,0 +1,141 @@
+{
+  "document": "credit_card_application.md",
+  "defects": [
+    {
+      "id": "D1",
+      "type": "ambiguity",
+      "criterion": "29148 5.2.4 unambiguous",
+      "severity": "major",
+      "quote": "Решение по заявке принимается быстро",
+      "line": 34,
+      "related_quote": null,
+      "explanation": "Срок решения не задан числом."
+    },
+    {
+      "id": "D2",
+      "type": "unverifiable",
+      "criterion": "29148 5.2.5 verifiable",
+      "severity": "major",
+      "quote": "Интерфейс анкеты должен быть понятным и удобным для всех клиентов",
+      "line": 47,
+      "related_quote": null,
+      "explanation": "Нет измеримого критерия."
+    },
+    {
+      "id": "D3",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "Минимальный возраст заявителя составляет 21 год",
+      "line": 21,
+      "related_quote": "Система принимает к рассмотрению заявки клиентов от 18 лет",
+      "explanation": "Минимальный возраст указан как 21 и как 18."
+    },
+    {
+      "id": "D4",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "Заявителю 19 лет, документы действительны",
+      "line": 79,
+      "related_quote": "Минимальный возраст заявителя составляет 21 год",
+      "explanation": "По критерию приёмки заявка 19-летнего принимается, хотя минимум 21 год."
+    },
+    {
+      "id": "D5",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "Прошло 60 дней с покупки, долг погашен не полностью",
+      "line": 81,
+      "related_quote": "Льготный период по карте составляет 55 дней",
+      "explanation": "Льготный период 55 дней, а приёмка ожидает отсутствие процентов на 60-й день."
+    },
+    {
+      "id": "D6",
+      "type": "incomplete",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "Система проверяет ИИН по государственной базе и сверяет введённые данные с анкетой клиента",
+      "line": 30,
+      "related_quote": null,
+      "explanation": "Не описано поведение при недоступности базы или несовпадении данных."
+    },
+    {
+      "id": "D7",
+      "type": "non_singular",
+      "criterion": "29148 5.2.5 singular",
+      "severity": "minor",
+      "quote": "Система одобряет заявку, отправляет клиенту SMS с условиями, формирует индивидуальное предложение и создаёт запись в кредитном портфеле",
+      "line": 38,
+      "related_quote": null,
+      "explanation": "В одном абзаце четыре независимых действия."
+    },
+    {
+      "id": "D8",
+      "type": "design_in_req",
+      "criterion": "29148 5.2.8 appropriate (implementation-free)",
+      "severity": "minor",
+      "quote": "Скоринговая модель реализуется на градиентном бустинге XGBoost и запускается как отдельный микросервис в Kubernetes",
+      "line": 36,
+      "related_quote": null,
+      "explanation": "Навязаны алгоритм и платформа развёртывания."
+    },
+    {
+      "id": "D9",
+      "type": "units",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "Процентная ставка по карте — 24% годовых, по снятию наличных — 2,5% в месяц",
+      "line": 42,
+      "related_quote": null,
+      "explanation": "Ставки заданы в разных периодах (год и месяц)."
+    },
+    {
+      "id": "D10",
+      "type": "empty_section",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "Раздел находится в разработке",
+      "line": 57,
+      "related_quote": null,
+      "explanation": "Раздел отчётности содержит заглушку."
+    },
+    {
+      "id": "D11",
+      "type": "no_version",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "minor",
+      "quote": "Статус | Утверждено",
+      "line": 9,
+      "related_quote": null,
+      "explanation": "Нет версии документа и даты при статусе «Утверждено»."
+    },
+    {
+      "id": "D12",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "critical",
+      "quote": "Отправка заявки на скоринг",
+      "line": 64,
+      "related_quote": null,
+      "explanation": "GET-метод submit изменяет состояние заявки."
+    },
+    {
+      "id": "D13",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "major",
+      "quote": "200 OK | Заявка не найдена",
+      "line": 72,
+      "related_quote": null,
+      "explanation": "Код 200 не соответствует сообщению об отсутствии заявки."
+    }
+  ],
+  "clean_requirements": [
+    "Анкета открывается за время не более 2 секунд при стабильном соединении",
+    "Сервис подачи заявок доступен не менее 99,5% времени в месяц",
+    "Если клиент не завершил заполнение анкеты, черновик сохраняется на 30 суток, после чего удаляется",
+    "Срок хранения заявок составляет 5 лет"
+  ]
+}

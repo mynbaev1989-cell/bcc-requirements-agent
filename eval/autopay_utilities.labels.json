@@ -1,0 +1,152 @@
+{
+  "document": "autopay_utilities.md",
+  "defects": [
+    {
+      "id": "D1",
+      "type": "ambiguity",
+      "criterion": "29148 5.2.4 unambiguous",
+      "severity": "major",
+      "quote": "Система должна быстро обрабатывать списания по правилам автоплатежа",
+      "line": 26,
+      "related_quote": null,
+      "explanation": "Слово «быстро» не задаёт измеримого порога."
+    },
+    {
+      "id": "D2",
+      "type": "unverifiable",
+      "criterion": "29148 5.2.5 verifiable",
+      "severity": "major",
+      "quote": "Система должна быть удобной в использовании",
+      "line": 38,
+      "related_quote": null,
+      "explanation": "Удобство нельзя проверить без метрики."
+    },
+    {
+      "id": "D3",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "Один клиент может иметь не более 5 активных правил автоплатежа",
+      "line": 28,
+      "related_quote": "Один клиент может создать до 10 активных правил автоплатежа",
+      "explanation": "Лимит активных правил равен 5 и 10 одновременно."
+    },
+    {
+      "id": "D4",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "critical",
+      "quote": "Комиссия за автоплатёж составляет 1% от суммы платежа, но не более 500 тенге",
+      "line": 33,
+      "related_quote": "комиссия составляет 300 тенге",
+      "explanation": "1% от 20 000 тенге равен 200, а в приёмке указано 300."
+    },
+    {
+      "id": "D5",
+      "type": "contradiction",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "списывает её с карты в течение 24 часов после обнаружения",
+      "line": 24,
+      "related_quote": "не позднее чем через 48 часов после обнаружения",
+      "explanation": "ФТ допускает 24 часа, критерий приёмки — 48 часов."
+    },
+    {
+      "id": "D6",
+      "type": "ambiguity",
+      "criterion": "29148 5.2.4 unambiguous",
+      "severity": "major",
+      "quote": "система по возможности повторяет попытку списания",
+      "line": 30,
+      "related_quote": null,
+      "explanation": "«По возможности» не определяет условий, числа и интервала повторов."
+    },
+    {
+      "id": "D7",
+      "type": "incomplete",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "Если поставщик не отвечает, система повторяет запрос",
+      "line": 32,
+      "related_quote": null,
+      "explanation": "Не заданы таймаут, число повторов и действия после исчерпания попыток."
+    },
+    {
+      "id": "D8",
+      "type": "non_singular",
+      "criterion": "29148 5.2.5 singular",
+      "severity": "minor",
+      "quote": "Система проверяет лицевой счёт у поставщика, сохраняет правило и отправляет клиенту SMS с подтверждением создания",
+      "line": 22,
+      "related_quote": null,
+      "explanation": "В одном пункте три независимых действия."
+    },
+    {
+      "id": "D9",
+      "type": "design_in_req",
+      "criterion": "29148 5.2.8 appropriate (implementation-free)",
+      "severity": "minor",
+      "quote": "Для хранения правил использовать СУБД PostgreSQL 15 с партиционированием таблицы по коду поставщика",
+      "line": 31,
+      "related_quote": null,
+      "explanation": "Требование навязывает конкретную СУБД и схему хранения."
+    },
+    {
+      "id": "D10",
+      "type": "units",
+      "criterion": "29148 5.2.6 consistent",
+      "severity": "major",
+      "quote": "Максимальная сумма платежа в тиынах",
+      "line": 74,
+      "related_quote": "максимальную сумму платежа в тенге",
+      "explanation": "В ФТ сумма в тенге, в API в тиынах."
+    },
+    {
+      "id": "D11",
+      "type": "empty_section",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "major",
+      "quote": "(раздел будет заполнен позднее)",
+      "line": 56,
+      "related_quote": null,
+      "explanation": "Раздел безопасности содержит только заглушку."
+    },
+    {
+      "id": "D12",
+      "type": "no_version",
+      "criterion": "29148 5.2.7 complete",
+      "severity": "minor",
+      "quote": "Статус | Черновик",
+      "line": 9,
+      "related_quote": null,
+      "explanation": "В общих сведениях нет версии документа и даты."
+    },
+    {
+      "id": "D13",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "critical",
+      "quote": "Приостанавливает правило автоплатежа",
+      "line": 64,
+      "related_quote": null,
+      "explanation": "GET-запрос изменяет состояние правила."
+    },
+    {
+      "id": "D14",
+      "type": "api",
+      "criterion": "HTTP semantics",
+      "severity": "major",
+      "quote": "201 Created | Ошибка валидации: лицевой счёт не найден у поставщика",
+      "line": 81,
+      "related_quote": null,
+      "explanation": "Код 201 не соответствует телу с ошибкой валидации."
+    }
+  ],
+  "clean_requirements": [
+    "Система запрашивает задолженность у поставщика каждый день в 09:00 по времени Астаны",
+    "платёж не выполняется, а клиенту отправляется push-уведомление с суммой долга",
+    "Клиент может приостановить или удалить правило автоплатежа в любой момент",
+    "Доступность сервиса автоплатежей составляет не менее 99,9% в календарный месяц",
+    "Журнал всех списаний хранится 5 лет с момента операции"
+  ]
+}

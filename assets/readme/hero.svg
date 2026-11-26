@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-labelledby="t d">
+  <title id="t">reqcheck — ревью документа требований до разработки</title>
+  <desc id="d">Слева название агента и назначение. Справа фрагмент реального входного документа с номерами строк: агент подсвечивает противоречие между требованием Ф-2 и критерием приёмки и даёт ссылку на строки 38 и 64 с проверенными цитатами.</desc>
+  <rect width="1200" height="420" rx="24" fill="#0f1b2d"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+    <!-- Заголовок -->
+    <text x="56" y="112" font-size="64" font-weight="800" fill="#f4f1ea">reqcheck</text>
+    <rect x="56" y="132" width="132" height="8" rx="4" fill="#f2b134"/>
+    <text x="56" y="194" font-size="30" font-weight="600" fill="#f4f1ea">Ревью требований</text>
+    <text x="56" y="234" font-size="30" font-weight="600" fill="#f4f1ea">до начала разработки</text>
+    <text x="56" y="290" font-size="20" fill="#9fb0c8">ISO/IEC/IEEE 29148 · IEEE 830</text>
+    <text x="56" y="320" font-size="20" fill="#9fb0c8">MD · PDF · DOCX → отчёт MD + PDF + JSON</text>
+    <text x="56" y="368" font-size="20" fill="#3fb68b">✓ каждая цитата сверена с документом</text>
+
+    <!-- Фрагмент документа -->
+    <rect x="470" y="40" width="690" height="340" rx="18" fill="#16263d" stroke="#2a3d5c" stroke-width="2"/>
+    <text x="496" y="76" font-size="18" fill="#6f84a3">docs/requirements.md</text>
+    <g font-size="20">
+      <text x="496" y="120" fill="#6f84a3" text-anchor="start">37</text>
+      <text x="540" y="120" fill="#c9d4e3">Ф-1. Держатель карты задаёт порог 1 000 – 1 000 000 ₸</text>
+
+      <rect x="532" y="134" width="606" height="34" rx="6" fill="#f2b134" fill-opacity="0.22"/>
+      <text x="496" y="158" fill="#f2b134">38</text>
+      <text x="540" y="158" fill="#f4f1ea">Ф-2. Месяц определяется по <tspan fill="#f2b134" font-weight="700">дате покупки</tspan> в Алматы</text>
+
+      <text x="496" y="196" fill="#6f84a3">39</text>
+      <text x="540" y="196" fill="#c9d4e3">Ф-3. … максимум один push за календарный месяц</text>
+
+      <text x="514" y="226" fill="#6f84a3">⋮</text>
+
+      <rect x="532" y="240" width="606" height="34" rx="6" fill="#e5484d" fill-opacity="0.22"/>
+      <text x="496" y="264" fill="#e5484d">64</text>
+      <text x="540" y="264" fill="#f4f1ea">Покупка 31.01 в 23:58 → <tspan fill="#e5484d" font-weight="700">февральский счётчик</tspan></text>
+    </g>
+    <!-- Вывод агента -->
+    <rect x="496" y="296" width="640" height="62" rx="12" fill="#0f1b2d" stroke="#e5484d" stroke-width="2"/>
+    <text x="516" y="324" font-size="20" font-weight="700" fill="#e5484d">● критичный · Согласованность (29148 п. 5.2.6)</text>
+    <text x="516" y="349" font-size="18" fill="#c9d4e3">Ф-2 ↔ критерий приёмки №2 · строки 38, 64 · вопрос автору ✓</text>
+  </g>
+</svg>

@@ -1,0 +1,308 @@
+"""Уточнение требований: агент-уточнитель и учёт ответов автора (цикл уточнения).
+
+1. Clarifier превращает подтверждённые находки в короткий список вопросов автору: один вопрос — одно решение,
+   с приоритетом, адресатом, вариантами ответа и допущением на случай, если ответа не будет.
+2. Вопросы пишутся в файл-шаблон <отчёт>_questions.md. Автор вписывает ответы и запускает агента с --answers.
+3. Resolver решает, какие находки ответ закрыл, какие нет; закрытые уходят из вердикта, по открытым — новый вопрос.
+Код гарантирует: каждый вопрос привязан к реальной находке, каждый критичный дефект покрыт вопросом.
+"""
+
+from __future__ import annotations
+
+import re
+from difflib import SequenceMatcher
+
+from reqcheck import prompts
+from reqcheck.agents import _list, _s, numbered_document
+from reqcheck.grounding import normalize
+from reqcheck.llm import JsonLLM
+from reqcheck.models import CRITICAL, MAJOR, SEV_RANK, Document, Finding, Question
+
+PRIORITIES = ("blocker", "important", "clarify")
+PRIORITY_RU = {"blocker": "блокирует разработку", "important": "нужно до тест-дизайна", "clarify": "можно уточнить по ходу"}
+PRIORITY_ICON = {"blocker": "🔴", "important": "🟠", "clarify": "🟡"}
+MAX_QUESTIONS = 20
+
+
+def _lines(fids: list[str], fmap: dict[str, Finding]) -> list[int]:
+    out: list[int] = []
+    for fid in fids:
+        for q in fmap[fid].quotes if fid in fmap else []:
+            if q.line and q.line not in out:
+                out.append(q.line)
+    return sorted(out)
+
+
+def _number(questions: list[Question]) -> list[Question]:
+    rank = {p: i for i, p in enumerate(PRIORITIES)}
+    questions.sort(key=lambda q: rank.get(q.priority, 9))
+    blockers = [q for q in questions if q.priority == "blocker"]
+    rest = [q for q in questions if q.priority != "blocker"]
+    kept = blockers + rest[:max(0, MAX_QUESTIONS - len(blockers))]  # блокирующие не режем никогда
+    for i, q in enumerate(kept, start=1):
+        q.qid = f"Q-{i:02d}"
+    return kept
+
+
+def questions_from_findings(findings: list[Finding]) -> list[Question]:
+    """Запасной вариант без LLM: вопросы из полей question критичных и существенных находок."""
+    fmap = {f.fid: f for f in findings}
+    by_text: dict[str, Question] = {}
+    for f in sorted(findings, key=lambda f: SEV_RANK.get(f.severity, 9)):
+        if f.severity not in (CRITICAL, MAJOR):
+            continue
+        # У находки без черновика вопроса (например, от правила) вопрос строится из её заголовка —
+        # так гарантия «каждый критичный дефект покрыт вопросом» не зависит от того, заполнила ли модель поле
+        text = f.question or f"Как устранить: «{f.title}»? Какое значение или поведение считать верным?"
+        key = normalize(text)[:80]
+        if key in by_text:
+            by_text[key].fids.append(f.fid)
+            continue
+        by_text[key] = Question(qid="", text=text, priority="blocker" if f.severity == CRITICAL else "important",
+                                addressee=f.addressee or "Аналитик", why=f.explanation[:300], fids=[f.fid],
+                                source="findings")
+    qs = list(by_text.values())
+    for q in qs:
+        q.lines = _lines(q.fids, fmap)
+    return _number(qs)
+
+
+class Clarifier:
+    """Агент-уточнитель: минимальный набор вопросов, ответы на которые снимают найденные дефекты."""
+
+    def __init__(self, llm: JsonLLM, doc: Document):
+        self.llm, self.doc = llm, doc
+
+    def run(self, findings: list[Finding]) -> list[Question]:
+        cand = [f for f in findings if f.severity in (CRITICAL, MAJOR) or f.question]
+        if not cand:
+            return []
+        listing = "\n\n".join(
+            f"{f.fid} [{f.severity}, требования: {', '.join(f.rids) or '—'}] {f.title}\n"
+            f"Пояснение: {f.explanation}\n"
+            f"Цитаты: " + " / ".join(f"«{q.text}» (строка {q.line})" for q in f.quotes)
+            + (f"\nЧерновик вопроса ревьюера: {f.question}" if f.question else "")
+            for f in cand
+        )
+        data = self.llm.generate_json(
+            "clarifier", prompts.BASE_SYSTEM,
+            f"{prompts.CLARIFIER}\nНаходки:\n{listing}\n\nВесь документ (номер строки: текст):\n{numbered_document(self.doc)}")
+        fmap = {f.fid: f for f in findings}
+        out: list[Question] = []
+        for item in _list(data.get("questions") if isinstance(data, dict) else data):
+            if not isinstance(item, dict):
+                continue
+            text = _s(item.get("question"), 600)
+            fids = list(dict.fromkeys(x for x in (_s(v, 12) for v in _list(item.get("fids"))) if x in fmap))
+            if not text or not fids:  # вопрос без привязки к реальной находке не принимаем
+                continue
+            pr = _s(item.get("priority"), 12).lower()
+            if any(fmap[x].severity == CRITICAL for x in fids):
+                pr = "blocker"  # критичный дефект всегда блокирует — модель не может понизить
+            elif pr not in PRIORITIES:
+                pr = "important"
+            out.append(Question(
+                qid="", text=text, priority=pr, addressee=_s(item.get("addressee"), 60) or "Аналитик",
+                why=_s(item.get("why"), 400), options=[_s(o, 300) for o in _list(item.get("options")) if _s(o)][:4],
+                assumption=_s(item.get("assumption"), 400), fids=fids, lines=_lines(fids, fmap),
+            ))
+        # Каждый критичный дефект должен быть покрыт вопросом: недостающие добираем из находок
+        covered = {fid for q in out for fid in q.fids}
+        missing = [f for f in findings if f.severity in (CRITICAL, MAJOR) and f.fid not in covered]
+        out += questions_from_findings(missing)
+        return _number(out)
+
+
+# --- Файл ответов ---------------------------------------------------------------------------------
+def render_questions_file(questions: list[Question], title: str, input_path: str, report_path: str, self_path: str,
+                          sha256: str = "") -> str:
+    L = [f"# Вопросы агента автору требований: {title}", ""]
+    if sha256:
+        L += [f"Документ: `{input_path}` (SHA-256 {sha256[:16]}…)", ""]
+    L += [
+        "Как ответить: впишите ответ после «Ответ:» (можно в несколько строк), сохраните файл и запустите повторно:",
+        "",
+        "```",
+        f"python -m reqcheck \"{input_path}\" \"{report_path}\" --answers \"{self_path}\"",
+        "```",
+        "",
+        "Пустые ответы агент пропускает. Ответы — данные для агента: он решит, какие дефекты они закрывают, "
+        "и пересчитает вердикт.",
+        "",
+    ]
+    for q in questions:
+        L.append(f"## {q.qid} · {PRIORITY_RU.get(q.priority, q.priority)} · Кому: {q.addressee}")
+        L.append("")
+        L.append(f"Вопрос: {q.text}")
+        if q.why:
+            L.append(f"Почему важно: {q.why}")
+        if q.options:
+            L.append("Варианты: " + "; ".join(f"({i}) {o}" for i, o in enumerate(q.options, start=1)))
+        if q.assumption:
+            L.append(f"Если ответа не будет: {q.assumption}")
+        refs = ", ".join(q.fids)
+        if q.lines:
+            refs += " (строки: " + ", ".join(map(str, q.lines)) + ")"
+        L.append(f"Находки: {refs}")
+        L.append(f"Ответ: {q.answer}".rstrip())
+        L.append("")
+    return "\n".join(L) + "\n"
+
+
+_BLOCK = re.compile(r"^##\s+(Q-\d+(?:\.\d+)?)\b[^\n]*\n(.*?)(?=^##\s+Q-|\Z)", re.M | re.S)
+
+
+def parse_answers(text: str) -> list[dict]:
+    """Разобрать файл ответов: [{qid, question, answer}] только для непустых ответов."""
+    out = []
+    for m in _BLOCK.finditer(text or ""):
+        body = m.group(2)
+        qm = re.search(r"^Вопрос:\s*(.+)$", body, re.M)
+        am = re.search(r"^Ответ:[ \t]*(.*)\Z", body, re.M | re.S)
+        answer = (am.group(1) if am else "").strip()
+        if answer:
+            out.append({"qid": m.group(1), "question": qm.group(1).strip() if qm else "", "answer": answer[:2000]})
+    return out
+
+
+def match_answers(answers: list[dict], questions: list[Question]) -> list[tuple[Question | None, dict]]:
+    """Сопоставить ответы с вопросами текущего прогона: по номеру, если текст совпадает, иначе по тексту вопроса."""
+    by_id = {q.qid: q for q in questions}
+    pairs = []
+    for a in answers:
+        q = by_id.get(a["qid"])
+        sim = lambda x: SequenceMatcher(None, normalize(x.text), normalize(a["question"])).ratio()  # noqa: E731
+        if q is None or (a["question"] and sim(q) < 0.6):
+            best = max(questions, key=sim, default=None)
+            q = best if best is not None and a["question"] and sim(best) >= 0.6 else None
+        pairs.append((q, a))
+    return pairs
+
+
+_NUM = re.compile(r"\d(?:[\d  ]*\d)?(?:[.,]\d+)?")
+
+
+def _numbers(text: str) -> set[str]:
+    return {re.sub(r"[\s ]", "", m.group(0)).replace(",", ".") for m in _NUM.finditer(text or "")}
+
+
+def wording_matches_answer(wording: str, chosen: list[str], answer: str) -> bool:
+    """Проверка кодом: значения, выбранные автором (дословно из ответа), должны быть в новой формулировке."""
+    ans_norm = normalize(answer)
+    real = [c for c in chosen if c and normalize(c) in ans_norm]  # выдуманные «выбранные значения» не считаются
+    need = set().union(*(_numbers(c) for c in real)) if real else set()
+    return need <= _numbers(wording)
+
+
+def _strip_tags(text: str) -> str:
+    """Ответ автора не может «закрыть» свой блок данных в промпте и выйти на уровень инструкций."""
+    return re.sub(r"<\s*/?\s*ответ\s+автора\s*>", " ", text, flags=re.I)
+
+
+class Resolver:
+    """Учёт ответов автора: какие находки ответ закрыл, какие частично, какие остались (с новым вопросом)."""
+
+    def __init__(self, llm: JsonLLM, doc: Document):
+        self.llm, self.doc = llm, doc
+
+    def run(self, pairs: list[tuple[Question | None, dict]], findings: list[Finding]) -> list[dict]:
+        fmap = {f.fid: f for f in findings}
+        linked = {fid for q, _ in pairs if q for fid in q.fids}
+        unmatched = any(q is None for q, _ in pairs)
+        scope = [f for f in findings if f.fid in linked or (unmatched and f.severity in (CRITICAL, MAJOR))]
+        if not scope:
+            return []
+        qa = "\n\n".join(
+            f"{(q.qid if q else a['qid'])}. Вопрос: {q.text if q else a['question']}\n"
+            f"Связанные находки: {', '.join(q.fids) if q else 'определи сам по смыслу'}\n"
+            f"<ответ автора>\n{_strip_tags(a['answer'])}\n</ответ автора>"
+            for q, a in pairs
+        )
+        listing = "\n\n".join(
+            f"{f.fid} [{f.severity}] {f.title}\nПояснение: {f.explanation}\n"
+            f"Цитаты: " + " / ".join(f"«{q.text}» (строка {q.line})" for q in f.quotes)
+            for f in scope
+        )
+        data = self.llm.generate_json(
+            "resolver", prompts.BASE_SYSTEM,
+            f"{prompts.RESOLVER}\nВопросы и ответы автора:\n{qa}\n\nНаходки:\n{listing}"
+            f"\n\nВесь документ (номер строки: текст):\n{numbered_document(self.doc)}")
+        valid_q = {(q.qid if q else a["qid"]) for q, a in pairs}
+        answer_by_q = {(q.qid if q else a["qid"]): a["answer"] for q, a in pairs}
+        effects = []
+        for e in _list(data.get("effects") if isinstance(data, dict) else data):
+            if not isinstance(e, dict):
+                continue
+            fid, qid = _s(e.get("fid"), 12), _s(e.get("qid"), 12)
+            status = _s(e.get("status"), 12).lower()
+            if fid not in fmap or qid not in valid_q or status not in ("resolved", "partial", "open"):
+                continue
+            comment = _s(e.get("comment"), 500)
+            if status == "resolved" and not comment:
+                status = "partial"  # закрыть дефект без обоснования нельзя
+            wording = _s(e.get("revised_wording"), 800)
+            if wording and not wording_matches_answer(wording, [_s(v, 100) for v in _list(e.get("chosen_values"))],
+                                                      answer_by_q.get(qid, "")):
+                wording = ""  # формулировка модели расходится с выбором автора — не показываем её как исправление
+                comment += " Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом."
+            effects.append({"fid": fid, "qid": qid, "status": status, "comment": comment,
+                            "revised_wording": wording, "follow_up": _s(e.get("follow_up"), 600)})
+        return effects
+
+
+def apply_effects(effects: list[dict], findings: list[Finding], questions: list[Question]) -> tuple[set[str], list[Question]]:
+    """Применить решения Resolver к находкам (код, не модель).
+
+    Решения по одной находке от разных ответов сводятся вместе: находка закрыта, только если ни один ответ
+    не оставил её открытой. По открытым — уточняющий вопрос (Q-xx.1). Возвращает (закрытые fid, уточнения)."""
+    fmap = {f.fid: f for f in findings}
+    qmap = {q.qid: q for q in questions}
+    by_fid: dict[str, list[dict]] = {}
+    for e in effects:
+        by_fid.setdefault(e["fid"], []).append(e)
+    resolved: set[str] = set()
+    followups: list[Question] = []
+    for fid, items in by_fid.items():
+        f = fmap[fid]
+        notes = []
+        for e in items:
+            if e["status"] == "resolved":
+                notes.append(f"закрыто ответом {e['qid']}: {e['comment']}")
+            elif e["status"] == "partial":
+                notes.append(f"частично снято ответом {e['qid']}: {e['comment']}")
+            else:
+                notes.append(f"ответ {e['qid']} не снимает дефект: {e['comment']}")
+                if e["follow_up"]:
+                    base = qmap.get(e["qid"])
+                    n = sum(1 for x in followups if x.qid.startswith(e["qid"] + ".")) + 1
+                    followups.append(Question(
+                        qid=f"{e['qid']}.{n}", text=e["follow_up"],
+                        priority=base.priority if base else ("blocker" if f.severity == CRITICAL else "important"),
+                        addressee=base.addressee if base else (f.addressee or "Аналитик"), fids=[f.fid],
+                        lines=[q.line for q in f.quotes if q.line], source="resolver"))
+        f.resolution = "; ".join(notes)
+        if all(e["status"] == "resolved" for e in items):
+            wording = next((e["revised_wording"] for e in items if e["revised_wording"]), "")
+            if wording:
+                f.suggestion = wording
+            resolved.add(fid)
+    for q in questions:
+        if q.answer:
+            closed = sum(1 for fid in q.fids if fid in resolved)
+            q.outcome = f"закрыто находок: {closed} из {len(q.fids)}"
+    return resolved, followups
+
+
+def carry_over(unmatched: list[dict], followups: list[Question]) -> list[Question]:
+    """Ответы на вопросы, которых нет в этом прогоне (например, уточнения прошлого прогона), не теряем:
+    они попадают в отчёт и обратно в файл ответов, который перезаписывается рядом с отчётом."""
+    by_qid = {q.qid: q for q in followups}
+    out = []
+    for a in unmatched:
+        if a["qid"] in by_qid:
+            by_qid[a["qid"]].answer = a["answer"]  # то же уточнение снова задано — сохраняем ответ при нём
+            continue
+        out.append(Question(qid=a["qid"], text=a["question"] or "(вопрос из прошлого прогона)", priority="clarify",
+                            answer=a["answer"], source="answers_file",
+                            outcome="вопрос из прошлого прогона: ответ передан агенту учёта ответов"))
+    return out

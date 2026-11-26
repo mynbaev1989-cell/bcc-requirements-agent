@@ -1,0 +1,320 @@
+"""Чтение входного документа (MD, TXT, PDF, DOCX) с диагностикой вместо аварийного завершения.
+
+Тип файла определяется по содержимому (сигнатуре), а не только по расширению.
+Любая проблема превращается в LoadError с понятным Diagnostic, который попадает в отчёт.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import io
+import logging
+import os
+import re
+import threading
+import zipfile
+from pathlib import Path
+from typing import Callable, TypeVar
+
+from reqcheck.models import Diagnostic, Document
+
+T = TypeVar("T")
+
+# Предупреждения pypdf о битой структуре («EOF marker not found») не печатаем в консоль:
+# проблема и так попадает в диагностику отчёта понятным сообщением.
+logging.getLogger("pypdf").setLevel(logging.ERROR)
+
+DEFAULT_MAX_BYTES = 20 * 1024 * 1024  # 20 МБ
+DEFAULT_MAX_CHARS = 400_000  # ~100 страниц текста
+DEFAULT_MAX_PAGES = 300
+PARSE_TIMEOUT_SEC = 60  # защита от «зависающих» PDF
+MIN_MEANINGFUL_CHARS = 20
+
+
+class LoadError(Exception):
+    """Файл нельзя проверить. Содержит диагностику для отчёта."""
+
+    def __init__(self, diagnostic: Diagnostic):
+        super().__init__(diagnostic.message)
+        self.diagnostic = diagnostic
+
+
+def _fail(code: str, message: str, hint: str = "") -> LoadError:
+    return LoadError(Diagnostic("error", code, message, hint))
+
+
+def run_with_timeout(fn: Callable[[], T], timeout: float, what: str) -> T:
+    """Выполнить fn в фоновом daemon-потоке; по таймауту — LoadError, а не зависание агента."""
+    box: dict[str, object] = {}
+
+    def target() -> None:
+        try:
+            box["value"] = fn()
+        except BaseException as exc:  # noqa: BLE001 — передаём наружу любую ошибку разбора
+            box["error"] = exc
+
+    thread = threading.Thread(target=target, daemon=True)
+    thread.start()
+    thread.join(timeout)
+    if thread.is_alive():
+        raise _fail(
+            "PARSE_TIMEOUT",
+            f"Разбор файла ({what}) не завершился за {timeout:.0f} с — файл, вероятно, повреждён.",
+            "Пересохраните документ (например, «Печать → PDF» или экспорт в DOCX) и запустите проверку снова.",
+        )
+    if "error" in box:
+        raise box["error"]  # type: ignore[misc]
+    return box["value"]  # type: ignore[return-value]
+
+
+def detect_format(raw: bytes, suffix: str) -> str:
+    """Определить формат по сигнатуре. Возвращает pdf | docx | zip | text | binary | empty."""
+    if not raw.strip(b" \t\r\n\x00"):
+        return "empty"
+    head = raw[:1024]
+    if b"%PDF-" in head:
+        return "pdf"
+    if raw[:4] == b"PK\x03\x04":
+        try:
+            with zipfile.ZipFile(io.BytesIO(raw)) as zf:
+                if "word/document.xml" in zf.namelist():
+                    return "docx"
+        except zipfile.BadZipFile:
+            return "binary"
+        return "zip"
+    if raw[:2] in (b"\xff\xfe", b"\xfe\xff") or raw[:3] == b"\xef\xbb\xbf":
+        return "text"
+    sample = raw[:65536]
+    if b"\x00" in sample:
+        return "binary"
+    # Доля управляющих символов (кроме \t \n \r \f) — признак бинарных данных
+    ctrl = sum(1 for b in sample if b < 32 and b not in (9, 10, 12, 13))
+    if ctrl / max(len(sample), 1) > 0.02:
+        return "binary"
+    if suffix == ".pdf":
+        # Расширение PDF, но сигнатуры нет — это не PDF
+        return "binary"
+    return "text"
+
+
+def decode_text(raw: bytes) -> tuple[str, str | None]:
+    """Декодировать текст: UTF-8 (с BOM), UTF-16 по BOM, затем CP1251. Возвращает (текст, предупреждение)."""
+    if raw[:3] == b"\xef\xbb\xbf":
+        return raw[3:].decode("utf-8", errors="replace"), None
+    if raw[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        return raw.decode("utf-16", errors="replace"), None
+    try:
+        return raw.decode("utf-8"), None
+    except UnicodeDecodeError:
+        pass
+    try:
+        text = raw.decode("cp1251")
+        return text, "Файл не в UTF-8; прочитан как Windows-1251. Проверьте, что кириллица в отчёте отображается верно."
+    except UnicodeDecodeError:
+        return raw.decode("utf-8", errors="replace"), "Часть символов не удалось декодировать и они заменены на «�»."
+
+
+def _read_pdf(raw: bytes, max_pages: int) -> tuple[str, list[int], int, list[Diagnostic]]:
+    from pypdf import PdfReader
+    from pypdf.errors import PdfReadError
+
+    diags: list[Diagnostic] = []
+    try:
+        reader = PdfReader(io.BytesIO(raw), strict=False)
+    except (PdfReadError, ValueError, OSError, KeyError, TypeError) as exc:
+        raise _fail("PDF_CORRUPTED", f"PDF повреждён и не читается: {exc}", "Пересохраните PDF из исходного редактора.")
+    if reader.is_encrypted:
+        try:
+            ok = reader.decrypt("")
+        except Exception:  # noqa: BLE001
+            ok = 0
+        if not ok:
+            raise _fail(
+                "PDF_ENCRYPTED",
+                "PDF защищён паролем, текст недоступен.",
+                "Снимите защиту (сохраните копию без пароля) и запустите проверку снова.",
+            )
+    try:
+        pages = reader.pages
+        n_pages = len(pages)
+    except Exception as exc:  # noqa: BLE001
+        raise _fail("PDF_CORRUPTED", f"Не удалось прочитать структуру страниц PDF: {exc}", "Пересохраните PDF.")
+    if n_pages == 0:
+        raise _fail("PDF_NO_PAGES", "В PDF нет ни одной страницы.", "Проверьте, что выгружен правильный файл.")
+    if n_pages > max_pages:
+        diags.append(
+            Diagnostic("warning", "PDF_TRUNCATED", f"В PDF {n_pages} стр.; проверены первые {max_pages}.", "Разделите документ на части.")
+        )
+    lines: list[str] = []
+    line_pages: list[int] = []
+    bad_pages: list[int] = []
+    for i, page in enumerate(pages[:max_pages], start=1):
+        try:
+            page_text = page.extract_text() or ""
+        except Exception:  # noqa: BLE001 — одна битая страница не должна ронять весь прогон
+            bad_pages.append(i)
+            continue
+        for line in page_text.splitlines():
+            lines.append(line.rstrip())
+            line_pages.append(i)
+    if bad_pages:
+        diags.append(
+            Diagnostic(
+                "warning",
+                "PDF_BAD_PAGES",
+                f"Не удалось извлечь текст со страниц: {', '.join(map(str, bad_pages))}.",
+                "Проверьте эти страницы вручную или пересохраните PDF.",
+            )
+        )
+    text = "\n".join(lines)
+    if len(re.sub(r"\s", "", text)) < MIN_MEANINGFUL_CHARS:
+        raise _fail(
+            "PDF_NO_TEXT",
+            "В PDF нет текстового слоя (похоже на скан или изображения) — проверять нечего.",
+            "Сохраните документ как текстовый PDF из редактора или пришлите DOCX/MD. Для скана нужно предварительное распознавание (OCR).",
+        )
+    return text, line_pages, n_pages, diags
+
+
+def _read_docx(raw: bytes) -> str:
+    import docx  # python-docx
+
+    try:
+        document = docx.Document(io.BytesIO(raw))
+    except Exception as exc:  # noqa: BLE001
+        raise _fail("DOCX_CORRUPTED", f"DOCX повреждён: {exc}", "Откройте файл в Word и сохраните заново.")
+    out: list[str] = []
+    # Абзацы и таблицы в порядке следования в документе
+    body = document.element.body
+    for child in body.iterchildren():
+        tag = child.tag.rsplit("}", 1)[-1]
+        if tag == "p":
+            para = docx.text.paragraph.Paragraph(child, document)
+            text = para.text.strip()
+            style = (para.style.name if para.style is not None else "") or ""
+            m = re.match(r"(?:Heading|Заголовок)\s*(\d)", style)
+            if m and text:
+                out.append("#" * int(m.group(1)) + " " + text)
+            elif text:
+                prefix = "* " if "List" in style or "Список" in style else ""
+                out.append(prefix + text)
+            out.append("")
+        elif tag == "tbl":
+            table = docx.table.Table(child, document)
+            for r_idx, row in enumerate(table.rows):
+                cells = [c.text.replace("\n", " ").strip() for c in row.cells]
+                out.append("| " + " | ".join(cells) + " |")
+                if r_idx == 0:
+                    out.append("|" + "---|" * len(cells))
+            out.append("")
+    return "\n".join(out)
+
+
+def _guess_title(lines: list[str], fallback: str) -> str:
+    for line in lines[:60]:
+        m = re.match(r"^\s*#\s+(.+?)\s*#*\s*$", line)
+        if m:
+            return m.group(1).strip()
+    for line in lines[:10]:
+        s = line.strip()
+        if 3 <= len(s) <= 150:
+            return s
+    return fallback
+
+
+def load_document(
+    path: str | os.PathLike[str],
+    max_bytes: int = DEFAULT_MAX_BYTES,
+    max_chars: int = DEFAULT_MAX_CHARS,
+    max_pages: int = DEFAULT_MAX_PAGES,
+) -> tuple[Document, list[Diagnostic]]:
+    """Прочитать документ. Возвращает (Document, предупреждения) или бросает LoadError."""
+    p = Path(path)
+    diags: list[Diagnostic] = []
+    if not p.exists():
+        raise _fail("FILE_NOT_FOUND", f"Файл не найден: {p}", "Проверьте путь к документу требований.")
+    if p.is_dir():
+        raise _fail("IS_DIRECTORY", f"Указана папка, а не файл: {p}", "Передайте путь к файлу документа.")
+    try:
+        size = p.stat().st_size
+    except OSError as exc:
+        raise _fail("FILE_UNREADABLE", f"Нет доступа к файлу: {exc}", "Проверьте права доступа.")
+    if size > max_bytes:
+        raise _fail(
+            "FILE_TOO_LARGE",
+            f"Файл слишком большой: {size / 1048576:.1f} МБ (лимит {max_bytes / 1048576:.0f} МБ).",
+            "Разделите документ на части или увеличьте лимит флагом --max-size-mb.",
+        )
+    try:
+        raw = p.read_bytes()
+    except OSError as exc:
+        raise _fail("FILE_UNREADABLE", f"Не удалось прочитать файл: {exc}", "Проверьте, что файл не открыт эксклюзивно другой программой.")
+
+    suffix = p.suffix.lower()
+    kind = detect_format(raw, suffix)
+    line_pages: list[int] | None = None
+    n_pages: int | None = None
+
+    if kind == "empty":
+        raise _fail("FILE_EMPTY", "Файл пустой — в нём нет текста для проверки.", "Проверьте, что выгружен правильный файл.")
+    if kind == "binary":
+        what = "PDF" if suffix == ".pdf" else "текст"
+        raise _fail(
+            "FILE_BINARY",
+            f"Содержимое файла не похоже ни на {what}, ни на другой поддерживаемый формат (повреждённые или бинарные данные).",
+            "Поддерживаются MD, TXT, PDF с текстовым слоем и DOCX. Пересохраните документ в одном из них.",
+        )
+    if kind == "zip":
+        raise _fail("UNSUPPORTED_ZIP", "Это ZIP-архив, а не документ DOCX.", "Распакуйте архив и передайте сам документ.")
+
+    if kind == "pdf":
+        text, line_pages, n_pages, pdf_diags = run_with_timeout(lambda: _read_pdf(raw, max_pages), PARSE_TIMEOUT_SEC, "PDF")
+        diags.extend(pdf_diags)
+        fmt = "pdf"
+    elif kind == "docx":
+        text = run_with_timeout(lambda: _read_docx(raw), PARSE_TIMEOUT_SEC, "DOCX")
+        fmt = "docx"
+    else:
+        text, warning = decode_text(raw)
+        if warning:
+            diags.append(Diagnostic("warning", "ENCODING", warning))
+        fmt = "md" if suffix in (".md", ".markdown") else "txt"
+        if suffix in (".pdf", ".docx", ".doc"):
+            diags.append(
+                Diagnostic(
+                    "warning",
+                    "EXTENSION_MISMATCH",
+                    f"Расширение «{suffix}», но внутри обычный текст — файл прочитан как текст.",
+                    "Проверьте, что выгружен правильный файл.",
+                )
+            )
+
+    text = text.replace("\r\n", "\n").replace("\r", "\n").replace("﻿", "")
+    if len(re.sub(r"\s", "", text)) < MIN_MEANINGFUL_CHARS:
+        raise _fail("NO_TEXT", "В документе нет распознаваемого текста (только пробелы или пустые строки).", "Проверьте содержимое файла.")
+    if len(text) > max_chars:
+        diags.append(
+            Diagnostic(
+                "warning",
+                "TEXT_TRUNCATED",
+                f"Документ длиннее {max_chars} символов; проверена только первая часть.",
+                "Разделите документ на части и проверьте каждую.",
+            )
+        )
+        text = text[:max_chars]
+        if line_pages is not None:
+            line_pages = line_pages[: text.count("\n") + 1]
+    lines = text.split("\n")
+    doc = Document(
+        path=str(p),
+        name=p.name,
+        title=_guess_title(lines, p.stem),
+        fmt=fmt,
+        text=text,
+        lines=lines,
+        sha256=hashlib.sha256(raw).hexdigest(),
+        size_bytes=size,
+        pages=n_pages,
+        line_pages=line_pages,
+    )
+    return doc, diags
