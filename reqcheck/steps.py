@@ -29,7 +29,8 @@ from reqcheck.agents import (
     visible_lines,
 )
 from reqcheck.clarify import (
-    Clarifier, Resolver, apply_effects, carry_over, match_answers, parse_answers, questions_from_findings,
+    Clarifier, Resolver, answers_sha, apply_effects, carry_over, close_marks, match_answers, parse_answers,
+    questions_from_findings,
 )
 from reqcheck.grounding import Grounder
 from reqcheck.llm import GeminiClient, LLMUnavailable
@@ -92,8 +93,8 @@ class SegmentRulesStep(Step):
             shown = ", ".join(map(str, lines[:10])) + (" …" if len(lines) > 10 else "")
             ctx.diag("warning", "PROMPT_INJECTION_SUSPECTED",
                      f"В документе есть текст, обращённый к ИИ-проверяющему (строки {shown}).",
-                     "Модели получили указание считать документ данными. Правила и сверка цитат от модели не зависят, "
-                     "но эти строки стоит проверить вручную и удалить из требований.")
+                     "Для моделей документ — данные, а не инструкции; правила и сверка цитат от модели не зависят. "
+                     "Эти строки стоит проверить вручную и удалить из требований.")
 
     def summary(self, out: Any) -> str:
         return f"блоков {len(out[0])}, находок правил {len(out[2])}"
@@ -351,9 +352,10 @@ class ReadAnswersStep(Step):
 
     def run(self, ctx: RunContext) -> Any:
         try:
-            return parse_answers(Path(ctx.opts.answers).read_text(encoding="utf-8-sig"))
+            text = Path(ctx.opts.answers).read_text(encoding="utf-8-sig")
         except (OSError, UnicodeDecodeError) as exc:
             return exc
+        return parse_answers(text), answers_sha(text)
 
     def apply(self, ctx: RunContext, out: Any) -> None:
         ctx.result.passport["answers_file"] = str(ctx.opts.answers)
@@ -361,6 +363,12 @@ class ReadAnswersStep(Step):
             ctx.diag("warning", "ANSWERS_UNREADABLE", f"Файл ответов не прочитан: {out}",
                      "Проверьте путь и кодировку (UTF-8) файла, переданного в --answers.")
             return
+        out, sha = out
+        if sha and ctx.doc.sha256 and not ctx.doc.sha256.startswith(sha):
+            ctx.diag("warning", "ANSWERS_FOR_OTHER_VERSION",
+                     "Ответы даны к другой версии документа: SHA-256 в файле ответов не совпадает с текущим.",
+                     "Агент сопоставил ответы с вопросами по тексту. Проверьте, что ответы относятся к изменённым местам, "
+                     "или ответьте заново на вопросы из нового файла *_questions.md.")
         if not out:
             ctx.diag("info", "ANSWERS_EMPTY", "В файле ответов нет заполненных ответов.",
                      "Впишите ответы после «Ответ:» в файле *_questions.md.")
@@ -377,7 +385,7 @@ class ReadAnswersStep(Step):
         return "ошибка" if isinstance(out, Exception) else "ok"
 
     def summary(self, out: Any) -> str:
-        return str(out)[:120] if isinstance(out, Exception) else f"ответов {len(out)}"
+        return str(out)[:120] if isinstance(out, Exception) else f"ответов {len(out[0])}"
 
 
 class ResolveAnswersStep(Step):
@@ -396,14 +404,23 @@ class ResolveAnswersStep(Step):
                      "Запустите без --offline с ключом GEMINI_API_KEY.")
             ctx.result.questions = ctx.result.questions + carry_over(self._unmatched(ctx), [])
             return None
+        self._failed = True
         return []  # Resolver упал: ни одна находка не закрыта, ответы сохраняются
 
     def apply(self, ctx: RunContext, out: Any) -> None:
+        count = lambda fs, sev: sum(1 for f in fs if f.severity == sev)  # noqa: E731
+        before = {"critical": count(ctx.findings, "critical"), "major": count(ctx.findings, "major")}
         resolved, followups = apply_effects(out, ctx.findings, ctx.result.questions)
+        if getattr(self, "_failed", False):
+            for q in ctx.result.questions:
+                if q.answer:
+                    q.outcome = "ответ не обработан: сбой Resolver, находки остались открытыми"
         ctx.result.resolved = [f for f in ctx.findings if f.fid in resolved]
         ctx.findings = ctx.result.findings = [f for f in ctx.findings if f.fid not in resolved]
         ctx.result.questions = ctx.result.questions + followups + carry_over(self._unmatched(ctx), followups)
         ctx.metrics["resolved_by_answers"] = len(resolved)
+        ctx.metrics["before_answers"] = before  # для строки «было → стало» в итоге отчёта
+        close_marks(ctx.result.resolved, ctx.findings, ctx.result.assessments)
 
     @staticmethod
     def _unmatched(ctx: RunContext) -> list[dict]:

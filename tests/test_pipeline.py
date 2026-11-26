@@ -229,6 +229,7 @@ def test_clarifier_questions_and_answers_loop(sample_md, tmp_path):
     write_outputs(result2, str(md), ("md",))
     body = md.read_text(encoding="utf-8")
     assert "Находки, закрытые ответами автора" in body and "Ответ автора" in body
+    assert "критичных было 2 → стало 1" in body  # итог показывает, что изменили ответы
 
 
 def test_answers_file_parsing_and_offline_fallback(sample_md, tmp_path):
@@ -277,7 +278,7 @@ def test_conflicting_answers_keep_finding_open_and_unmatched_answers_survive(sam
     def resolver(prompt):
         fid = re.search(r"Связанные находки: (F-\d{3})", prompt).group(1)
         return {"effects": [{"qid": "Q-01", "fid": fid, "status": "resolved", "comment": "выбран лимит"},
-                            {"qid": "Q-09.1", "fid": fid, "status": "open", "comment": "второй ответ противоречит",
+                            {"qid": "прошлый-Q-09.1", "fid": fid, "status": "open", "comment": "второй ответ противоречит",
                              "follow_up": "Так 50 000 или 30 000?"}]}
     llm.responses["resolver"] = resolver
     first = run(str(sample_md), Options(), llm=_with_clarify(sample_md))
@@ -293,3 +294,57 @@ def test_conflicting_answers_keep_finding_open_and_unmatched_answers_survive(sam
     write_outputs(res, str(tmp_path / "r.md"), ("md",))
     again = qfile.read_text(encoding="utf-8")
     assert "## Q-09.1" in again and "Нет, без комиссии." in again  # ответ на старый вопрос не потерян
+
+
+def _answer_first_question(sample_md, tmp_path, answer="Верный лимит — 50 000 ₸, FR-3 устарел."):
+    first = run(str(sample_md), Options(), llm=_with_clarify(sample_md))
+    write_outputs(first, str(tmp_path / "r.md"), ("md",))
+    qfile = tmp_path / "r_questions.md"
+    qfile.write_text(qfile.read_text(encoding="utf-8").replace("\nОтвет:", f"\nОтвет: {answer}", 1), encoding="utf-8")
+    return first, qfile
+
+
+def test_resolved_finding_clears_its_violation_mark(sample_md, tmp_path):
+    first, qfile = _answer_first_question(sample_md, tmp_path)
+    res = run(str(sample_md), Options(answers=str(qfile)), llm=_with_clarify(sample_md))
+    (closed,) = res.resolved
+    for rid in closed.rids:
+        marks = [m for m in res.assessments[rid].marks if m.criterion == closed.criterion]
+        assert all(m.status != "violation" for m in marks)
+
+
+def test_resolver_failure_is_not_reported_as_zero_closed(sample_md, tmp_path):
+    _, qfile = _answer_first_question(sample_md, tmp_path)
+    llm = _with_clarify(sample_md)
+    llm.fail_roles = {"resolver"}
+    res = run(str(sample_md), Options(answers=str(qfile)), llm=llm)
+    q1 = next(q for q in res.questions if q.qid == "Q-01")
+    assert q1.answer and "не обработан" in q1.outcome and not res.resolved
+
+
+def test_answers_to_other_document_version_are_flagged(sample_md, tmp_path):
+    _, qfile = _answer_first_question(sample_md, tmp_path)
+    same = run(str(sample_md), Options(answers=str(qfile)), llm=_with_clarify(sample_md))
+    assert not any(d.code == "ANSWERS_FOR_OTHER_VERSION" for d in same.diagnostics)
+    sample_md.write_text(sample_md.read_text(encoding="utf-8") + "\nДобавлено после ответов.\n", encoding="utf-8")
+    res = run(str(sample_md), Options(answers=str(qfile)), llm=_with_clarify(sample_md))
+    assert any(d.code == "ANSWERS_FOR_OTHER_VERSION" for d in res.diagnostics)
+
+
+def test_two_answers_never_share_one_question():
+    from reqcheck.clarify import match_answers
+    from reqcheck.models import Question
+    qs = [Question(qid="Q-01", text="Какой верхний лимит перевода?", priority="blocker", fids=["F-001"])]
+    answers = [{"qid": "Q-01", "question": "Какой верхний лимит перевода?", "answer": "50 000"},
+               {"qid": "Q-01.1", "question": "Какой верхний лимит перевода в сутки?", "answer": "1 000 000"}]
+    pairs = match_answers(answers, qs)
+    assert pairs[0][0] is qs[0] and pairs[1][0] is None  # второй ответ не перезаписывает первый
+
+
+def test_every_question_has_options_and_assumption(sample_md):
+    for opts, llm in ((Options(offline=True), None), (Options(), _with_clarify(sample_md))):
+        res = run(str(sample_md), opts, llm=llm)
+        assert res.questions
+        assert all(q.assumption for q in res.questions)
+        with_fix = [q for q in res.questions if any(f.suggestion for f in res.findings if f.fid in q.fids)]
+        assert all(q.options for q in with_fix)

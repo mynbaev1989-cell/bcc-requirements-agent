@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 from difflib import SequenceMatcher
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
@@ -191,16 +192,19 @@ class Reviewer:
         known = {r.rid for r in reqs}
         line_of = {r.rid: r.line_start for r in reqs}
         batches = [reqs[i:i + REVIEW_BATCH] for i in range(0, len(reqs), REVIEW_BATCH)]
+        shared = {b for b, n in Counter(b for r in reqs for b in set(r.block_ids)).items() if n > 1}
 
         def wording(r: Requirement) -> str:
-            # Своя формулировка требования. Если Extractor выделил из одного абзаца несколько требований,
-            # абзац идёт отдельной строкой как контекст: иначе у соседних требований одинаковый текст,
-            # и модель принимает их за дубли или за одно «неатомарное» требование.
+            # Обычно модель видит весь текст требования. Только если Extractor выделил из одного абзаца несколько
+            # требований, у каждого показываем свою формулировку, а абзац — отдельно как контекст: иначе у соседних
+            # требований одинаковый текст, и модель принимает их за дубли или за одно «неатомарное» требование.
             block = " ".join(blocks_by_id[b].text for b in r.block_ids if b in blocks_by_id)
             own = r.quote.strip()
-            if not own or normalize(own) == normalize(block):
+            if not own or not shared.intersection(r.block_ids) or normalize(own) == normalize(block):
                 return block or own
-            return f"Формулировка: {own}\nАбзац целиком (контекст, оценивать не нужно): {block}"
+            # Указание только у таких требований: общий промпт не меняется, остальные пакеты берутся из кэша
+            return (f"Формулировка: {own}\nАбзац целиком: {block}\n(Из этого абзаца выделено несколько требований. "
+                    "Оценивай только формулировку выше: соседние требования абзаца — не её дубли и не делают её неатомарной.)")
 
         def ask(batch: list[Requirement]) -> Any:
             listing = "\n\n".join(

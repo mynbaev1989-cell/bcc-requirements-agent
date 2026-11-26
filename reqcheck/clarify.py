@@ -16,7 +16,7 @@ from reqcheck import prompts
 from reqcheck.agents import _list, _s, numbered_document
 from reqcheck.grounding import normalize
 from reqcheck.llm import JsonLLM
-from reqcheck.models import CRITICAL, MAJOR, SEV_RANK, Document, Finding, Question
+from reqcheck.models import CRITICAL, MAJOR, OK, SEV_RANK, VIOLATION, Document, Finding, Question, RequirementAssessment
 
 PRIORITIES = ("blocker", "important", "clarify")
 PRIORITY_RU = {"blocker": "блокирует разработку", "important": "нужно до тест-дизайна", "clarify": "можно уточнить по ходу"}
@@ -31,6 +31,26 @@ def _lines(fids: list[str], fmap: dict[str, Finding]) -> list[int]:
             if q.line and q.line not in out:
                 out.append(q.line)
     return sorted(out)
+
+
+DEFAULT_ASSUMPTION = {
+    "blocker": "До ответа требование считается неготовым: разработку этой части не начинаем.",
+    "important": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+    "clarify": "До ответа берём формулировку документа как есть и фиксируем это в протоколе ревью.",
+}
+
+
+def complete_question(q: Question, fmap: dict[str, Finding]) -> Question:
+    """Гарантия кодом: у каждого вопроса есть варианты ответа и допущение на случай, если ответа не будет.
+    Если модель их не дала (или вопрос построен из находки правила), варианты берутся из исправления находки."""
+    if not q.options:
+        fix = next((fmap[x].suggestion for x in q.fids if x in fmap and fmap[x].suggestion), "")
+        if fix:
+            q.options = [f"Принять исправление: {fix[:250].rstrip(' .;')}",
+                         "Оставить как есть: пояснить, почему это не дефект"]
+    if not q.assumption:
+        q.assumption = DEFAULT_ASSUMPTION.get(q.priority, DEFAULT_ASSUMPTION["important"])
+    return q
 
 
 def _number(questions: list[Question]) -> list[Question]:
@@ -64,6 +84,7 @@ def questions_from_findings(findings: list[Finding]) -> list[Question]:
     qs = list(by_text.values())
     for q in qs:
         q.lines = _lines(q.fids, fmap)
+        complete_question(q, fmap)
     return _number(qs)
 
 
@@ -110,7 +131,7 @@ class Clarifier:
         covered = {fid for q in out for fid in q.fids}
         missing = [f for f in findings if f.severity in (CRITICAL, MAJOR) and f.fid not in covered]
         out += questions_from_findings(missing)
-        return _number(out)
+        return _number([complete_question(q, fmap) for q in out])
 
 
 # --- Файл ответов ---------------------------------------------------------------------------------
@@ -165,16 +186,32 @@ def parse_answers(text: str) -> list[dict]:
     return out
 
 
+_SHA = re.compile(r"SHA-256\s+([0-9a-f]{8,64})", re.I)
+
+
+def answers_sha(text: str) -> str:
+    """Начало SHA-256 документа, к которому писались ответы (из шапки файла вопросов), или пустая строка."""
+    m = _SHA.search((text or "")[:2000])
+    return m.group(1).lower() if m else ""
+
+
 def match_answers(answers: list[dict], questions: list[Question]) -> list[tuple[Question | None, dict]]:
-    """Сопоставить ответы с вопросами текущего прогона: по номеру, если текст совпадает, иначе по тексту вопроса."""
+    """Сопоставить ответы с вопросами текущего прогона: по номеру, если текст совпадает, иначе по тексту вопроса.
+
+    Каждому вопросу — не больше одного ответа: второй ответ, похожий на уже занятый вопрос, остаётся без пары
+    и уходит в Resolver как ответ на вопрос прошлого прогона (ничего не теряется и не перезаписывается)."""
     by_id = {q.qid: q for q in questions}
+    used: set[str] = set()
     pairs = []
     for a in answers:
-        q = by_id.get(a["qid"])
         sim = lambda x: SequenceMatcher(None, normalize(x.text), normalize(a["question"])).ratio()  # noqa: E731
-        if q is None or (a["question"] and sim(q) < 0.6):
-            best = max(questions, key=sim, default=None)
+        q = by_id.get(a["qid"])
+        if q is None or q.qid in used or (a["question"] and sim(q) < 0.6):
+            free = [x for x in questions if x.qid not in used]
+            best = max(free, key=sim, default=None)
             q = best if best is not None and a["question"] and sim(best) >= 0.6 else None
+        if q:
+            used.add(q.qid)
         pairs.append((q, a))
     return pairs
 
@@ -214,6 +251,11 @@ class Resolver:
     def __init__(self, llm: JsonLLM, doc: Document):
         self.llm, self.doc = llm, doc
 
+    @staticmethod
+    def _key(q: Question | None, a: dict) -> str:
+        # Ответ на вопрос прошлого прогона может носить тот же номер, что и вопрос этого прогона, — разводим их
+        return q.qid if q else f"прошлый-{a['qid']}"
+
     def run(self, pairs: list[tuple[Question | None, dict]], findings: list[Finding]) -> list[dict]:
         fmap = {f.fid: f for f in findings}
         linked = {fid for q, _ in pairs if q for fid in q.fids}
@@ -222,7 +264,7 @@ class Resolver:
         if not scope:
             return []
         qa = "\n\n".join(
-            f"{(q.qid if q else a['qid'])}. Вопрос: {q.text if q else a['question']}\n"
+            f"{self._key(q, a)}. Вопрос: {q.text if q else a['question']}\n"
             f"Связанные находки: {', '.join(q.fids) if q else 'определи сам по смыслу'}\n"
             f"<ответ автора>\n{_strip_tags(a['answer'])}\n</ответ автора>"
             for q, a in pairs
@@ -236,8 +278,9 @@ class Resolver:
             "resolver", prompts.BASE_SYSTEM,
             f"{prompts.RESOLVER}\nВопросы и ответы автора:\n{qa}\n\nНаходки:\n{listing}"
             f"\n\nВесь документ (номер строки: текст):\n{numbered_document(self.doc)}")
-        valid_q = {(q.qid if q else a["qid"]) for q, a in pairs}
-        answer_by_q = {(q.qid if q else a["qid"]): a["answer"] for q, a in pairs}
+        valid_q = {self._key(q, a) for q, a in pairs}
+        answer_by_q = {self._key(q, a): a["answer"] for q, a in pairs}
+        orig_qid = {self._key(q, a): (q.qid if q else a["qid"]) for q, a in pairs}
         # Ответ на вопрос этого прогона может решать только находки этого вопроса; ответ на вопрос
         # прошлого прогона (без пары) — любую находку из списка, переданного модели
         allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
@@ -245,7 +288,7 @@ class Resolver:
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
             if not isinstance(e, dict):
                 continue
-            fid, qid = _s(e.get("fid"), 12), _s(e.get("qid"), 12)
+            fid, qid = _s(e.get("fid"), 12), _s(e.get("qid"), 24)
             status = _s(e.get("status"), 12).lower()
             if fid not in fmap or qid not in valid_q or status not in ("resolved", "partial", "open"):
                 continue
@@ -261,7 +304,8 @@ class Resolver:
                                                       answer_by_q.get(qid, "")):
                 wording = ""  # формулировка модели расходится с выбором автора — не показываем её как исправление
                 comment += " Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом."
-            effects.append({"fid": fid, "qid": qid, "status": status, "comment": comment,
+            # В отчёт и файл ответов — исходный номер вопроса
+            effects.append({"fid": fid, "qid": orig_qid.get(qid, qid), "status": status, "comment": comment,
                             "revised_wording": wording, "follow_up": _s(e.get("follow_up"), 600)})
         return effects
 
@@ -307,6 +351,21 @@ def apply_effects(effects: list[dict], findings: list[Finding], questions: list[
             closed = sum(1 for fid in q.fids if fid in resolved)
             q.outcome = f"закрыто находок: {closed} из {len(q.fids)}"
     return resolved, followups
+
+
+def close_marks(resolved: list[Finding], remaining: list[Finding],
+                assessments: dict[str, RequirementAssessment]) -> None:
+    """Находка закрыта ответом — её критерий у требования больше не нарушен (если по нему нет других открытых находок).
+    Иначе таблица оценок и балл противоречили бы вердикту, пересчитанному после ответов."""
+    still = {(rid, f.criterion) for f in remaining for rid in f.rids}
+    for f in resolved:
+        for rid in f.rids:
+            a = assessments.get(rid)
+            if a is None or (rid, f.criterion) in still:
+                continue
+            for m in a.marks:
+                if m.criterion == f.criterion and m.status == VIOLATION:
+                    m.status, m.comment = OK, f"закрыто ответом автора ({f.resolution[:120]})"
 
 
 def carry_over(unmatched: list[dict], followups: list[Question]) -> list[Question]:

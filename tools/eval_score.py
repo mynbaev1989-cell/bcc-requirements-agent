@@ -77,6 +77,9 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
         "by_type": {k: f"{v[0]}/{v[1]}" for k, v in sorted(by_type.items())},
         "missed": [d.get("explanation") or d.get("quote") for d in defects if d not in hit_gold],
         "model": result.passport.get("model"),
+        "dropped_ungrounded": result.metrics.get("dropped_ungrounded", 0),
+        "merged_by_critic": result.metrics.get("merged_duplicates", 0),
+        "rejected_by_critic": result.metrics.get("dropped_by_critic", 0),
     }
 
 

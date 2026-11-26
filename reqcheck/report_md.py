@@ -250,7 +250,14 @@ def render_markdown(result: RunResult) -> str:
         a(f"- **Вопросы автору:** {len(result.questions)}, без ответа {len(open_q)}"
           + (f"; блокируют разработку: {', '.join(blockers)}" if blockers else "") + " (Приложение A).")
     if result.resolved:
-        a(f"- **Учтены ответы автора:** закрыто находок {len(result.resolved)} — они не входят в вердикт (Приложение A).")
+        before = result.metrics.get("before_answers") or {}
+        delta = ""
+        if before:
+            after = {sev: sum(1 for f in findings if f.severity == sev) for sev in ("critical", "major")}
+            delta = (f"; критичных было {before.get('critical', 0)} → стало {after['critical']}, "
+                     f"существенных {before.get('major', 0)} → {after['major']}")
+        a(f"- **Учтены ответы автора:** закрыто находок {len(result.resolved)}{delta}. "
+          "Закрытые находки не входят в вердикт (Приложение A).")
     a("")
     if result.priorities:
         a("**Что исправить в первую очередь:**")
@@ -433,15 +440,17 @@ def render_markdown(result: RunResult) -> str:
         a(f"| Проверка отчёта человеком ({v['check_min_per_finding']} мин × находка) | {v['check_hours']} ч |")
         a(f"| Экономия времени ревью на документ | **{v['saved_hours']} ч ≈ {sp(v['saved_kzt'])} ₸** при ставке {sp(v['rate_kzt_per_hour'])} ₸/ч |")
         if v.get("avoided_rework_hours") is not None:
+            prec = f"{v.get('precision', 1):g}".replace(".", ",")
             a(f"| Предотвращённые переделки: (критичных {v['critical_found']} + {v.get('major_found', 0)} существенных × 0,5) × "
-              f"{v.get('fix_hours_at_requirements', 1):g} ч × ({v.get('escalation_factor', 7):g} − 1) | "
+              f"точность находок {prec} × {v.get('fix_hours_at_requirements', 1):g} ч × ({v.get('escalation_factor', 7):g} − 1) | "
               f"**{v.get('avoided_rework_hours', 0)} ч ≈ {sp(v.get('avoided_rework_kzt', 0))} ₸** |")
         a(f"| Стоимость LLM на прогон ({v.get('tokens_total', 0)} токенов; {v.get('llm_price_note', '')}) | {v.get('llm_cost_kzt', 0)} ₸ |")
         if v.get("roi") is not None:
             a(f"| Отдача: выгода / (LLM + время проверки отчёта) | **×{v['roi']}** |")
         a("")
         a("Переделки: по данным NASA (Stecklein et al., 2004/2010), дефект требований, найденный на этапе кодирования, "
-          "обходится в 7–16 раз дороже, на интеграции и тестах — в 21–78 раз; агент берёт нижнюю границу (×7). "
+          "обходится в 7–16 раз дороже, на интеграции и тестах — в 21–78 раз; агент берёт нижнюю границу (×7) "
+          "и умножает на точность находок, измеренную на контрольном наборе: не каждая находка — настоящий дефект. "
           "Все параметры — допущения, их можно задать переменными окружения (см. README).")
         a("")
     return "\n".join(L) + "\n"

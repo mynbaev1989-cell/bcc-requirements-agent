@@ -32,6 +32,7 @@ class ValueEstimate:
     major_found: int = 0
     fix_hours_at_requirements: float = 0.0
     escalation_factor: float = 0.0
+    precision: float = 1.0
     avoided_rework_hours: float = 0.0
     avoided_rework_kzt: float = 0.0
     tokens_total: int = 0
@@ -60,7 +61,9 @@ def estimate(n_requirements: int, n_findings: int, n_critical: int, agent_second
     fix_h = _env_float("REQCHECK_FIX_HOURS", 1.0)
     esc = _env_float("REQCHECK_ESCALATION", 7.0)
     weight_major = _env_float("REQCHECK_MAJOR_WEIGHT", 0.5)  # существенный дефект доходит до кода не всегда
-    avoided_h = (n_critical + weight_major * n_major) * fix_h * max(esc - 1, 0)
+    # Не каждая находка — настоящий дефект: умножаем на измеренную точность находок (контрольный набор eval_holdout/)
+    precision = min(max(_env_float("REQCHECK_PRECISION", 0.86), 0.0), 1.0)
+    avoided_h = (n_critical + weight_major * n_major) * precision * fix_h * max(esc - 1, 0)
 
     # Стоимость прогона LLM: токены × цена (по умолчанию 0 — бесплатный тариф AI Studio)
     price_in = _env_float("REQCHECK_PRICE_IN_USD_PER_M", 0.0)
@@ -73,5 +76,5 @@ def estimate(n_requirements: int, n_findings: int, n_critical: int, agent_second
     benefit = saved_h * rate + avoided_h * rate
     roi = round(benefit / agent_cost, 1) if agent_cost > 0 else None
     return ValueEstimate(rate, base, per_req, per_finding, round(manual_h, 2), round(agent_h, 3), round(check_h, 2),
-                         round(saved_h, 2), round(saved_h * rate), n_critical, n_major, fix_h, esc, round(avoided_h, 1),
+                         round(saved_h, 2), round(saved_h * rate), n_critical, n_major, fix_h, esc, precision, round(avoided_h, 1),
                          round(avoided_h * rate), tokens_in + tokens_out, round(llm_cost, 1), note, roi)

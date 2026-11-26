@@ -7,6 +7,9 @@
     "precision": 0.861,
     "false_major_on_clean": 2,
     "cache_misses": 5,
+    "dropped_ungrounded": 7,
+    "merged_by_critic": 7,
+    "rejected_by_critic": 0,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -33,6 +36,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 2
       },
       {
@@ -60,6 +66,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 2,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 2
       },
       {
@@ -87,6 +96,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 3,
+        "merged_by_critic": 4,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       },
       {
@@ -116,6 +128,9 @@
           "Поле interest_rate в примере не совпадает с rate_percent в описании."
         ],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -145,6 +160,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 3,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       }
     ]
@@ -157,6 +175,9 @@
     "precision": 0.866,
     "false_major_on_clean": 2,
     "cache_misses": 5,
+    "dropped_ungrounded": 7,
+    "merged_by_critic": 0,
+    "rejected_by_critic": 0,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -183,6 +204,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -210,6 +234,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 2,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -237,6 +264,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 3,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -266,6 +296,9 @@
           "Поле interest_rate в примере не совпадает с rate_percent в описании."
         ],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -295,6 +328,9 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       }
     ]
@@ -306,7 +342,10 @@
     "findings": 164,
     "precision": 0.828,
     "false_major_on_clean": 2,
-    "cache_misses": 9,
+    "cache_misses": 5,
+    "dropped_ungrounded": 0,
+    "merged_by_critic": 0,
+    "rejected_by_critic": 0,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -333,7 +372,10 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
-        "cache_misses": 2
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
       },
       {
         "document": "credit_card_application.md",
@@ -360,7 +402,10 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
-        "cache_misses": 2
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
       },
       {
         "document": "p2p_phone.md",
@@ -387,7 +432,10 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
-        "cache_misses": 2
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
       },
       {
         "document": "holdout_deposit.md",
@@ -416,6 +464,9 @@
           "Поле interest_rate в примере не совпадает с rate_percent в описании."
         ],
         "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 1
       },
       {
@@ -445,7 +496,10 @@
         },
         "missed": [],
         "model": "gemini-3.5-flash-lite",
-        "cache_misses": 2
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
       }
     ]
   },
@@ -457,6 +511,9 @@
     "precision": 0.702,
     "false_major_on_clean": 0,
     "cache_misses": 0,
+    "dropped_ungrounded": 0,
+    "merged_by_critic": 0,
+    "rejected_by_critic": 0,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -488,6 +545,9 @@
           "Код 201 не соответствует телу с ошибкой валидации."
         ],
         "model": "не использовалась",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       },
       {
@@ -525,6 +585,9 @@
           "Код 200 не соответствует сообщению об отсутствии заявки."
         ],
         "model": "не использовалась",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       },
       {
@@ -562,6 +625,9 @@
           "404 не подходит для недостатка средств."
         ],
         "model": "не использовалась",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       },
       {
@@ -599,6 +665,9 @@
           "Поле interest_rate в примере не совпадает с rate_percent в описании."
         ],
         "model": "не использовалась",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       },
       {
@@ -640,6 +709,9 @@
           "Поле installment_months в примере не совпадает с term_months в описании."
         ],
         "model": "не использовалась",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "rejected_by_critic": 0,
         "cache_misses": 0
       }
     ]
