@@ -138,6 +138,29 @@ def questions_from_findings(findings: list[Finding]) -> list[Question]:
     return _number(qs)
 
 
+def with_minor_batch(questions: list[Question], findings: list[Finding]) -> list[Question]:
+    """Мелкие находки без вопроса — одним сводным вопросом, чтобы автор мог ответить и на них.
+
+    Отдельный вопрос на каждую мелочь превратил бы список в шум, а без вопроса такие находки нельзя закрыть
+    ответом. Строится кодом после Clarifier: промпт модели и кэш не меняются."""
+    covered = {fid for q in questions for fid in q.fids}
+    minor = [f for f in findings if f.severity not in (CRITICAL, MAJOR) and f.fid not in covered]
+    if not minor:
+        return questions
+    fmap = {f.fid: f for f in findings}
+    fids = [f.fid for f in minor]
+    shown = ", ".join(fids[:12]) + (f" и ещё {len(fids) - 12}" if len(fids) > 12 else "")
+    batch = Question(
+        qid="", text=f"Мелкие замечания ({len(fids)}: {shown}): принять предложенные исправления или оставить формулировки документа?",
+        priority="clarify", addressee="Аналитик",
+        why="Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+        options=["Принять все предложенные исправления", "Принять, кроме перечисленных номеров находок",
+                 "Оставить формулировки документа как есть"],
+        assumption="Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+        fids=fids, lines=_lines(fids, fmap), source="findings")
+    return _number([*questions, batch])
+
+
 class Clarifier:
     """Агент-уточнитель: минимальный набор вопросов, ответы на которые снимают найденные дефекты."""
 

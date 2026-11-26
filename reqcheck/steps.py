@@ -33,7 +33,7 @@ from reqcheck.agents import (
 )
 from reqcheck.clarify import (
     Clarifier, Resolver, answers_sha, apply_effects, carry_over, close_marks, match_answers, parse_answers,
-    questions_from_findings,
+    questions_from_findings, with_minor_batch,
 )
 from reqcheck.grounding import Grounder
 from reqcheck.llm import GeminiClient, LLMUnavailable, _load_dotenv
@@ -391,7 +391,7 @@ class ClarifyStep(Step):
         return questions_from_findings(ctx.findings)
 
     def apply(self, ctx: RunContext, out: Any) -> None:
-        ctx.result.questions = out
+        ctx.result.questions = with_minor_batch(out or [], ctx.findings)
 
     def summary(self, out: Any) -> str:
         return f"вопросов {len(out)}"
