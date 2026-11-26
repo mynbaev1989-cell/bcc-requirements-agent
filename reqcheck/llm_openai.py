@@ -11,6 +11,7 @@ import json
 import os
 import random
 import re
+import socket
 import threading
 import time
 import urllib.error
@@ -66,6 +67,7 @@ class OpenAICompatClient:
         self.stats = LLMStats(model_version=self.model)
         self.stats.models_used.append(self.model)
         self._json_mode = True  # сервер не принял response_format — дальше шлём без него
+        self._exhausted = ""  # сервер не принимает соединения: дальше в сеть не ходим, шаги берут запасные варианты
         self._parallel = threading.Semaphore(max(1, int(os.environ.get("REQCHECK_MAX_PARALLEL", "3") or 3)))
         self.cache_dir = Path(cache_dir) if cache_dir else None
 
@@ -112,6 +114,8 @@ class OpenAICompatClient:
         hit, cached = self._from_cache(role, payload)
         if hit:
             return cached
+        if self._exhausted:
+            raise LLMError(self._exhausted)
         if self.stats.calls >= self.max_calls:
             raise LLMError(f"Исчерпан лимит вызовов LLM на прогон ({self.max_calls}).")
         self.stats.add(role, calls=1)
@@ -155,7 +159,16 @@ class OpenAICompatClient:
                     time.sleep(self._backoff(exc, attempt))
             except (urllib.error.URLError, TimeoutError, OSError) as exc:
                 self.stats.add(seconds=time.perf_counter() - started)
-                last_error = f"{type(exc).__name__}: {getattr(exc, 'reason', exc)}"[:200]
+                reason = getattr(exc, "reason", exc)
+                last_error = f"{type(exc).__name__}: {reason}"[:200]
+                if isinstance(reason, (ConnectionRefusedError, socket.gaierror)):
+                    # Сервер не запущен или адрес не существует: повторы только тянут время (в Windows каждая
+                    # попытка к закрытому порту — около 4 с). Помечаем сервер недоступным для всего прогона.
+                    self._exhausted = (f"Сервер модели {self.provider.split(': ', 1)[-1]} не принимает соединения "
+                                       f"({type(reason).__name__}): запустите его или проверьте {ENV_BASE_URL}.")
+                    self.stats.add(role, failures=1)
+                    self.stats.note(error=f"{role}: {self._exhausted}")
+                    raise LLMError(self._exhausted) from exc
                 if attempt < self.retries:
                     self.stats.add(retries=1)
                     time.sleep(self._backoff(exc, attempt))

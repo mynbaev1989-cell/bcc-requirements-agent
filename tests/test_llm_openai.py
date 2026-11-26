@@ -2,6 +2,7 @@
 
 import io
 import json
+import socket
 import urllib.error
 import urllib.request
 
@@ -266,3 +267,42 @@ def test_without_base_url_gemini_path_unchanged(sample_md, tmp_path, monkeypatch
     monkeypatch.delenv("REQCHECK_LLM_BASE_URL", raising=False)
     assert main([str(sample_md), str(tmp_path / "r.md"), "--formats", "md"]) == 0
     assert "GEMINI_API_KEY" in capsys.readouterr().out
+
+
+# ---- сервер модели не запущен: без повторов и без зависания ----
+
+@pytest.mark.parametrize("reason", [ConnectionRefusedError(10061, "refused"), socket.gaierror(11001, "no host")])
+def test_dead_server_fails_fast_without_retries(net, tmp_path, reason):
+    net["queue"] = [urllib.error.URLError(reason)]
+    c = client(tmp_path, retries=5)
+    with pytest.raises(LLMError, match="не принимает соединения"):
+        c.generate_json("r", "s", "p")
+    with pytest.raises(LLMError, match="не принимает соединения"):
+        c.generate_json("r", "s", "другой запрос")  # второй запрос уже не идёт в сеть
+    assert len(net["calls"]) == 1 and c.stats.retries == 0
+
+
+def test_dead_server_still_serves_cache(net, tmp_path):
+    net["queue"] = [FakeResp('{"v": 1}'), urllib.error.URLError(ConnectionRefusedError())]
+    c = client(tmp_path)
+    assert c.generate_json("r", "s", "p") == {"v": 1}
+    with pytest.raises(LLMError):
+        c.generate_json("r", "s", "новый")
+    assert c.generate_json("r", "s", "p") == {"v": 1}  # кэш работает и после отказа сервера
+
+
+def test_cli_dead_local_server_gives_report_quickly(sample_md, tmp_path, monkeypatch):
+    calls = []
+
+    def refused(req, timeout=None):
+        calls.append(req)
+        raise urllib.error.URLError(ConnectionRefusedError(10061, "refused"))
+
+    monkeypatch.setattr(urllib.request, "urlopen", refused)
+    monkeypatch.setattr("time.sleep", lambda s: pytest.fail("повторы с паузой не нужны"))
+    monkeypatch.setenv("REQCHECK_LLM_BASE_URL", BASE)
+    monkeypatch.setenv("REQCHECK_LLM_MODEL", "llama3.1:8b")
+    out = tmp_path / "r.md"
+    assert main([str(sample_md), str(out), "--formats", "md", "--no-cache"]) == 0
+    assert len(calls) <= 3  # не больше параллельных запросов первой волны
+    assert "не принимает соединения" in out.read_text(encoding="utf-8")

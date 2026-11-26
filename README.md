@@ -155,7 +155,7 @@ python main.py --input input/requirements.md --output reports/requirements_repor
 
 Вердикт, баллы 0–100, приоритеты и оценку экономии считает код в [`pipeline.py`](reqcheck/pipeline.py), а не модель.
 
-**Модель внутри контура банка.** Если документ нельзя отправлять в облако, агент работает с любой моделью с OpenAI-совместимым API (Ollama, vLLM, LM Studio): задайте `REQCHECK_LLM_BASE_URL=http://localhost:11434/v1` и `REQCHECK_LLM_MODEL=<модель>`, ключ Gemini не нужен ([`llm_openai.py`](reqcheck/llm_openai.py)). Конвейер, правила и сверка цитат от модели не зависят; качество на локальных моделях мы не замеряли.
+**Модель внутри контура банка.** Если документ нельзя отправлять в облако, агент работает с любой моделью с OpenAI-совместимым API (Ollama, vLLM, LM Studio): задайте `REQCHECK_LLM_BASE_URL=http://localhost:11434/v1` и `REQCHECK_LLM_MODEL=<модель>`, ключ Gemini не нужен ([`llm_openai.py`](reqcheck/llm_openai.py)). Если сервер не запущен, агент после первого отказа соединения не повторяет запросы, а за секунды переходит на запасные варианты шагов и пишет причину в диагностику отчёта. Конвейер, правила и сверка цитат от модели не зависят; качество на локальных моделях мы не замеряли.
 
 **Встраивание в процесс.** [`examples/ci_gate.yml`](examples/ci_gate.yml) — шаг GitHub Actions, который проверяет ТЗ в pull request и падает, пока в документе есть критичные дефекты.
 
@@ -273,7 +273,7 @@ pip install -r requirements-dev.txt
 python -m pytest -q --cov=reqcheck
 ```
 
-860 тестов, покрытие строк `reqcheck/` 99%. В настоящую модель тесты не ходят: используется подставная `FakeLLM`. [GitHub Actions](.github/workflows/tests.yml) гоняет их на каждый push на Ubuntu и Windows, Python 3.11 и 3.12, падает при покрытии ниже 90% и делает офлайн-прогон агента. Перед сдачей проект собран из чистого клона в новом окружении.
+868 тестов, покрытие строк `reqcheck/` 99%. В настоящую модель тесты не ходят: используется подставная `FakeLLM`. [GitHub Actions](.github/workflows/tests.yml) гоняет их на каждый push на Ubuntu и Windows, Python 3.11 и 3.12, падает при покрытии ниже 90% и делает офлайн-прогон агента. Перед сдачей проект собран из чистого клона в новом окружении.
 
 | Что проверяется | Файл | Тестов |
 | --- | --- | ---: |
@@ -282,7 +282,7 @@ python -m pytest -q --cov=reqcheck
 | CLI: команда формы `main.py --input … --output …` и короткая форма, коды выхода 0–3, кириллица и пробелы в путях, `--offline`, `--answers`, `--formats`, отчёт не пишется поверх входа | [`test_cli_e2e.py`](tests/test_cli_e2e.py), [`test_main_entry.py`](tests/test_main_entry.py) | 58 |
 | Золотой отчёт: MD и JSON сравниваются с эталоном; документ кейса, превращённый в PDF, даёт те же ID Ф-1…Ф-4 | [`test_golden.py`](tests/test_golden.py), [`test_case_pdf.py`](tests/test_case_pdf.py) | 21 |
 | Разметка замера точности: цитаты и строки эталонов во всех 7 документах сходятся с текстом, аблация меряет все размеченные папки | [`test_eval_labels.py`](tests/test_eval_labels.py) | 9 |
-| Новое к сдаче: 2 правила кода и их несрабатывание на корректных требованиях всех 7 документов (28), клиент локальной модели без сети (23), разбиение запроса Reviewer пополам при сбое и неизменность запросов при успехе (6), метрики замера (4), ворота CI (3), сводный вопрос по мелким находкам (5), ответ, противоречащий сам себе (4) | [`test_rules_new.py`](tests/test_rules_new.py), [`test_llm_openai.py`](tests/test_llm_openai.py), [`test_reviewer_split.py`](tests/test_reviewer_split.py), [`test_eval_metrics.py`](tests/test_eval_metrics.py), [`test_ci_gate.py`](tests/test_ci_gate.py), [`test_minor_batch.py`](tests/test_minor_batch.py), [`test_self_contradiction.py`](tests/test_self_contradiction.py) | 73 |
+| Новое к сдаче: 2 правила кода и их несрабатывание на корректных требованиях всех 7 документов (28), клиент локальной модели без сети, в том числе незапущенный сервер (27), разбиение запроса Reviewer пополам при сбое и неизменность запросов при успехе (6), метрики замера (4), ворота CI (3), сводный вопрос по мелким находкам (5), ответ, противоречащий сам себе (4), таблица агентов и схема в README совпадают с `build_plan()` (4) | [`test_rules_new.py`](tests/test_rules_new.py), [`test_llm_openai.py`](tests/test_llm_openai.py), [`test_reviewer_split.py`](tests/test_reviewer_split.py), [`test_eval_metrics.py`](tests/test_eval_metrics.py), [`test_ci_gate.py`](tests/test_ci_gate.py), [`test_minor_batch.py`](tests/test_minor_batch.py), [`test_self_contradiction.py`](tests/test_self_contradiction.py), [`test_readme_architecture.py`](tests/test_readme_architecture.py) | 81 |
 | Модули по отдельности: загрузчики, нарезка, правила, сверка цитат, клиент LLM, критерии, вопросы и ответы, оценка ценности | [`test_units.py`](tests/test_units.py) и файлы по модулям | 445 |
 
 Тесты нашли и закрыли 6 ошибок, на каждую есть регрессионный тест: нечёткая цитата получала строку на две выше настоящей; в PDF без маркеров списка пункты «Ф-1.»…«Ф-4.» склеивались и теряли ID; «Версия документа: 1.0» не считалась версией; критичный дефект давал тестировщикам вердикт лучше существенного; при сбое Reviewer критерий с находкой правил показывался «не оценено»; порядок строк в таблице нагрузки на LLM зависел от того, какой параллельный агент ответил первым.
