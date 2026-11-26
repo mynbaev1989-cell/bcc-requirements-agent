@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 710" width="1200" height="710" role="img" aria-labelledby="t d">
   <title id="t">Оркестратор агентов reqcheck</title>
-  <desc id="d">Стадии по порядку. Код читает файл, нарезает его и проверяет правилами. Extractor выделяет требования. Параллельно работают Reviewer и два шага Analyst. Затем ConsistencyReviewer и GapFinder ищут противоречия и пропуски, код сверяет цитаты, Critic перепроверяет находки, Clarifier задаёт вопросы автору. Ответы автора при повторном запуске с ключом --answers учитывает Resolver. При сбое LLM каждый шаг переходит на запасной вариант на коде.</desc>
+  <desc id="d">Стадии по порядку. Код читает файл, нарезает его и проверяет правилами. Extractor выделяет требования. Параллельно работают Reviewer и два шага Analyst. Затем ConsistencyReviewer и GapFinder ищут противоречия и пропуски, код сверяет цитаты, Critic перепроверяет находки, код сливает повторы одного дефекта от разных агентов, Clarifier задаёт вопросы автору. Ответы автора при повторном запуске с ключом --answers учитывает Resolver. При сбое LLM каждый шаг переходит на запасной вариант на коде.</desc>
   <rect width="1200" height="710" rx="24" fill="#f7f5ef"/>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
@@ -56,29 +56,35 @@
     <text x="870" y="372" font-size="18" fill="#3c4a5e">слияние дублей</text>
 
     <!-- Ряд C -->
-    <rect x="40" y="500" width="250" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
-    <text x="60" y="538" font-size="22" font-weight="700" fill="#7a4a00">Critic</text>
-    <text x="60" y="570" font-size="18" fill="#5c4a2e">подтверждает,</text>
-    <text x="60" y="596" font-size="18" fill="#5c4a2e">понижает или</text>
-    <text x="60" y="622" font-size="18" fill="#5c4a2e">отклоняет находки</text>
+    <rect x="40" y="500" width="200" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="58" y="538" font-size="22" font-weight="700" fill="#7a4a00">Critic</text>
+    <text x="58" y="570" font-size="18" fill="#5c4a2e">подтверждает,</text>
+    <text x="58" y="596" font-size="18" fill="#5c4a2e">понижает или</text>
+    <text x="58" y="622" font-size="18" fill="#5c4a2e">отклоняет</text>
 
-    <rect x="330" y="500" width="270" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
-    <text x="350" y="538" font-size="22" font-weight="700" fill="#7a4a00">Clarifier</text>
-    <text x="350" y="570" font-size="18" fill="#5c4a2e">вопросы автору:</text>
-    <text x="350" y="596" font-size="18" fill="#5c4a2e">кому, приоритет,</text>
-    <text x="350" y="622" font-size="18" fill="#5c4a2e">варианты ответа</text>
+    <rect x="270" y="500" width="200" height="140" rx="14" fill="#ffffff" stroke="#0f1b2d" stroke-width="2"/>
+    <text x="288" y="538" font-size="22" font-weight="700" fill="#0f1b2d">Слияние</text>
+    <text x="288" y="570" font-size="18" fill="#3c4a5e">один дефект от</text>
+    <text x="288" y="596" font-size="18" fill="#3c4a5e">двух агентов →</text>
+    <text x="288" y="622" font-size="18" fill="#3c4a5e">одна находка</text>
 
-    <rect x="640" y="500" width="250" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
-    <text x="660" y="538" font-size="22" font-weight="700" fill="#7a4a00">Resolver</text>
-    <text x="660" y="570" font-size="18" fill="#5c4a2e">ответы автора</text>
-    <text x="660" y="596" font-size="18" fill="#5c4a2e">закрывают или</text>
-    <text x="660" y="622" font-size="18" fill="#5c4a2e">оставляют находки</text>
+    <rect x="500" y="500" width="200" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="518" y="538" font-size="22" font-weight="700" fill="#7a4a00">Clarifier</text>
+    <text x="518" y="570" font-size="18" fill="#5c4a2e">вопросы автору:</text>
+    <text x="518" y="596" font-size="18" fill="#5c4a2e">кому, приоритет,</text>
+    <text x="518" y="622" font-size="18" fill="#5c4a2e">варианты ответа</text>
 
-    <rect x="930" y="500" width="230" height="140" rx="14" fill="#0f1b2d"/>
-    <text x="950" y="538" font-size="22" font-weight="700" fill="#f4f1ea">Отчёт</text>
-    <text x="950" y="570" font-size="18" fill="#c9d4e3">вердикт, баллы</text>
-    <text x="950" y="596" font-size="18" fill="#c9d4e3">MD · PDF · JSON</text>
-    <text x="950" y="622" font-size="18" fill="#c9d4e3">файл вопросов</text>
+    <rect x="730" y="500" width="200" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="748" y="538" font-size="22" font-weight="700" fill="#7a4a00">Resolver</text>
+    <text x="748" y="570" font-size="18" fill="#5c4a2e">ответы автора</text>
+    <text x="748" y="596" font-size="18" fill="#5c4a2e">закрывают или</text>
+    <text x="748" y="622" font-size="18" fill="#5c4a2e">оставляют</text>
+
+    <rect x="960" y="500" width="200" height="140" rx="14" fill="#0f1b2d"/>
+    <text x="978" y="538" font-size="22" font-weight="700" fill="#f4f1ea">Отчёт</text>
+    <text x="978" y="570" font-size="18" fill="#c9d4e3">вердикт, баллы</text>
+    <text x="978" y="596" font-size="18" fill="#c9d4e3">MD · PDF · JSON</text>
+    <text x="978" y="622" font-size="18" fill="#c9d4e3">файл вопросов</text>
 
     <!-- Стрелки -->
     <g stroke="#5b6b82" stroke-width="2.5" fill="none" marker-end="url(#a)">
@@ -87,12 +93,13 @@
       <path d="M990 200 V225 H255 V246"/>
       <path d="M470 350 H506"/>
       <path d="M810 350 H846"/>
-      <path d="M1005 450 V475 H165 V496"/>
-      <path d="M290 570 H326"/>
-      <path d="M600 570 H636"/>
-      <path d="M890 570 H926"/>
+      <path d="M1005 450 V475 H140 V496"/>
+      <path d="M240 570 H266"/>
+      <path d="M470 570 H496"/>
+      <path d="M700 570 H726"/>
+      <path d="M930 570 H956"/>
     </g>
-    <path d="M1045 640 V665 H765 V644" stroke="#b0700a" stroke-width="2.5" fill="none" stroke-dasharray="8 6" marker-end="url(#a)"/>
-    <text x="905" y="694" font-size="18" text-anchor="middle" fill="#7a4a00">автор отвечает → повторный запуск с --answers</text>
+    <path d="M1060 640 V665 H830 V644" stroke="#b0700a" stroke-width="2.5" fill="none" stroke-dasharray="8 6" marker-end="url(#a)"/>
+    <text x="945" y="694" font-size="18" text-anchor="middle" fill="#7a4a00">автор отвечает → повторный запуск с --answers</text>
   </g>
 </svg>

@@ -143,7 +143,7 @@ python -m reqcheck input/requirements.md reports/requirements_report.md --answer
 ## Как устроен агент
 
 <p align="center">
-  <img src="./assets/readme/pipeline.svg" width="100%" alt="Схема оркестратора: код читает файл, нарезает и проверяет правилами; Extractor выделяет требования; Reviewer и два шага Analyst работают параллельно; Consistency и GapFinder ищут противоречия и пропуски; код сверяет цитаты; Critic перепроверяет находки; Clarifier задаёт вопросы автору; Resolver учитывает ответы при запуске с --answers">
+  <img src="./assets/readme/pipeline.svg" width="100%" alt="Схема оркестратора: код читает файл, нарезает и проверяет правилами; Extractor выделяет требования; Reviewer и два шага Analyst работают параллельно; Consistency и GapFinder ищут противоречия и пропуски; код сверяет цитаты; Critic перепроверяет находки; код сливает повторы одного дефекта от разных агентов; Clarifier задаёт вопросы автору; Resolver учитывает ответы при запуске с --answers">
 </p>
 
 Принцип: **всё, что можно посчитать кодом, считает код**; LLM оценивает только смысл, а её ответы проверяет код.
