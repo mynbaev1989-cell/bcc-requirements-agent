@@ -85,6 +85,16 @@ def _run_inner(input_path: str, opts: Options, llm: JsonLLM | None, result: RunR
         _llm_metrics(ctx.llm, result)
 
 
+# Роли в порядке плана. Словарь статистики заполняется в порядке первых запросов, а параллельные шаги
+# обращаются к модели в произвольном порядке: без сортировки таблица нагрузки в отчёте менялась бы от прогона к прогону
+ROLE_ORDER = ("extractor", "reviewer", "analyst_checklist", "analyst_tests", "consistency", "gaps", "critic",
+              "clarifier", "resolver")
+
+
+def _role_rank(role: str) -> tuple[int, str]:
+    return (ROLE_ORDER.index(role) if role in ROLE_ORDER else len(ROLE_ORDER), role)
+
+
 def _llm_metrics(llm: JsonLLM, result: RunResult) -> None:
     """Нагрузка на LLM: вызовы, кэш, токены, роли; смена модели из-за квоты — в паспорт и диагностику."""
     st = llm.stats
@@ -93,7 +103,7 @@ def _llm_metrics(llm: JsonLLM, result: RunResult) -> None:
         "llm_failures": st.failures, "input_tokens": st.input_tokens, "output_tokens": st.output_tokens,
         "thinking_tokens": st.thinking_tokens, "llm_seconds": round(st.seconds, 1),
         "llm_by_role": {k: {kk: (round(vv, 1) if isinstance(vv, float) else vv) for kk, vv in v.items()}
-                        for k, v in st.by_role.items()}})
+                        for k, v in sorted(st.by_role.items(), key=lambda kv: _role_rank(kv[0]))}})
     p = result.passport
     if len(st.models_used) > 1:
         p["model"] = " + ".join(st.models_used) + " (переключение из-за квоты/доступности)"

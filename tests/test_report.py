@@ -25,3 +25,17 @@ def test_report_prints_sensitivity_table(sample_md):
     assert "Чувствительность к допущениям" in md
     for name in ("| основной |", "| осторожный | ×3 | 0,7 |", "| только время ревью | — | — | 0 ч |"):
         assert name in md
+
+
+def test_llm_role_table_follows_plan_order_not_call_order():
+    # Регрессия: порядок ролей в «нагрузке на LLM» зависел от того, какой параллельный шаг первым спросил модель
+    from reqcheck.llm import FakeLLM
+    from reqcheck.models import RunResult
+    from reqcheck.pipeline import _llm_metrics
+
+    llm = FakeLLM({})
+    for role in ("critic", "analyst_tests", "reviewer", "extractor", "custom"):
+        llm.stats.add(role, calls=1)
+    result = RunResult(document=None)
+    _llm_metrics(llm, result)
+    assert list(result.metrics["llm_by_role"]) == ["extractor", "reviewer", "analyst_tests", "critic", "custom"]

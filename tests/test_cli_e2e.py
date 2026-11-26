@@ -120,8 +120,11 @@ def test_unknown_extension_with_text_is_read_as_text(tmp_path, ext):
 
 
 def test_too_large_input(sample_md, tmp_path):
+    # Нижний предел лимита в CLI — 0,001 МБ (~1 КБ); файл заведомо больше на любой ОС (на Linux sample_md короче 1 КБ)
+    big = tmp_path / "big.md"
+    big.write_bytes(sample_md.read_bytes() + b"\n" + "Текст требования. ".encode("utf-8") * 200)
     out = tmp_path / "r.md"
-    assert main([str(sample_md), str(out), "--offline", "--max-size-mb", "0.0001"]) == 1
+    assert main([str(big), str(out), "--offline", "--max-size-mb", "0.0001"]) == 1
     assert out.exists()
 
 
