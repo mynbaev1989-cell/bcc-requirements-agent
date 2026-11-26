@@ -12,8 +12,8 @@
     "document_title": "Уведомление о расходах по карте",
     "file": "requirements.md",
     "input_path": "input/requirements.md",
-    "run_at": "2026-11-26T18:17:13+05:00",
-    "agent_version": "0.1.0 (66cfae7-dirty)",
+    "run_at": "2026-11-26T21:05:02+05:00",
+    "agent_version": "0.1.0 (f396d3e)",
     "model": "gemini-3.5-flash + gemini-3.5-flash-lite (переключение из-за квоты/доступности)",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -23,7 +23,7 @@
     "lines": 199,
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
-    "duration_sec": 46.39,
+    "duration_sec": 1.02,
     "report_questions_file": "requirements_report_questions.md"
   },
   "requirements": [
@@ -4848,19 +4848,12 @@
     }
   ],
   "resolved": [],
-  "diagnostics": [
-    {
-      "level": "info",
-      "code": "LLM_FALLBACK",
-      "message": "дневная квота gemini-3.5-flash исчерпана, переключаюсь на gemini-3.5-flash-lite",
-      "hint": "Модель сменилась во время прогона."
-    }
-  ],
+  "diagnostics": [],
   "metrics": {
     "dropped_ungrounded": 1,
     "dropped_by_critic": 0,
     "downgraded_by_critic": 0,
-    "llm_calls": 1,
+    "llm_calls": 0,
     "journal": [
       {
         "stage": "1",
@@ -4884,7 +4877,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 1.07,
+        "seconds": 0.94,
         "status": "ok",
         "out": "gemini-3.5-flash",
         "roles": []
@@ -4893,7 +4886,7 @@
         "stage": "4",
         "step": "Выделение требований",
         "agent": "Extractor (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "требований 45",
         "roles": [
@@ -4904,7 +4897,7 @@
         "stage": "5.1",
         "step": "Оценка каждого требования",
         "agent": "Reviewer, параллельные пакеты (LLM)",
-        "seconds": 0.03,
+        "seconds": 0.01,
         "status": "ok",
         "out": "оценено 45, находок 25",
         "roles": [
@@ -4915,7 +4908,7 @@
         "stage": "5.2",
         "step": "Чек-лист и трассировка",
         "agent": "Analyst (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "строк трассировки 12",
         "roles": [
@@ -4926,7 +4919,7 @@
         "stage": "5.3",
         "step": "Черновики тест-кейсов",
         "agent": "Analyst (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "тест-кейсов 8",
         "roles": [
@@ -4937,7 +4930,7 @@
         "stage": "6",
         "step": "Проверка набора: противоречия и пропуски",
         "agent": "ConsistencyReviewer + GapFinder (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "находок 6",
         "roles": [
@@ -4958,7 +4951,7 @@
         "stage": "8",
         "step": "Перепроверка находок",
         "agent": "Critic (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "оставлено 36, отклонено/слито 0",
         "roles": [
@@ -4987,7 +4980,7 @@
         "stage": "11",
         "step": "Вопросы автору",
         "agent": "Clarifier (LLM)",
-        "seconds": 45.21,
+        "seconds": 0.0,
         "status": "ok",
         "out": "вопросов 16",
         "roles": [
@@ -5007,26 +5000,17 @@
       "Противоречие кодов статусов и тел ответов для статуса 200 → Противоречие в описании условий возврата HTTP-статуса 200"
     ],
     "merged_singular": 3,
-    "llm_cache_hits": 12,
-    "llm_retries": 2,
+    "llm_cache_hits": 13,
+    "llm_retries": 0,
     "llm_failures": 0,
-    "input_tokens": 17604,
-    "output_tokens": 5987,
+    "input_tokens": 0,
+    "output_tokens": 0,
     "thinking_tokens": 0,
-    "llm_seconds": 47.0,
+    "llm_seconds": 0.0,
     "llm_by_role": {
       "extractor": {
         "calls": 0,
         "cache_hits": 1,
-        "failures": 0,
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "thinking_tokens": 0,
-        "seconds": 0.0
-      },
-      "reviewer": {
-        "calls": 0,
-        "cache_hits": 6,
         "failures": 0,
         "input_tokens": 0,
         "output_tokens": 0,
@@ -5045,6 +5029,15 @@
       "analyst_checklist": {
         "calls": 0,
         "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 0,
+        "cache_hits": 6,
         "failures": 0,
         "input_tokens": 0,
         "output_tokens": 0,
@@ -5079,26 +5072,26 @@
         "seconds": 0.0
       },
       "clarifier": {
-        "calls": 1,
-        "cache_hits": 0,
+        "calls": 0,
+        "cache_hits": 1,
         "failures": 0,
-        "input_tokens": 17604,
-        "output_tokens": 5987,
+        "input_tokens": 0,
+        "output_tokens": 0,
         "thinking_tokens": 0,
-        "seconds": 29.6
+        "seconds": 0.0
       }
     },
-    "duration_sec": 46.39,
+    "duration_sec": 1.02,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
       "manual_min_per_requirement": 6.0,
       "check_min_per_finding": 1.5,
       "manual_hours": 5.0,
-      "agent_hours": 0.013,
+      "agent_hours": 0.0,
       "check_hours": 0.72,
-      "saved_hours": 4.26,
-      "saved_kzt": 21311,
+      "saved_hours": 4.27,
+      "saved_kzt": 21374,
       "critical_found": 4,
       "major_found": 20,
       "fix_hours_at_requirements": 1.0,
@@ -5106,10 +5099,11 @@
       "precision": 0.85,
       "avoided_rework_hours": 71.4,
       "avoided_rework_kzt": 357000,
-      "tokens_total": 23591,
+      "tokens_total": 0,
       "llm_cost_kzt": 0.0,
       "llm_price_note": "бесплатный тариф (цена токенов не задана)",
-      "roi": 104.4
+      "roi": 104.4,
+      "major_weight": 0.5
     },
     "requirements": 45,
     "findings": 29,

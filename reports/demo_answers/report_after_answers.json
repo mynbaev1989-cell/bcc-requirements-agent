@@ -12,8 +12,8 @@
     "document_title": "Уведомление о расходах по карте",
     "file": "requirements.md",
     "input_path": "input/requirements.md",
-    "run_at": "2026-11-26T18:18:17+05:00",
-    "agent_version": "0.1.0 (66cfae7-dirty)",
+    "run_at": "2026-11-26T21:05:06+05:00",
+    "agent_version": "0.1.0 (f396d3e-dirty)",
     "model": "gemini-3.5-flash + gemini-3.5-flash-lite (переключение из-за квоты/доступности)",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -24,7 +24,7 @@
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
     "answers_file": "reports/demo_answers/answers.md",
-    "duration_sec": 8.52,
+    "duration_sec": 0.88,
     "report_questions_file": "report_after_answers_questions.md"
   },
   "requirements": [
@@ -4850,19 +4850,12 @@
       "grouped": false
     }
   ],
-  "diagnostics": [
-    {
-      "level": "info",
-      "code": "LLM_FALLBACK",
-      "message": "дневная квота gemini-3.5-flash исчерпана, переключаюсь на gemini-3.5-flash-lite",
-      "hint": "Модель сменилась во время прогона."
-    }
-  ],
+  "diagnostics": [],
   "metrics": {
     "dropped_ungrounded": 1,
     "dropped_by_critic": 0,
     "downgraded_by_critic": 0,
-    "llm_calls": 1,
+    "llm_calls": 0,
     "journal": [
       {
         "stage": "1",
@@ -4877,7 +4870,7 @@
         "stage": "2",
         "step": "Нарезка и правила набора",
         "agent": "Segmenter + RuleEngine (код)",
-        "seconds": 0.0,
+        "seconds": 0.01,
         "status": "ok",
         "out": "блоков 83, находок правил 5",
         "roles": []
@@ -4886,7 +4879,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 0.85,
+        "seconds": 0.8,
         "status": "ok",
         "out": "gemini-3.5-flash",
         "roles": []
@@ -4989,7 +4982,7 @@
         "stage": "11",
         "step": "Вопросы автору",
         "agent": "Clarifier (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "вопросов 16",
         "roles": [
@@ -5009,7 +5002,7 @@
         "stage": "13",
         "step": "Учёт ответов автора",
         "agent": "Resolver (LLM)",
-        "seconds": 7.59,
+        "seconds": 0.0,
         "status": "ok",
         "out": "решений по находкам 7",
         "roles": [
@@ -5036,13 +5029,13 @@
       "critical": 4,
       "major": 20
     },
-    "llm_cache_hits": 13,
+    "llm_cache_hits": 14,
     "llm_retries": 0,
     "llm_failures": 0,
-    "input_tokens": 5377,
-    "output_tokens": 816,
+    "input_tokens": 0,
+    "output_tokens": 0,
     "thinking_tokens": 0,
-    "llm_seconds": 7.6,
+    "llm_seconds": 0.0,
     "llm_by_role": {
       "extractor": {
         "calls": 0,
@@ -5117,26 +5110,26 @@
         "seconds": 0.0
       },
       "resolver": {
-        "calls": 1,
-        "cache_hits": 0,
+        "calls": 0,
+        "cache_hits": 1,
         "failures": 0,
-        "input_tokens": 5377,
-        "output_tokens": 816,
+        "input_tokens": 0,
+        "output_tokens": 0,
         "thinking_tokens": 0,
-        "seconds": 6.8
+        "seconds": 0.0
       }
     },
-    "duration_sec": 8.52,
+    "duration_sec": 0.88,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
       "manual_min_per_requirement": 6.0,
       "check_min_per_finding": 1.5,
       "manual_hours": 5.0,
-      "agent_hours": 0.002,
+      "agent_hours": 0.0,
       "check_hours": 0.72,
       "saved_hours": 4.27,
-      "saved_kzt": 21363,
+      "saved_kzt": 21374,
       "critical_found": 4,
       "major_found": 20,
       "fix_hours_at_requirements": 1.0,
@@ -5144,10 +5137,11 @@
       "precision": 0.85,
       "avoided_rework_hours": 71.4,
       "avoided_rework_kzt": 357000,
-      "tokens_total": 6193,
+      "tokens_total": 0,
       "llm_cost_kzt": 0.0,
       "llm_price_note": "бесплатный тариф (цена токенов не задана)",
-      "roi": 104.4
+      "roi": 104.4,
+      "major_weight": 0.5
     },
     "requirements": 45,
     "findings": 22,
