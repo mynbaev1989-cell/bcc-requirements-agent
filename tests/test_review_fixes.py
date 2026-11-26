@@ -669,3 +669,54 @@ def test_docx_restart_from_nested_item_and_bad_level(tmp_path):
     d.save(tmp_path / "nested.docx")
     lines = [ln for ln in load_document(tmp_path / "nested.docx")[0].lines if ln.strip()]
     assert lines[1:] == ["1. Первый.", "2. Второй.", "1.1. Вложенный.", "* Глубокий."]  # битый уровень — без номера, но без падения
+
+
+def test_critic_duplicate_keeps_quotes_and_fake_downgrade_is_not_counted(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nЛимит 30 000 тенге.\n\nЛимит 50 000 тенге.\n")
+    f1 = Finding(fid="T-001", scope="set", criterion="set_consistent", severity="critical", title="A", explanation="",
+                 rids=["R-001"], quotes=[Quote("Лимит 30 000 тенге", 3, True)], source="llm", verified=True)
+    f2 = Finding(fid="T-002", scope="set", criterion="set_consistent", severity="critical", title="B", explanation="",
+                 rids=["R-002"], quotes=[Quote("Лимит 50 000 тенге", 5, True)], source="llm", verified=True)
+    f3 = Finding(fid="T-003", scope="set", criterion="set_complete", severity="major", title="C", explanation="",
+                 rids=["R-001"], quotes=[Quote("Лимит 30 000 тенге", 3, True)], source="llm", verified=True)
+    llm = FakeLLM({"critic": {"verdicts": [{"fid": "T-002", "verdict": "duplicate", "duplicate_of": "T-001"},
+                                           {"fid": "T-003", "verdict": "downgrade", "severity": "critical"}]}})
+    kept, _ = Critic(llm, doc).run([f1, f2, f3])
+    assert [q.line for q in kept[0].quotes] == [3, 5] and kept[0].rids == ["R-001", "R-002"]
+    assert kept[1].severity == "major" and not kept[1].critic.startswith("понижено")
+
+
+def test_reviewer_ignores_assessment_of_requirement_from_another_batch(tmp_path, monkeypatch):
+    from reqcheck import agents
+    from reqcheck.models import Requirement
+    monkeypatch.setattr(agents, "REVIEW_BATCH", 1)
+    doc = _doc(tmp_path, "# ТЗ\n\nСистема должна отправлять SMS.\n\nСистема должна хранить журнал.\n")
+    reqs = [Requirement(rid=f"R-00{i}", source_id="", source_id_assigned=True, summary="", quote="", line_start=l,
+                        line_end=l, section="ТЗ") for i, l in ((1, 3), (2, 5))]
+
+    class PerBatch(FakeLLM):  # пакет R-002 ошибочно оценивает ещё и R-001 — нарушением
+        def generate_json(self, role, system, prompt):
+            ok = lambda rid: {"rid": rid, "marks": [{"criterion": "verifiable", "status": "ok"}]}  # noqa: E731
+            if "R-002 (" in prompt:
+                return {"assessments": [ok("R-002"), {"rid": "R-001", "marks": [{"criterion": "verifiable", "status": "violation"}],
+                                                      "findings": [{"title": "Чужая", "quotes": ["отправлять SMS"]}]}]}
+            return {"assessments": [ok("R-001")]}
+
+    assessments, findings = agents.Reviewer(PerBatch(), doc, Grounder(doc)).run(reqs, {})
+    mark = next(m for m in assessments["R-001"].marks if m.criterion == "verifiable")
+    assert mark.status == "ok" and findings == []
+
+
+def test_report_is_never_written_over_the_input_document(tmp_path):
+    from reqcheck.pipeline import Options, run, write_outputs
+    src = tmp_path / "tz.md"
+    text = "# ТЗ\n\n**Ф-1.** Система должна отправлять SMS клиенту в течение 30 секунд.\n"
+    src.write_text(text, encoding="utf-8")
+    result = run(str(src), Options(offline=True))
+    written, problems = write_outputs(result, str(tmp_path / "tz.pdf"), ("md", "pdf"))
+    assert src.read_text(encoding="utf-8") == text  # «tz.md tz.pdf» не затирает документ
+    assert [p.code for p in problems] == ["WRITE_SKIPPED"] and str(tmp_path / "tz.pdf") in written
+    blocker = tmp_path / "file.txt"
+    blocker.write_text("x", encoding="utf-8")
+    written, problems = write_outputs(result, str(blocker / "r.md"), ("md",))  # папка отчёта внутри файла
+    assert written == [] and problems[0].code == "WRITE_FAILED"

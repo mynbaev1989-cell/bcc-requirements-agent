@@ -179,6 +179,13 @@ def _finalize(result: RunResult) -> None:
                            "questions_blocker_open": sum(1 for q in open_q if q.priority == "blocker")})
 
 
+def _resolved(path: str) -> Path | None:
+    try:
+        return Path(path).resolve() if path else None
+    except (OSError, ValueError):
+        return None
+
+
 def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...]) -> tuple[list[str], list[Diagnostic]]:
     """Записать отчёт. Формат основного файла — по расширению; остальные — рядом с тем же именем."""
     from reqcheck.report_md import render_markdown
@@ -187,7 +194,21 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
     out = Path(output_path)
     written: list[str] = []
     problems: list[Diagnostic] = []
-    out.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        out.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:  # путь отчёта ведёт внутрь файла или нет прав: код выхода 2, а не трассировка
+        return [], [Diagnostic("error", "WRITE_FAILED", f"Не удалось создать папку для отчёта: {exc}",
+                               "Укажите другой путь отчёта.")]
+    source = _resolved(result.passport.get("input_path", ""))
+
+    def overwrites_input(target: Path) -> bool:
+        # «tz.md tz.pdf» положил бы Markdown-версию отчёта в tz.md — поверх проверяемого документа
+        if source is None or _resolved(str(target)) != source:
+            return False
+        problems.append(Diagnostic("warning", "WRITE_SKIPPED", f"{target.name} не записан: это входной документ.",
+                                   "Укажите для отчёта другое имя файла."))
+        return True
+
     stem = out.with_suffix("")
     main_ext = out.suffix.lower().lstrip(".") or "md"
     wanted = list(dict.fromkeys([main_ext] + list(formats)))
@@ -196,6 +217,8 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
     md_text = render_markdown(result)
     for fmt in wanted:
         target = out if fmt == main_ext and out.suffix else stem.with_suffix("." + fmt)
+        if overwrites_input(target):
+            continue
         try:
             if fmt in ("md", "markdown", "txt"):
                 target.write_text(md_text, encoding="utf-8")
@@ -209,7 +232,7 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
             written.append(str(target))
         except Exception as exc:  # noqa: BLE001 — один формат не должен мешать остальным
             problems.append(Diagnostic("warning", "WRITE_FAILED", f"Не удалось записать {target.name}: {exc}"))
-    if result.questions:
+    if result.questions and not overwrites_input(Path(f"{stem}_questions.md")):
         # Шаблон для ответов автора: ответы уже учтённые в этом прогоне сохраняются в файле
         from reqcheck.clarify import render_questions_file
         target = Path(f"{stem}_questions.md")

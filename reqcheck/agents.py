@@ -208,7 +208,6 @@ class Reviewer:
         context = numbered_document(self.doc)
         assessments: dict[str, RequirementAssessment] = {}
         findings: list[Finding] = []
-        known = {r.rid for r in reqs}
         line_of = {r.rid: r.line_start for r in reqs}
         batches = [reqs[i:i + REVIEW_BATCH] for i in range(0, len(reqs), REVIEW_BATCH)]
         shared = {b for b, n in Counter(b for r in reqs for b in set(r.block_ids)).items() if n > 1}
@@ -250,9 +249,9 @@ class Reviewer:
                             r.rid, [CriterionMark(c, NA, "не оценено: LLM не ответила") for c in criteria.REQ_CODES])
         if batches and all(a is None for a in answers):
             raise LLMError(self.errors[0] if self.errors else "Reviewer не получил ответов")
-        for data in answers:
-            if data is not None:
-                self._collect(data, known, line_of, assessments, findings)
+        for batch, data in zip(batches, answers):
+            if data is not None:  # из ответа берём только требования своего пакета: чужую оценку не перезаписываем
+                self._collect(data, {r.rid for r in batch}, line_of, assessments, findings)
         # Модель могла пропустить требования пакета. Переспрашиваем один раз только о них; что осталось без
         # оценки — честно помечаем и сообщаем (self.skipped → диагностика REVIEW_INCOMPLETE), а не молчим
         omitted = [r for i, b in enumerate(batches) if answers[i] is not None for r in b if r.rid not in assessments]
@@ -398,11 +397,14 @@ class Critic:
                         f.critic = f"дубль {other}: {reason}"
                         main = by_id[other]
                         main.rids = list(dict.fromkeys(main.rids + f.rids))
+                        main.quotes = union_quotes(main.quotes, f.quotes)  # у каждого требования — своё место в тексте
                 elif verdict == "downgrade":
                     sev = _s(v.get("severity"), 12).lower()
                     if sev in SEVERITIES and SEVERITIES.index(sev) > SEVERITIES.index(f.severity):
                         f.severity = sev
-                    f.critic = f"понижено критиком: {reason}"
+                        f.critic = f"понижено критиком: {reason}"
+                    else:  # «понижение» до той же или более высокой критичности — не понижение
+                        f.critic = f"проверено критиком: {reason}"
                 elif verdict == "confirm":
                     f.critic = "подтверждено критиком"
         kept = [f for f in findings if f.fid not in rejected]
