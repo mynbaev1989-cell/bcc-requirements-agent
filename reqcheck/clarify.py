@@ -319,6 +319,24 @@ def _strip_tags(text: str) -> str:
     return re.sub(r"<\s*/?\s*ответ\s+автора\s*>", " ", text, flags=re.I)
 
 
+def self_contradictions(data, answer_by_q: dict[str, str]) -> dict[str, tuple[str, str]]:
+    """Ответы, которые модель назвала противоречащими самим себе: {qid: (часть 1, часть 2)}.
+
+    Принимаются только пары, где обе части — разные фрагменты именно этого ответа (сверка кодом):
+    выдуманная моделью «цитата» не может открыть находку, закрытую честным ответом."""
+    out: dict[str, tuple[str, str]] = {}
+    for c in _list(data.get("self_contradictions") if isinstance(data, dict) else None):
+        if not isinstance(c, dict):
+            continue
+        qid, a, b = _s(c.get("qid"), 24), _s(c.get("part_a"), 300), _s(c.get("part_b"), 300)
+        answer = normalize(answer_by_q.get(qid, ""))
+        na, nb = normalize(a).strip(" .,;:«»\""), normalize(b).strip(" .,;:«»\"")
+        if len(na) >= 5 and len(nb) >= 5 and na != nb and na not in nb and nb not in na \
+                and na in answer and nb in answer:
+            out.setdefault(qid, (a.strip(), b.strip()))
+    return out
+
+
 class Resolver:
     """Учёт ответов автора: какие находки ответ закрыл, какие частично, какие остались (с новым вопросом)."""
 
@@ -388,6 +406,8 @@ class Resolver:
         # Ответ на вопрос этого прогона может решать только находки этого вопроса; ответ на вопрос
         # прошлого прогона (без пары) — любую находку из списка, переданного модели
         allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
+        clash = self_contradictions(data, answer_by_q)
+        asked: set[str] = set()
         effects = []
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
             if not isinstance(e, dict):
@@ -412,9 +432,20 @@ class Resolver:
                                                       answer_by_q.get(qid, "")):
                 wording = ""  # формулировка модели расходится с выбором автора — не показываем её как исправление
                 comment += " Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом."
+            follow_up = _s(e.get("follow_up"), 600)
+            if qid in clash and status in ("resolved", "partial"):
+                # Ответ сам себе противоречит (обе части найдены в ответе дословно): закрывать нельзя,
+                # иначе модель молча выбрала бы одно из значений за автора. Уточнение — одно на ответ.
+                a_part, b_part = clash[qid]
+                status, wording = "open", ""
+                comment = f"ответ противоречит сам себе: «{a_part}» и «{b_part}»"
+                follow_up = "" if qid in asked else (
+                    f"В ответе два несовместимых утверждения: «{a_part}» и «{b_part}». Какое из них верно?")
+            if status == "open" and follow_up:
+                asked.add(qid)
             # В отчёт и файл ответов — исходный номер вопроса
             effects.append({"fid": fid, "qid": orig_qid.get(qid, qid), "status": status, "comment": comment,
-                            "revised_wording": wording, "follow_up": _s(e.get("follow_up"), 600)})
+                            "revised_wording": wording, "follow_up": follow_up})
         return effects
 
 
