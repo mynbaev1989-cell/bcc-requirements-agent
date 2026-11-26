@@ -188,10 +188,19 @@ def _numbers(text: str) -> set[str]:
 
 def wording_matches_answer(wording: str, chosen: list[str], answer: str) -> bool:
     """Проверка кодом: значения, выбранные автором (дословно из ответа), должны быть в новой формулировке."""
-    ans_norm = normalize(answer)
+    ans_norm, wording_norm = normalize(answer), normalize(wording)
     real = [c for c in chosen if c and normalize(c) in ans_norm]  # выдуманные «выбранные значения» не считаются
     need = set().union(*(_numbers(c) for c in real)) if real else set()
-    return need <= _numbers(wording)
+    if not need <= _numbers(wording):
+        return False
+    # Выбор без чисел («POST», «через SMS»): большинство слов выбранного варианта должно быть в формулировке
+    for c in real:
+        if _numbers(c):
+            continue
+        words = re.findall(r"\w{3,}", normalize(c))
+        if words and sum(1 for w in words if w in wording_norm) * 2 < len(words) + 1:
+            return False
+    return True
 
 
 def _strip_tags(text: str) -> str:
@@ -229,6 +238,9 @@ class Resolver:
             f"\n\nВесь документ (номер строки: текст):\n{numbered_document(self.doc)}")
         valid_q = {(q.qid if q else a["qid"]) for q, a in pairs}
         answer_by_q = {(q.qid if q else a["qid"]): a["answer"] for q, a in pairs}
+        # Ответ на вопрос этого прогона может решать только находки этого вопроса; ответ на вопрос
+        # прошлого прогона (без пары) — любую находку из списка, переданного модели
+        allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
         effects = []
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
             if not isinstance(e, dict):
@@ -236,6 +248,10 @@ class Resolver:
             fid, qid = _s(e.get("fid"), 12), _s(e.get("qid"), 12)
             status = _s(e.get("status"), 12).lower()
             if fid not in fmap or qid not in valid_q or status not in ("resolved", "partial", "open"):
+                continue
+            if qid in allowed and fid not in allowed[qid]:
+                continue  # модель приписала ответу находку, о которой вопрос не спрашивал
+            if qid not in allowed and fid not in {f.fid for f in scope}:
                 continue
             comment = _s(e.get("comment"), 500)
             if status == "resolved" and not comment:

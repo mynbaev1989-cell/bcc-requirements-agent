@@ -54,21 +54,30 @@ class Grounder:
                 hi = mid - 1
         return lo + 1
 
-    def locate(self, quote: str) -> Quote:
-        """Найти цитату в документе (точно, по частям с многоточием, нечётко). Результат кэшируется."""
+    def locate(self, quote: str, near: tuple[int, ...] = ()) -> Quote:
+        """Найти цитату в документе (точно, по частям с многоточием, нечётко). Результат кэшируется.
+
+        near — строки требований, к которым относится цитата: если цитата встречается в документе
+        несколько раз («ФТ-4», «30 000 тенге»), берётся вхождение, ближайшее к ним, а не первое.
+        """
         memo = self.__dict__.setdefault("_memo", {})
-        if quote not in memo:
-            memo[quote] = self._locate(quote)
-        found = memo[quote]
+        key = (quote, near)
+        if key not in memo:
+            memo[key] = self._locate(quote, near)
+        found = memo[key]
         return Quote(text=quote, line=found.line, found=found.found)
 
-    def _locate(self, quote: str) -> Quote:
+    def _locate(self, quote: str, near: tuple[int, ...] = ()) -> Quote:
         q = normalize(quote).strip(" .;:,")
         if len(q) < 3:
             return Quote(text=quote, found=False)
         idx = self.joined.find(q)
         if idx >= 0:
-            return Quote(text=quote, line=self._line_at(idx), found=True)
+            lines = [self._line_at(idx)]
+            while near and (idx := self.joined.find(q, idx + 1)) >= 0:
+                lines.append(self._line_at(idx))
+            best = min(lines, key=lambda ln: (min(abs(ln - n) for n in near), ln)) if near else lines[0]
+            return Quote(text=quote, line=best, found=True)
         # Цитата с многоточием: ищем по частям
         if "..." in q or "…" in q:
             pieces = [p.strip() for p in re.split(r"\.\.\.|…", q) if len(p.strip()) >= 6]
@@ -95,11 +104,13 @@ class Grounder:
                 if not window:
                     continue
                 if len(window) >= len(q):
-                    # Ищем лучшее совпадение подстроки нужной длины
+                    # Совпавшие куски должны лежать рядом: делим на длину участка окна, который они покрывают.
+                    # Иначе цитата, собранная из слов соседних строк, набрала бы высокий балл.
                     sm = SequenceMatcher(None, q, window, autojunk=False)
-                    blocks = sm.get_matching_blocks()
+                    blocks = [b for b in sm.get_matching_blocks() if b.size]
                     matched = sum(b.size for b in blocks)
-                    ratio = matched / len(q)
+                    span = blocks[-1].b + blocks[-1].size - blocks[0].b if blocks else 0
+                    ratio = matched / max(len(q), span)
                 else:
                     ratio = SequenceMatcher(None, q, window, autojunk=False).ratio()
                 if ratio > best_ratio:

@@ -55,6 +55,16 @@ def numbered_document(doc: Document, max_chars: int = 180_000) -> str:
     return _NUMBERED_CACHE[key]
 
 
+def visible_lines(doc: Document, max_chars: int = 180_000) -> int:
+    """Сколько строк документа целиком помещается в промпт (остальное модели не видят)."""
+    size = 0
+    for i, line in enumerate(doc.lines, start=1):
+        size += len(f"{i:>4}: {line}") + 1
+        if size > max_chars:
+            return i - 1
+    return len(doc.lines)
+
+
 def _number_lines(doc: Document, max_chars: int) -> str:
     out, size = [], 0
     for i, line in enumerate(doc.lines, start=1):
@@ -147,12 +157,16 @@ def number_requirements(reqs: list[Requirement]) -> None:
 
 
 # --------------------------------------------------------------------------------------------------
-def _finding_from(item: dict, scope: str, grounder: Grounder, default_rids: list[str]) -> Finding | None:
+def _finding_from(item: dict, scope: str, grounder: Grounder, default_rids: list[str],
+                  line_of: dict[str, int] | None = None) -> Finding | None:
     if not isinstance(item, dict):
         return None
     sev = _s(item.get("severity"), 20).lower()
-    quotes = [grounder.locate(_s(q, 600)) for q in _list(item.get("quotes")) if _s(q)]
     rids = [_s(r, 10) for r in _list(item.get("rids"))] or default_rids
+    # Повторяющаяся цитата привязывается к вхождению рядом с требованиями находки, а не к первому в документе
+    near_rids = default_rids if scope == "requirement" else rids
+    near = tuple(sorted({line_of[r] for r in near_rids if line_of and r in line_of}))
+    quotes = [grounder.locate(_s(q, 600), near) for q in _list(item.get("quotes")) if _s(q)]
     title = _s(item.get("title"), 200)
     if not title:
         return None
@@ -175,6 +189,7 @@ class Reviewer:
         assessments: dict[str, RequirementAssessment] = {}
         findings: list[Finding] = []
         known = {r.rid for r in reqs}
+        line_of = {r.rid: r.line_start for r in reqs}
         batches = [reqs[i:i + REVIEW_BATCH] for i in range(0, len(reqs), REVIEW_BATCH)]
 
         def ask(batch: list[Requirement]) -> Any:
@@ -224,7 +239,7 @@ class Reviewer:
                     marks.setdefault(code, CriterionMark(code, NA, "модель не дала оценку"))
                 assessments[rid] = RequirementAssessment(rid, [marks[c] for c in criteria.REQ_CODES])
                 for f in _list(item.get("findings")):
-                    fnd = _finding_from(f, "requirement", self.grounder, [rid])
+                    fnd = _finding_from(f, "requirement", self.grounder, [rid], line_of)
                     if fnd:
                         fnd.rids = [rid]
                         findings.append(fnd)
@@ -255,8 +270,9 @@ class ConsistencyReviewer:
                 gaps, self.gap_error = None, str(exc)
         if self.consistency_error and self.gap_error:
             raise LLMError(self.consistency_error)
+        line_of = {r.rid: r.line_start for r in reqs}
         if not isinstance(data, dict):
-            return [], self._collect(gaps, {r.rid for r in reqs})
+            return [], self._collect(gaps, line_of)
         marks: dict[str, CriterionMark] = {}
         for m in _list(data.get("set_marks")):
             if isinstance(m, dict):
@@ -266,18 +282,17 @@ class ConsistencyReviewer:
                     marks[code] = CriterionMark(code, status if status in (OK, VIOLATION, NA) else NA, _s(m.get("comment"), 600))
         for code in criteria.SET_CODES:
             marks.setdefault(code, CriterionMark(code, NA, "модель не дала оценку"))
-        known = {r.rid for r in reqs}
-        findings = self._collect(data, known) + self._collect(gaps, known)
+        findings = self._collect(data, line_of) + self._collect(gaps, line_of)
         return [marks[c] for c in criteria.SET_CODES], findings
 
-    def _collect(self, data: Any, known: set[str]) -> list[Finding]:
+    def _collect(self, data: Any, line_of: dict[str, int]) -> list[Finding]:
         out = []
         if not isinstance(data, dict):
             return out
         for f in _list(data.get("findings")):
-            fnd = _finding_from(f, "set", self.grounder, [])
+            fnd = _finding_from(f, "set", self.grounder, [], line_of)
             if fnd:
-                fnd.rids = [r for r in fnd.rids if r in known]
+                fnd.rids = [r for r in fnd.rids if r in line_of]
                 out.append(fnd)
         return out
 
@@ -306,9 +321,11 @@ class Critic:
             data = self.llm.generate_json("critic", prompts.BASE_SYSTEM,
                                           f"{prompts.CRITIC}{listing}\n\nВесь документ (номер строки: текст):\n{context}")
             by_id = {f.fid: f for f in batch}
-            for v in _list(data.get("verdicts") if isinstance(data, dict) else data):
-                if not isinstance(v, dict):
-                    continue
+            verdicts = [v for v in _list(data.get("verdicts") if isinstance(data, dict) else data) if isinstance(v, dict)]
+            # Сначала отклонения и понижения, потом дубли: иначе дубль сливается в находку, которую критик
+            # отклонит ниже по списку, и пропадают обе
+            verdicts.sort(key=lambda v: _s(v.get("verdict"), 12).lower() == "duplicate")
+            for v in verdicts:
                 f = by_id.get(_s(v.get("fid"), 12))
                 if not f:
                     continue

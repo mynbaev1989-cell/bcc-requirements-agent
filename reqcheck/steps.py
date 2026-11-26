@@ -26,6 +26,7 @@ from typing import Any
 
 from reqcheck.agents import (
     Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, dedupe, number_requirements, requirements_from_blocks,
+    visible_lines,
 )
 from reqcheck.clarify import (
     Clarifier, Resolver, apply_effects, carry_over, match_answers, parse_answers, questions_from_findings,
@@ -111,6 +112,10 @@ class ConnectLLMStep(Step):
                      "Отчёт построен только детерминированными правилами. Задайте GEMINI_API_KEY для полной проверки.")
         if ctx.opts.offline:
             ctx.diag("info", "OFFLINE", "Запуск с --offline: использованы только детерминированные правила.")
+        if ctx.llm and (seen := visible_lines(ctx.doc)) < len(ctx.doc.lines):
+            ctx.diag("warning", "DOC_TRUNCATED",
+                     f"Документ длиннее лимита контекста: модели видят строки 1–{seen} из {len(ctx.doc.lines)}.",
+                     "Правила и сверка цитат проверили весь текст; смысловую проверку остатка сделайте, разбив документ на части.")
         p = ctx.result.passport
         p["model"] = ctx.llm.model if ctx.llm else "не использовалась"
         p["mode"] = "LLM + детерминированные правила" if ctx.llm else "только детерминированные правила (без LLM)"

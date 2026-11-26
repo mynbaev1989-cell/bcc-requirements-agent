@@ -11,7 +11,7 @@ import re
 from collections import Counter
 
 from reqcheck.models import MAJOR, MINOR, Block, ChecklistItem, Document, Finding, Quote, Requirement
-from reqcheck.segmenter import HEADING_MD
+from reqcheck.segmenter import FENCE, HEADING_MD
 
 # Размытые («слабые») слова и обороты — признак неоднозначности/непроверяемости (29148 п. 5.2.5, IEEE 830 п. 4.3.2)
 WEAK_PATTERNS: list[tuple[str, str]] = [
@@ -58,7 +58,8 @@ PLACEHOLDER = re.compile(
 UNIT_GROUPS = {
     "деньги": {
         "основная": re.compile(r"\bтенге\b|₸|\bKZT\b|\bруб(\.|лей|ли|ль)?\b|\bUSD\b|\$|\bдоллар\w*", re.I),
-        "дробная": re.compile(r"\bтиын\w*|\bкопе\w*|\bцент\w*", re.I),
+        # Только формы денежных единиц: «центр», «центральный», «Копенгаген» сюда не попадают
+        "дробная": re.compile(r"\bтиын(а|ов|ы|ах)?\b|\bкопе(ек|йк[аиуеой]\w*)\b|\bцент(а|ов|ы|ах)?\b", re.I),
     },
     "время": {
         "основная": re.compile(r"\b(секунд\w*|сек\.?|минут\w*|мин\.?|час(а|ов)?)\b", re.I),
@@ -109,7 +110,7 @@ class RuleEngine:
                     explanation=f"Слово «{word}» допускает разное толкование и не задаёт измеримого критерия.",
                     quotes=[Quote(word, ln, True)],
                     suggestion="Заменить на измеримое значение или явное условие.",
-                    question=f"Что именно означает «{word}» в {r.source_id}? Укажите измеримое значение.",
+                    question=f"Что именно означает «{word}» в {r.source_id or r.rid}? Укажите измеримое значение.",
                     addressee="Аналитик",
                 ))
         return out
@@ -169,7 +170,13 @@ class RuleEngine:
         """Заголовок, за которым сразу идёт заголовок того же или более высокого уровня."""
         out = []
         heading = HEADING_MD
-        heads = [(i, len(m.group(1)), m.group(2)) for i, line in enumerate(self.doc.lines) if (m := heading.match(line))]
+        heads, in_code = [], False
+        for i, line in enumerate(self.doc.lines):
+            if FENCE.match(line):
+                in_code = not in_code  # «# комментарий» внутри блока кода — не заголовок
+                continue
+            if not in_code and (m := heading.match(line)):
+                heads.append((i, len(m.group(1)), m.group(2)))
         for k, (i, lvl, title) in enumerate(heads):
             nxt = heads[k + 1] if k + 1 < len(heads) else None
             end = nxt[0] if nxt else len(self.doc.lines)
