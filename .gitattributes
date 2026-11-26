@@ -1,0 +1,6 @@
+# Бинарные файлы: без преобразования окончаний строк (иначе тестовые PDF портятся при клонировании)
+*.pdf binary
+*.docx binary
+*.ttf binary
+*.png binary
+*.jpg binary
