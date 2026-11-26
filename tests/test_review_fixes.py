@@ -626,3 +626,46 @@ def test_value_formula_shows_configured_major_weight(monkeypatch):
     monkeypatch.setenv("REQCHECK_MAJOR_WEIGHT", "0.3")
     v = estimate(10, 5, 1, 60, n_major=4)
     assert v.major_weight == 0.3 and v.avoided_rework_hours == round((1 + 0.3 * 4) * 0.85 * 1 * 6, 1)
+
+
+def test_own_id_accepts_labels_and_cells_rejects_references_and_prefixes():
+    from reqcheck.agents import _own_id
+    from reqcheck.models import Block
+
+    def para(text):
+        return Block(bid="B-001", kind="paragraph", text=text, line_start=1, line_end=1, section="ТЗ")
+
+    assert _own_id("ФТ-6", para("Требование ФТ-6 Система должна хранить журнал."))
+    assert _own_id("ФТ-2", para("ФТ-2: сумма перевода не более 1 млн."))
+    assert not _own_id("ФТ-2", para("Согласно ФТ-2: сумма перевода не более 1 млн."))  # ссылка
+    assert not _own_id("ФТ-4", para("ФТ-41 Система должна хранить журнал."))  # другой номер
+    assert not _own_id("4.2", para("4.2.1 Система должна хранить журнал."))
+    assert not _own_id("ФТ-3", para("Проверка выполнения ФТ-3 проводится на стенде."))
+    row = Block(bid="B-002", kind="table_row", text="ID: ФТ-7 (обяз.)", line_start=2, line_end=2, section="ТЗ",
+                cells=["ФТ-7 (обязательное)", "Система должна вести журнал, см. ФТ-3"])
+    assert _own_id("ФТ-7", row) and not _own_id("ФТ-3", row)
+
+
+def test_docx_restart_from_nested_item_and_bad_level(tmp_path):
+    import copy
+    from docx.oxml.ns import qn
+    d, paras, root, num_id, abs_id = _docx_list(tmp_path, ("Первый.", "Второй.", "Вложенный.", "Глубокий."))
+    an = next(a for a in root.findall(qn("w:abstractNum")) if a.get(qn("w:abstractNumId")) == abs_id)
+    lvls = {lv.get(qn("w:ilvl")): lv for lv in an.findall(qn("w:lvl"))}
+    if "1" not in lvls:
+        lvls["1"] = copy.deepcopy(lvls["0"])
+        lvls["1"].set(qn("w:ilvl"), "1")
+        an.append(lvls["1"])
+    lvls["1"].find(qn("w:numFmt")).set(qn("w:val"), "decimal")
+    lvls["1"].find(qn("w:lvlText")).set(qn("w:val"), "%1.%2.")
+    bad = copy.deepcopy(lvls["0"])  # уровень 9 — в Word такого нет
+    bad.set(qn("w:ilvl"), "9")
+    an.append(bad)
+    _add_num(root, "902", abs_id, start_override=1)
+    _use_num(paras[2], "902")
+    _use_num(paras[3], "902")
+    paras[2]._p.pPr.findall(qn("w:numPr"))[-1].find(qn("w:ilvl")).set(qn("w:val"), "1")
+    paras[3]._p.pPr.findall(qn("w:numPr"))[-1].find(qn("w:ilvl")).set(qn("w:val"), "9")
+    d.save(tmp_path / "nested.docx")
+    lines = [ln for ln in load_document(tmp_path / "nested.docx")[0].lines if ln.strip()]
+    assert lines[1:] == ["1. Первый.", "2. Второй.", "1.1. Вложенный.", "* Глубокий."]  # битый уровень — без номера, но без падения

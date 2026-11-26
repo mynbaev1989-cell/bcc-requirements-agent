@@ -187,6 +187,7 @@ class _DocxNumbering:
                "russianLower": "абвгдежзиклмнопрстуфхцчшщэюя", "russianUpper": "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ"}
     ROMAN = ((1000, "m"), (900, "cm"), (500, "d"), (400, "cd"), (100, "c"), (90, "xc"), (50, "l"), (40, "xl"),
              (10, "x"), (9, "ix"), (5, "v"), (4, "iv"), (1, "i"))
+    MAX_LEVELS = 9  # уровни списка Word: 0–8
 
     def __init__(self, document) -> None:  # noqa: ANN001 — docx.Document
         self.levels: dict[str, dict[int, tuple[str, str, int]]] = {}  # numId → ilvl → (numFmt, lvlText, start)
@@ -216,9 +217,11 @@ class _DocxNumbering:
             lv = {}
             for lvl in an.findall(qn("w:lvl")):
                 fmt, text = lvl.find(qn("w:numFmt")), lvl.find(qn("w:lvlText"))
-                lv[int(lvl.get(qn("w:ilvl"), 0))] = (fmt.get(val) if fmt is not None else "decimal",
-                                                     text.get(val) if text is not None else "",
-                                                     num_val(lvl.find(qn("w:start")), 1))
+                ilvl = int(lvl.get(qn("w:ilvl"), 0))
+                if 0 <= ilvl < self.MAX_LEVELS:  # уровень вне 0–8 Word не показывает: игнорируем, а не падаем
+                    lv[ilvl] = (fmt.get(val) if fmt is not None else "decimal",
+                                text.get(val) if text is not None else "",
+                                num_val(lvl.find(qn("w:start")), 1))
             abstract[an.get(qn("w:abstractNumId"))] = lv
         for num in root.findall(qn("w:num")):
             ref = num.find(qn("w:abstractNumId"))
@@ -249,7 +252,10 @@ class _DocxNumbering:
         if num_pr is None or num_pr.numId is None:
             return None
         num_id = str(num_pr.numId.val)
-        ilvl = int(num_pr.ilvl.val) if num_pr.ilvl is not None else 0
+        try:
+            ilvl = int(num_pr.ilvl.val) if num_pr.ilvl is not None else 0
+        except (ValueError, TypeError):  # битый w:ilvl: абзац читаем без номера
+            return None
         levels = self.levels.get(num_id)
         if not levels or ilvl not in levels:
             return None
@@ -257,22 +263,22 @@ class _DocxNumbering:
         if fmt in ("bullet", "none") or not text:
             return ""
         key = self.abstract_of[num_id]
-        cnt = self.counters.setdefault(key, [0] * 9)
+        cnt = self.counters.setdefault(key, [0] * self.MAX_LEVELS)
         pending = self.pending.setdefault(key, {})
         if num_id not in self.started:  # первый абзац этого w:num: его startOverride начинает уровни заново
             self.started.add(num_id)
             pending.update(self.overrides.get(num_id, {}))
-        for k in range(ilvl):
-            if cnt[k] == 0:
-                cnt[k] = levels.get(k, ("", "", 1))[2]  # пропущенный верхний уровень начинается со своего start
-        if ilvl in pending:
-            cnt[ilvl] = pending.pop(ilvl)
-        else:
-            cnt[ilvl] = levels[ilvl][2] if cnt[ilvl] == 0 else cnt[ilvl] + 1
-        for k in range(ilvl + 1, 9):
+        for k in range(ilvl + 1):
+            if k in pending:  # startOverride, в том числе у родителя, если список начат сразу с вложенного пункта
+                cnt[k] = pending.pop(k)
+            elif cnt[k] == 0:  # пропущенный верхний уровень начинается со своего start
+                cnt[k] = levels.get(k, ("", "", 1))[2]
+            elif k == ilvl:
+                cnt[k] += 1
+        for k in range(ilvl + 1, self.MAX_LEVELS):
             cnt[k] = 0  # новый пункт уровня сбрасывает вложенные
-        return re.sub(r"%(\d)", lambda m: self._fmt(levels.get(int(m.group(1)) - 1, ("decimal",))[0],
-                                                    cnt[int(m.group(1)) - 1]), text)
+        return re.sub(r"%([1-9])", lambda m: self._fmt(levels.get(int(m.group(1)) - 1, ("decimal",))[0],
+                                                       cnt[int(m.group(1)) - 1]), text)
 
     def _fmt(self, fmt: str, n: int) -> str:
         if n <= 0:

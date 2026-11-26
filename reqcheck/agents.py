@@ -38,19 +38,21 @@ def _s(value: Any, limit: int = 1200) -> str:
     return value.strip()[:limit]
 
 
+_ID_LABEL = r"(?:(?:требование|пункт|п\.|id|№)\s*)?"  # подпись перед номером: «Требование ФТ-4 …»
+
+
 def _own_id(sid: str, block: Block) -> bool:
     """ID, названный моделью, — собственный номер блока, а не ссылка на другой пункт.
 
-    В строке таблицы он должен занимать ячейку целиком («ФТ-3 | …»), в тексте — стоять в начале
-    («Требование ФТ-3: …»). «Проверка ФТ-3 проводится…» — ссылка: иначе ложный дубль ID."""
+    В строке таблицы ячейка начинается с ID («ФТ-3 | …»), в тексте ID стоит в начале, можно после подписи
+    («Требование ФТ-3 …»). «Проверка ФТ-3…», «Согласно ФТ-2: …» — ссылки: иначе ложный дубль ID."""
     n = normalize(sid).strip(" .:;)")
     if not n:
         return False
-    if block.kind == "table_row":
-        return any(normalize(c).strip(" .:;)") == n for c in block.cells or [])
-    t = normalize(block.text)
-    # В начале текста или как подпись в первых словах, с разделителем после: «Требование ФТ-4: …»
-    return t.startswith(n) or bool(re.match(r"^.{0,40}?(?<!\w)" + re.escape(n) + r"\s*[.:)\-]", t))
+    ident = re.escape(n) + r"(?!\w|\.\d)"  # целиком: «ФТ-4» не совпадает с «ФТ-41», «4.2» — с «4.2.1»
+    if block.kind == "table_row":  # ячейка начинается с ID: «ФТ-1», «ФТ-1 (обязательное)»
+        return any(re.match(ident, normalize(c)) for c in block.cells or [])
+    return bool(re.match(_ID_LABEL + ident, normalize(block.text)))
 
 
 def _list(value: Any) -> list:

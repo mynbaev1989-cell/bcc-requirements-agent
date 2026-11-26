@@ -49,7 +49,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
     matched_agent = [f for f, fl in agent if any(near(fl, dl) for _, dl in gold)]
     # Строже: сводная находка (collapse_singular) считается по пунктам — каждая её цитата отдельно,
     # иначе одно совпавшее замечание закрыло бы несовпавшие соседние
-    items = [{q.line} if q.line else set() for f, fl in agent if f.grouped for q in f.quotes]
+    items = [{q.line} for f, fl in agent if f.grouped for q in f.quotes if q.line]
     items += [fl for f, fl in agent if not f.grouped]
     matched_items = [il for il in items if any(near(il, dl) for _, dl in gold)]
     clean_lines = set()
