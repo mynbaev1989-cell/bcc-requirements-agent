@@ -1,4 +1,5 @@
-"""Командная строка: python -m reqcheck <документ> <отчёт> [опции].
+"""Командная строка: python main.py --input <документ> --output <отчёт> [опции]
+(или короче: python -m reqcheck <документ> <отчёт> [опции]).
 
 Коды выхода: 0 — проверка выполнена; 1 — документ не удалось проверить (отчёт с диагностикой записан);
 2 — не удалось записать отчёт; 3 — неверные аргументы.
@@ -14,12 +15,15 @@ from reqcheck import __version__
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="python -m reqcheck",
+        prog="python main.py",
         description="ИИ-агент статической проверки документа требований (ISO/IEC/IEEE 29148, IEEE 830). "
                     "Пишет отчёт на русском в Markdown, PDF и JSON.",
     )
-    p.add_argument("input", help="путь к документу требований (.md, .txt, .pdf, .docx)")
-    p.add_argument("output", help="путь к файлу отчёта (.md или .pdf); рядом лягут остальные форматы")
+    p.add_argument("input", nargs="?", help="путь к документу требований (.md, .txt, .pdf, .docx)")
+    p.add_argument("output", nargs="?", help="путь к файлу отчёта (.md или .pdf); рядом лягут остальные форматы")
+    # Те же пути именованными опциями — формат команды из формы сдачи: python main.py --input … --output …
+    p.add_argument("--input", "-i", dest="input_opt", metavar="ДОКУМЕНТ", help="то же, что позиционный путь к документу")
+    p.add_argument("--output", "-o", dest="output_opt", metavar="ОТЧЁТ", help="то же, что позиционный путь к отчёту")
     p.add_argument("--model", help="модель (Gemini: GEMINI_MODEL или gemini-3.5-flash; при REQCHECK_LLM_BASE_URL: REQCHECK_LLM_MODEL)")
     p.add_argument("--offline", action="store_true", help="без LLM: только детерминированные правила")
     p.add_argument("--formats", default="md,pdf,json", help="форматы отчёта через запятую (по умолчанию md,pdf,json)")
@@ -45,6 +49,16 @@ def main(argv: list[str] | None = None) -> int:
         args = parser.parse_args(argv)
     except SystemExit as exc:
         return 0 if exc.code == 0 else 3
+    for name in ("input", "output"):
+        pos, opt = getattr(args, name), getattr(args, f"{name}_opt")
+        if pos and opt and pos != opt:
+            print(f"Ошибка: путь {name} задан дважды по-разному: «{pos}» и «{opt}».", file=sys.stderr)
+            return 3
+        setattr(args, name, pos or opt)
+    if not args.input or not args.output:
+        parser.print_usage(sys.stderr)
+        print("Ошибка: нужны путь к документу и путь к отчёту: --input <документ> --output <отчёт>.", file=sys.stderr)
+        return 3
 
     from reqcheck.pipeline import Options, run, write_outputs
 

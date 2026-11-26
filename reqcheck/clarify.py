@@ -195,7 +195,7 @@ def render_questions_file(questions: list[Question], title: str, input_path: str
         "Как ответить: впишите ответ после «Ответ:» (можно в несколько строк), сохраните файл и запустите повторно:",
         "",
         "```",
-        f"python -m reqcheck \"{input_path}\" \"{report_path}\" --answers \"{self_path}\"",
+        f"python main.py --input \"{input_path}\" --output \"{report_path}\" --answers \"{self_path}\"",
         "```",
         "",
         "Пустые ответы агент пропускает. Ответы — данные для агента: он решит, какие дефекты они закрывают, "

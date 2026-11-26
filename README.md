@@ -8,7 +8,7 @@
 
 Отборочное задание BCC-HUB × MNU FinTech Hackathon, кейс [ai-requirements-validator-task](https://github.com/BCC-HUB/ai-requirements-validator-task).
 
-**Проверить за 2 минуты:** [что агент нашёл в документе кейса](#отчёт-по-выданному-документу) · [какие вопросы задал автору](reports/requirements_report_questions.md) · [как ответы меняют вердикт](#отчёт-по-выданному-документу) (4 критичных → 2) · [насколько точен](#точность-на-размеченных-документах) · [как устроен](#как-устроен-агент) · [где в коде каждый пункт ТЗ](#соответствие-тз). Без ключа и сети: `python -m reqcheck eval_holdout/holdout_deposit.md out/report.md --offline`.
+**Проверить за 2 минуты:** [что агент нашёл в документе кейса](#отчёт-по-выданному-документу) · [какие вопросы задал автору](reports/requirements_report_questions.md) · [как ответы меняют вердикт](#отчёт-по-выданному-документу) (4 критичных → 2) · [насколько точен](#точность-на-размеченных-документах) · [как устроен](#как-устроен-агент) · [где в коде каждый пункт ТЗ](#соответствие-тз). Без ключа и сети: `python main.py --input eval_holdout/holdout_deposit.md --output out/report.md --offline`.
 
 ## Отчёт по выданному документу
 
@@ -35,7 +35,7 @@
 **Цикл уточнения на этом документе.** Мы ответили от лица автора на три блокирующих вопроса: метод GET → POST, код ответа для чужой карты 404, ошибка валидации → HTTP 400. Затем запустили агента с `--answers`:
 
 ```powershell
-python -m reqcheck input/requirements.md reports/demo_answers/report_after_answers.md --answers reports/demo_answers/answers.md
+python main.py --input input/requirements.md --output reports/demo_answers/report_after_answers.md --answers reports/demo_answers/answers.md
 ```
 
 | | До ответов | После 3 ответов |
@@ -92,11 +92,13 @@ GEMINI_API_KEY=ваш_ключ
 
 или переменной окружения: `$env:GEMINI_API_KEY="…"` (PowerShell) / `export GEMINI_API_KEY=…` (bash). Ключ нигде не печатается и не пишется в отчёт.
 
-**4. Запустить прогон одной командой** — агент принимает путь к документу и путь к отчёту:
+**4. Запустить прогон одной командой** — путь к документу и путь к отчёту:
 
 ```powershell
-python -m reqcheck input/requirements.md reports/requirements_report.md
+python main.py --input input/requirements.md --output reports/requirements_report.md
 ```
+
+Короткая форма той же команды: `python -m reqcheck input/requirements.md reports/requirements_report.md`.
 
 Документ кейса можно скачать так:
 
@@ -104,12 +106,12 @@ python -m reqcheck input/requirements.md reports/requirements_report.md
 curl -o input/requirements.md --create-dirs https://raw.githubusercontent.com/BCC-HUB/ai-requirements-validator-task/main/docs/requirements.md
 ```
 
-**5. Куда ляжет отчёт** — по пути из второго аргумента (`reports/requirements_report.md`), рядом с тем же именем — `.pdf`, `.json` и `_questions.md` с вопросами автору. Если второй аргумент оканчивается на `.pdf`, основным будет PDF.
+**5. Куда ляжет отчёт** — по пути из `--output` (`reports/requirements_report.md`), рядом с тем же именем — `.pdf`, `.json` и `_questions.md` с вопросами автору. Если путь оканчивается на `.pdf`, основным будет PDF.
 
 **6. Ответить на вопросы агента (по желанию)** — впишите ответы после «Ответ:» в `reports/requirements_report_questions.md` и запустите повторно:
 
 ```powershell
-python -m reqcheck input/requirements.md reports/requirements_report.md --answers reports/requirements_report_questions.md
+python main.py --input input/requirements.md --output reports/requirements_report.md --answers reports/requirements_report_questions.md
 ```
 
 Модель по умолчанию — `gemini-3.5-flash`. Опции: `--model` (другая модель Gemini), `--answers` (файл с ответами автора), `--offline` (без LLM, только правила), `--formats md,pdf,json`, `--max-size-mb 20`, `--timeout`, `--no-cache`, `--no-critic`. Коды выхода: `0` — проверка выполнена; `1` — документ не удалось проверить, но отчёт с диагностикой записан; `2` — отчёт не записан; `3` — неверные аргументы.
@@ -270,13 +272,13 @@ pip install -r requirements-dev.txt
 python -m pytest -q --cov=reqcheck
 ```
 
-843 теста, покрытие строк `reqcheck/` 99%. В настоящую модель тесты не ходят: используется подставная `FakeLLM`. [GitHub Actions](.github/workflows/tests.yml) гоняет их на каждый push на Ubuntu и Windows, Python 3.11 и 3.12, падает при покрытии ниже 90% и делает офлайн-прогон агента. Перед сдачей проект собран из чистого клона в новом окружении.
+851 тест, покрытие строк `reqcheck/` 99%. В настоящую модель тесты не ходят: используется подставная `FakeLLM`. [GitHub Actions](.github/workflows/tests.yml) гоняет их на каждый push на Ubuntu и Windows, Python 3.11 и 3.12, падает при покрытии ниже 90% и делает офлайн-прогон агента. Перед сдачей проект собран из чистого клона в новом окружении.
 
 | Что проверяется | Файл | Тестов |
 | --- | --- | ---: |
 | Мусор от модели: 9 ролей × 15 видов ответа (None, не тот тип, выдуманные ID и цитаты, 200 КБ), 20 плохих документов, 8 файлов ответов — прогон не падает, отчёт пишется, выдуманное отброшено | [`test_robustness.py`](tests/test_robustness.py) | 172 |
 | Инварианты: каждый критичный дефект покрыт вопросом, вердикт не «Да» при неполной проверке, нет находок без цитаты, балл совпадает с отметками, результат не зависит от порядка ответов агентов и `PYTHONHASHSEED` | [`test_invariants.py`](tests/test_invariants.py) | 82 |
-| CLI: коды выхода 0–3, кириллица и пробелы в путях, `--offline`, `--answers`, `--formats`, отчёт не пишется поверх входа | [`test_cli_e2e.py`](tests/test_cli_e2e.py) | 50 |
+| CLI: команда формы `main.py --input … --output …` и короткая форма, коды выхода 0–3, кириллица и пробелы в путях, `--offline`, `--answers`, `--formats`, отчёт не пишется поверх входа | [`test_cli_e2e.py`](tests/test_cli_e2e.py), [`test_main_entry.py`](tests/test_main_entry.py) | 58 |
 | Золотой отчёт: MD и JSON сравниваются с эталоном; документ кейса, превращённый в PDF, даёт те же ID Ф-1…Ф-4 | [`test_golden.py`](tests/test_golden.py), [`test_case_pdf.py`](tests/test_case_pdf.py) | 21 |
 | Разметка замера точности: цитаты и строки эталонов во всех 7 документах сходятся с текстом, аблация меряет все размеченные папки | [`test_eval_labels.py`](tests/test_eval_labels.py) | 9 |
 | Новое к сдаче: 2 правила кода и их несрабатывание на корректных требованиях всех 7 документов (28), клиент локальной модели без сети (23), разбиение запроса Reviewer пополам при сбое и неизменность запросов при успехе (6), метрики замера (4), ворота CI (3) | [`test_rules_new.py`](tests/test_rules_new.py), [`test_llm_openai.py`](tests/test_llm_openai.py), [`test_reviewer_split.py`](tests/test_reviewer_split.py), [`test_eval_metrics.py`](tests/test_eval_metrics.py), [`test_ci_gate.py`](tests/test_ci_gate.py) | 64 |

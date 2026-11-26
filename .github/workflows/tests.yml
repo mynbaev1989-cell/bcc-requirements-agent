@@ -31,7 +31,7 @@ jobs:
       - name: Тесты и покрытие reqcheck/ (порог 90%)
         run: python -m pytest -q --cov=reqcheck --cov-report=term --cov-fail-under=90
       - name: Офлайн-прогон на размеченном документе
-        run: python -m reqcheck eval_holdout/holdout_deposit.md out/report.md --offline
+        run: python main.py --input eval_holdout/holdout_deposit.md --output out/report.md --offline
       - uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
         with:

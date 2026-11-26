@@ -5,7 +5,7 @@
 Отчёт агента после ответов: [`report_after_answers.md`](report_after_answers.md). Он собран командой
 
 ```powershell
-python -m reqcheck input/requirements.md reports/independent_answers/report_after_answers.md --answers reports/independent_answers/answers.md
+python main.py --input input/requirements.md --output reports/independent_answers/report_after_answers.md --answers reports/independent_answers/answers.md
 ```
 
 | Тип ответа | Ответов | Что должен сделать агент | Сделал верно |
