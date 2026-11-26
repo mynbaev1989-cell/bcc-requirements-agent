@@ -103,7 +103,7 @@ class Clarifier:
                 pr = "important"
             out.append(Question(
                 qid="", text=text, priority=pr, addressee=_s(item.get("addressee"), 60) or "Аналитик",
-                why=_s(item.get("why"), 400), options=[_s(o, 300) for o in _list(item.get("options")) if _s(o)][:4],
+                why=_s(item.get("why"), 400), options=[_s(o, 300).rstrip(" .;") for o in _list(item.get("options")) if _s(o)][:4],
                 assumption=_s(item.get("assumption"), 400), fids=fids, lines=_lines(fids, fmap),
             ))
         # Каждый критичный дефект должен быть покрыт вопросом: недостающие добираем из находок

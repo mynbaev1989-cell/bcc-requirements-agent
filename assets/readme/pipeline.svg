@@ -1,70 +1,98 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-labelledby="t d">
-  <title id="t">Архитектура агента reqcheck</title>
-  <desc id="d">Верхний ряд — детерминированный код: чтение файла с диагностикой, нарезка на блоки, правила. Нижний ряд — роли LLM: Extractor, Reviewer, Consistency, Critic, Analyst. Затем код сверяет цитаты, считает вердикт и пишет отчёт.</desc>
-  <rect width="1200" height="470" rx="24" fill="#f7f5ef"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 710" width="1200" height="710" role="img" aria-labelledby="t d">
+  <title id="t">Оркестратор агентов reqcheck</title>
+  <desc id="d">Стадии по порядку. Код читает файл, нарезает его и проверяет правилами. Extractor выделяет требования. Параллельно работают Reviewer и два шага Analyst. Затем ConsistencyReviewer и GapFinder ищут противоречия и пропуски, код сверяет цитаты, Critic перепроверяет находки, Clarifier задаёт вопросы автору. Ответы автора при повторном запуске с ключом --answers учитывает Resolver. При сбое LLM каждый шаг переходит на запасной вариант на коде.</desc>
+  <rect width="1200" height="710" rx="24" fill="#f7f5ef"/>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#5b6b82"/>
     </marker>
   </defs>
   <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
-    <text x="40" y="52" font-size="22" font-weight="700" fill="#0f1b2d">КОД (детерминированно)</text>
-    <text x="160" y="276" font-size="22" font-weight="700" fill="#b0700a">LLM (роли агента, JSON-ответы)</text>
+    <!-- Легенда -->
+    <rect x="40" y="28" width="28" height="22" rx="5" fill="#ffffff" stroke="#0f1b2d" stroke-width="2"/>
+    <text x="78" y="46" font-size="20" font-weight="700" fill="#0f1b2d">код</text>
+    <rect x="140" y="28" width="28" height="22" rx="5" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="178" y="46" font-size="20" font-weight="700" fill="#7a4a00">LLM-агент</text>
+    <text x="330" y="46" font-size="18" fill="#3c4a5e">при сбое LLM шаг переходит на запасной вариант (код)</text>
 
-    <!-- Верхний ряд -->
-    <g stroke="#0f1b2d" stroke-width="2" fill="#ffffff">
-      <rect x="40" y="72" width="250" height="130" rx="14"/>
-      <rect x="330" y="72" width="250" height="130" rx="14"/>
-      <rect x="620" y="72" width="250" height="130" rx="14"/>
-      <rect x="910" y="72" width="250" height="130" rx="14" fill="#0f1b2d"/>
-    </g>
-    <text x="60" y="110" font-size="22" font-weight="700" fill="#0f1b2d">1 Чтение</text>
-    <text x="60" y="142" font-size="18" fill="#3c4a5e">MD · TXT · PDF · DOCX</text>
-    <text x="60" y="170" font-size="18" fill="#3c4a5e">битый файл → диагностика</text>
-    <text x="350" y="110" font-size="22" font-weight="700" fill="#0f1b2d">2 Нарезка</text>
-    <text x="350" y="142" font-size="18" fill="#3c4a5e">разделы, таблицы, ID</text>
-    <text x="350" y="170" font-size="18" fill="#3c4a5e">номера строк</text>
-    <text x="640" y="110" font-size="22" font-weight="700" fill="#0f1b2d">3 Правила</text>
-    <text x="640" y="142" font-size="18" fill="#3c4a5e">размытые слова, пустоты,</text>
-    <text x="640" y="170" font-size="18" fill="#3c4a5e">единицы, версия, чек-лист</text>
-    <text x="930" y="110" font-size="22" font-weight="700" fill="#f4f1ea">7 Сверка и вердикт</text>
-    <text x="930" y="142" font-size="18" fill="#c9d4e3">цитата есть в тексте?</text>
-    <text x="930" y="170" font-size="18" fill="#c9d4e3">баллы, итог, отчёт MD/PDF</text>
+    <!-- Ряд A -->
+    <rect x="40" y="80" width="340" height="120" rx="14" fill="#ffffff" stroke="#0f1b2d" stroke-width="2"/>
+    <text x="60" y="118" font-size="22" font-weight="700" fill="#0f1b2d">Чтение файла</text>
+    <text x="60" y="150" font-size="18" fill="#3c4a5e">MD · TXT · PDF · DOCX</text>
+    <text x="60" y="176" font-size="18" fill="#3c4a5e">битый файл → диагностика</text>
 
-    <!-- Нижний ряд -->
-    <g stroke="#b0700a" stroke-width="2" fill="#fff6e3">
-      <rect x="40" y="300" width="200" height="130" rx="14"/>
-      <rect x="265" y="300" width="200" height="130" rx="14"/>
-      <rect x="490" y="300" width="200" height="130" rx="14"/>
-      <rect x="715" y="300" width="200" height="130" rx="14"/>
-      <rect x="940" y="300" width="220" height="130" rx="14"/>
+    <rect x="430" y="80" width="340" height="120" rx="14" fill="#ffffff" stroke="#0f1b2d" stroke-width="2"/>
+    <text x="450" y="118" font-size="22" font-weight="700" fill="#0f1b2d">Нарезка и правила</text>
+    <text x="450" y="150" font-size="18" fill="#3c4a5e">разделы, таблицы, ID, строки</text>
+    <text x="450" y="176" font-size="18" fill="#3c4a5e">правила качества</text>
+
+    <rect x="820" y="80" width="340" height="120" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="840" y="118" font-size="22" font-weight="700" fill="#7a4a00">Extractor</text>
+    <text x="840" y="150" font-size="18" fill="#5c4a2e">атомарные требования</text>
+    <text x="840" y="176" font-size="18" fill="#5c4a2e">сбой LLM → эвристика</text>
+
+    <!-- Ряд B -->
+    <rect x="40" y="250" width="430" height="200" rx="14" fill="none" stroke="#b0700a" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="60" y="278" font-size="18" font-weight="700" fill="#b0700a">параллельно</text>
+    <g fill="#fff6e3" stroke="#b0700a" stroke-width="2">
+      <rect x="60" y="290" width="390" height="46" rx="10"/>
+      <rect x="60" y="344" width="390" height="46" rx="10"/>
+      <rect x="60" y="398" width="390" height="46" rx="10"/>
     </g>
-    <text x="58" y="338" font-size="22" font-weight="700" fill="#7a4a00">4 Extractor</text>
-    <text x="58" y="370" font-size="18" fill="#5c4a2e">атомарные</text>
-    <text x="58" y="396" font-size="18" fill="#5c4a2e">требования</text>
-    <text x="283" y="338" font-size="22" font-weight="700" fill="#7a4a00">5 Reviewer</text>
-    <text x="283" y="370" font-size="18" fill="#5c4a2e">10 критериев</text>
-    <text x="283" y="396" font-size="18" fill="#5c4a2e">на требование</text>
-    <text x="508" y="338" font-size="22" font-weight="700" fill="#7a4a00">5 Consistency</text>
-    <text x="508" y="370" font-size="18" fill="#5c4a2e">противоречия,</text>
-    <text x="508" y="396" font-size="18" fill="#5c4a2e">пропуски набора</text>
-    <text x="733" y="338" font-size="22" font-weight="700" fill="#7a4a00">6 Critic</text>
-    <text x="733" y="370" font-size="18" fill="#5c4a2e">снимает ложные</text>
-    <text x="733" y="396" font-size="18" fill="#5c4a2e">находки</text>
-    <text x="958" y="338" font-size="22" font-weight="700" fill="#7a4a00">8 Analyst</text>
-    <text x="958" y="370" font-size="18" fill="#5c4a2e">чек-лист, тесты,</text>
-    <text x="958" y="396" font-size="18" fill="#5c4a2e">трассировка</text>
+    <text x="78" y="320" font-size="20" font-weight="700" fill="#7a4a00">Reviewer: 10 критериев</text>
+    <text x="78" y="374" font-size="20" font-weight="700" fill="#7a4a00">Analyst: чек-лист, трассировка</text>
+    <text x="78" y="428" font-size="20" font-weight="700" fill="#7a4a00">Analyst: тест-кейсы</text>
+
+    <rect x="510" y="250" width="300" height="200" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="530" y="288" font-size="22" font-weight="700" fill="#7a4a00">Consistency</text>
+    <text x="530" y="320" font-size="18" fill="#5c4a2e">+ GapFinder</text>
+    <text x="530" y="346" font-size="18" fill="#5c4a2e">противоречия</text>
+    <text x="530" y="372" font-size="18" fill="#5c4a2e">и пропуски набора</text>
+
+    <rect x="850" y="250" width="310" height="200" rx="14" fill="#ffffff" stroke="#0f1b2d" stroke-width="2"/>
+    <text x="870" y="288" font-size="22" font-weight="700" fill="#0f1b2d">Сверка цитат</text>
+    <text x="870" y="320" font-size="18" fill="#3c4a5e">цитаты нет в тексте →</text>
+    <text x="870" y="346" font-size="18" fill="#3c4a5e">находка отброшена;</text>
+    <text x="870" y="372" font-size="18" fill="#3c4a5e">слияние дублей</text>
+
+    <!-- Ряд C -->
+    <rect x="40" y="500" width="250" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="60" y="538" font-size="22" font-weight="700" fill="#7a4a00">Critic</text>
+    <text x="60" y="570" font-size="18" fill="#5c4a2e">подтверждает,</text>
+    <text x="60" y="596" font-size="18" fill="#5c4a2e">понижает или</text>
+    <text x="60" y="622" font-size="18" fill="#5c4a2e">отклоняет находки</text>
+
+    <rect x="330" y="500" width="270" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="350" y="538" font-size="22" font-weight="700" fill="#7a4a00">Clarifier</text>
+    <text x="350" y="570" font-size="18" fill="#5c4a2e">вопросы автору:</text>
+    <text x="350" y="596" font-size="18" fill="#5c4a2e">кому, приоритет,</text>
+    <text x="350" y="622" font-size="18" fill="#5c4a2e">варианты ответа</text>
+
+    <rect x="640" y="500" width="250" height="140" rx="14" fill="#fff6e3" stroke="#b0700a" stroke-width="2"/>
+    <text x="660" y="538" font-size="22" font-weight="700" fill="#7a4a00">Resolver</text>
+    <text x="660" y="570" font-size="18" fill="#5c4a2e">ответы автора</text>
+    <text x="660" y="596" font-size="18" fill="#5c4a2e">закрывают или</text>
+    <text x="660" y="622" font-size="18" fill="#5c4a2e">оставляют находки</text>
+
+    <rect x="930" y="500" width="230" height="140" rx="14" fill="#0f1b2d"/>
+    <text x="950" y="538" font-size="22" font-weight="700" fill="#f4f1ea">Отчёт</text>
+    <text x="950" y="570" font-size="18" fill="#c9d4e3">вердикт, баллы</text>
+    <text x="950" y="596" font-size="18" fill="#c9d4e3">MD · PDF · JSON</text>
+    <text x="950" y="622" font-size="18" fill="#c9d4e3">файл вопросов</text>
 
     <!-- Стрелки -->
     <g stroke="#5b6b82" stroke-width="2.5" fill="none" marker-end="url(#a)">
-      <path d="M290 137 H326"/>
-      <path d="M580 137 H616"/>
-      <path d="M745 202 V236 H140 V296"/>
-      <path d="M240 365 H261"/>
-      <path d="M465 365 H486"/>
-      <path d="M690 365 H711"/>
-      <path d="M815 300 V250 H1035 V206"/>
-      <path d="M1035 202 V230 H1050 V296"/>
+      <path d="M380 140 H426"/>
+      <path d="M770 140 H816"/>
+      <path d="M990 200 V225 H255 V246"/>
+      <path d="M470 350 H506"/>
+      <path d="M810 350 H846"/>
+      <path d="M1005 450 V475 H165 V496"/>
+      <path d="M290 570 H326"/>
+      <path d="M600 570 H636"/>
+      <path d="M890 570 H926"/>
     </g>
+    <path d="M1045 640 V665 H765 V644" stroke="#b0700a" stroke-width="2.5" fill="none" stroke-dasharray="8 6" marker-end="url(#a)"/>
+    <text x="905" y="694" font-size="18" text-anchor="middle" fill="#7a4a00">автор отвечает → повторный запуск с --answers</text>
   </g>
 </svg>
