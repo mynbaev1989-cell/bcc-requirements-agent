@@ -1,0 +1,4505 @@
+{
+  "document": {
+    "path": "eval_blind\\blind_payroll.md",
+    "name": "blind_payroll.md",
+    "title": "Техническое задание: Зарплатный проект для юридических лиц",
+    "fmt": "md",
+    "sha256": "16fcb05ffef7c5020a20682039494bbf0af72ddcbc93a81a01ae083708f61978",
+    "size_bytes": 9774,
+    "pages": null
+  },
+  "passport": {
+    "document_title": "Техническое задание: Зарплатный проект для юридических лиц",
+    "file": "blind_payroll.md",
+    "input_path": "eval_blind/blind_payroll.md",
+    "run_at": "2026-11-27T02:38:29+05:00",
+    "agent_version": "0.1.0 (d6937a6)",
+    "model": "gemini-3.5-flash-lite",
+    "mode": "LLM + детерминированные правила",
+    "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
+    "format": "MD",
+    "sha256": "16fcb05ffef7c5020a20682039494bbf0af72ddcbc93a81a01ae083708f61978",
+    "size_bytes": 9774,
+    "lines": 114,
+    "pages": null,
+    "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
+    "answers_file": "reports/independent_answers/blind/blind_payroll_answers.md",
+    "duration_sec": 34.99,
+    "report_questions_file": "blind_payroll_questions.md"
+  },
+  "requirements": [
+    {
+      "rid": "R-001",
+      "source_id": "ФТ-01",
+      "source_id_assigned": false,
+      "summary": "Прием реестра в CSV",
+      "quote": "Система принимает реестр выплат в формате CSV в кодировке UTF-8 с разделителем «;».",
+      "line_start": 28,
+      "line_end": 28,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-008"
+      ]
+    },
+    {
+      "rid": "R-002",
+      "source_id": "ФТ-02",
+      "source_id_assigned": false,
+      "summary": "Отклонение файла более 20 МБ",
+      "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE.",
+      "line_start": 29,
+      "line_end": 29,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-009"
+      ]
+    },
+    {
+      "rid": "R-003",
+      "source_id": "ФТ-03",
+      "source_id_assigned": false,
+      "summary": "Проверка ИИН сотрудника",
+      "quote": "Система отклоняет строку реестра, если ИИН сотрудника содержит не 12 цифр.",
+      "line_start": 30,
+      "line_end": 30,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-010"
+      ]
+    },
+    {
+      "rid": "R-004",
+      "source_id": "ФТ-04",
+      "source_id_assigned": false,
+      "summary": "Проверка наличия заголовков",
+      "quote": "Система отклоняет файл реестра, в котором отсутствует строка заголовков столбцов.",
+      "line_start": 31,
+      "line_end": 31,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-011"
+      ]
+    },
+    {
+      "rid": "R-005",
+      "source_id": "ФТ-05",
+      "source_id_assigned": false,
+      "summary": "Максимальный размер реестра",
+      "quote": "Максимальный размер реестра составляет 5 000 строк.",
+      "line_start": 32,
+      "line_end": 32,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-006",
+      "source_id": "ФТ-06",
+      "source_id_assigned": false,
+      "summary": "Скорость обработки реестра",
+      "quote": "Система обрабатывает реестр с приемлемой скоростью.",
+      "line_start": 33,
+      "line_end": 33,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-013"
+      ]
+    },
+    {
+      "rid": "R-007",
+      "source_id": "ФТ-07",
+      "source_id_assigned": false,
+      "summary": "Проверка и отправка отчета",
+      "quote": "Система проверяет ИИН, сверяет ФИО с данными банка, формирует отчёт и отправляет его бухгалтеру на почту.",
+      "line_start": 34,
+      "line_end": 34,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-014"
+      ]
+    },
+    {
+      "rid": "R-008",
+      "source_id": "ФТ-08",
+      "source_id_assigned": false,
+      "summary": "Статус ошибок валидации",
+      "quote": "Строки с ошибками валидации помечаются в отчёте статусом «Ошибка».",
+      "line_start": 35,
+      "line_end": 35,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.1 Загрузка и проверка реестра",
+      "kind": "functional",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-009",
+      "source_id": "ФТ-09",
+      "source_id_assigned": false,
+      "summary": "Подтверждение реестра подписантом",
+      "quote": "Система исполняет реестр только после подтверждения уполномоченным подписантом клиента.",
+      "line_start": 41,
+      "line_end": 41,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-010",
+      "source_id": "ФТ-10",
+      "source_id_assigned": false,
+      "summary": "Срок ожидания подтверждения",
+      "quote": "Система не исполняет реестр, подтверждение которого не получено в течение 3 рабочих дней.",
+      "line_start": 42,
+      "line_end": 42,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-017"
+      ]
+    },
+    {
+      "rid": "R-011",
+      "source_id": "ФТ-11",
+      "source_id_assigned": false,
+      "summary": "Срок зачисления выплаты",
+      "quote": "Система зачисляет каждую выплату на карточный счёт сотрудника не позднее 2 рабочих дней с даты выплаты.",
+      "line_start": 43,
+      "line_end": 43,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-018"
+      ]
+    },
+    {
+      "rid": "R-012",
+      "source_id": "ФТ-12",
+      "source_id_assigned": false,
+      "summary": "Генерация UUID реестра",
+      "quote": "Система присваивает каждому принятому реестру уникальный идентификатор в формате UUID версии 4.",
+      "line_start": 44,
+      "line_end": 44,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-019"
+      ]
+    },
+    {
+      "rid": "R-013",
+      "source_id": "ФТ-13",
+      "source_id_assigned": false,
+      "summary": "Формирование итогового отчета",
+      "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX в течение 5 минут после зачисления.",
+      "line_start": 45,
+      "line_end": 45,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-014",
+      "source_id": "ФТ-14",
+      "source_id_assigned": false,
+      "summary": "Блокировка повторной загрузки",
+      "quote": "Система блокирует повторную загрузку реестра с уже использованным идентификатором файла.",
+      "line_start": 46,
+      "line_end": 46,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-021"
+      ]
+    },
+    {
+      "rid": "R-015",
+      "source_id": "ФТ-15",
+      "source_id_assigned": false,
+      "summary": "Дневной лимит зачисления",
+      "quote": "Дневной лимит зачисления по одному реестру составляет 50 000 000 в сутки.",
+      "line_start": 47,
+      "line_end": 47,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-022"
+      ]
+    },
+    {
+      "rid": "R-016",
+      "source_id": "ФТ-16",
+      "source_id_assigned": false,
+      "summary": "Время приема реестров",
+      "quote": "Приём реестров осуществляется до 17:00 текущего операционного дня.",
+      "line_start": 48,
+      "line_end": 48,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.2 Подтверждение и зачисление",
+      "kind": "functional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-017",
+      "source_id": "ФТ-17",
+      "source_id_assigned": false,
+      "summary": "Срок возврата средств TBD",
+      "quote": "Срок возврата незачисленных средств клиенту определяется отдельно (TBD).",
+      "line_start": 54,
+      "line_end": 54,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.3 Возвраты и хранение",
+      "kind": "functional",
+      "block_ids": [
+        "B-024"
+      ]
+    },
+    {
+      "rid": "R-018",
+      "source_id": "ФТ-18",
+      "source_id_assigned": false,
+      "summary": "Срок хранения реестров",
+      "quote": "Система хранит реестры и отчёты клиента 5 лет с даты загрузки.",
+      "line_start": 55,
+      "line_end": 55,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.3 Возвраты и хранение",
+      "kind": "functional",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-019",
+      "source_id": "ФТ-19",
+      "source_id_assigned": false,
+      "summary": "Просмотр истории реестров",
+      "quote": "Система показывает бухгалтеру в личном кабинете список реестров со статусами за последние 12 месяцев.",
+      "line_start": 56,
+      "line_end": 56,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.3 Возвраты и хранение",
+      "kind": "functional",
+      "block_ids": [
+        "B-026"
+      ]
+    },
+    {
+      "rid": "R-020",
+      "source_id": "ФТ-20",
+      "source_id_assigned": false,
+      "summary": "Фиксация в журнале аудита",
+      "quote": "Система фиксирует в журнале аудита идентификатор пользователя, загрузившего реестр, и время загрузки в UTC.",
+      "line_start": 57,
+      "line_end": 57,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 4. Функциональные требования › 4.3 Возвраты и хранение",
+      "kind": "functional",
+      "block_ids": [
+        "B-027"
+      ]
+    },
+    {
+      "rid": "R-021",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметры метода API загрузки",
+      "quote": "Метод загрузки реестра: `POST /api/v1/payroll/registries`. Формат тела запроса: JSON, кодировка UTF-8.",
+      "line_start": 63,
+      "line_end": 63,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-028"
+      ]
+    },
+    {
+      "rid": "R-022",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр company_bin",
+      "quote": "Параметр: company_bin; Тип: string(12); Обязательность: да; Описание: БИН организации-плательщика",
+      "line_start": 67,
+      "line_end": 67,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-029"
+      ]
+    },
+    {
+      "rid": "R-023",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр registry_id",
+      "quote": "Параметр: registry_id; Тип: ; Обязательность: да; Описание: Идентификатор реестра в системе клиента",
+      "line_start": 68,
+      "line_end": 68,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-030"
+      ]
+    },
+    {
+      "rid": "R-024",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр pay_date",
+      "quote": "Параметр: pay_date; Тип: string; Обязательность: да; Описание: Дата выплаты в формате, принятом в банке",
+      "line_start": 69,
+      "line_end": 69,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-031"
+      ]
+    },
+    {
+      "rid": "R-025",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр comment",
+      "quote": "Параметр: comment; Тип: string; Обязательность: ; Описание: Комментарий к платежу, отображаемый сотруднику",
+      "line_start": 70,
+      "line_end": 70,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-032"
+      ]
+    },
+    {
+      "rid": "R-026",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр items",
+      "quote": "Параметр: items; Тип: array; Обязательность: да; Описание: Строки реестра, не более 10 000 записей в одном запросе",
+      "line_start": 71,
+      "line_end": 71,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-033"
+      ]
+    },
+    {
+      "rid": "R-027",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр currency",
+      "quote": "Параметр: currency; Тип: string(3); Обязательность: да; Описание: Код валюты по ISO 4217, например KZT",
+      "line_start": 72,
+      "line_end": 72,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-034"
+      ]
+    },
+    {
+      "rid": "R-028",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Успешный ответ API",
+      "quote": "Успешный ответ содержит HTTP-код 202 и идентификатор принятого реестра.",
+      "line_start": 74,
+      "line_end": 74,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-035"
+      ]
+    },
+    {
+      "rid": "R-029",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Ответ при ошибке API",
+      "quote": "В случае ошибки метод возвращает ответ с описанием проблемы.",
+      "line_start": 76,
+      "line_end": 76,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 5. Интеграция",
+      "kind": "api",
+      "block_ids": [
+        "B-036"
+      ]
+    },
+    {
+      "rid": "R-030",
+      "source_id": "НФТ-01",
+      "source_id_assigned": false,
+      "summary": "Доступность сервиса",
+      "quote": "Доступность сервиса приёма реестров составляет не менее 99,5 % в месяц.",
+      "line_start": 82,
+      "line_end": 82,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-037"
+      ]
+    },
+    {
+      "rid": "R-031",
+      "source_id": "НФТ-02",
+      "source_id_assigned": false,
+      "summary": "Защита каналов связи TLS",
+      "quote": "Все каналы передачи данных защищены TLS версии 1.2 или выше.",
+      "line_start": 83,
+      "line_end": 83,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-038"
+      ]
+    },
+    {
+      "rid": "R-032",
+      "source_id": "НФТ-03",
+      "source_id_assigned": false,
+      "summary": "Защита журнала аудита",
+      "quote": "Записи журнала аудита недоступны для изменения и удаления пользователями системы.",
+      "line_start": 84,
+      "line_end": 84,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-039"
+      ]
+    },
+    {
+      "rid": "R-033",
+      "source_id": "НФТ-04",
+      "source_id_assigned": false,
+      "summary": "СУБД и партиционирование",
+      "quote": "Реестры хранятся в базе данных PostgreSQL 15 с партиционированием по месяцам.",
+      "line_start": 85,
+      "line_end": 85,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-040"
+      ]
+    },
+    {
+      "rid": "R-034",
+      "source_id": "НФТ-05",
+      "source_id_assigned": false,
+      "summary": "Срок хранения отчетов",
+      "quote": "Срок хранения реестров и отчётов составляет 3 года.",
+      "line_start": 86,
+      "line_end": 86,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-041"
+      ]
+    },
+    {
+      "rid": "R-035",
+      "source_id": "НФТ-06",
+      "source_id_assigned": false,
+      "summary": "Удобство интерфейса",
+      "quote": "Интерфейс загрузки реестра должен быть интуитивно понятным для бухгалтера.",
+      "line_start": 87,
+      "line_end": 87,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "ui",
+      "block_ids": [
+        "B-042"
+      ]
+    },
+    {
+      "rid": "R-036",
+      "source_id": "НФТ-07",
+      "source_id_assigned": false,
+      "summary": "Ежедневное резервное копирование",
+      "quote": "Система сохраняет резервную копию данных реестров ежедневно.",
+      "line_start": 88,
+      "line_end": 88,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-043"
+      ]
+    },
+    {
+      "rid": "R-037",
+      "source_id": "НФТ-08",
+      "source_id_assigned": false,
+      "summary": "Производительность обработки",
+      "quote": "Система обрабатывает реестр из 1 000 строк не более чем за 60 секунд при 20 одновременных загрузках.",
+      "line_start": 89,
+      "line_end": 89,
+      "section": "Техническое задание: Зарплатный проект для юридических лиц › 6. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-044"
+      ]
+    }
+  ],
+  "assessments": {
+    "R-001": {
+      "rid": "R-001",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-002": {
+      "rid": "R-002",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-003": {
+      "rid": "R-003",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-004": {
+      "rid": "R-004",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-005": {
+      "rid": "R-005",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указан код ошибки при превышении лимита строк."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-006": {
+      "rid": "R-006",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Термин 'приемлемой скоростью' является субъективным."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-16: Приняты конкретные метрики производительности из НФТ-08.)"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 95,
+      "light": "green"
+    },
+    "R-007": {
+      "rid": "R-007",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт содержит несколько независимых действий."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-008": {
+      "rid": "R-008",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-009": {
+      "rid": "R-009",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-010": {
+      "rid": "R-010",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указан конечный статус реестра при неполучении подтверждения."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 80,
+      "light": "green"
+    },
+    "R-011": {
+      "rid": "R-011",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-06: Термин 'дата выплаты' и порядок отсчета срока определены.)"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-012": {
+      "rid": "R-012",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-013": {
+      "rid": "R-013",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указан способ доставки или хранения отчета."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-014": {
+      "rid": "R-014",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-07: Терминологическое расхождение устранено, подтверждено использование registry_id.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-015": {
+      "rid": "R-015",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не указана валюта лимита."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-03: Валюта и поведение при превышении лимита уточнены.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 95,
+      "light": "green"
+    },
+    "R-016": {
+      "rid": "R-016",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-08: Поведение системы для реестров после 17:00 зафиксировано.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-017": {
+      "rid": "R-017",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Срок возврата не определен и указан как TBD"
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Содержит метку TBD вместо конкретного срока"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "violation",
+          "comment": "Невозможно реализовать неопределенное требование"
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Отсутствуют критерии проверки срока возврата"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 47,
+      "light": "red"
+    },
+    "R-018": {
+      "rid": "R-018",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Срок хранения установлен на уровне 5 лет, противоречие с НФТ-05 снято.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-019": {
+      "rid": "R-019",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-020": {
+      "rid": "R-020",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-021": {
+      "rid": "R-021",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-022": {
+      "rid": "R-022",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-023": {
+      "rid": "R-023",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не указан тип данных параметра"
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Пропущено значение поля Тип"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "violation",
+          "comment": "Невозможно реализовать валидацию без типа данных"
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 75,
+      "light": "yellow"
+    },
+    "R-024": {
+      "rid": "R-024",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Формат даты описан неопределенно"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 70,
+      "light": "yellow"
+    },
+    "R-025": {
+      "rid": "R-025",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Параметр оформлен в таблице без идентификатора и шаблона требования."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У параметра отсутствует уникальный идентификатор требования."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-026": {
+      "rid": "R-026",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не описана структура и состав полей элементов массива items."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Параметр оформлен в таблице без идентификатора."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У параметра отсутствует уникальный идентификатор требования."
+        }
+      ],
+      "score": 70,
+      "light": "yellow"
+    },
+    "R-027": {
+      "rid": "R-027",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Параметр оформлен в таблице без идентификатора."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У параметра отсутствует уникальный идентификатор требования."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-028": {
+      "rid": "R-028",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора и оформлено вне таблицы."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-029": {
+      "rid": "R-029",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Формулировка «ответ с описанием проблемы» размыта и не содержит конкретных кодов ошибок."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно однозначно проверить результат обработки ошибки из-за отсутствия спецификации ответа."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор."
+        }
+      ],
+      "score": 65,
+      "light": "yellow"
+    },
+    "R-030": {
+      "rid": "R-030",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-031": {
+      "rid": "R-031",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-032": {
+      "rid": "R-032",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-033": {
+      "rid": "R-033",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "violation",
+          "comment": "Навязано детальное проектное решение по СУБД в требованиях"
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-034": {
+      "rid": "R-034",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Срок хранения приведен к единому значению 5 лет.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-035": {
+      "rid": "R-035",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Субъективная формулировка «интуитивно понятным»"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Отсутствуют измеримые критерии проверки понятности интерфейса"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 72,
+      "light": "yellow"
+    },
+    "R-036": {
+      "rid": "R-036",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указано время и параметры выполнения бэкапа"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Нельзя проверить корректность выполнения без параметров времени"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 87,
+      "light": "green"
+    },
+    "R-037": {
+      "rid": "R-037",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    }
+  },
+  "findings": [
+    {
+      "fid": "F-001",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "minor",
+      "title": "Не указан код ошибки для ограничения строк",
+      "explanation": "В требовании задано ограничение на максимальное количество строк, но не определен код ошибки системы при его нарушении, в отличие от требования ФТ-02.",
+      "rids": [
+        "R-005"
+      ],
+      "quotes": [
+        {
+          "text": "Максимальный размер реестра составляет 5 000 строк.",
+          "line": 32,
+          "found": true
+        }
+      ],
+      "example": "При загрузке файла из 5001 строки система возвращает ошибку без стандартизированного кода.",
+      "suggestion": "Когда размер реестра превышает 5000 строк, система должна отклонять файл реестра с кодом ошибки REG_FILE_TOO_MANY_ROWS.",
+      "question": "Какой код ошибки должен возвращаться при превышении максимального количества строк в реестре?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-003",
+      "scope": "requirement",
+      "criterion": "singular",
+      "severity": "minor",
+      "title": "Нарушена атомарность требования",
+      "explanation": "Требование объединяет несколько разных действий: проверку ИИН, сверку ФИО, формирование отчета и отправку на почту. Их следует разделить для упрощения трассировки и тестирования.",
+      "rids": [
+        "R-007"
+      ],
+      "quotes": [
+        {
+          "text": "Система проверяет ИИН, сверяет ФИО с данными банка, формирует отчёт и отправляет его бухгалтеру на почту.",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "При сбое отправки почты невозможно однозначно зафиксировать статус прохождения проверки ИИН и ФИО.",
+      "suggestion": "Когда проверка реестра завершена, система должна отправлять сформированный отчёт на электронную почту бухгалтера.",
+      "question": "Можно ли разделить данное комплексное требование на отдельные атомарные пункты для каждого этапа?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-004",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не указан статус реестра по истечении 3 рабочих дней",
+      "explanation": "В требовании сказано, что система не исполняет реестр, но не определено, переходит ли он в статус «Отклонён» или иной.",
+      "rids": [
+        "R-010"
+      ],
+      "quotes": [
+        {
+          "text": "Система не исполняет реестр, подтверждение которого не получено в течение 3 рабочих дней.",
+          "line": 42,
+          "found": true
+        }
+      ],
+      "example": "Реестр загружен в понедельник, в четверг подтверждение не поступило. Какой статус присваивается реестру в системе?",
+      "suggestion": "Когда истекает 3 рабочих дня без подтверждения, система должна переводить реестр в статус «Отклонён» и отправлять уведомление.",
+      "question": "Какой статус присваивается реестру, если подтверждение не получено за 3 рабочих дня?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-05 не снимает дефект: Автор не указал конкретный статус реестра, сославшись на будущее обсуждение.",
+      "grouped": false
+    },
+    {
+      "fid": "F-006",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "minor",
+      "title": "Не указан канал передачи сформированного отчета",
+      "explanation": "Требование описывает формирование отчета, но не уточняет, где он сохраняется или куда отправляется бухгалтеру.",
+      "rids": [
+        "R-013"
+      ],
+      "quotes": [
+        {
+          "text": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX",
+          "line": 45,
+          "found": true
+        }
+      ],
+      "example": "Отчет сформирован, но бухгалтер не знает, где его скачать — в ЛК или на почту.",
+      "suggestion": "Когда зачисление завершено, система должна формировать итоговый отчёт по реестру в форматах PDF и XLSX в течение 5 минут и сохранять его в личном кабинете.",
+      "question": "Куда направляется или где становится доступен сформированный отчет для клиента?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-010",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "critical",
+      "title": "Срок возврата средств не определен (TBD)",
+      "explanation": "В требовании указано TBD, что делает невозможным расчет сроков возврата денег клиенту и разработку логики.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "Срок возврата незачисленных средств клиенту определяется отдельно (TBD).",
+          "line": 54,
+          "found": true
+        }
+      ],
+      "example": "При возврате средств через 5 дней нет точного норматива и условий.",
+      "suggestion": "Когда средства не зачислены, система должна вернуть их клиенту в течение 3 рабочих дней.",
+      "question": "Какой нормативный срок возврата незачисленных средств?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-011",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «TBD»",
+      "explanation": "Слово «TBD» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "TBD",
+          "line": 54,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «TBD» в ФТ-17? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-014",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неопределенный формат даты выплаты",
+      "explanation": "Формулировка 'в формате, принятом в банке' размыта и не указывает конкретный стандарт (например, ISO 8601).",
+      "rids": [
+        "R-024"
+      ],
+      "quotes": [
+        {
+          "text": "Дата выплаты в формате, принятом в банке",
+          "line": 69,
+          "found": true
+        },
+        {
+          "text": "| pay_date | string | да | Дата выплаты в формате, принятом в банке |",
+          "line": 69,
+          "found": true
+        }
+      ],
+      "example": "Клиент передаст дату как DD.MM.YYYY, а система ожидает YYYY-MM-DD, что приведет к ошибке.",
+      "suggestion": "Параметр pay_date должен иметь формат даты YYYY-MM-DD по стандарту ISO 8601.",
+      "question": "Какой конкретный формат даты ожидает метод для параметра pay_date?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-015",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не определена внутренняя структура элементов массива items",
+      "explanation": "Параметр items имеет тип array, но в документе полностью отсутствуют требования к полям, которые должны содержаться в каждой строке реестра.",
+      "rids": [
+        "R-026"
+      ],
+      "quotes": [
+        {
+          "text": "Строки реестра, не более 10 000 записей в одном запросе",
+          "line": 71,
+          "found": true
+        }
+      ],
+      "example": "Клиент отправляет запрос с массивом `items: [{ \"amount\": 100 }]`, но система ожидает ИИН и номер счета, из-за чего данные не могут быть обработаны.",
+      "suggestion": "Когда клиент формирует запрос, система должна принимать массив items, содержащий обязательные поля: ИИН сотрудника и сумму зачисления.",
+      "question": "Какая детальная структура полей должна передаваться внутри каждого элемента массива items?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-016",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Не определены форматы и коды ошибок API",
+      "explanation": "Требование указывает на возврат ошибки, но не задает конкретные HTTP-статусы и структуру тела ответа при сбое.",
+      "rids": [
+        "R-029"
+      ],
+      "quotes": [
+        {
+          "text": "В случае ошибки метод возвращает ответ с описанием проблемы.",
+          "line": 76,
+          "found": true
+        }
+      ],
+      "example": "При неверном формате JSON сервер возвращает статус 500 вместо 400 с JSON-описанием ошибки.",
+      "suggestion": "Когда происходит ошибка валидации, метод должен возвращать HTTP-код 400 и JSON-объект с полями errorCode и message.",
+      "question": "Какие HTTP-коды и структуру JSON должен возвращать метод в ответ на различные типы ошибок?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-017",
+      "scope": "requirement",
+      "criterion": "appropriate",
+      "severity": "minor",
+      "title": "Навязано техническое решение по базе данных в требованиях",
+      "explanation": "Указание конкретной СУБД и метода оптимизации является проектным решением, а не бизнес-требованием.",
+      "rids": [
+        "R-033"
+      ],
+      "quotes": [
+        {
+          "text": "Реестры хранятся в базе данных PostgreSQL 15 с партиционированием по месяцам.",
+          "line": 85,
+          "found": true
+        }
+      ],
+      "example": "При изменении стека технологий потребуется пересматривать текст функциональных требований.",
+      "suggestion": "Система должна обеспечивать эффективное хранение и быстрый поиск исторических данных реестров.",
+      "question": "Является ли жесткая привязка к PostgreSQL 15 и партиционированию обязательным архитектурным ограничением?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-018",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Непроверяемое требование к интуитивной понятности интерфейса",
+      "explanation": "Формулировка является субъективной и не позволяет объективно проверить выполнение сценария тестировщиком.",
+      "rids": [
+        "R-035"
+      ],
+      "quotes": [
+        {
+          "text": "Интерфейс загрузки реестра должен быть интуитивно понятным для бухгалтера.",
+          "line": 87,
+          "found": true
+        }
+      ],
+      "example": "Бухгалтер может считать интерфейс сложным, а разработчик — понятным из-за отсутствия метрик.",
+      "suggestion": "Когда бухгалтер открывает интерфейс загрузки, система должна позволять загрузить файл не более чем за 3 клика.",
+      "question": "Какими метриками можно измерить интуитивную понятность интерфейса для бухгалтера?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-019",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «интуитивно»",
+      "explanation": "Слово «интуитивно» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-035"
+      ],
+      "quotes": [
+        {
+          "text": "интуитивно",
+          "line": 87,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «интуитивно» в НФТ-06? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-020",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "minor",
+      "title": "Отсутствие точного времени выполнения резервного копирования",
+      "explanation": "Не указано время суток или окно обслуживания для запуска ежедневного резервного копирования.",
+      "rids": [
+        "R-036"
+      ],
+      "quotes": [
+        {
+          "text": "Система сохраняет резервную копию данных реестров ежедневно.",
+          "line": 88,
+          "found": true
+        }
+      ],
+      "example": "Резервное копирование может запуститься в пиковые часы нагрузки, вызывая деградацию производительности.",
+      "suggestion": "Когда наступает 02:00 UTC ежедневно, система должна сохранять резервную копию данных реестров.",
+      "question": "В какое время суток должно производиться ежедневное резервное копирование?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-022",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Пустой раздел «4.4 Отмена и отзыв реестра»",
+      "explanation": "У раздела нет содержания.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "4.4 Отмена и отзыв реестра",
+          "line": 59,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заполнить раздел или удалить заголовок.",
+      "question": "Что должно быть в разделе «4.4 Отмена и отзыв реестра»?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "ответ Q-12 не снимает дефект: Ответ 'уточним позже' не содержит конкретных требований для заполнения раздела.",
+      "grouped": false
+    },
+    {
+      "fid": "F-024",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Пропущено поведение для нулевого или минимального размера файла реестра",
+      "explanation": "В требованиях описано отклонение файла размером более 20 МБ (ФТ-02), но не указано, как система должна реагировать на пустой файл (0 байт) или файл меньше минимальной структуры.",
+      "rids": [
+        "R-002"
+      ],
+      "quotes": [
+        {
+          "text": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE.",
+          "line": 29,
+          "found": true
+        }
+      ],
+      "example": "Загрузка файла размером 0 байт приводит к зависанию обработки или неописанной ошибке 500 вместо валидационного ответа.",
+      "suggestion": "Описать проверку минимального размера файла и поведение при загрузке пустого файла (например, код ошибки REG_FILE_EMPTY).",
+      "question": "Какое поведение и код ошибки должны быть при загрузке пустого файла (0 байт)?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-026",
+      "scope": "set",
+      "criterion": "set_traceable",
+      "severity": "minor",
+      "title": "9 из 37 требований без идентификатора в документе",
+      "explanation": "На требования без номера нельзя однозначно сослаться в задачах, тестах и при изменениях: R-021, R-022, R-023, R-024, R-025, R-026, R-027, R-028, R-029.",
+      "rids": [
+        "R-021",
+        "R-022",
+        "R-023",
+        "R-024",
+        "R-025",
+        "R-026",
+        "R-027",
+        "R-028",
+        "R-029"
+      ],
+      "quotes": [
+        {
+          "text": "Метод загрузки реестра: `POST /api/v1/payroll/registries`. Формат тела запроса: JSON, кодировка UTF-8.",
+          "line": 63,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Присвоить всем требованиям, критериям приёмки и правилам API уникальные идентификаторы (например НФТ-1, ДАН-1, API-1, КП-1).",
+      "question": "Можно ли пронумеровать все требования единым образом?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    }
+  ],
+  "set_marks": [
+    {
+      "criterion": "set_complete",
+      "status": "violation",
+      "comment": "В документе присутствует нерешенный маркер TBD в ФТ-17, а также полностью пустой раздел 4.4."
+    },
+    {
+      "criterion": "set_consistent",
+      "status": "violation",
+      "comment": "Обнаружены прямые противоречия между ФТ-05 и спецификацией API по лимиту строк, а также между ФТ-18 и НФТ-05 по срокам хранения."
+    },
+    {
+      "criterion": "set_feasible",
+      "status": "ok",
+      "comment": "Требования в целом реализуемы в рамках стандартной технологической стека и архитектуры."
+    },
+    {
+      "criterion": "set_comprehensible",
+      "status": "ok",
+      "comment": "Назначение системы, границы и роли пользователей описаны понятно."
+    },
+    {
+      "criterion": "set_validatable",
+      "status": "ok",
+      "comment": "Цели и требования сформулированы так, что их выполнение поддается проверке."
+    },
+    {
+      "criterion": "ranked",
+      "status": "ok",
+      "comment": "У всех функциональных и нефункциональных требований проставлены приоритеты (Высокий / Средний)."
+    },
+    {
+      "criterion": "modifiable",
+      "status": "ok",
+      "comment": "Документ имеет сквозную нумерацию требований, оглавление и версию."
+    },
+    {
+      "criterion": "set_traceable",
+      "status": "ok",
+      "comment": "Прослеживается связь между бизнес-целями, функциональными требованиями и интерфейсом API."
+    }
+  ],
+  "checklist": [],
+  "tests": [
+    {
+      "rid": "",
+      "title": "Превышение максимального размера реестра в строках",
+      "given": "Загружается файл реестра выплат, содержащий 5001 строку.",
+      "when": "Бухгалтер клиента загружает данный файл в систему.",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "",
+      "title": "Превышение дневного лимита зачисления по реестру",
+      "given": "Сумма выплат по одному реестру составляет 50 000 001 в сутки.",
+      "when": "Реестр отправляется на исполнение.",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "",
+      "title": "Загрузка реестра после окончания операционного времени",
+      "given": "Реестр загружается в 17:01 текущего операционного дня.",
+      "when": "Система принимает запрос на загрузку файла.",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "",
+      "title": "Проверка срока возврата незачисленных средств",
+      "given": "Средства по выплате остались незачисленными клиенту.",
+      "when": "Наступает срок возврата средств.",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    }
+  ],
+  "trace": [
+    {
+      "rid": "R-001",
+      "acceptance": [],
+      "api": [
+        "R-021"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-002",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-003",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-004",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-005",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-006",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-007",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-008",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-009",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-010",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-011",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-012",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-013",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-014",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-015",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-016",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-017",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-018",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-019",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-020",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-021",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-022",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-023",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-024",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-025",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-026",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-027",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-028",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-029",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-030",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-031",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-032",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-033",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-034",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-035",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-036",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-037",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q-01",
+      "text": "Какой корректный срок хранения реестров и отчётов должен быть закреплен в документе: 3 года (НФТ-05) или 5 лет (ФТ-18)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Противоречие в требованиях приведет к неверной реализации политики хранения данных и возможным юридическим спорам.",
+      "options": [
+        "Установить единый срок 3 года во всех разделах",
+        "Установить единый срок 5 лет во всех разделах"
+      ],
+      "assumption": "Команда руководствуется сроком 5 лет из ФТ-18.",
+      "fids": [
+        "F-012",
+        "F-013"
+      ],
+      "lines": [
+        55,
+        86
+      ],
+      "source": "llm",
+      "answer": "Срок хранения реестров и отчётов — 5 лет с даты загрузки. Строку НФТ-05 (3 года) исключить.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-02",
+      "text": "Каково истинное ограничение на максимальное количество строк в реестре: 5 000 строк (ФТ-05) или 10 000 записей (API)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Рассинхронизация лимитов между функциональными требованиями и спецификацией API приведет к ошибкам интеграции и некорректному тестированию.",
+      "options": [
+        "Ограничить реестр 5 000 строк везде",
+        "Увеличить лимит до 10 000 строк везде"
+      ],
+      "assumption": "Применяется жесткое ограничение в 5 000 строк согласно ФТ-05.",
+      "fids": [
+        "F-021",
+        "F-023",
+        "F-001"
+      ],
+      "lines": [
+        32,
+        71
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-03",
+      "text": "В какой валюте задан лимит зачисления 50 000 000 и каково поведение системы при его превышении?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Отсутствие валюты и логики обработки превышения лимита влечет финансовые риски и блокировку платежей без определенного статуса.",
+      "options": [
+        "Валюта KZT, при превышении отклоняется весь реестр",
+        "Валюта KZT, при превышении останавливается зачисление с отчетом об ошибке"
+      ],
+      "assumption": "Лимит установлен в валюте KZT, при превышении весь реестр отклоняется.",
+      "fids": [
+        "F-008"
+      ],
+      "lines": [
+        47
+      ],
+      "source": "llm",
+      "answer": "Валюта лимита — KZT (тенге). При превышении реестр отклоняется целиком; одновременно зачисление останавливается, но выплаты, уже обработанные в пределах лимита, проводятся частично.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-04",
+      "text": "Какой нормативный срок возврата незачисленных средств клиенту должен быть указан вместо текущего «TBD» в ФТ-17?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Наличие незаполненного поля (TBD) делает невозможным расчет сроков возврата денег и нарушает требования к полноте ТЗ.",
+      "options": [
+        "Возврат в течение 1 рабочего дня",
+        "Возврат в течение 3 рабочих дней"
+      ],
+      "assumption": "Срок возврата средств принимается равным 3 рабочим дням.",
+      "fids": [
+        "F-010",
+        "F-011"
+      ],
+      "lines": [
+        54
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-05",
+      "text": "Какой статус присваивается реестру, если подтверждение не получено за 3 рабочих дня в соответствии с ФТ-10?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Без указания статуса зависшие реестры не будут корректно обрабатываться системой и отображаться в личных кабинетах.",
+      "options": [
+        "Присваивать статус «Отклонён»",
+        "Оставлять в статусе ожидания с ручным закрытием"
+      ],
+      "assumption": "Реестр автоматически переводится в статус «Отклонён».",
+      "fids": [
+        "F-004"
+      ],
+      "lines": [
+        42
+      ],
+      "source": "llm",
+      "answer": "Как обычно, статус определим по итогам обсуждения с командой.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-06",
+      "text": "Что именно понимается под «датой выплаты» в ФТ-11 — pay_date из файла или дата подтверждения реестра?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Двусмысленность термина приведет к нарушению SLA по зачислению средств и спорам с клиентами.",
+      "options": [
+        "Срок отсчитывается от pay_date",
+        "Срок отсчитывается от даты подтверждения реестра"
+      ],
+      "assumption": "Датой выплаты считается pay_date из запроса API.",
+      "fids": [
+        "F-005"
+      ],
+      "lines": [
+        43
+      ],
+      "source": "llm",
+      "answer": "Дата выплаты — pay_date из запроса. Срок 2 рабочих дня отсчитывается от даты подтверждения реестра, а не от pay_date.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-07",
+      "text": "Имеется ли в виду под идентификатором файла в ФТ-14 поле registry_id из метода API загрузки реестра?",
+      "priority": "important",
+      "addressee": "Разработка",
+      "why": "Несоответствие терминологии между функциональными требованиями и API приведет к ошибкам дедупликации запросов.",
+      "options": [
+        "Да, это одно и то же поле registry_id",
+        "Нет, это разные идентификаторы, нужно добавить registry_file_id"
+      ],
+      "assumption": "Идентификатором файла является поле registry_id из спецификации API.",
+      "fids": [
+        "F-007"
+      ],
+      "lines": [
+        46
+      ],
+      "source": "llm",
+      "answer": "Принять исправление: блокируется повторная загрузка реестра с уже использованным registry_id.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-08",
+      "text": "Что происходит с реестром, загруженным после 17:00 текущего операционного дня?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Неопределенность поведения системы в конце операционного дня приведет к неверному расчету времени зачисления выплат.",
+      "options": [
+        "Реестр отклоняется системой",
+        "Реестр принимается, но дата обработки переносится на следующий операционный день"
+      ],
+      "assumption": "Реестр принимается текущим днем, но исполнение переносится на следующий операционный день.",
+      "fids": [
+        "F-009"
+      ],
+      "lines": [
+        48
+      ],
+      "source": "llm",
+      "answer": "Принять исправление: реестр, поступивший после 17:00, принимается датой следующего операционного дня.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-09",
+      "text": "Какой конкретный формат даты ожидает метод для параметра pay_date в спецификации API?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Формулировка «в формате, принятом в банке» субъективна и вызовет ошибки валидации на стороне бэкенда.",
+      "options": [
+        "Использовать стандарт ISO 8601 (YYYY-MM-DD)",
+        "Использовать формат DD.MM.YYYY"
+      ],
+      "assumption": "Используется формат ISO 8601 (YYYY-MM-DD).",
+      "fids": [
+        "F-014"
+      ],
+      "lines": [
+        69
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-10",
+      "text": "Какая детальная структура полей должна передаваться внутри каждого элемента массива items в методе API?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Отсутствие схемы массива items делает невозможным проектирование структуры базы данных и разработку метода загрузки.",
+      "options": [
+        "Описать структуру items отдельным приложением в ТЗ",
+        "Включить перечень полей (ИИН, ФИО, сумма) в тело раздела интеграции"
+      ],
+      "assumption": "Каждый элемент содержит ИИН, ФИО и сумму выплаты.",
+      "fids": [
+        "F-015"
+      ],
+      "lines": [
+        71
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-11",
+      "text": "Какие HTTP-коды и структуру JSON должен возвращать метод в ответ на различные типы ошибок?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Без стандартизации ответов об ошибках фронтенд и интеграционные системы клиентов не смогут корректно обрабатывать сбои.",
+      "options": [
+        "Использовать стандартные HTTP-коды (400, 422, 500) с единой структурой ошибки",
+        "Возвращать кастомные коды ошибок в теле ответа с HTTP 200"
+      ],
+      "assumption": "Используются стандартные коды HTTP (400, 422, 500) и описание ошибки в теле JSON.",
+      "fids": [
+        "F-016"
+      ],
+      "lines": [
+        76
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12",
+      "text": "Что должно быть заполнено в пустом разделе «4.4 Отмена и отзыв реестра»?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Наличие пустого раздела нарушает структуру документа и оставляет без внимания сценарии отзыва платежей.",
+      "options": [
+        "Удалить раздел как не входящий в первую версию",
+        "Описать бизнес-правила отзыва реестра до его подтверждения"
+      ],
+      "assumption": "Раздел удаляется как нереализуемый в данной версии продукта.",
+      "fids": [
+        "F-022"
+      ],
+      "lines": [
+        59
+      ],
+      "source": "llm",
+      "answer": "Уточним позже, на усмотрение команды.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-13",
+      "text": "Какое поведение и код ошибки должны быть при загрузке пустого файла (0 байт)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Отсутствие обработки граничного случая с пустым файлом приведет к падению парсера или зависанию процесса загрузки.",
+      "options": [
+        "Отклонять файл с кодом ошибки REG_FILE_EMPTY",
+        "Обрабатывать как ошибку валидации заголовков"
+      ],
+      "assumption": "Файл отклоняется с кодом ошибки REG_FILE_EMPTY.",
+      "fids": [
+        "F-024"
+      ],
+      "lines": [
+        29
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-14",
+      "text": "Какой тип данных должен быть указан для параметра registry_id в запросе API?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Пропущенный тип данных в спецификации API сделает невозможной генерацию клиентских SDK и валидацию запросов.",
+      "options": [
+        "string",
+        "string(36) UUID"
+      ],
+      "assumption": "Параметр имеет тип string.",
+      "fids": [
+        "F-025"
+      ],
+      "lines": [
+        68
+      ],
+      "source": "llm",
+      "answer": "string, максимум 64 символа, уникален в рамках company_bin.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-15",
+      "text": "Какими метриками можно измерить интуитивную понятность интерфейса для бухгалтера?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Формулировка является субъективной и не позволяет объективно проверить выполнение сценария тестировщиком.",
+      "options": [
+        "Принять исправление: Когда бухгалтер открывает интерфейс загрузки, система должна позволять загрузить файл не более чем за 3 клика",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-018"
+      ],
+      "lines": [
+        87
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-16",
+      "text": "Какие конкретные целевые показатели времени обработки должны применяться для требования ФТ-06?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Формулировка «с приемлемой скоростью» субъективна и не позволяет провести приемочное тестирование.",
+      "options": [
+        "Привязать требование к метрикам из НФТ-08",
+        "Убрать требование ФТ-06 как дублирующее НФТ-08"
+      ],
+      "assumption": "Требование ФТ-06 уточняется метриками из НФТ-08.",
+      "fids": [
+        "F-002"
+      ],
+      "lines": [
+        33
+      ],
+      "source": "llm",
+      "answer": "Принять исправление: реестр из 1 000 строк обрабатывается не более чем за 60 секунд при 20 одновременных загрузках (НФТ-08).",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-17",
+      "text": "Можно ли разделить комплексное требование ФТ-07 на отдельные атомарные пункты для каждого этапа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Смешивание валидации, формирования отчета и отправки письма в одном требовании затрудняет трассировку тестов.",
+      "options": [
+        "Разделить на подпункты (проверка ИИН/ФИО, формирование отчета, отправка)",
+        "Оставить текущую формулировку"
+      ],
+      "assumption": "Требование оставляется в текущем виде для упрощения.",
+      "fids": [
+        "F-003"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-18",
+      "text": "Куда именно направляется или где становится доступен сформированный отчет для клиента в ФТ-13?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Неопределенность канала доставки отчета может потребовать доработки интерфейса личного кабинета или почтового шлюза.",
+      "options": [
+        "Отчет отправляется только на электронную почту бухгалтера",
+        "Отчет доступ для скачивания в личном кабинете клиента"
+      ],
+      "assumption": "Отчет сохраняется в личном кабинете с возможностью скачивания.",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        45
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-19",
+      "text": "Можно ли пронумеровать все неидентифицированные требования в документе единым образом?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Наличие требований без идентификаторов делает невозможным ссылаться на них в тест-кейсах и баг-трекере.",
+      "options": [
+        "Присвоить сквозные идентификаторы всем неразмеченным строкам",
+        "Объединить их со смежными нумерованными пунктами"
+      ],
+      "assumption": "Аналитик самостоятельно пронумерует требования перед стартом разработки.",
+      "fids": [
+        "F-026"
+      ],
+      "lines": [
+        63
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-20",
+      "text": "Мелкие замечания (3: F-017, F-019, F-020): принять предложенные исправления или оставить формулировки документа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+      "options": [
+        "Принять все предложенные исправления",
+        "Принять, кроме перечисленных номеров находок",
+        "Оставить формулировки документа как есть"
+      ],
+      "assumption": "Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+      "fids": [
+        "F-017",
+        "F-019",
+        "F-020"
+      ],
+      "lines": [
+        85,
+        87,
+        88
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12.1",
+      "text": "Когда будут зафиксированы правила отмены и отзыва реестра для раздела 4.4?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-022"
+      ],
+      "lines": [
+        59
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-01",
+      "text": "Какой единый лимит максимального количества строк должен применяться для реестра выплат: 5 000 в соответствии с требованием ФТ-05 или 10 000 согласно спецификации API в строке 71?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [],
+      "lines": [],
+      "source": "answers_file",
+      "answer": "5 000 строк в одном реестре. В API (строка 71) также не более 5 000 записей в одном запросе; значение 10 000 исключить.",
+      "outcome": "вопрос из прошлого прогона: ответ передан агенту учёта ответов"
+    }
+  ],
+  "resolved": [
+    {
+      "fid": "F-002",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Непроверяемое требование к скорости обработки",
+      "explanation": "Формулировка 'с приемлемой скоростью' не содержит измеримых метрик времени, что делает невозможным приемочное тестирование. При этом в НФТ-08 уже есть конкретный показатель производительности.",
+      "rids": [
+        "R-006"
+      ],
+      "quotes": [
+        {
+          "text": "Система обрабатывает реестр с приемлемой скоростью.",
+          "line": 33,
+          "found": true
+        }
+      ],
+      "example": "Обработка реестра за 120 секунд для одного тестировщика приемлема, а для другого нет.",
+      "suggestion": "Когда система обрабатывает реестр из 1 000 строк при 20 одновременных загрузках, она должна завершать обработку не более чем за 60 секунд.",
+      "question": "Какие конкретные целевые показатели времени обработки должны применяться для данного требования?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-16: Приняты конкретные метрики производительности из НФТ-08.",
+      "grouped": false
+    },
+    {
+      "fid": "F-005",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неопределенность термина «дата выплаты»",
+      "explanation": "Неясно, отсчитывается ли срок от даты в поле `pay_date` из API запроса или от даты успешного подтверждения реестра.",
+      "rids": [
+        "R-011"
+      ],
+      "quotes": [
+        {
+          "text": "не позднее 2 рабочих дней с даты выплаты",
+          "line": 43,
+          "found": true
+        }
+      ],
+      "example": "В реестре указана `pay_date` равная вчерашнему дню, а подтверждение получено сегодня. С какого момента считать 2 дня?",
+      "suggestion": "Когда система проверяет дату выплаты, она должна использовать pay_date из запроса, при этом отсчет срока 2 рабочих дня должен производиться от даты подтверждения реестра.",
+      "question": "Что именно понимается под «датой выплаты» — `pay_date` из файла или дата подтверждения реестра?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-06: Термин 'дата выплаты' и порядок отсчета срока определены.",
+      "grouped": false
+    },
+    {
+      "fid": "F-007",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "major",
+      "title": "Терминологическое расхождение с API по идентификатору",
+      "explanation": "В разделе 5 спецификации API параметр называется `registry_id` («Идентификатор реестра в системе клиента»), а в требовании используется «идентификатор файла».",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "Система блокирует повторную загрузку реестра с уже использованным идентификатором файла.",
+          "line": 46,
+          "found": true
+        }
+      ],
+      "example": "Разработчик ищет поле file_id в запросе, хотя по API приходит registry_id.",
+      "suggestion": "Когда поступает повторная загрузка, система должна блокировать ее при наличии уже использованного registry_id.",
+      "question": "Имеется ли в виду под идентификатором файла поле `registry_id` из метода API загрузки реестра?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-07: Терминологическое расхождение устранено, подтверждено использование registry_id.",
+      "grouped": false
+    },
+    {
+      "fid": "F-008",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "critical",
+      "title": "Отсутствует валюта лимита и поведение при превышении",
+      "explanation": "Сумма 50 000 000 не привязана к валюте (например, KZT), а также не указано, отклоняется ли весь реестр или зачисление останавливается при достижении лимита.",
+      "rids": [
+        "R-015"
+      ],
+      "quotes": [
+        {
+          "text": "Дневной лимит зачисления по одному реестру составляет 50 000 000 в сутки.",
+          "line": 47,
+          "found": true
+        }
+      ],
+      "example": "Реестр на 60 000 000 тенге загружен. Что происходит с суммой сверх лимита — отклонение или блокировка?",
+      "suggestion": "Когда дневной лимит зачисления 50 000 000 KZT по одному реестру превышается, система должна отклонять реестр целиком, останавливать зачисление и проводить выплаты, уже обработанные в пределах лимита, частично.",
+      "question": "В какой валюте задан лимит 50 000 000 и каково поведение системы при его превышении?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-03: Валюта и поведение при превышении лимита уточнены.",
+      "grouped": false
+    },
+    {
+      "fid": "F-009",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не указано поведение системы при приеме реестра после 17:00",
+      "explanation": "Установлен временной порог операционного дня, но не зафиксировано, отклоняется ли файл или переносится на следующий операционный день.",
+      "rids": [
+        "R-016"
+      ],
+      "quotes": [
+        {
+          "text": "Приём реестров осуществляется до 17:00 текущего операционного дня.",
+          "line": 48,
+          "found": true
+        }
+      ],
+      "example": "Клиент загрузил реестр в 17:05. Будет ли он принят датой следующего дня или отклонен?",
+      "suggestion": "Когда система принимает реестр после 17:00, она должна принимать его датой следующего операционного дня.",
+      "question": "Что происходит с реестром, загруженным после 17:00 текущего операционного дня?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-08: Поведение системы для реестров после 17:00 зафиксировано.",
+      "grouped": false
+    },
+    {
+      "fid": "F-012",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие со сроком хранения в НФТ-05",
+      "explanation": "Требование указывает срок хранения 5 лет, в то время как НФТ-05 указывает 3 года, создавая прямое противоречие.",
+      "rids": [
+        "R-018"
+      ],
+      "quotes": [
+        {
+          "text": "Система хранит реестры и отчёты клиента 5 лет с даты загрузки.",
+          "line": 55,
+          "found": true
+        }
+      ],
+      "example": "При аудите через 4 года непонятно, удалять ли данные по НФТ-05 или хранить по ФТ-18.",
+      "suggestion": "Когда система обрабатывает реестры и отчёты клиента, она должна хранить их 5 лет с даты загрузки.",
+      "question": "Какой корректный срок хранения реестров: 3 года (НФТ-05) или 5 лет (ФТ-18)?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Срок хранения установлен на уровне 5 лет, противоречие с НФТ-05 снято.",
+      "grouped": false
+    },
+    {
+      "fid": "F-013",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие срока хранения реестров с требованием ФТ-18",
+      "explanation": "В требовании НФТ-05 указан срок хранения 3 года, в то время как в ФТ-18 зафиксирован срок 5 лет.",
+      "rids": [
+        "R-018",
+        "R-034"
+      ],
+      "quotes": [
+        {
+          "text": "Срок хранения реестров и отчётов составляет 3 года.",
+          "line": 86,
+          "found": true
+        },
+        {
+          "text": "Система хранит реестры и отчёты клиента 5 лет с даты загрузки.",
+          "line": 55,
+          "found": true
+        },
+        {
+          "text": "| НФТ-05 | Срок хранения реестров и отчётов составляет 3 года. | Средний |",
+          "line": 86,
+          "found": true
+        }
+      ],
+      "example": "Через 4 года система удалит реестр по НФТ-05, что нарушит требование ФТ-18 хранить данные 5 лет.",
+      "suggestion": "Когда система обрабатывает реестры и отчёты клиента, она должна хранить их 5 лет с даты загрузки.",
+      "question": "Какой верный срок хранения реестров и отчётов должен быть закреплен: 3 года или 5 лет?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Срок хранения приведен к единому значению 5 лет.",
+      "grouped": false
+    },
+    {
+      "fid": "F-021",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "critical",
+      "title": "Противоречие в максимальном размере реестра между ФТ-05 и спецификацией API",
+      "explanation": "В ФТ-05 максимальный размер реестра ограничен 5 000 строк, в то время как в таблице параметров API (строка 71) указано до 10 000 записей.",
+      "rids": [
+        "R-005",
+        "R-026"
+      ],
+      "quotes": [
+        {
+          "text": "Максимальный размер реестра составляет 5 000 строк.",
+          "line": 32,
+          "found": true
+        },
+        {
+          "text": "| items | array | да | Строки реестра, не более 10 000 записей в одном запросе |",
+          "line": 71,
+          "found": true
+        }
+      ],
+      "example": "Клиент загружает через API 8 000 строк: API принимает запрос (до 10 000), но внутренний бизнес-процесс отклоняет его (лимит 5 000).",
+      "suggestion": "Когда пользователь передает реестр выплат, система должна ограничивать максимальный размер реестра 5 000 строк.",
+      "question": "Каково истинное ограничение на максимальное количество строк в реестре: 5 000 или 10 000?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Автор зафиксировал единый лимит в 5 000 строк и исключил значение 10 000.",
+      "grouped": false
+    },
+    {
+      "fid": "F-023",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Противоречие в максимальном количестве строк реестра",
+      "explanation": "Функциональное требование ФТ-05 ограничивает размер реестра 5000 строками, в то время как спецификация API в параметре items разрешает до 10000 записей в одном запросе.",
+      "rids": [
+        "R-005",
+        "R-026"
+      ],
+      "quotes": [
+        {
+          "text": "Максимальный размер реестра составляет 5 000 строк.",
+          "line": 32,
+          "found": true
+        },
+        {
+          "text": "items | array | да | Строки реестра, не более 10 000 записей в одном запросе",
+          "line": 71,
+          "found": true
+        }
+      ],
+      "example": "Клиент отправляет через API реестр на 7 000 строк. Запрос успешно принимается методом API (лимит 10 000), но дальнейшая обработка блокируется бизнес-правилом ФТ-05 (лимит 5 000).",
+      "suggestion": "Когда пользователь передает реестр выплат, система должна ограничивать максимальный размер реестра 5 000 строк.",
+      "question": "Какой единый лимит строк должен применяться для реестра выплат — 5 000 или 10 000?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Противоречие устранено выбором единого лимита в 5 000 строк.",
+      "grouped": false
+    },
+    {
+      "fid": "F-025",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Не указан тип данных для параметра registry_id в API",
+      "explanation": "В спецификации метода POST /api/v1/payroll/registries для параметра registry_id пропущено значение в колонке «Тип», хотя указана обязательность (да).",
+      "rids": [
+        "R-023"
+      ],
+      "quotes": [
+        {
+          "text": "| registry_id | | да | Идентификатор реестра в системе клиента |",
+          "line": 68,
+          "found": true
+        }
+      ],
+      "example": "Разработчик реализует поле как string, а клиент передает число, что приведет к ошибке десериализации.",
+      "suggestion": "Когда клиент передает запрос API, система должна принимать параметр registry_id как string длиной максимум 64 символа, уникальный в рамках company_bin.",
+      "question": "Какой тип данных должен быть у параметра registry_id в запросе API?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-14: Тип данных и ограничения для registry_id определены.",
+      "grouped": false
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "dropped_ungrounded": 1,
+    "dropped_by_critic": 0,
+    "downgraded_by_critic": 0,
+    "llm_calls": 4,
+    "journal": [
+      {
+        "stage": "1",
+        "step": "Чтение документа",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "MD, строк 114",
+        "roles": []
+      },
+      {
+        "stage": "2",
+        "step": "Нарезка и правила набора",
+        "agent": "Segmenter + RuleEngine (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "блоков 57, находок правил 1",
+        "roles": []
+      },
+      {
+        "stage": "3",
+        "step": "Подключение модели",
+        "agent": "GeminiClient (код)",
+        "seconds": 0.74,
+        "status": "ok",
+        "out": "gemini-3.5-flash-lite",
+        "roles": []
+      },
+      {
+        "stage": "4",
+        "step": "Выделение требований",
+        "agent": "Extractor (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "требований 37",
+        "roles": [
+          "extractor"
+        ]
+      },
+      {
+        "stage": "5.1",
+        "step": "Оценка каждого требования",
+        "agent": "Reviewer, параллельные пакеты (LLM)",
+        "seconds": 13.63,
+        "status": "ok",
+        "out": "оценено 37, находок 19",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "stage": "5.2",
+        "step": "Чек-лист и трассировка",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "строк трассировки 37",
+        "roles": [
+          "analyst_checklist"
+        ]
+      },
+      {
+        "stage": "5.3",
+        "step": "Черновики тест-кейсов",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "тест-кейсов 4",
+        "roles": [
+          "analyst_tests"
+        ]
+      },
+      {
+        "stage": "6",
+        "step": "Проверка набора: противоречия и пропуски",
+        "agent": "ConsistencyReviewer + GapFinder (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 8",
+        "roles": [
+          "consistency",
+          "gaps"
+        ]
+      },
+      {
+        "stage": "7",
+        "step": "Сверка цитат и дедупликация",
+        "agent": "Grounder + dedupe (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "отброшено без цитаты 1, слито дублей 0",
+        "roles": []
+      },
+      {
+        "stage": "8",
+        "step": "Перепроверка находок",
+        "agent": "Critic (LLM)",
+        "seconds": 4.22,
+        "status": "ok",
+        "out": "оставлено 30, отклонено/слито 0",
+        "roles": [
+          "critic"
+        ]
+      },
+      {
+        "stage": "9",
+        "step": "Слияние повторов между агентами",
+        "agent": "dedupe по требованиям и строкам (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "слито повторов 4",
+        "roles": []
+      },
+      {
+        "stage": "10",
+        "step": "Нумерация находок",
+        "agent": "Оркестратор (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 26",
+        "roles": []
+      },
+      {
+        "stage": "11",
+        "step": "Вопросы автору",
+        "agent": "Clarifier (LLM)",
+        "seconds": 9.0,
+        "status": "ok",
+        "out": "вопросов 19",
+        "roles": [
+          "clarifier"
+        ]
+      },
+      {
+        "stage": "12",
+        "step": "Чтение ответов автора",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "ответов 10",
+        "roles": []
+      },
+      {
+        "stage": "13",
+        "step": "Учёт ответов автора",
+        "agent": "Resolver (LLM)",
+        "seconds": 7.28,
+        "status": "ok",
+        "out": "решений по находкам 12",
+        "roles": [
+          "resolver"
+        ]
+      }
+    ],
+    "merged_id_findings": 0,
+    "merged_duplicates": 0,
+    "dropped_by_critic_titles": [],
+    "merged_overlap": 4,
+    "merged_overlap_titles": [
+      "Противоречие в сроках хранения реестров и отчетов → Противоречие срока хранения реестров с требованием ФТ-18",
+      "Не описан формат даты выплаты в API → Неопределенный формат даты выплаты",
+      "Противоречие в сроках хранения реестров между ФТ-18 и НФТ-05 → Противоречие срока хранения реестров с требованием ФТ-18",
+      "Не описаны коды и структура ответов при ошибках API → Не определены форматы и коды ошибок API"
+    ],
+    "merged_singular": 0,
+    "answers_used": 10,
+    "answers_unmatched": [
+      "Q-01"
+    ],
+    "resolved_by_answers": 10,
+    "before_answers": {
+      "critical": 5,
+      "major": 13
+    },
+    "llm_cache_hits": 9,
+    "llm_retries": 0,
+    "llm_failures": 0,
+    "input_tokens": 22739,
+    "output_tokens": 9134,
+    "thinking_tokens": 3228,
+    "llm_seconds": 34.1,
+    "llm_by_role": {
+      "extractor": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 1,
+        "cache_hits": 4,
+        "failures": 0,
+        "input_tokens": 4374,
+        "output_tokens": 2782,
+        "thinking_tokens": 3228,
+        "seconds": 13.6
+      },
+      "analyst_checklist": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_tests": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "consistency": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "gaps": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "critic": {
+        "calls": 1,
+        "cache_hits": 0,
+        "failures": 0,
+        "input_tokens": 6026,
+        "output_tokens": 1452,
+        "thinking_tokens": 0,
+        "seconds": 4.2
+      },
+      "clarifier": {
+        "calls": 1,
+        "cache_hits": 0,
+        "failures": 0,
+        "input_tokens": 6610,
+        "output_tokens": 3390,
+        "thinking_tokens": 0,
+        "seconds": 9.0
+      },
+      "resolver": {
+        "calls": 1,
+        "cache_hits": 0,
+        "failures": 0,
+        "input_tokens": 5729,
+        "output_tokens": 1510,
+        "thinking_tokens": 0,
+        "seconds": 7.3
+      }
+    },
+    "duration_sec": 34.99,
+    "value": {
+      "rate_kzt_per_hour": 5000.0,
+      "manual_base_min": 30.0,
+      "manual_min_per_requirement": 6.0,
+      "check_min_per_finding": 1.5,
+      "manual_hours": 4.2,
+      "agent_hours": 0.01,
+      "check_hours": 0.65,
+      "saved_hours": 3.54,
+      "saved_kzt": 17701,
+      "critical_found": 5,
+      "major_found": 13,
+      "fix_hours_at_requirements": 1.0,
+      "escalation_factor": 7.0,
+      "precision": 0.85,
+      "avoided_rework_hours": 58.7,
+      "avoided_rework_kzt": 293250,
+      "tokens_total": 35101,
+      "llm_cost_kzt": 0.0,
+      "llm_price_note": "бесплатный тариф (цена токенов не задана)",
+      "roi": 95.7,
+      "major_weight": 0.5,
+      "scenarios": [
+        {
+          "name": "основной",
+          "escalation": 7.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 58.7,
+          "benefit_kzt": 310951,
+          "roi": 95.7
+        },
+        {
+          "name": "осторожный",
+          "escalation": 3.0,
+          "precision": 0.7,
+          "avoided_rework_hours": 16.1,
+          "benefit_kzt": 98201,
+          "roi": 30.2
+        },
+        {
+          "name": "только время ревью",
+          "escalation": 1.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 0.0,
+          "benefit_kzt": 17701,
+          "roi": 5.4
+        }
+      ]
+    },
+    "requirements": 37,
+    "findings": 16,
+    "critical": 1,
+    "major": 7,
+    "minor": 8,
+    "questions": 22,
+    "questions_blocker_open": 2
+  },
+  "document_score": 82,
+  "verdict_dev": "Нет — найдено критичных дефектов: 1. Начинать разработку до их устранения нельзя.",
+  "verdict_test": "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения.",
+  "priorities": [
+    "F-010",
+    "F-024",
+    "F-022",
+    "F-004",
+    "F-014",
+    "F-015",
+    "F-016"
+  ]
+}

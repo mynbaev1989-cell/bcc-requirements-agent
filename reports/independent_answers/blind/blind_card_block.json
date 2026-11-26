@@ -1,0 +1,4618 @@
+{
+  "document": {
+    "path": "eval_blind\\blind_card_block.md",
+    "name": "blind_card_block.md",
+    "title": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении",
+    "fmt": "md",
+    "sha256": "2d632458cfa4e4804cd13a0cd724bee99af3cc2281a2bf4bd88d4f6beb875dfb",
+    "size_bytes": 8287,
+    "pages": null
+  },
+  "passport": {
+    "document_title": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении",
+    "file": "blind_card_block.md",
+    "input_path": "eval_blind/blind_card_block.md",
+    "run_at": "2026-11-27T02:38:25+05:00",
+    "agent_version": "0.1.0 (d6937a6)",
+    "model": "gemini-3.5-flash-lite",
+    "mode": "LLM + детерминированные правила",
+    "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
+    "format": "MD",
+    "sha256": "2d632458cfa4e4804cd13a0cd724bee99af3cc2281a2bf4bd88d4f6beb875dfb",
+    "size_bytes": 8287,
+    "lines": 124,
+    "pages": null,
+    "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
+    "answers_file": "reports/independent_answers/blind/blind_card_block_answers.md",
+    "duration_sec": 1.11,
+    "report_questions_file": "blind_card_block_questions.md"
+  },
+  "requirements": [
+    {
+      "rid": "R-001",
+      "source_id": "REQ-1",
+      "source_id_assigned": false,
+      "summary": "Клиент может заблокировать карту в приложении",
+      "quote": "Система должна позволять клиенту заблокировать карту из экрана карты в приложении.",
+      "line_start": 29,
+      "line_end": 29,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-002",
+      "source_id": "REQ-2",
+      "source_id_assigned": false,
+      "summary": "Кнопка блокировки отображается только для активных карт",
+      "quote": "Система должна показывать кнопку «Заблокировать» только для карт в состоянии «Активна».",
+      "line_start": 31,
+      "line_end": 31,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-013"
+      ]
+    },
+    {
+      "rid": "R-003",
+      "source_id": "REQ-3",
+      "source_id_assigned": false,
+      "summary": "Мгновенная блокировка карты по запросу",
+      "quote": "Система должна блокировать карту сразу после запроса клиента.",
+      "line_start": 33,
+      "line_end": 33,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-014"
+      ]
+    },
+    {
+      "rid": "R-004",
+      "source_id": "REQ-4",
+      "source_id_assigned": false,
+      "summary": "Блокировка в приложении без подтверждения",
+      "quote": "Блокировка карты в приложении выполняется без дополнительного подтверждения.",
+      "line_start": 35,
+      "line_end": 35,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-005",
+      "source_id": "REQ-5",
+      "source_id_assigned": false,
+      "summary": "Действия системы при блокировке карты",
+      "quote": "Система должна блокировать карту, уведомлять клиента, фиксировать событие в журнале и снимать лимиты.",
+      "line_start": 37,
+      "line_end": 37,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-006",
+      "source_id": "REQ-6",
+      "source_id_assigned": false,
+      "summary": "Выбор причины блокировки из списка",
+      "quote": "Клиент выбирает причину блокировки из списка, который будет определён позднее (TBD).",
+      "line_start": 39,
+      "line_end": 39,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-017"
+      ]
+    },
+    {
+      "rid": "R-007",
+      "source_id": "REQ-7",
+      "source_id_assigned": false,
+      "summary": "Отображение статуса заблокированной карты до 3 секунд",
+      "quote": "Система должна показывать статус «Заблокирована» не позднее 3 секунд после блокировки.",
+      "line_start": 41,
+      "line_end": 41,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Блокировка карты",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-018"
+      ]
+    },
+    {
+      "rid": "R-008",
+      "source_id": "REQ-8",
+      "source_id_assigned": false,
+      "summary": "Условие доступности разблокировки карты",
+      "quote": "Разблокировка доступна, если карта заблокирована клиентом.",
+      "line_start": 45,
+      "line_end": 45,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Разблокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-019"
+      ]
+    },
+    {
+      "rid": "R-009",
+      "source_id": "REQ-9",
+      "source_id_assigned": false,
+      "summary": "Запрос биометрии или PIN-кода для разблокировки",
+      "quote": "Система должна запрашивать биометрию или PIN-код приложения перед разблокировкой карты.",
+      "line_start": 47,
+      "line_end": 47,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Разблокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-010",
+      "source_id": "REQ-10",
+      "source_id_assigned": false,
+      "summary": "Блокировка разблокировки при неверном вводе кода",
+      "quote": "Система должна на 30 минут запрещать разблокировку после 3 неверных вводов кода подтверждения.",
+      "line_start": 49,
+      "line_end": 49,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Разблокировка карты",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-021"
+      ]
+    },
+    {
+      "rid": "R-011",
+      "source_id": "REQ-11",
+      "source_id_assigned": false,
+      "summary": "Информирование об оставшихся попытках ввода кода",
+      "quote": "Система должна сообщать клиенту, сколько попыток ввода кода у него осталось.",
+      "line_start": 51,
+      "line_end": 51,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Разблокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-022"
+      ]
+    },
+    {
+      "rid": "R-012",
+      "source_id": "REQ-12",
+      "source_id_assigned": false,
+      "summary": "Отмена блокировки супервайзером колл-центра",
+      "quote": "Супервайзер колл-центра может отменить блокировку, выполненную оператором.",
+      "line_start": 53,
+      "line_end": 53,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Разблокировка карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-013",
+      "source_id": "REQ-13",
+      "source_id_assigned": false,
+      "summary": "Заказ перевыпуска карты с доставкой",
+      "quote": "Система должна позволять клиенту заказать перевыпуск карты с доставкой в отделение банка или курьером.",
+      "line_start": 57,
+      "line_end": 57,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-024"
+      ]
+    },
+    {
+      "rid": "R-014",
+      "source_id": "REQ-14",
+      "source_id_assigned": false,
+      "summary": "Срок перевыпуска карты до 5 дней",
+      "quote": "Срок перевыпуска карты составляет не более 5 рабочих дней.",
+      "line_start": 59,
+      "line_end": 59,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-015",
+      "source_id": "REQ-15",
+      "source_id_assigned": false,
+      "summary": "Лимит операций по новой карте до активации",
+      "quote": "До активации новой карты максимальная сумма операций составляет 200 000 в сутки.",
+      "line_start": 61,
+      "line_end": 61,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-026"
+      ]
+    },
+    {
+      "rid": "R-016",
+      "source_id": "REQ-16",
+      "source_id_assigned": false,
+      "summary": "Лимит снятия наличных по новой карте",
+      "quote": "Лимит снятия наличных по новой карте составляет 100 000 тенге.",
+      "line_start": 63,
+      "line_end": 63,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-027"
+      ]
+    },
+    {
+      "rid": "R-017",
+      "source_id": "REQ-17",
+      "source_id_assigned": false,
+      "summary": "Блокировка старой карты при перевыпуске",
+      "quote": "Система должна блокировать старую карту в момент подтверждения заказа перевыпуска.",
+      "line_start": 65,
+      "line_end": 65,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-028"
+      ]
+    },
+    {
+      "rid": "R-018",
+      "source_id": "REQ-18",
+      "source_id_assigned": false,
+      "summary": "Запрет повторного перевыпуска в течение суток",
+      "quote": "Система должна отклонять повторный перевыпуск карты в течение 24 часов после предыдущего.",
+      "line_start": 67,
+      "line_end": 67,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-029"
+      ]
+    },
+    {
+      "rid": "R-019",
+      "source_id": "REQ-19",
+      "source_id_assigned": false,
+      "summary": "Отображение статусов перевыпуска карты",
+      "quote": "Система должна показывать статус перевыпуска: «Заказана», «Изготовлена», «Передана в доставку».",
+      "line_start": 69,
+      "line_end": 69,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Перевыпуск карты",
+      "kind": "functional",
+      "block_ids": [
+        "B-030"
+      ]
+    },
+    {
+      "rid": "R-020",
+      "source_id": "REQ-20",
+      "source_id_assigned": false,
+      "summary": "Отправка push-уведомления о блокировке",
+      "quote": "Система должна отправлять клиенту push-уведомление о блокировке карты.",
+      "line_start": 73,
+      "line_end": 73,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "integration",
+      "block_ids": [
+        "B-031"
+      ]
+    },
+    {
+      "rid": "R-021",
+      "source_id": "REQ-21",
+      "source_id_assigned": false,
+      "summary": "Отправка SMS о блокировке карты",
+      "quote": "Система должна отправлять SMS о блокировке карты на номер телефона, указанный в договоре.",
+      "line_start": 75,
+      "line_end": 75,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "integration",
+      "block_ids": [
+        "B-032"
+      ]
+    },
+    {
+      "rid": "R-022",
+      "source_id": "REQ-22",
+      "source_id_assigned": false,
+      "summary": "Формат содержимого push-уведомления",
+      "quote": "Push-уведомление должно содержать последние 4 цифры карты и время события по времени Астаны (UTC+5).",
+      "line_start": 77,
+      "line_end": 77,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "data",
+      "block_ids": [
+        "B-033"
+      ]
+    },
+    {
+      "rid": "R-023",
+      "source_id": "REQ-23",
+      "source_id_assigned": false,
+      "summary": "Требования безопасности к SMS-уведомлениям",
+      "quote": "SMS-уведомление не должно содержать полный номер карты, CVV и PIN-код.",
+      "line_start": 79,
+      "line_end": 79,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "data",
+      "block_ids": [
+        "B-034"
+      ]
+    },
+    {
+      "rid": "R-024",
+      "source_id": "REQ-24",
+      "source_id_assigned": false,
+      "summary": "Настройка отключения push-уведомлений",
+      "quote": "Клиент может отключить push-уведомления в настройках, при этом SMS остаются обязательными.",
+      "line_start": 81,
+      "line_end": 81,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "functional",
+      "block_ids": [
+        "B-035"
+      ]
+    },
+    {
+      "rid": "R-025",
+      "source_id": "REQ-25",
+      "source_id_assigned": false,
+      "summary": "Время плановых работ сервиса уведомлений",
+      "quote": "Плановые работы в сервисе уведомлений выполняются с 02:00 до 04:00, push в это время откладываются.",
+      "line_start": 83,
+      "line_end": 83,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Уведомления",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-036"
+      ]
+    },
+    {
+      "rid": "R-026",
+      "source_id": "REQ-26",
+      "source_id_assigned": false,
+      "summary": "Подтверждение блокировки одноразовым SMS-кодом",
+      "quote": "Любая блокировка карты требует подтверждения одноразовым кодом из SMS.",
+      "line_start": 87,
+      "line_end": 87,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Антифрод",
+      "kind": "functional",
+      "block_ids": [
+        "B-037"
+      ]
+    },
+    {
+      "rid": "R-027",
+      "source_id": "REQ-27",
+      "source_id_assigned": false,
+      "summary": "Передача антифроду событий блокировки карт",
+      "quote": "Система должна передавать специалисту антифрод событие о каждой блокировке в момент её выполнения.",
+      "line_start": 89,
+      "line_end": 89,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Антифрод",
+      "kind": "integration",
+      "block_ids": [
+        "B-038"
+      ]
+    },
+    {
+      "rid": "R-028",
+      "source_id": "REQ-28",
+      "source_id_assigned": false,
+      "summary": "Завершение сеанса при бездействии",
+      "quote": "Система должна завершать сеанс клиента после 5 минут бездействия.",
+      "line_start": 91,
+      "line_end": 91,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Антифрод",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-039"
+      ]
+    },
+    {
+      "rid": "R-029",
+      "source_id": "REQ-29",
+      "source_id_assigned": false,
+      "summary": "Запрет операций с непривязанного устройства",
+      "quote": "Система должна запрещать блокировку и разблокировку с устройства, не привязанного к клиенту.",
+      "line_start": 93,
+      "line_end": 93,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Антифрод",
+      "kind": "functional",
+      "block_ids": [
+        "B-040"
+      ]
+    },
+    {
+      "rid": "R-030",
+      "source_id": "REQ-30",
+      "source_id_assigned": false,
+      "summary": "Уведомление антифрода при частых блокировках",
+      "quote": "Специалист антифрод получает уведомление при 3 и более блокировках карт одного клиента за сутки.",
+      "line_start": 95,
+      "line_end": 95,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Антифрод",
+      "kind": "integration",
+      "block_ids": [
+        "B-041"
+      ]
+    },
+    {
+      "rid": "R-031",
+      "source_id": "REQ-31",
+      "source_id_assigned": false,
+      "summary": "Подтверждение личности клиента оператором",
+      "quote": "Оператор подтверждает личность клиента по контрольным вопросам.",
+      "line_start": 99,
+      "line_end": 99,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "functional",
+      "block_ids": [
+        "B-042"
+      ]
+    },
+    {
+      "rid": "R-032",
+      "source_id": "REQ-32",
+      "source_id_assigned": false,
+      "summary": "Блокировка карты оператором по запросу",
+      "quote": "Оператор может заблокировать карту клиента по его устному запросу после подтверждения личности.",
+      "line_start": 101,
+      "line_end": 101,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "functional",
+      "block_ids": [
+        "B-043"
+      ]
+    },
+    {
+      "rid": "R-033",
+      "source_id": "REQ-33",
+      "source_id_assigned": false,
+      "summary": "Отображение маскированной карты оператору",
+      "quote": "Оператор колл-центра должен видеть только последние 4 цифры номера карты.",
+      "line_start": 103,
+      "line_end": 103,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "data",
+      "block_ids": [
+        "B-044"
+      ]
+    },
+    {
+      "rid": "R-034",
+      "source_id": "REQ-34",
+      "source_id_assigned": false,
+      "summary": "Запрет разблокировки карт антифрода оператором",
+      "quote": "Оператор не может разблокировать карту, заблокированную банком по решению антифрод.",
+      "line_start": 105,
+      "line_end": 105,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "functional",
+      "block_ids": [
+        "B-045"
+      ]
+    },
+    {
+      "rid": "R-035",
+      "source_id": "REQ-35",
+      "source_id_assigned": false,
+      "summary": "Информирование клиента о сроке перевыпуска оператором",
+      "quote": "Оператор сообщает клиенту, что перевыпуск занимает до 7 рабочих дней.",
+      "line_start": 107,
+      "line_end": 107,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "functional",
+      "block_ids": [
+        "B-046"
+      ]
+    },
+    {
+      "rid": "R-036",
+      "source_id": "REQ-36",
+      "source_id_assigned": false,
+      "summary": "Отображение истории блокировок оператору",
+      "quote": "Система должна показывать оператору историю блокировок карты за последние 90 дней.",
+      "line_start": 109,
+      "line_end": 109,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "functional",
+      "block_ids": [
+        "B-047"
+      ]
+    },
+    {
+      "rid": "R-037",
+      "source_id": "REQ-37",
+      "source_id_assigned": false,
+      "summary": "Актуальность статуса карты для оператора",
+      "quote": "Система должна показывать оператору статус карты не старше 60 секунд относительно процессинга.",
+      "line_start": 111,
+      "line_end": 111,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Работа оператора колл-центра",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-048"
+      ]
+    },
+    {
+      "rid": "R-038",
+      "source_id": "REQ-38",
+      "source_id_assigned": false,
+      "summary": "Удобство приложения для всех возрастов",
+      "quote": "Приложение должно быть удобным для клиентов всех возрастов.",
+      "line_start": 115,
+      "line_end": 115,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-049"
+      ]
+    },
+    {
+      "rid": "R-039",
+      "source_id": "REQ-39",
+      "source_id_assigned": false,
+      "summary": "Использование Flutter и Redux",
+      "quote": "Мобильное приложение должно быть реализовано на Flutter с использованием Redux.",
+      "line_start": 117,
+      "line_end": 117,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-050"
+      ]
+    },
+    {
+      "rid": "R-040",
+      "source_id": "REQ-40",
+      "source_id_assigned": false,
+      "summary": "Производительность системы блокировки карт",
+      "quote": "Система должна выдерживать 500 запросов на блокировку в минуту без отказов.",
+      "line_start": 119,
+      "line_end": 119,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-051"
+      ]
+    },
+    {
+      "rid": "R-041",
+      "source_id": "REQ-41",
+      "source_id_assigned": false,
+      "summary": "Доступность функции блокировки",
+      "quote": "Доступность функции блокировки карты должна составлять не менее 99,9 % в месяц.",
+      "line_start": 121,
+      "line_end": 121,
+      "section": "ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении › Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-052"
+      ]
+    }
+  ],
+  "assessments": {
+    "R-001": {
+      "rid": "R-001",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-002": {
+      "rid": "R-002",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-003": {
+      "rid": "R-003",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Использование расплывчатого термина «сразу» без точного SLA в секундах."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-004": {
+      "rid": "R-004",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Ответ подтверждает отсутствие подтверждения в приложении и приоритет REQ-4 над REQ-26 для клиентск)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-005": {
+      "rid": "R-005",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет несколько самостоятельных действий через союзы."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 80,
+      "light": "green"
+    },
+    "R-006": {
+      "rid": "R-006",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-03: TBD заменено на конкретный фиксированный список.)"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-03: Автор зафиксировал конкретный список причин блокировки.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-007": {
+      "rid": "R-007",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-008": {
+      "rid": "R-008",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-009": {
+      "rid": "R-009",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-010": {
+      "rid": "R-010",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не указано, какого именно кода подтверждения касается ограничение попыток."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 80,
+      "light": "green"
+    },
+    "R-011": {
+      "rid": "R-011",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не уточнен способ отображения оставшихся попыток."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-012": {
+      "rid": "R-012",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указаны условия и интерфейс отмены блокировки."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-013": {
+      "rid": "R-013",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-014": {
+      "rid": "R-014",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Установлен единый срок перевыпуска не более 5 рабочих дней для всех каналов.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-015": {
+      "rid": "R-015",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-04: Валюта и период для лимита указаны в ответе автора.)"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-016": {
+      "rid": "R-016",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-017": {
+      "rid": "R-017",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-018": {
+      "rid": "R-018",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-019": {
+      "rid": "R-019",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-020": {
+      "rid": "R-020",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-021": {
+      "rid": "R-021",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-022": {
+      "rid": "R-022",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-023": {
+      "rid": "R-023",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-024": {
+      "rid": "R-024",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Нарушена атомарность требования из-за двух разных логических условий"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-025": {
+      "rid": "R-025",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не определено, что происходит с отложенными push-уведомлениями после окончания плановых работ."
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указано, отправляются ли накопленные push пачкой в 04:00 или отменяются."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно проверить доставку отложенных push из-за отсутствия правил обработки очереди."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 70,
+      "light": "yellow"
+    },
+    "R-026": {
+      "rid": "R-026",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Уточнено применение REQ-26 только для антифрода и колл-центра, снято противоречие с REQ-4.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-027": {
+      "rid": "R-027",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-028": {
+      "rid": "R-028",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-029": {
+      "rid": "R-029",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-06: Указан конкретный технический идентификатор — App Instance ID.)"
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указано, как именно система определяет привязку устройства."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно проверить критерий привязки без четкого определения признака."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-030": {
+      "rid": "R-030",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не уточнено, что означают «сутки» (календарный день или скользящие 24 часа)."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-031": {
+      "rid": "R-031",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не указано, какие именно контрольные вопросы используются."
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Отсутствует информация о количестве вопросов и критериях успешности."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно проверить выполнение требования из-за отсутствия списка вопросов."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 70,
+      "light": "yellow"
+    },
+    "R-032": {
+      "rid": "R-032",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-033": {
+      "rid": "R-033",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-034": {
+      "rid": "R-034",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-035": {
+      "rid": "R-035",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Срок для оператора скорректирован в соответствии с общим сроком перевыпуска.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-036": {
+      "rid": "R-036",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-037": {
+      "rid": "R-037",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-038": {
+      "rid": "R-038",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Формулировка 'удобным для клиентов всех возрастов' размыта."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-09: Требование дополнено ссылкой на стандарт WCAG 2.1 уровня AA.)"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-039": {
+      "rid": "R-039",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "violation",
+          "comment": "Навязан конкретный технологический стек в бизнес-требованиях."
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-040": {
+      "rid": "R-040",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-041": {
+      "rid": "R-041",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    }
+  },
+  "findings": [
+    {
+      "fid": "F-001",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытый термин «сразу» без точного времени",
+      "explanation": "Слово «сразу» субъективно и не задает жесткого норматива выполнения, хотя в REQ-7 упоминается ограничение в 3 секунды.",
+      "rids": [
+        "R-003"
+      ],
+      "quotes": [
+        {
+          "text": "Система должна блокировать карту сразу после запроса клиента.",
+          "line": 33,
+          "found": true
+        }
+      ],
+      "example": "Запрос обрабатывается 2 секунды — формально выполнено, но термин нечеткий.",
+      "suggestion": "Когда клиент запрашивает блокировку, система должна заблокировать карту не позднее 1 секунды.",
+      "question": "Какой точный SLA (в секундах) закладывается на блокировку карты?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-003",
+      "scope": "requirement",
+      "criterion": "singular",
+      "severity": "major",
+      "title": "Требование не атомарно и содержит несколько действий",
+      "explanation": "Пункт объединяет блокировку, уведомление, журналирование и снятие лимитов, что затрудняет трассировку и независимое тестирование.",
+      "rids": [
+        "R-005"
+      ],
+      "quotes": [
+        {
+          "text": "Система должна блокировать карту, уведомлять клиента, фиксировать событие в журнале и снимать лимиты.",
+          "line": 37,
+          "found": true
+        }
+      ],
+      "example": "Блокировка прошла, но уведомление не отправилось — сложно зафиксировать частичный сбой по одному требованию.",
+      "suggestion": "Когда карта заблокирована, система должна снять лимиты.",
+      "question": "Можно ли разделить это комплексное требование на отдельные атомарные пункты?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-05 не снимает дефект: Автор отложил разделение требования на неопределенный срок.",
+      "grouped": false
+    },
+    {
+      "fid": "F-006",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Не указано, какого именно кода подтверждения касается ограничение попыток",
+      "explanation": "Требование ссылается на «код подтверждения», но в контексте разблокировки (REQ-9) упоминаются «биометрия или PIN-код», что создает неопределенность в терминологии.",
+      "rids": [
+        "R-010"
+      ],
+      "quotes": [
+        {
+          "text": "после 3 неверных вводов кода подтверждения",
+          "line": 49,
+          "found": true
+        }
+      ],
+      "example": "Пользователь трижды вводит неверный PIN-код приложения, неясно, срабатывает ли блокировка разблокировки именно по нему.",
+      "suggestion": "Когда пользователь совершает 3 неверных ввода PIN-кода приложения, система должна запретить разблокировку на 30 минут.",
+      "question": "Какой именно код имеется в виду под «кодом подтверждения» в REQ-10 — PIN-код или SMS-код?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-007",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Не уточнен способ отображения оставшихся попыток ввода кода",
+      "explanation": "Формулировка не указывает, где именно и в каком виде клиенту сообщается количество оставшихся попыток.",
+      "rids": [
+        "R-011"
+      ],
+      "quotes": [
+        {
+          "text": "сообщать клиенту, сколько попыток ввода кода у него осталось",
+          "line": 51,
+          "found": true
+        }
+      ],
+      "example": "Система может показать всплывающее сообщение или текст под полем ввода, но это не регламентировано.",
+      "suggestion": "Когда пользователь вводит неверный код, система должна выводить на экран сообщение с количеством оставшихся попыток.",
+      "question": "В каком интерфейсном элементе и в каком формате должно отображаться количество оставшихся попыток?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-008",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "minor",
+      "title": "Не указаны условия и интерфейс для отмены блокировки супервайзером",
+      "explanation": "Отсутствуют детали о том, через какой интерфейс супервайзер выполняет отмену и действуют ли временные ограничения.",
+      "rids": [
+        "R-012"
+      ],
+      "quotes": [
+        {
+          "text": "Супервайзер колл-центра может отменить блокировку, выполненную оператором",
+          "line": 53,
+          "found": true
+        }
+      ],
+      "example": "Супервайзер пытается отменить блокировку через АРМ спустя месяц после операции, но правила доступности не описаны.",
+      "suggestion": "Когда супервайзер подтверждает отмену в АРМ супервайзера, система должна восстановить статус карты «Активна».",
+      "question": "Через какой интерфейс супервайзер выполняет отмену блокировки и есть ли временные лимиты?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-011",
+      "scope": "requirement",
+      "criterion": "singular",
+      "severity": "minor",
+      "title": "Нарушена атомарность требования из-за двух разных логических условий",
+      "explanation": "Пункт содержит два самостоятельных требования: возможность отключения push клиентом и обязательность отправки SMS при этом.",
+      "rids": [
+        "R-024"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент может отключить push-уведомления в настройках, при этом SMS остаются обязательными.",
+          "line": 81,
+          "found": true
+        }
+      ],
+      "example": "При тестировании невозможно завести отдельный баг-репорт или тест-кейс строго на одно поведение, так как смешаны настройки push и отправка SMS.",
+      "suggestion": "Когда клиент отключает push-уведомления в настройках, система должна сохранять обязательную отправку SMS.",
+      "question": "Можем ли мы разделить это требование на два самостоятельных пункта для корректной трассировки?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-012",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не определена логика отправки push-уведомлений после плановых работ",
+      "explanation": "Требование указывает, что push откладываются, но не описывает дальнейшую судьбу этих уведомлений (доставляются ли они в 04:00 или утеряны).",
+      "rids": [
+        "R-025"
+      ],
+      "quotes": [
+        {
+          "text": "push в это время откладываются",
+          "line": 83,
+          "found": true
+        }
+      ],
+      "example": "Событие блокировки произошло в 03:00, в 04:00 сервис включился — получит ли клиент push или уведомление пропадет?",
+      "suggestion": "Когда наступают плановые работы с 02:00 до 04:00, система должна ставить push-уведомления в очередь и доставлять их клиенту не позднее 04:15.",
+      "question": "Какова дальнейшая судьба push-уведомлений, отложенных во время плановых работ?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-07 не снимает дефект: Ответ не содержит технического решения по отправке отложенных push-уведомлений.",
+      "grouped": false
+    },
+    {
+      "fid": "F-015",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Неопределенность периода «за сутки» для подсчета блокировок",
+      "explanation": "Словосочетание допускает двоякое толкование: с 00:00 текущего дня или скользящие 24 часа от момента первой блокировки.",
+      "rids": [
+        "R-030"
+      ],
+      "quotes": [
+        {
+          "text": "за сутки",
+          "line": 95,
+          "found": true
+        }
+      ],
+      "example": "Блокировки произошли в 23:00, 23:30 и 00:30 следующего дня. Считается ли это за сутки?",
+      "suggestion": "Когда фиксируется 3 блокировки карт одного клиента за скользящие 24 часа, система должна отправить уведомление специалисту антифрод.",
+      "question": "Под «сутками» понимается календарный день или скользящие 24 часа?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-016",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Отсутствие параметров и правил проверки контрольных вопросов",
+      "explanation": "Требование не определяет, сколько вопросов задается оператору и какие именно данные считаются корректным ответом.",
+      "rids": [
+        "R-031"
+      ],
+      "quotes": [
+        {
+          "text": "по контрольным вопросам",
+          "line": 99,
+          "found": true
+        }
+      ],
+      "example": "Оператор задал один вопрос о кодовом слове, клиент ответил неверно, но оператор подтвердил личность.",
+      "suggestion": "Когда оператор инициирует подтверждение личности, система должна запросить у клиента ответы минимум на 2 контрольных вопроса из профиля.",
+      "question": "Какой перечень контрольных вопросов и какое количество правильных ответов требуются для подтверждения личности?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-019",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «удобным»",
+      "explanation": "Слово «удобным» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-038"
+      ],
+      "quotes": [
+        {
+          "text": "удобным",
+          "line": 115,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «удобным» в REQ-38? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-020",
+      "scope": "requirement",
+      "criterion": "appropriate",
+      "severity": "minor",
+      "title": "Навязывание технологического стека в бизнес-требованиях",
+      "explanation": "Документ фиксирует конкретные технологии реализации, что ограничивает архитектурные решения без обоснования.",
+      "rids": [
+        "R-039"
+      ],
+      "quotes": [
+        {
+          "text": "Мобильное приложение должно быть реализовано на Flutter с использованием Redux.",
+          "line": 117,
+          "found": true
+        }
+      ],
+      "example": "Команда хочет использовать другой фреймворк, но требование блокирует это без технических оснований.",
+      "suggestion": "Требование по стеку технологий должно быть перенесено в техническое проектное решение или архитектурный документ.",
+      "question": "Почему стек технологий зафиксирован на уровне бизнес-требований?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-023",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Пустой раздел «Требования к журналированию»",
+      "explanation": "У раздела нет содержания.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Требования к журналированию",
+          "line": 123,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заполнить раздел или удалить заголовок.",
+      "question": "Что должно быть в разделе «Требования к журналированию»?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-024",
+      "scope": "set",
+      "criterion": "modifiable",
+      "severity": "major",
+      "title": "Не указаны версия и дата документа",
+      "explanation": "Без версии нельзя понять, какую редакцию согласовали и проверяли (управление изменениями).",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "# ТЗ: Блокировка, разблокировка и перевыпуск карты в мобильном приложении",
+          "line": 1,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Добавить в шапку версию, дату и историю изменений.",
+      "question": "Какая версия и дата у этой редакции документа?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    }
+  ],
+  "set_marks": [
+    {
+      "criterion": "set_complete",
+      "status": "violation",
+      "comment": "В наборе есть незавершенные требования (TBD в REQ-6) и пустой раздел журналирования на строке 124."
+    },
+    {
+      "criterion": "set_consistent",
+      "status": "violation",
+      "comment": "Обнаружены противоречия между требованиями: REQ-4 и REQ-26 противоречат друг другу относительно подтверждения блокировки, REQ-12 ссылается на отмену блокировки оператора супервайзером, но оператор блокирует карту по REQ-32, а REQ-12 упоминает отмену блокировки оператора без явных правил, а также сроки перевыпуска различаются в REQ-14 (до 5 рабочих дней) и REQ-35 (до 7 рабочих дней)."
+    },
+    {
+      "criterion": "set_feasible",
+      "status": "ok",
+      "comment": "Требования в целом реализуемы в рамках стандартных архитектурных подходов мобильных и бэкенд-систем."
+    },
+    {
+      "criterion": "set_comprehensible",
+      "status": "ok",
+      "comment": "Термины и роли определены, структура документа понятна."
+    },
+    {
+      "criterion": "set_validatable",
+      "status": "violation",
+      "comment": "Отсутствуют измеримые критерии приёмки и показатели успешности для достижения бизнес-цели."
+    },
+    {
+      "criterion": "ranked",
+      "status": "violation",
+      "comment": "У требований в тексте отсутствуют приоритеты, важность или стабильность."
+    },
+    {
+      "criterion": "modifiable",
+      "status": "ok",
+      "comment": "Требования имеют уникальные идентификаторы (REQ-1 — REQ-41) и структурированы по разделам."
+    },
+    {
+      "criterion": "set_traceable",
+      "status": "ok",
+      "comment": "Связи с целями и ролями прослеживаются, хотя есть внутренние логические несостыковки."
+    }
+  ],
+  "checklist": [],
+  "tests": [
+    {
+      "rid": "R-026",
+      "title": "Подтверждение блокировки одноразовым SMS-кодом",
+      "given": "Клиент находится на экране карты и инициирует блокировку",
+      "when": "Клиент подтверждает запрос на блокировку карты",
+      "then": "Система запрашивает подтверждение одноразовым кодом из SMS"
+    },
+    {
+      "rid": "R-010",
+      "title": "Блокировка разблокировки при неверном вводе кода",
+      "given": "Клиент вводит неверный код подтверждения при разблокировке 3 раза",
+      "when": "Клиент пытается ввести код в 4-й раз",
+      "then": "Система запрещает разблокировку карты на 30 минут"
+    },
+    {
+      "rid": "R-018",
+      "title": "Запрет повторного перевыпуска в течение суток",
+      "given": "Клиент успешно заказал перевыпуск карты менее 24 часов назад",
+      "when": "Клиент отправляет новый запрос на перевыпуск карты",
+      "then": "Система отклоняет повторный перевыпуск карты"
+    },
+    {
+      "rid": "R-015",
+      "title": "Лимит операций по новой карте до активации",
+      "given": "Клиент получил новую перевыпущенную карту, но еще не активировал её",
+      "when": "Клиент совершает операции по карте за сутки",
+      "then": "Максимальная сумма операций составляет 200 000 в сутки"
+    },
+    {
+      "rid": "R-016",
+      "title": "Лимит снятия наличных по новой карте",
+      "given": "Клиент имеет новую неактивированную карту",
+      "when": "Клиент осуществляет снятие наличных",
+      "then": "Лимит снятия наличных по новой карте составляет 100 000 тенге"
+    }
+  ],
+  "trace": [
+    {
+      "rid": "R-001",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-002",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-003",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-004",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-005",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-006",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-007",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-008",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-009",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-010",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-011",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-012",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-013",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-014",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-015",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-016",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-017",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-018",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-019",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-020",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-021",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-022",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-023",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-024",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-025",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-026",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-027",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-028",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-029",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-030",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-031",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-032",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-033",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-034",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-035",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-036",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-037",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-038",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-039",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-040",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    },
+    {
+      "rid": "R-041",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода в API"
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q-01",
+      "text": "Требуется ли SMS-подтверждение для блокировки карты в приложении согласно REQ-26, или блокировка выполняется без дополнительного подтверждения по REQ-4?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Противоречие в требованиях безопасности и UX блокирует проектирование интерфейсов и логики авторизации транзакции.",
+      "options": [
+        "Требуется SMS-код для любой блокировки (приоритет REQ-26)",
+        "Блокировка выполняется без дополнительного подтверждения (приоритет REQ-4)"
+      ],
+      "assumption": "Блокировка в приложении выполняется без дополнительного подтверждения (REQ-4), а REQ-26 применяется только к операциям через внешние каналы.",
+      "fids": [
+        "F-002",
+        "F-013",
+        "F-022"
+      ],
+      "lines": [
+        35,
+        87
+      ],
+      "source": "llm",
+      "answer": "Блокировка клиентом в приложении выполняется без дополнительного подтверждения (REQ-4). REQ-26 применяется только к блокировкам, инициированным банком через антифрод и оператором колл-центра.",
+      "outcome": "закрыто находок: 3 из 3"
+    },
+    {
+      "qid": "Q-02",
+      "text": "Какой актуальный нормативный срок перевыпуска карты должен быть зафиксирован в документе — 5 рабочих дней (REQ-14) или до 7 рабочих дней (REQ-35)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Риск претензий клиентов и штрафов за нарушение условий договора из-за расхождения сроков в требованиях и инструкциях оператора.",
+      "options": [
+        "Не более 5 рабочих дней для всех каналов",
+        "До 7 рабочих дней"
+      ],
+      "assumption": "Срок перевыпуска составляет 5 рабочих дней (REQ-14), а в REQ-35 и REQ-35 будет внесено исправление.",
+      "fids": [
+        "F-009",
+        "F-017",
+        "F-025"
+      ],
+      "lines": [
+        59,
+        107
+      ],
+      "source": "llm",
+      "answer": "Срок перевыпуска — не более 5 рабочих дней для всех каналов, включая доставку курьером; оператору сообщать срок до 7 рабочих дней.",
+      "outcome": "закрыто находок: 3 из 3"
+    },
+    {
+      "qid": "Q-03",
+      "text": "Когда будет предоставлен итоговый список причин блокировки карты для замены неопределенности TBD в REQ-6?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Отсутствие списка причин блокировки делает невозможным разработку экранов выбора причины и настройку справочников в АБС.",
+      "options": [
+        "Предоставить список до старта разработки",
+        "Использовать единую дефолтную причину без выбора"
+      ],
+      "assumption": "До старта разработки используется временный фиксированный список из трех стандартных причин (утеря, кража, повреждение).",
+      "fids": [
+        "F-004",
+        "F-005"
+      ],
+      "lines": [
+        39
+      ],
+      "source": "llm",
+      "answer": "Список причин фиксирован: утеря; кража; повреждение; прочее (с текстом до 200 символов). Справочник передаётся до старта разработки.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-04",
+      "text": "За какой период действует лимит операции 200 000, указанный в REQ-15 (сутки, месяц, одна операция)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Некорректная реализация лимитов приведет к финансовым потерям банка или блокировке правомерных операций клиентов.",
+      "options": [
+        "В сутки",
+        "На одну операцию",
+        "В месяц"
+      ],
+      "assumption": "Лимит 200 000 действует в сутки, по аналогии с соседними требованиями.",
+      "fids": [
+        "F-010",
+        "F-021"
+      ],
+      "lines": [
+        61,
+        63
+      ],
+      "source": "llm",
+      "answer": "200 000 тенге в сутки на все операции по карте, до активации новой карты.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-05",
+      "text": "Можно ли разделить комплексное требование REQ-5 на отдельные атомарные пункты для независимого тестирования?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Слитное требование приведет к неверному тест-дизайну и затруднит локализацию дефектов при сбое одного из действий.",
+      "options": [
+        "Да, разделить на 4 отдельных требования",
+        "Нет, оставить единым пунктом"
+      ],
+      "assumption": "Требование будет разбито аналитиком на подпункты перед передачей в тест-дизайн.",
+      "fids": [
+        "F-003"
+      ],
+      "lines": [
+        37
+      ],
+      "source": "llm",
+      "answer": "Разделим позже, на усмотрение аналитика.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-06",
+      "text": "Какой технический идентификатор используется для определения привязки устройства к клиенту в REQ-29?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Отсутствие технической конкретизации делает требование антифрода нереализуемым на стороне бэкенда.",
+      "options": [
+        "App Instance ID / Device ID, зарегистрированный в системе",
+        "Номер SIM-карты (MSISDN)"
+      ],
+      "assumption": "Используется уникальный идентификатор устройства (Device ID), привязанный к профилю в мобильном банке.",
+      "fids": [
+        "F-014"
+      ],
+      "lines": [
+        93
+      ],
+      "source": "llm",
+      "answer": "App Instance ID (идентификатор установки приложения), регистрируется в системе при первом входе клиента.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-07",
+      "text": "Какова дальнейшая судьба push-уведомлений, отложенных во время плановых работ сервиса с 02:00 до 04:00 (REQ-25)?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Неопределенность логики очереди сообщений может привести к массовой рассылке устаревших уведомлений клиентам утром.",
+      "options": [
+        "Доставлять накопившиеся уведомления сразу после 04:00",
+        "Отменять отправку уведомлений, попавших в окно плановых работ"
+      ],
+      "assumption": "Уведомления помещаются в очередь с отложенной отправкой и доставляются сразу после завершения плановых работ.",
+      "fids": [
+        "F-012"
+      ],
+      "lines": [
+        83
+      ],
+      "source": "llm",
+      "answer": "Как обычно, решим по итогам обсуждения с командой.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-08",
+      "text": "Какой перечень контрольных вопросов и какое количество правильных ответов требуются для подтверждения личности в REQ-31?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Отсутствие регламента проверки по контрольным вопросам создает риск социальной инженерии и несанкционированного доступа через оператора.",
+      "options": [
+        "Задавать 3 обязательных вопроса, требуется 3 правильных ответа",
+        "Задавать любые 2 вопроса из анкеты на выбор оператора"
+      ],
+      "assumption": "Оператор обязан задать 3 контрольных вопроса из профиля клиента и получить не менее 2 правильных ответов.",
+      "fids": [
+        "F-016"
+      ],
+      "lines": [
+        99
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-09",
+      "text": "Какие конкретные метрики или стандарты определяют удобство для всех возрастов?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Формулировка является субъективной и не содержит измеримых метрик или ссылок на стандарты доступности.",
+      "options": [
+        "Принять исправление: Когда пользователь открывает приложение, интерфейс должен соответствовать стандарту WCAG 2.1 уровня AA",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-018"
+      ],
+      "lines": [
+        115
+      ],
+      "source": "findings",
+      "answer": "Принять исправление: интерфейс приложения соответствует стандарту WCAG 2.1 уровня AA.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-10",
+      "text": "Какой именно код имеется в виду под «кодом подтверждения» в REQ-10 — PIN-код приложения или SMS-код?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Двоякая трактовка термина приведет к ошибкам в логике блокировки механизма ввода при неудачных попытках.",
+      "options": [
+        "PIN-код приложения",
+        "SMS-код подтверждения"
+      ],
+      "assumption": "Под кодом подтверждения в контексте разблокировки понимается PIN-код доступа к мобильному приложению.",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        49
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-11",
+      "text": "Что должно быть заполнено в пустом разделе «Требования к журналированию» на строке 123?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Отсутствие требований к логам затруднит расследование инцидентов информационной безопасности и техническую поддержку.",
+      "options": [
+        "Добавить требования о логировании всех транзакций блокировки и разблокировки в защищенный SIEM-лог",
+        "Удалить пустой раздел"
+      ],
+      "assumption": "Раздел будет дополнен стандартными требованиями к системному аудиту либо удален по согласованию с архитекторами.",
+      "fids": [
+        "F-023"
+      ],
+      "lines": [
+        123
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12",
+      "text": "Какие версия и дата должны быть проставлены в заголовке документа (строка 1-3) для старта официального согласования?",
+      "priority": "clarify",
+      "addressee": "Бизнес-заказчик",
+      "why": "Отсутствие версии делает невозможным контроль изменений и арбитраж споров с подрядчиком по составу требований.",
+      "options": [
+        "Версия 1.0 от текущей даты",
+        "Версия 0.1 (черновик)"
+      ],
+      "assumption": "Документу присваивается версия 1.0 от даты 02.04.2026.",
+      "fids": [
+        "F-024"
+      ],
+      "lines": [
+        1
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-13",
+      "text": "Мелкие замечания (7: F-001, F-007, F-008, F-011, F-015, F-019, F-020): принять предложенные исправления или оставить формулировки документа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+      "options": [
+        "Принять все предложенные исправления",
+        "Принять, кроме перечисленных номеров находок",
+        "Оставить формулировки документа как есть"
+      ],
+      "assumption": "Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+      "fids": [
+        "F-001",
+        "F-007",
+        "F-008",
+        "F-011",
+        "F-015",
+        "F-019",
+        "F-020"
+      ],
+      "lines": [
+        33,
+        51,
+        53,
+        81,
+        95,
+        115,
+        117
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-07.1",
+      "text": "Какова конкретная логика отправки push-уведомлений после окончания плановых работ в 04:00?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-012"
+      ],
+      "lines": [
+        83
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-05.1",
+      "text": "Когда именно будет выполнено разделение комплексного требования REQ-5 на атомарные пункты?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-003"
+      ],
+      "lines": [
+        37
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    }
+  ],
+  "resolved": [
+    {
+      "fid": "F-002",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие с требованием REQ-26 о подтверждении блокировки",
+      "explanation": "Требование утверждает отсутствие дополнительного подтверждения, что прямо противоречит REQ-26, требующему SMS-код для любой блокировки.",
+      "rids": [
+        "R-004"
+      ],
+      "quotes": [
+        {
+          "text": "Блокировка карты в приложении выполняется без дополнительного подтверждения.",
+          "line": 35,
+          "found": true
+        }
+      ],
+      "example": "Клиент нажимает кнопку, и карта блокируется без ввода SMS-кода, что нарушает антифрод-правило из REQ-26.",
+      "suggestion": "Когда клиент инициирует блокировку карты в приложении, система должна выполнить блокировку без дополнительного подтверждения.",
+      "question": "Требуется ли SMS-подтверждение для блокировки карты в приложении согласно REQ-26?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Ответ подтверждает отсутствие подтверждения в приложении и приоритет REQ-4 над REQ-26 для клиентских операций.",
+      "grouped": false
+    },
+    {
+      "fid": "F-004",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "critical",
+      "title": "Наличие незавершенной информации TBD в требовании",
+      "explanation": "Требование ссылается на неопределенный список причин, который будет определен позже, что блокирует проектирование интерфейса.",
+      "rids": [
+        "R-006"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент выбирает причину блокировки из списка, который будет определён позднее (TBD).",
+          "line": 39,
+          "found": true
+        }
+      ],
+      "example": "Разработчики не могут реализовать выпадающий список причин, так как сами элементы списка отсутствуют в ТЗ.",
+      "suggestion": "Когда клиент запрашивает блокировку карты, система должна предоставить выбор причины из списка: утеря, кража, повреждение, прочее (с текстом до 200 символов).",
+      "question": "Когда будет предоставлен итоговый список причин блокировки карты?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-03: Автор зафиксировал конкретный список причин блокировки.",
+      "grouped": false
+    },
+    {
+      "fid": "F-005",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «TBD»",
+      "explanation": "Слово «TBD» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-006"
+      ],
+      "quotes": [
+        {
+          "text": "TBD",
+          "line": 39,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Когда клиент запрашивает блокировку карты, система должна предоставить выбор причины из фиксированного списка: утеря, кража, повреждение, прочее.",
+      "question": "Что именно означает «TBD» в REQ-6? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "закрыто ответом Q-03: TBD заменено на конкретный фиксированный список.",
+      "grouped": false
+    },
+    {
+      "fid": "F-009",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие в сроках перевыпуска карты с требованием REQ-35",
+      "explanation": "В REQ-14 указан срок перевыпуска не более 5 рабочих дней, в то время как в REQ-35 оператор сообщает срок до 7 рабочих дней.",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "Срок перевыпуска карты составляет не более 5 рабочих дней",
+          "line": 59,
+          "found": true
+        }
+      ],
+      "example": "Система гарантирует изготовление за 5 дней, а оператор информирует клиента о 7 днях.",
+      "suggestion": "Когда клиент заказывает перевыпуск карты, система должна обеспечить срок перевыпуска не более 5 рабочих дней для всех каналов, включая доставку курьером.",
+      "question": "Какой верный нормативный срок перевыпуска карты — 5 или 7 рабочих дней (устранить расхождение с REQ-35)?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Установлен единый срок перевыпуска не более 5 рабочих дней для всех каналов.",
+      "grouped": false
+    },
+    {
+      "fid": "F-010",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Не указана валюта для лимита суммы операций",
+      "explanation": "В требовании указана цифра 200 000 без указания валюты, в отличие от аналогичного требования REQ-16.",
+      "rids": [
+        "R-015"
+      ],
+      "quotes": [
+        {
+          "text": "максимальная сумма операций составляет 200 000 в сутки",
+          "line": 61,
+          "found": true
+        }
+      ],
+      "example": "При проведении мультивалютных операций система не сможет корректно проверить лимит из-за неопределенной валюты.",
+      "suggestion": "До активации новой карты максимальная сумма операций должна составлять 200 000 тенге в сутки на все операции по карте.",
+      "question": "В какой валюте установлен лимит 200 000 в REQ-15?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-04: Валюта и период для лимита указаны в ответе автора.",
+      "grouped": false
+    },
+    {
+      "fid": "F-013",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие с требованием REQ-4 о подтверждении блокировки",
+      "explanation": "REQ-26 требует SMS-подтверждение для любой блокировки, в то время как REQ-4 прямо утверждает обратное.",
+      "rids": [
+        "R-026"
+      ],
+      "quotes": [
+        {
+          "text": "Любая блокировка карты требует подтверждения одноразовым кодом из SMS.",
+          "line": 87,
+          "found": true
+        }
+      ],
+      "example": "Клиент нажимает «Заблокировать» в приложении: по REQ-4 код не нужен, по REQ-26 требуется ввести SMS-код.",
+      "suggestion": "Когда блокировка инициируется банком через антифрод или оператором колл-центра, система должна требовать подтверждения одноразовым кодом из SMS.",
+      "question": "Требуется ли SMS-код для блокировки карты в приложении с учетом REQ-4?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Уточнено применение REQ-26 только для антифрода и колл-центра, снято противоречие с REQ-4.",
+      "grouped": false
+    },
+    {
+      "fid": "F-014",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неопределенность понятия устройства, привязанного к клиенту",
+      "explanation": "Формулировка не раскрывает, по какому техническому параметру система определяет принадлежность устройства клиенту.",
+      "rids": [
+        "R-029"
+      ],
+      "quotes": [
+        {
+          "text": "с устройства, не привязанного к клиенту",
+          "line": 93,
+          "found": true
+        }
+      ],
+      "example": "Клиент заходит с нового смартфона — является ли он привязанным до авторизации?",
+      "suggestion": "Когда система проверяет привязку устройства к клиенту, она должна использовать App Instance ID, зарегистрированный при первом входе.",
+      "question": "Какой технический идентификатор используется для определения привязки устройства к клиенту?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-06: Указан конкретный технический идентификатор — App Instance ID.",
+      "grouped": false
+    },
+    {
+      "fid": "F-017",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "major",
+      "title": "Противоречие со сроком перевыпуска карты в документе",
+      "explanation": "Требование указывает срок 7 рабочих дней, в то время как REQ-14 устанавливает срок не более 5 рабочих дней.",
+      "rids": [
+        "R-035"
+      ],
+      "quotes": [
+        {
+          "text": "Оператор сообщает клиенту, что перевыпуск занимает до 7 рабочих дней.",
+          "line": 107,
+          "found": true
+        }
+      ],
+      "example": "Клиент заказывает перевыпуск, оператор говорит про 7 дней, а SLA согласно REQ-14 составляет 5 дней.",
+      "suggestion": "Когда оператор обрабатывает запрос, он должен сообщать клиенту, что перевыпуск занимает не более 5 рабочих дней.",
+      "question": "Какой официальный срок перевыпуска карты: 5 или 7 рабочих дней?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Срок для оператора скорректирован в соответствии с общим сроком перевыпуска.",
+      "grouped": false
+    },
+    {
+      "fid": "F-018",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Непроверяемое требование к удобству приложения",
+      "explanation": "Формулировка является субъективной и не содержит измеримых метрик или ссылок на стандарты доступности.",
+      "rids": [
+        "R-038"
+      ],
+      "quotes": [
+        {
+          "text": "Приложение должно быть удобным для клиентов всех возрастов.",
+          "line": 115,
+          "found": true
+        }
+      ],
+      "example": "Приложение неудобно для слабовидящих пожилых людей, но формально разработчики считают его удобным.",
+      "suggestion": "Интерфейс мобильного приложения должен соответствовать стандарту WCAG 2.1 уровня AA.",
+      "question": "Какие конкретные метрики или стандарты определяют удобство для всех возрастов?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-09: Требование дополнено ссылкой на стандарт WCAG 2.1 уровня AA.",
+      "grouped": false
+    },
+    {
+      "fid": "F-021",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Лимит без периода действия",
+      "explanation": "У лимита не указан период или область действия (сутки, месяц, одна операция, один реестр): требование нельзя однозначно реализовать и проверить.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Лимит",
+          "line": 63,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Максимальная сумма операций по новой карте должна составлять 200 000 тенге в сутки до активации новой карты.",
+      "question": "За какой период действует лимит «REQ-16. Лимит снятия наличных по новой карте составляет 100 000 тенге.» (сутки, месяц, одна операция)?",
+      "addressee": "Аналитик / владелец продукта",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "закрыто ответом Q-04: Период и валюта лимита явно определены в ответе.",
+      "grouped": false
+    },
+    {
+      "fid": "F-022",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "critical",
+      "title": "Противоречие в требованиях к подтверждению блокировки карты",
+      "explanation": "REQ-4 указывает, что блокировка в приложении выполняется без дополнительного подтверждения, в то время как REQ-26 требует подтверждения любой блокировки одноразовым кодом из SMS.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Блокировка карты в приложении выполняется без дополнительного подтверждения.",
+          "line": 35,
+          "found": true
+        },
+        {
+          "text": "Любая блокировка карты требует подтверждения одноразовым кодом из SMS.",
+          "line": 87,
+          "found": true
+        }
+      ],
+      "example": "Клиент нажимает кнопку «Заблокировать» в приложении. Согласно REQ-4 система блокирует карту сразу без ввода кода, а согласно REQ-26 система должна запросить SMS-код, что создает взаимоисключающие сценарии поведения интерфейса.",
+      "suggestion": "Когда блокировка выполняется клиентом в приложении, система должна выполнять её без дополнительного подтверждения.",
+      "question": "Требуется ли ввод SMS-кода при блокировке карты клиентом из мобильного приложения?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Противоречие между REQ-4 и REQ-26 устранено разделением сценариев для клиента и банка.",
+      "grouped": false
+    },
+    {
+      "fid": "F-025",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Рассогласование сроков перевыпуска карты между клиентом и оператором",
+      "explanation": "В требованиях REQ-14 указан срок перевыпуска карты до 5 рабочих дней, тогда как оператор по REQ-35 должен сообщать клиенту срок до 7 рабочих дней.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Срок перевыпуска карты составляет не более 5 рабочих дней.",
+          "line": 59,
+          "found": true
+        },
+        {
+          "text": "Оператор сообщает клиенту, что перевыпуск занимает до 7 рабочих дней.",
+          "line": 107,
+          "found": true
+        }
+      ],
+      "example": "Клиент заказывает перевыпуск в приложении и видит один срок, а при звонке в колл-центр оператор озвучивает другой срок, что приводит к дезинформации клиента.",
+      "suggestion": "Когда оператор сообщает информацию клиенту, срок перевыпуска должен составлять не более 5 рабочих дней для всех каналов.",
+      "question": "Какой актуальный нормативный срок перевыпуска карт должен сообщаться клиентам и операторам?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Рассогласование сроков устранено в пользу единого срока 5 рабочих дней.",
+      "grouped": false
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "dropped_ungrounded": 0,
+    "dropped_by_critic": 0,
+    "downgraded_by_critic": 0,
+    "llm_calls": 0,
+    "journal": [
+      {
+        "stage": "1",
+        "step": "Чтение документа",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "MD, строк 124",
+        "roles": []
+      },
+      {
+        "stage": "2",
+        "step": "Нарезка и правила набора",
+        "agent": "Segmenter + RuleEngine (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "блоков 52, находок правил 3",
+        "roles": []
+      },
+      {
+        "stage": "3",
+        "step": "Подключение модели",
+        "agent": "GeminiClient (код)",
+        "seconds": 0.99,
+        "status": "ok",
+        "out": "gemini-3.5-flash-lite",
+        "roles": []
+      },
+      {
+        "stage": "4",
+        "step": "Выделение требований",
+        "agent": "Extractor (LLM)",
+        "seconds": 0.02,
+        "status": "ok",
+        "out": "требований 41",
+        "roles": [
+          "extractor"
+        ]
+      },
+      {
+        "stage": "5.1",
+        "step": "Оценка каждого требования",
+        "agent": "Reviewer, параллельные пакеты (LLM)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "оценено 41, находок 18",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "stage": "5.2",
+        "step": "Чек-лист и трассировка",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "строк трассировки 41",
+        "roles": [
+          "analyst_checklist"
+        ]
+      },
+      {
+        "stage": "5.3",
+        "step": "Черновики тест-кейсов",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "тест-кейсов 5",
+        "roles": [
+          "analyst_tests"
+        ]
+      },
+      {
+        "stage": "6",
+        "step": "Проверка набора: противоречия и пропуски",
+        "agent": "ConsistencyReviewer + GapFinder (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 2",
+        "roles": [
+          "consistency",
+          "gaps"
+        ]
+      },
+      {
+        "stage": "7",
+        "step": "Сверка цитат и дедупликация",
+        "agent": "Grounder + dedupe (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "отброшено без цитаты 0, слито дублей 0",
+        "roles": []
+      },
+      {
+        "stage": "8",
+        "step": "Перепроверка находок",
+        "agent": "Critic (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "оставлено 25, отклонено/слито 0",
+        "roles": [
+          "critic"
+        ]
+      },
+      {
+        "stage": "9",
+        "step": "Слияние повторов между агентами",
+        "agent": "dedupe по требованиям и строкам (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "слито повторов 0",
+        "roles": []
+      },
+      {
+        "stage": "10",
+        "step": "Нумерация находок",
+        "agent": "Оркестратор (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 25",
+        "roles": []
+      },
+      {
+        "stage": "11",
+        "step": "Вопросы автору",
+        "agent": "Clarifier (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "вопросов 12",
+        "roles": [
+          "clarifier"
+        ]
+      },
+      {
+        "stage": "12",
+        "step": "Чтение ответов автора",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "ответов 8",
+        "roles": []
+      },
+      {
+        "stage": "13",
+        "step": "Учёт ответов автора",
+        "agent": "Resolver (LLM)",
+        "seconds": 0.02,
+        "status": "ok",
+        "out": "решений по находкам 14",
+        "roles": [
+          "resolver"
+        ]
+      }
+    ],
+    "merged_id_findings": 0,
+    "merged_duplicates": 0,
+    "dropped_by_critic_titles": [],
+    "merged_overlap": 0,
+    "merged_overlap_titles": [],
+    "merged_singular": 0,
+    "answers_used": 8,
+    "answers_unmatched": [],
+    "resolved_by_answers": 12,
+    "before_answers": {
+      "critical": 5,
+      "major": 12
+    },
+    "llm_cache_hits": 14,
+    "llm_retries": 0,
+    "llm_failures": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "thinking_tokens": 0,
+    "llm_seconds": 0.0,
+    "llm_by_role": {
+      "extractor": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 0,
+        "cache_hits": 6,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_checklist": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_tests": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "consistency": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "gaps": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "critic": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "clarifier": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "resolver": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      }
+    },
+    "duration_sec": 1.11,
+    "value": {
+      "rate_kzt_per_hour": 5000.0,
+      "manual_base_min": 30.0,
+      "manual_min_per_requirement": 6.0,
+      "check_min_per_finding": 1.5,
+      "manual_hours": 4.6,
+      "agent_hours": 0.0,
+      "check_hours": 0.62,
+      "saved_hours": 3.97,
+      "saved_kzt": 19873,
+      "critical_found": 5,
+      "major_found": 12,
+      "fix_hours_at_requirements": 1.0,
+      "escalation_factor": 7.0,
+      "precision": 0.85,
+      "avoided_rework_hours": 56.1,
+      "avoided_rework_kzt": 280500,
+      "tokens_total": 0,
+      "llm_cost_kzt": 0.0,
+      "llm_price_note": "бесплатный тариф (цена токенов не задана)",
+      "roi": 96.1,
+      "major_weight": 0.5,
+      "scenarios": [
+        {
+          "name": "основной",
+          "escalation": 7.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 56.1,
+          "benefit_kzt": 300373,
+          "roi": 96.1
+        },
+        {
+          "name": "осторожный",
+          "escalation": 3.0,
+          "precision": 0.7,
+          "avoided_rework_hours": 15.4,
+          "benefit_kzt": 96873,
+          "roi": 31.0
+        },
+        {
+          "name": "только время ревью",
+          "escalation": 1.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 0.0,
+          "benefit_kzt": 19873,
+          "roi": 6.4
+        }
+      ]
+    },
+    "requirements": 41,
+    "findings": 13,
+    "critical": 0,
+    "major": 6,
+    "minor": 7,
+    "questions": 15,
+    "questions_blocker_open": 0
+  },
+  "document_score": 88,
+  "verdict_dev": "Условно — критичных дефектов нет, но есть существенные (6); разработку можно начинать после их уточнения.",
+  "verdict_test": "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения.",
+  "priorities": [
+    "F-023",
+    "F-024",
+    "F-003",
+    "F-006",
+    "F-012",
+    "F-016"
+  ]
+}
