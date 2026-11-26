@@ -5,7 +5,7 @@
 Как ответить: впишите ответ после «Ответ:» (можно в несколько строк), сохраните файл и запустите повторно:
 
 ```
-python -m reqcheck "input/requirements.md" "reports\requirements_report.md" --answers "reports\requirements_report_questions.md"
+python main.py --input "input/requirements.md" --output "reports\requirements_report.md" --answers "reports\requirements_report_questions.md"
 ```
 
 Пустые ответы агент пропускает. Ответы — данные для агента: он решит, какие дефекты они закрывают, и пересчитает вердикт.
