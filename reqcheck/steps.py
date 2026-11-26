@@ -36,7 +36,7 @@ from reqcheck.llm import GeminiClient, LLMUnavailable
 from reqcheck.loaders import LoadError, load_document
 from reqcheck.models import SEV_RANK
 from reqcheck.orchestrator import RunContext, Step
-from reqcheck.rules import RuleEngine
+from reqcheck.rules import RuleEngine, injection_lines
 from reqcheck.segmenter import segment
 
 
@@ -88,6 +88,12 @@ class SegmentRulesStep(Step):
         ctx.result.blocks = ctx.blocks
         ctx.result.checklist = ctx.checklist
         ctx.grounder = Grounder(ctx.doc)
+        if lines := injection_lines(ctx.doc):
+            shown = ", ".join(map(str, lines[:10])) + (" …" if len(lines) > 10 else "")
+            ctx.diag("warning", "PROMPT_INJECTION_SUSPECTED",
+                     f"В документе есть текст, обращённый к ИИ-проверяющему (строки {shown}).",
+                     "Модели получили указание считать документ данными. Правила и сверка цитат от модели не зависят, "
+                     "но эти строки стоит проверить вручную и удалить из требований.")
 
     def summary(self, out: Any) -> str:
         return f"блоков {len(out[0])}, находок правил {len(out[2])}"

@@ -1,0 +1,35 @@
+# Тесты и офлайн-прогон агента на каждый push и PR. Ключ Gemini не нужен: тесты ходят в подставную FakeLLM,
+# прогон идёт с --offline (только детерминированные правила).
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.12"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      REQCHECK_NO_DOTENV: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - name: Офлайн-прогон на размеченном документе
+        run: python -m reqcheck eval_holdout/holdout_deposit.md out/report.md --offline
+      - uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
+        with:
+          name: offline-report
+          path: out/

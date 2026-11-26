@@ -192,11 +192,20 @@ class Reviewer:
         line_of = {r.rid: r.line_start for r in reqs}
         batches = [reqs[i:i + REVIEW_BATCH] for i in range(0, len(reqs), REVIEW_BATCH)]
 
+        def wording(r: Requirement) -> str:
+            # Своя формулировка требования. Если Extractor выделил из одного абзаца несколько требований,
+            # абзац идёт отдельной строкой как контекст: иначе у соседних требований одинаковый текст,
+            # и модель принимает их за дубли или за одно «неатомарное» требование.
+            block = " ".join(blocks_by_id[b].text for b in r.block_ids if b in blocks_by_id)
+            own = r.quote.strip()
+            if not own or normalize(own) == normalize(block):
+                return block or own
+            return f"Формулировка: {own}\nАбзац целиком (контекст, оценивать не нужно): {block}"
+
         def ask(batch: list[Requirement]) -> Any:
             listing = "\n\n".join(
                 f"{r.rid} (в документе: {r.source_id or 'без номера'}; строки {r.line_start}-{r.line_end}; "
-                f"раздел: {r.section}; вид: {r.kind})\n"
-                + " ".join(blocks_by_id[b].text for b in r.block_ids if b in blocks_by_id)
+                f"раздел: {r.section}; вид: {r.kind})\n" + wording(r)
                 for r in batch
             )
             prompt = f"{prompts.REVIEWER}\n\nТребования для оценки:\n{listing}\n\nВесь документ (номер строки: текст):\n{context}"

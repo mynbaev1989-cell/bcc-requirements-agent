@@ -33,8 +33,8 @@ def _lines_of(defect: dict, grounder: Grounder) -> set[int]:
     return lines
 
 
-def score_document(md_path: Path, labels: dict, opts: Options) -> dict:
-    result = run(str(md_path), opts)
+def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict:
+    result = run(str(md_path), opts, llm=llm)
     if result.document is None:
         return {"document": md_path.name, "error": [d.message for d in result.diagnostics]}
     g = Grounder(result.document)
