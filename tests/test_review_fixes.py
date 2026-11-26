@@ -155,3 +155,57 @@ def test_avoided_rework_is_discounted_by_measured_precision(monkeypatch):
     assert v.precision == 0.86 and v.avoided_rework_hours == round((4 + 0.5 * 6) * 0.86 * 1 * 6, 1)
     monkeypatch.setenv("REQCHECK_PRECISION", "1")
     assert estimate(40, 30, 4, 300, n_major=6).avoided_rework_hours == 42.0
+
+
+def test_passport_lists_every_model_including_cached_answers(tmp_path, monkeypatch):
+    import json as _json
+    from reqcheck.llm import GeminiClient
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    llm = GeminiClient(model="model-a", retries=0, cache_dir=str(tmp_path))
+    for model, prompt in (("model-a", "p1"), ("model-b", "p2")):
+        llm.model = model
+        llm._cache_path("sys\n\n" + prompt).write_text(_json.dumps({"model": model, "parsed": {"ok": 1}}), encoding="utf-8")
+        assert llm.generate_json("reviewer", "sys", prompt) == {"ok": 1}
+    assert llm.stats.models_used == ["model-a", "model-b"]
+
+
+def test_answer_after_model_switch_is_cached_under_the_model_that_answered(tmp_path, monkeypatch):
+    import json as _json
+    from types import SimpleNamespace
+    from reqcheck.llm import GeminiClient
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    calls = []
+
+    class Quota429(Exception):
+        code = 429
+
+    class Client:
+        class models:  # noqa: N801
+            @staticmethod
+            def generate_content(model, contents, config):
+                calls.append(model)
+                if model == "model-a":
+                    raise Quota429("429 RESOURCE_EXHAUSTED: Generate content requests per day limit exceeded")
+                return SimpleNamespace(text='{"ok": 1}', usage_metadata=None, model_version=model,
+                                       candidates=[SimpleNamespace(finish_reason="STOP")])
+
+    def client(model):
+        c = GeminiClient(model=None, retries=1, cache_dir=str(tmp_path))
+        c.model, c._fallbacks, c._client, c.min_interval = model, ["model-b"], Client(), 0
+        return c
+
+    first = client("model-a")
+    assert first.generate_json("critic", "sys", "p") == {"ok": 1} and calls == ["model-a", "model-b"]
+    # Ответ model-b лежит под ключом model-b, а не под ключом модели, с которой начинали
+    assert not first._cache_path("sys\n\np", "model-a").exists()
+    assert _json.loads(first._cache_path("sys\n\np", "model-b").read_text(encoding="utf-8"))["model"] == "model-b"
+    # Следующий прогон: model-a снова упирается в квоту, после переключения ответ берётся из кэша без запроса
+    calls.clear()
+    second = client("model-a")
+    assert second.generate_json("critic", "sys", "p") == {"ok": 1} and calls == ["model-a"]
+    # Поиск по цепочке моделей: ответ запасной модели находится сразу, без запроса к основной
+    calls.clear()
+    third = client("model-a")
+    third._chain = ["model-a", "model-b"]
+    assert third.generate_json("critic", "sys", "p") == {"ok": 1} and calls == []
+    assert third.stats.models_used == ["model-b"]

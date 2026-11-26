@@ -4,12 +4,12 @@
     "gold_defects": 15,
     "found": 14,
     "recall": 0.933,
-    "agent_findings": 38,
-    "precision": 0.763,
+    "agent_findings": 34,
+    "precision": 0.824,
     "false_major_on_clean": 0,
     "questions": 13,
-    "gold_covered_by_questions": 13,
-    "question_coverage": 0.867,
+    "gold_covered_by_questions": 14,
+    "question_coverage": 0.933,
     "by_type": {
       "ambiguity": "1/1",
       "api": "2/3",
@@ -25,7 +25,10 @@
     "missed": [
       "Поле interest_rate в примере не совпадает с rate_percent в описании."
     ],
-    "model": "gemini-3.5-flash-lite"
+    "model": "gemini-3.5-flash-lite",
+    "dropped_ungrounded": 0,
+    "merged_by_critic": 0,
+    "rejected_by_critic": 0
   },
   {
     "document": "holdout_installments.md",
@@ -53,6 +56,9 @@
       "unverifiable": "1/1"
     },
     "missed": [],
-    "model": "gemini-3.5-flash-lite"
+    "model": "gemini-3.5-flash-lite",
+    "dropped_ungrounded": 1,
+    "merged_by_critic": 3,
+    "rejected_by_critic": 0
   }
 ]

@@ -97,7 +97,10 @@ def render_markdown(result: RunResult) -> str:
         ("Версия агента", p.get("agent_version")),
         ("Режим", p.get("mode")),
         ("Нарезка требований", p.get("segmentation", "—")),
-        ("Длительность прогона", f"{p.get('duration_sec', '—')} с"),
+        ("Длительность прогона", f"{p.get('duration_sec', '—')} с" + (
+            f" (ответов модели из кэша: {result.metrics['llm_cache_hits']} из "
+            f"{result.metrics['llm_cache_hits'] + result.metrics.get('llm_calls', 0)}; время и токены — только новых запросов)"
+            if result.metrics.get("llm_cache_hits") else "")),
         ("Вызовы LLM", f"{result.metrics.get('llm_calls', 0)} (из кэша: {result.metrics.get('llm_cache_hits', 0)}, "
                        f"повторов: {result.metrics.get('llm_retries', 0)})"),
         ("Токены (вход / выход)", f"{result.metrics.get('input_tokens', 0)} / {result.metrics.get('output_tokens', 0)}"),
@@ -450,7 +453,7 @@ def render_markdown(result: RunResult) -> str:
         a("")
         a("Переделки: по данным NASA (Stecklein et al., 2004/2010), дефект требований, найденный на этапе кодирования, "
           "обходится в 7–16 раз дороже, на интеграции и тестах — в 21–78 раз; агент берёт нижнюю границу (×7) "
-          "и умножает на точность находок, измеренную на контрольном наборе: не каждая находка — настоящий дефект. "
+          "и умножает на точность находок, измеренную на размеченных документах: не каждая находка — настоящий дефект. "
           "Все параметры — допущения, их можно задать переменными окружения (см. README).")
         a("")
     return "\n".join(L) + "\n"

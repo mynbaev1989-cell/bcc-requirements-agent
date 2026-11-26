@@ -61,7 +61,7 @@ def estimate(n_requirements: int, n_findings: int, n_critical: int, agent_second
     fix_h = _env_float("REQCHECK_FIX_HOURS", 1.0)
     esc = _env_float("REQCHECK_ESCALATION", 7.0)
     weight_major = _env_float("REQCHECK_MAJOR_WEIGHT", 0.5)  # существенный дефект доходит до кода не всегда
-    # Не каждая находка — настоящий дефект: умножаем на измеренную точность находок (контрольный набор eval_holdout/)
+    # Не каждая находка — настоящий дефект: умножаем на измеренную точность находок (все размеченные документы: 123 из 143)
     precision = min(max(_env_float("REQCHECK_PRECISION", 0.86), 0.0), 1.0)
     avoided_h = (n_critical + weight_major * n_major) * precision * fix_h * max(esc - 1, 0)
 

@@ -142,6 +142,7 @@ class GeminiClient:
         self.model = explicit or DEFAULT_MODEL
         # Явно выбранную модель не подменяем; для модели по умолчанию разрешён запасной список
         self._fallbacks = [] if explicit else [m for m in FALLBACK_MODELS if m != self.model]
+        self._chain = [self.model] + self._fallbacks  # порядок поиска в кэше: основная модель, затем запасные
         self.timeout = timeout
         self.retries = retries
         self.max_calls = max_calls
@@ -159,21 +160,42 @@ class GeminiClient:
             timeout=int(timeout * 1000), retry_options=types.HttpRetryOptions(attempts=1)))
 
     # --- кэш ответов: повторный прогон того же документа не тратит квоту и даёт тот же результат ---
-    def _cache_path(self, payload: str) -> Path | None:
+    def _cache_path(self, payload: str, model: str | None = None) -> Path | None:
         if not self.cache_dir:
             return None
-        digest = hashlib.sha256(f"{self.model}\n{payload}".encode("utf-8")).hexdigest()
+        digest = hashlib.sha256(f"{model or self.model}\n{payload}".encode("utf-8")).hexdigest()
         return self.cache_dir / f"{digest}.json"
 
-    def generate_json(self, role: str, system: str, prompt: str) -> Any:
-        cache = self._cache_path(system + "\n\n" + prompt)
-        if cache and cache.exists():
+    def _from_cache(self, role: str, payload: str) -> tuple[bool, Any]:
+        """Ответ из кэша. Ключ — модель + промпт; запись с меткой другой модели не принимается.
+
+        Модели проверяются по цепочке (основная, затем запасные), а не только текущая: тогда повторный прогон
+        берёт те же ответы независимо от того, в какой момент параллельные шаги переключили модель."""
+        models = getattr(self, "_chain", None) or [self.model]
+        if self.model not in models:
+            models = [self.model] + models
+        for model in models:
+            cache = self._cache_path(payload, model)
+            if not (cache and cache.exists()):
+                continue
             try:
                 data = json.loads(cache.read_text(encoding="utf-8"))
-                self.stats.add(role, cache_hits=1)
-                return data["parsed"]
+                if data.get("model", model) != model:
+                    continue
+                parsed = data["parsed"]
             except (OSError, ValueError, KeyError):
-                pass
+                continue
+            self.stats.add(role, cache_hits=1)
+            # Ответ из кэша тоже дала модель: она попадает в паспорт отчёта (иначе смесь моделей не видна)
+            self.stats.note(model_version=model)
+            return True, parsed
+        return False, None
+
+    def generate_json(self, role: str, system: str, prompt: str) -> Any:
+        payload = system + "\n\n" + prompt
+        hit, cached = self._from_cache(role, payload)
+        if hit:
+            return cached
         if self._exhausted:
             raise LLMError(self._exhausted)
         if self.stats.calls >= self.max_calls:
@@ -221,10 +243,11 @@ class GeminiClient:
                     self.stats.note(error=f"{role}: ответ обрезан по лимиту токенов")
                     raise LLMError("Ответ модели обрезан по лимиту токенов; шаг выполнен без LLM.")
                 parsed = parse_json_loose(text)
+                cache = self._cache_path(payload, model)  # ключ — модель, которая ответила (даже если другой поток уже переключил)
                 if cache:
                     try:
                         cache.parent.mkdir(parents=True, exist_ok=True)
-                        cache.write_text(json.dumps({"role": role, "model": self.model, "parsed": parsed},
+                        cache.write_text(json.dumps({"role": role, "model": model, "parsed": parsed},
                                                     ensure_ascii=False), encoding="utf-8")
                     except OSError:
                         pass
@@ -253,6 +276,9 @@ class GeminiClient:
                 if status == 429 and self._is_daily_quota(exc):
                     # Дневная квота не восстановится за минуты: ждать бессмысленно, сразу берём запасную модель
                     if self._switch_model(model, "дневная квота {} исчерпана"):
+                        hit, cached = self._from_cache(role, payload)  # у запасной модели ответ может быть в кэше
+                        if hit:
+                            return cached
                         continue
                     self.stats.add(failures=1)
                     self._exhausted = (f"Исчерпана дневная квота бесплатного ключа для «{self.model}». "
@@ -260,6 +286,9 @@ class GeminiClient:
                     raise LLMError(self._exhausted) from exc
                 if status == 404:
                     if self._switch_model(model, "модель {} недоступна"):
+                        hit, cached = self._from_cache(role, payload)
+                        if hit:
+                            return cached
                         continue
                     self.stats.add(failures=1)
                     raise LLMError(f"Модель «{self.model}» не найдена. Укажите другую через GEMINI_MODEL или --model.") from exc
