@@ -5,11 +5,15 @@
 находка агента «попала» в эталонный дефект, если хотя бы одна её цитата лежит в пределах ±1 строки
 от строки дефекта (или совпадает текст цитаты). Считаются recall (доля найденных эталонных дефектов),
 precision (доля находок агента, совпавших с разметкой) и ложные срабатывания на «чистых» требованиях.
+
+Дополнительно: критичность (точно / ±1 уровень), ложные critical, покрытие вопросами critical/major дефектов,
+качество вопросов и precision_with_extra (учитывает <имя>.extra.json — дефекты, подтверждённые вручную).
 """
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -18,6 +22,10 @@ sys.path.insert(0, str(ROOT))
 
 from reqcheck.grounding import Grounder, normalize  # noqa: E402
 from reqcheck.pipeline import Options, run  # noqa: E402
+
+SEV_RANK = {"critical": 2, "major": 1, "minor": 0}
+SEVERE = ("critical", "major")
+_LINE_IN_TEXT = re.compile(r"(строк\w*|стр\.?|line)\s*№?\s*\d", re.IGNORECASE)
 
 
 def _lines_of(defect: dict, grounder: Grounder) -> set[int]:
@@ -33,7 +41,41 @@ def _lines_of(defect: dict, grounder: Grounder) -> set[int]:
     return lines
 
 
-def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict:
+def load_extra(md_path: Path) -> dict:
+    """Необязательный файл <имя>.extra.json рядом с документом: реальные дефекты вне эталона."""
+    p = md_path.parent / f"{md_path.stem}.extra.json"
+    if not p.exists():
+        return {}
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def question_quality(questions: list) -> dict:
+    """Качество вопросов: доли с адресатом, вариантами, допущением, номером строки; число пар-дублей."""
+    n = len(questions)
+
+    def share(k: int) -> float:
+        return round(k / n, 3) if n else 0.0
+
+    groups: dict[frozenset, int] = {}
+    for q in questions:
+        if q.lines:
+            key = frozenset(q.lines)
+            groups[key] = groups.get(key, 0) + 1
+    return {
+        "n": n,
+        "with_addressee": share(sum(1 for q in questions if (q.addressee or "").strip())),
+        "with_options": share(sum(1 for q in questions if q.options)),
+        "with_assumption": share(sum(1 for q in questions if (q.assumption or "").strip())),
+        "with_line": share(sum(1 for q in questions if q.lines or _LINE_IN_TEXT.search(q.text or ""))),
+        "duplicate_pairs": sum(c * (c - 1) // 2 for c in groups.values()),  # одинаковый набор строк
+    }
+
+
+def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: dict | None = None) -> dict:
     result = run(str(md_path), opts, llm=llm)
     if result.document is None:
         return {"document": md_path.name, "error": [d.message for d in result.diagnostics]}
@@ -68,6 +110,32 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
     # Уточнение: доля найденных эталонных дефектов, по которым агент задал автору вопрос
     asked = {fid for q in result.questions for fid in q.fids}
     gold_asked = [d for d, dl in gold if any(near(dl, fl) and f.fid in asked for f, fl in agent)]
+
+    # Критичность: для найденного эталонного дефекта берём максимальную критичность среди совпавших находок
+    sev_exact = sev_one = severe_gold = severe_asked = 0
+    for d, dl in gold:
+        matches = [f for f, fl in agent if near(dl, fl)]
+        if not matches:
+            continue
+        gold_sev = d.get("severity", "major")
+        if gold_sev in SEVERE:
+            severe_gold += 1
+            if any(f.fid in asked for f in matches):
+                severe_asked += 1
+        diff = abs(max(SEV_RANK.get(f.severity, 0) for f in matches) - SEV_RANK.get(gold_sev, 1))
+        sev_exact += diff == 0
+        sev_one += diff <= 1
+    false_critical = [f for f, fl in agent if f.severity == "critical" and not any(near(fl, dl) for _, dl in gold)]
+
+    # Дефекты, подтверждённые вручную (extra): precision_with_extra
+    if extra is None:
+        extra = load_extra(md_path)
+    extra_lines = [_lines_of(e, g) for e in extra.get("extra_defects", []) if isinstance(e, dict)]
+    matched_extra = [f for f, fl in agent
+                     if any(near(fl, dl) for _, dl in gold) or any(near(fl, el) for el in extra_lines)]
+    unmatched = [{"fid": f.fid, "severity": f.severity, "lines": sorted(fl), "title": f.title,
+                  "quote": f.quotes[0].text if f.quotes else ""}
+                 for f, fl in agent if not any(near(fl, dl) for _, dl in gold)]
     return {
         "document": md_path.name,
         "gold_defects": len(gold),
@@ -75,13 +143,25 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
         "recall": round(len(hit_gold) / max(len(gold), 1), 3),
         "agent_findings": len(agent),
         "precision": round(len(matched_agent) / max(len(agent), 1), 3),
+        "precision_with_extra": round(len(matched_extra) / max(len(agent), 1), 3),
+        "extra_defects": len(extra_lines),
         "precision_items": round(len(matched_items) / max(len(items), 1), 3),
         "false_major_on_clean": len(false_on_clean),
         "questions": len(result.questions),
         "gold_covered_by_questions": len(gold_asked),
         "question_coverage": round(len(gold_asked) / max(len(gold), 1), 3),
+        "severe_gold": severe_gold,
+        "severe_covered_by_questions": severe_asked,
+        "severe_question_coverage": round(severe_asked / max(severe_gold, 1), 3),
+        "severity_exact": round(sev_exact / max(len(hit_gold), 1), 3),
+        "severity_within_one": round(sev_one / max(len(hit_gold), 1), 3),
+        "severity_exact_n": sev_exact,
+        "severity_within_one_n": sev_one,
+        "false_critical": len(false_critical),
+        "question_quality": question_quality(result.questions),
         "by_type": {k: f"{v[0]}/{v[1]}" for k, v in sorted(by_type.items())},
         "missed": [d.get("explanation") or d.get("quote") for d in defects if d not in hit_gold],
+        "unmatched": unmatched,
         "model": result.passport.get("model"),
         "dropped_ungrounded": result.metrics.get("dropped_ungrounded", 0),
         "merged_by_critic": result.metrics.get("merged_duplicates", 0),
@@ -114,6 +194,20 @@ def main(argv: list[str]) -> int:
               f"эталонных дефектов, по которым задан вопрос автору: "
               f"{sum(r['gold_covered_by_questions'] for r in ok)}/{tot_gold}; "
               f"вопросов всего: {sum(r['questions'] for r in ok)}")
+        sev_gold = sum(r["severe_gold"] for r in ok)
+        qn = sum(r["question_quality"]["n"] for r in ok)
+
+        def qshare(key: str) -> str:
+            return f"{sum(r['question_quality'][key] * r['question_quality']['n'] for r in ok) / max(qn, 1):.0%}"
+
+        print(f"Критичность: точно {sum(r['severity_exact_n'] for r in ok)}/{tot_found}, "
+              f"±1 уровень {sum(r['severity_within_one_n'] for r in ok)}/{tot_found}; "
+              f"ложных critical: {sum(r['false_critical'] for r in ok)}; "
+              f"critical/major дефектов, покрытых вопросом: {sum(r['severe_covered_by_questions'] for r in ok)}/{sev_gold}; "
+              f"precision с учётом extra: {sum(r['precision_with_extra'] for r in ok) / len(ok):.0%}")
+        print(f"Качество вопросов ({qn}): адресат {qshare('with_addressee')}, варианты {qshare('with_options')}, "
+              f"допущение {qshare('with_assumption')}, строка {qshare('with_line')}; "
+              f"пар-дублей: {sum(r['question_quality']['duplicate_pairs'] for r in ok)}")
     out = folder / "eval_results.json"
     out.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Результаты: {out}")

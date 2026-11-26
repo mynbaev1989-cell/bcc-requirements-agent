@@ -20,7 +20,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("input", help="путь к документу требований (.md, .txt, .pdf, .docx)")
     p.add_argument("output", help="путь к файлу отчёта (.md или .pdf); рядом лягут остальные форматы")
-    p.add_argument("--model", help="модель Gemini (по умолчанию GEMINI_MODEL или gemini-3.5-flash)")
+    p.add_argument("--model", help="модель (Gemini: GEMINI_MODEL или gemini-3.5-flash; при REQCHECK_LLM_BASE_URL: REQCHECK_LLM_MODEL)")
     p.add_argument("--offline", action="store_true", help="без LLM: только детерминированные правила")
     p.add_argument("--formats", default="md,pdf,json", help="форматы отчёта через запятую (по умолчанию md,pdf,json)")
     p.add_argument("--max-size-mb", type=float, default=20.0, help="лимит размера входного файла, МБ (по умолчанию 20)")

@@ -203,6 +203,7 @@ class Reviewer:
         self.llm, self.doc, self.grounder = llm, doc, grounder
         self.errors: list[str] = []
         self.skipped: list[str] = []  # требования, которые модель не оценила и после переспроса
+        self._last_error = ""  # текст последней ошибки запроса (для распознавания квоты/авторизации)
 
     def run(self, reqs: list[Requirement], blocks_by_id: dict[str, Block]) -> tuple[dict[str, RequirementAssessment], list[Finding]]:
         context = numbered_document(self.doc)
@@ -233,9 +234,39 @@ class Reviewer:
             prompt = f"{prompts.REVIEWER}\n\nТребования для оценки:\n{listing}\n\nВесь документ (номер строки: текст):\n{context}"
             return self.llm.generate_json("reviewer", prompts.BASE_SYSTEM, prompt)
 
+        def attempt(chunk: list[Requirement]) -> bool:
+            """Один запрос по chunk; True, если получена хотя бы одна оценка. Ошибка пишется в self.errors."""
+            self._last_error = ""
+            try:
+                data = ask(chunk)
+            except LLMError as exc:
+                self.errors.append(str(exc))
+                self._last_error = str(exc)
+                return False
+            got_a: dict[str, RequirementAssessment] = {}
+            got_f: list[Finding] = []
+            self._collect(data, {r.rid for r in chunk}, line_of, got_a, got_f)
+            assessments.update(got_a)
+            findings.extend(got_f)
+            return bool(got_a)
+
+        def split_retry(chunk: list[Requirement]) -> bool:
+            """Разбить chunk пополам и спросить каждую половину один раз (без рекурсии).
+            Не делаем этого при квоте/авторизации/лимите вызовов: новые запросы только тратят ресурс."""
+            if len(chunk) < 2:
+                return False
+            mid = len(chunk) // 2
+            ok = False
+            for half in (chunk[:mid], chunk[mid:]):
+                if self._no_more_requests():
+                    break
+                ok = attempt(half) or ok
+            return ok
+
         # Пачки независимы — отправляем параллельно (REQCHECK_WORKERS, по умолчанию 3); порядок результатов сохраняется
         workers = max(1, min(int(os.environ.get("REQCHECK_WORKERS", "3") or 1), len(batches) or 1))
         answers: list[Any] = [None] * len(batches)
+        failed_err: dict[int, str] = {}  # текст ошибки по упавшим первичным пакетам
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {pool.submit(ask, b): i for i, b in enumerate(batches)}
             for fut in as_completed(futures):
@@ -244,10 +275,17 @@ class Reviewer:
                     answers[i] = fut.result()
                 except LLMError as exc:
                     self.errors.append(str(exc))
+                    failed_err[i] = str(exc)
                     for r in batches[i]:
                         assessments[r.rid] = RequirementAssessment(
                             r.rid, [CriterionMark(c, NA, "не оценено: LLM не ответила") for c in criteria.REQ_CODES])
-        if batches and all(a is None for a in answers):
+        # Сбой всего первичного пакета (не квота): один раз пробуем его половины, чтобы не терять оценки целиком
+        recovered = False
+        for i, b in enumerate(batches):
+            if answers[i] is None:
+                self._last_error = failed_err.get(i, "")
+                recovered = split_retry(b) or recovered
+        if batches and all(a is None for a in answers) and not recovered:
             raise LLMError(self.errors[0] if self.errors else "Reviewer не получил ответов")
         for batch, data in zip(batches, answers):
             if data is not None:  # из ответа берём только требования своего пакета: чужую оценку не перезаписываем
@@ -257,16 +295,28 @@ class Reviewer:
         omitted = [r for i, b in enumerate(batches) if answers[i] is not None for r in b if r.rid not in assessments]
         for start in range(0, len(omitted), REVIEW_BATCH):
             chunk = omitted[start:start + REVIEW_BATCH]
-            try:  # из ответа берём только переспрошенные требования: остальные уже оценены
-                self._collect(ask(chunk), {r.rid for r in chunk}, line_of, assessments, findings)
-            except LLMError as exc:
-                self.errors.append(str(exc))
+            # из ответа берём только переспрошенные требования: остальные уже оценены.
+            # Если переспрос не дал ни одной оценки (ошибка или пустой/битый ответ) — делим пополам, один раз
+            if not attempt(chunk):
+                split_retry(chunk)
         for r in omitted:
             if r.rid not in assessments:
                 self.skipped.append(r.rid)
                 assessments[r.rid] = RequirementAssessment(
                     r.rid, [CriterionMark(c, NA, "не оценено: модель пропустила требование") for c in criteria.REQ_CODES])
         return assessments, findings
+
+    def _no_more_requests(self) -> bool:
+        """True, если новые запросы бессмысленны: квота/авторизация исчерпаны или выбран лимит вызовов клиента."""
+        if getattr(self.llm, "_exhausted", ""):
+            return True
+        max_calls = getattr(self.llm, "max_calls", None)
+        calls = getattr(getattr(self.llm, "stats", None), "calls", 0)
+        if isinstance(max_calls, int) and calls >= max_calls:
+            return True
+        low = self._last_error.lower()
+        markers = ("квот", "лимит вызовов", "api key", "api_key", "permission", "unauthorized", "401", "403", "400")
+        return any(m in low for m in markers)
 
     def _collect(self, data: Any, accept: set[str], line_of: dict[str, int],
                  assessments: dict[str, RequirementAssessment], findings: list[Finding]) -> None:

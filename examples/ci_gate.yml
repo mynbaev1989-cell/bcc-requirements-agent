@@ -1,0 +1,48 @@
+# Пример «ворот» качества требований для GitHub Actions.
+# Скопируйте в .github/workflows/ репозитория, где лежат ТЗ (docs/requirements.md).
+# Шаг падает, если в документе остались критичные дефекты: разработку по такому ТЗ начинать нельзя.
+# Ключ: секрет репозитория GEMINI_API_KEY. Для модели внутри контура банка вместо него задайте
+# REQCHECK_LLM_BASE_URL и REQCHECK_LLM_MODEL (self-hosted runner с доступом к модели).
+name: requirements-gate
+
+on:
+  pull_request:
+    paths: ["docs/requirements.md", "docs/requirements_answers.md"]
+
+jobs:
+  reqcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Установить reqcheck
+        run: |
+          git clone --depth 1 https://github.com/mynbaev1989-cell/bcc-requirements-agent.git /tmp/reqcheck
+          pip install -r /tmp/reqcheck/requirements.txt
+      - name: Проверить требования
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONPATH: /tmp/reqcheck
+        run: |
+          ANSWERS=""
+          if [ -f docs/requirements_answers.md ]; then ANSWERS="--answers docs/requirements_answers.md"; fi
+          python -m reqcheck docs/requirements.md out/requirements_report.md $ANSWERS
+      - name: Ворота — нет открытых критичных дефектов
+        run: |
+          python - <<'EOF'
+          import json, sys
+          r = json.load(open("out/requirements_report.json", encoding="utf-8"))
+          crit = [f for f in r["findings"] if f["severity"] == "critical"]
+          for f in crit:
+              lines = ", ".join(str(q.get("line")) for q in f["quotes"])
+              print(f"::error file=docs/requirements.md,line={f['quotes'][0].get('line', 1) if f['quotes'] else 1}::{f['fid']} {f['title']} (строки {lines})")
+          print(r["verdict_dev"])
+          sys.exit(1 if crit else 0)
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: requirements-report
+          path: out/

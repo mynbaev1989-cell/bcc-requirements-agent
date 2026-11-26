@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from difflib import SequenceMatcher
 
 from reqcheck.models import MAJOR, MINOR, Block, ChecklistItem, Document, Finding, Quote, Requirement
-from reqcheck.segmenter import FENCE, HEADING_MD
+from reqcheck.segmenter import FENCE, HEADING_MD, TABLE_SEP, split_cells
 
 # Размытые («слабые») слова и обороты — признак неоднозначности/непроверяемости (29148 п. 5.2.5, IEEE 830 п. 4.3.2)
 WEAK_PATTERNS: list[tuple[str, str]] = [
@@ -88,6 +89,40 @@ UNIT_GROUPS = {
 VERSION_RE = re.compile(r"(верси[яи](?:\s+документа)?|version|ред\.|редакци[яи])\s*[:№#]?\s*v?\d+(\.\d+)*", re.I)
 DATE_RE = re.compile(r"\b\d{1,2}[./]\d{1,2}[./]\d{2,4}\b|\b\d{4}-\d{2}-\d{2}\b")
 YES_NO_CELL = re.compile(r"^\s*(да|нет)(\s*/\s*(да|нет|не требуется|н/п))+\s*$", re.I)
+
+# --- Правило «Лимит без периода» --------------------------------------------------------------------
+# Ключевое слово лимита: «лимит», «максимальная сумма», «не более N <денег>»
+LIMIT_KW = re.compile(r"\bлимит\w*|\bмаксимальн\w*\s+сумм\w*|\bне\s+более\s+\d", re.I)
+# Денежная сумма: число + валюта/тыс/млн (число может быть «100 000» или «1,5»)
+MONEY_RE = re.compile(r"\d[\d\s\u00a0.,]*\s*(тенге|тг\b|₸|kzt|руб\w*|usd|eur|\$|€|тыс\w*|млн|млрд)|(₸|\$|€)\s*\d", re.I)
+# Число-длительность или процент: «лимит ожидания 5 секунд» — не лимит суммы
+TIME_UNIT_AFTER_NUM = re.compile(r"\d[\d\s\u00a0.,]*\s*(сек|мин|час|мс|дн|сут|мес|нед|год|лет|%)", re.I)
+# Период или область действия лимита
+LIMIT_SCOPE_RE = re.compile(
+    r"\bв\s+(сутки|день|месяц|неделю|год|квартал|час|минуту|секунду)\b"
+    r"|\bза\s+(сутки|день|месяц|неделю|год|квартал|час|период|операцию|раз|один|одну|одного|запрос)\b"
+    r"|\bна\s+(одну|одного|один|каждую|каждого|каждый)\b"
+    r"|\bодн(ого|ой|у|им|а)\s+(перевод|платеж|платёж|операци|транзакци|реестр|запрос|файл|карт|клиент|договор)\w*"
+    r"|\bв\s+одном\b|\bпо\s+одн(ому|ой|ого|им)\b|\bразов\w+|\bсуточн\w+|\bдневн\w+|\bмесячн\w+|\bнедельн\w+|\bгодов\w+"
+    r"|\bежедневн\w+|\bежемесячн\w+|\bежегодн\w+|\bеженедельн\w+|\bза\s+период\b|\bв\s+течени[ие]\s+\S+|\bв\s+рамках\b"
+    r"|\bper\s+(day|month|week|year|transaction|operation|request)\b"
+    # «максимальная сумма / лимит платежа, покупки…» — единичный объект уже задаёт область (на один платёж)
+    r"|\b(?:максимальн\w*\s+сумм\w*|лимит\w*)\s+(покупки|платежа|перевода|операции|транзакции|заказа|заявки|списания|пополнения)\b"
+    # «1% от суммы, но не более 500 тенге» — предел комиссии на операцию, а не лимит
+    r"|\bот\s+суммы\b|\d\s*%"
+    # диапазон допустимых значений поля («от 100 000 до 3 000 000 тенге») — это ввод, а не лимит
+    r"|\bот\s+\d[\d\s]*(\S+\s+)?до\s+\d",
+    re.I,
+)
+# Заголовки колонок таблицы параметров API
+PARAM_COLS = {"параметр", "поле", "name", "имя", "field", "parameter", "параметры", "поля"}
+IDENT_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+JSON_KEY_RE = re.compile(r'"([A-Za-z_][A-Za-z0-9_]*)"\s*:')
+
+
+def _name_tokens(name: str) -> set[str]:
+    """Слова идентификатора: interest_rate -> {interest, rate}; rateValue -> {rate, value}."""
+    return {t.lower() for t in re.findall(r"[A-Za-z][a-z0-9]*|[A-Z]+(?![a-z])", name.replace("_", " "))}
 
 
 class RuleEngine:
@@ -291,6 +326,160 @@ class RuleEngine:
                 ))
         return out
 
+    # --- Правила по строкам документа (не зависят от LLM-выделения требований) --------------------------
+    def limit_without_period(self) -> list[Finding]:
+        """Лимит/максимальная сумма/«не более N <денег>» без периода или области действия.
+
+        Не срабатывает на строки таблиц параметров API (там «не более 10 000 записей в одном запросе» — область),
+        на «не более 3 попыток» без суммы (не денежный лимит) и на блоки кода.
+        «лимит N» без денег считается, если N — не длительность и не процент.
+        """
+        out = []
+        for b in self.blocks:
+            if b.kind not in ("paragraph", "list_item", "table_row"):
+                continue
+            if b.kind == "table_row" and b.table_header and any(
+                    h.strip(" *`").lower() in PARAM_COLS or "результат" in h.lower() for h in b.table_header):
+                continue  # таблицы параметров API и таблицы тест-сценариев (условия/результат) — не требования
+            if LIMIT_SCOPE_RE.search(b.text):
+                continue
+            for ln in range(b.line_start, b.line_end + 1):
+                line = self.doc.lines[ln - 1] if 0 < ln <= len(self.doc.lines) else ""
+                kw = LIMIT_KW.search(line)
+                if not kw:
+                    continue
+                money = MONEY_RE.search(line)
+                # «не более N» — только с деньгами; «лимит»/«максимальная сумма» — деньги или число-не-время
+                if kw.group(0).lower().startswith("не"):
+                    ok = bool(money)
+                else:
+                    tail = line[kw.start():]
+                    ok = bool(money) or (bool(re.search(r"\d", tail)) and not TIME_UNIT_AFTER_NUM.search(tail))
+                if not ok:
+                    continue
+                snippet = line.strip().strip("-*• ").strip()[:160]
+                out.append(self._finding(
+                    scope="requirement", criterion="complete", severity=MAJOR,
+                    title="Лимит без периода действия",
+                    explanation="У лимита не указан период или область действия (сутки, месяц, одна операция, один реестр): "
+                                "требование нельзя однозначно реализовать и проверить.",
+                    quotes=[Quote(kw.group(0), ln, True)],
+                    suggestion="Указать период или область действия лимита, например «не более N тенге в сутки на карту».",
+                    question=f"За какой период действует лимит «{snippet[:80]}» (сутки, месяц, одна операция)?",
+                    addressee="Аналитик / владелец продукта",
+                ))
+                break  # одной находки на блок достаточно
+        return out
+
+    def _tables(self) -> list[dict]:
+        """Таблицы параметров: {fields: {имя: номер строки}, section: str} — колонка Параметр/Поле/Name/Имя."""
+        tables: list[dict] = []
+        lines = self.doc.lines
+        i, section, in_code = 0, "", False
+        while i < len(lines):
+            line = lines[i]
+            if FENCE.match(line):
+                in_code = not in_code
+            elif not in_code and (m := HEADING_MD.match(line)):
+                section = m.group(2)
+            if not in_code and line.lstrip().startswith("|"):
+                j = i
+                while j < len(lines) and lines[j].lstrip().startswith("|"):
+                    j += 1
+                header = [c.strip(" *`").lower() for c in split_cells(lines[i])]
+                col = next((k for k, h in enumerate(header) if h in PARAM_COLS), None)
+                if col is not None:
+                    fields: dict[str, int] = {}
+                    for r in range(i + 1, j):
+                        if TABLE_SEP.match(lines[r]):
+                            continue
+                        cells = split_cells(lines[r])
+                        if col < len(cells):
+                            name = cells[col].strip(" *`")
+                            if IDENT_RE.match(name):
+                                fields[name] = r + 1
+                    if fields:
+                        tables.append({"fields": fields, "section": section})
+                i = j
+                continue
+            i += 1
+        return tables
+
+    def _json_examples(self) -> list[dict]:
+        """Примеры JSON: блок кода, начинающийся с «{»/«[», или строка с «{» в начале: {keys: {ключ: строка}, section}."""
+        out: list[dict] = []
+        lines = self.doc.lines
+        section, i = "", 0
+        while i < len(lines):
+            line = lines[i]
+            if FENCE.match(line):
+                j = i + 1
+                while j < len(lines) and not FENCE.match(lines[j]):
+                    j += 1
+                body = [k for k in range(i + 1, j) if lines[k].strip()]
+                if body and lines[body[0]].lstrip()[:1] in ("{", "["):
+                    keys: dict[str, int] = {}
+                    for k in body:
+                        for mt in JSON_KEY_RE.finditer(lines[k]):
+                            keys.setdefault(mt.group(1), k + 1)
+                    if keys:
+                        out.append({"keys": keys, "section": section})
+                i = j + 1
+                continue
+            if (m := HEADING_MD.match(line)):
+                section = m.group(2)
+            elif line.lstrip().startswith("{"):
+                keys = {}
+                for mt in JSON_KEY_RE.finditer(line):
+                    keys.setdefault(mt.group(1), i + 1)
+                if keys:
+                    out.append({"keys": keys, "section": section})
+            i += 1
+        return out
+
+    def api_example_mismatch(self) -> list[Finding]:
+        """Пример JSON содержит ключ, которого нет в таблице параметров, а в таблице есть поле, которого нет в примере.
+
+        Консервативно: пара «таблица—пример» берётся, только если пересечение ключей >= 50% ключей примера
+        (иначе это, скорее всего, пример другого объекта: запрос против таблицы ответа). Предпочтительна таблица
+        из того же раздела, затем — любая лучшая по пересечению.
+        """
+        tables = self._tables()
+        if not tables:
+            return []
+        out = []
+        for ex in self._json_examples():
+            keys = set(ex["keys"])
+            best = None
+            for t in sorted(tables, key=lambda t: t["section"] != ex["section"]):  # сначала таблицы того же раздела
+                share = len(keys & set(t["fields"])) / len(keys)
+                if share >= 0.5 and (best is None or share > best[0]):
+                    best = (share, t)
+            if not best:
+                continue
+            t = best[1]
+            extra = [k for k in ex["keys"] if k not in t["fields"]]
+            missing = [k for k in t["fields"] if k not in keys]
+            if not extra or not missing:
+                continue
+            # самая похожая пара «лишний ключ примера — отсутствующее поле таблицы» (interest_rate ~ rate_percent)
+            def _sim(e: str, m: str):  # сначала общие слова имени (rate), затем похожесть строк
+                shared = len(_name_tokens(e) & _name_tokens(m))
+                return (shared, SequenceMatcher(None, e.lower(), m.lower()).ratio())
+            _, e0, m0 = max(((_sim(e, m), e, m) for e in extra for m in missing), key=lambda x: x[0])
+            extra, missing = [e0] + [e for e in extra if e != e0], [m0] + [m for m in missing if m != m0]
+            out.append(self._finding(
+                scope="set", criterion="set_consistent", severity=MAJOR,
+                title=f"Поле «{extra[0]}» в примере не совпадает с описанием API",
+                explanation=f"В примере JSON есть ключ «{extra[0]}», которого нет в таблице параметров, а поле «{missing[0]}» "
+                            "из таблицы в примере отсутствует: пример и описание расходятся (возможно, разное имя одного поля).",
+                quotes=[Quote(f'"{extra[0]}"', ex["keys"][extra[0]], True), Quote(missing[0], t["fields"][missing[0]], True)],
+                suggestion="Привести имена полей в примере и в таблице параметров к одному виду.",
+                question=f"Какое имя поля верное: «{extra[0]}» (пример) или «{missing[0]}» (таблица)?",
+                addressee="Аналитик / разработчик API",
+            ))
+        return out
+
     # --- Чек-листы ревью (для приложения B) ------------------------------------------------------
     def find_checklists(self) -> list[ChecklistItem]:
         """Строки таблиц с незаполненными вариантами «Да / Нет» — чек-лист ревью из самого документа."""
@@ -318,5 +507,6 @@ class RuleEngine:
     def run_set_rules(self) -> tuple[list[Finding], list[ChecklistItem]]:
         checklist = self.find_checklists()
         findings = (self.placeholders() + self.empty_sections() + self.empty_tables() + self.missing_version()
-                    + self.mixed_units() + self.unfilled_checklist(checklist))
+                    + self.mixed_units() + self.unfilled_checklist(checklist)
+                    + self.limit_without_period() + self.api_example_mismatch())
         return findings, checklist

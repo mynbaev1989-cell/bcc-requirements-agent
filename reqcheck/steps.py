@@ -21,6 +21,7 @@
 from __future__ import annotations
 
 import copy
+import os
 from pathlib import Path
 from typing import Any
 
@@ -35,7 +36,8 @@ from reqcheck.clarify import (
     questions_from_findings,
 )
 from reqcheck.grounding import Grounder
-from reqcheck.llm import GeminiClient, LLMUnavailable
+from reqcheck.llm import GeminiClient, LLMUnavailable, _load_dotenv
+from reqcheck.llm_openai import ENV_BASE_URL, OpenAICompatClient
 from reqcheck.loaders import LoadError, load_document
 from reqcheck.models import SEV_RANK
 from reqcheck.orchestrator import RunContext, Step
@@ -108,9 +110,12 @@ class ConnectLLMStep(Step):
     def run(self, ctx: RunContext) -> Any:
         if ctx.llm is not None or ctx.opts.offline:  # модель передана снаружи (тесты) или режим без LLM
             return ctx.llm, None
+        cache_dir = ctx.opts.cache_dir if ctx.opts.use_cache else None
+        _load_dotenv()  # REQCHECK_LLM_* может лежать в .env (в тестах REQCHECK_NO_DOTENV отключает)
         try:
-            return GeminiClient(model=ctx.opts.model, timeout=ctx.opts.timeout,
-                                cache_dir=ctx.opts.cache_dir if ctx.opts.use_cache else None), None
+            if os.environ.get(ENV_BASE_URL):  # модель внутри контура: документ не уходит в Google
+                return OpenAICompatClient(model=ctx.opts.model, timeout=ctx.opts.timeout, cache_dir=cache_dir), None
+            return GeminiClient(model=ctx.opts.model, timeout=ctx.opts.timeout, cache_dir=cache_dir), None
         except LLMUnavailable as exc:
             return None, exc
 
@@ -118,7 +123,9 @@ class ConnectLLMStep(Step):
         ctx.llm, err = out
         if err is not None:
             ctx.diag("warning", "LLM_UNAVAILABLE", f"LLM недоступна: {err}",
-                     "Отчёт построен только детерминированными правилами. Задайте GEMINI_API_KEY для полной проверки.")
+                     "Отчёт построен только детерминированными правилами. "
+                     + ("Задайте модель (--model или REQCHECK_LLM_MODEL) и проверьте REQCHECK_LLM_BASE_URL."
+                        if os.environ.get(ENV_BASE_URL) else "Задайте GEMINI_API_KEY для полной проверки."))
         if ctx.opts.offline:
             ctx.diag("info", "OFFLINE", "Запуск с --offline: использованы только детерминированные правила.")
         if ctx.llm and (seen := visible_lines(ctx.doc)) < len(ctx.doc.lines):
@@ -127,6 +134,8 @@ class ConnectLLMStep(Step):
                      "Правила и сверка цитат проверили весь текст; смысловую проверку остатка сделайте, разбив документ на части.")
         p = ctx.result.passport
         p["model"] = ctx.llm.model if ctx.llm else "не использовалась"
+        if isinstance(ctx.llm, OpenAICompatClient):  # провайдер без пути и учётных данных
+            p["model"] = f"{ctx.llm.model} ({ctx.llm.provider})"
         p["mode"] = "LLM + детерминированные правила" if ctx.llm else "только детерминированные правила (без LLM)"
 
     def summary(self, out: Any) -> str:

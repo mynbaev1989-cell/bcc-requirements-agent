@@ -669,7 +669,7 @@
       },
       "reviewer": {
         "cache_hits": 0,
-        "calls": 2,
+        "calls": 4,
         "failures": 0,
         "input_tokens": 0,
         "output_tokens": 0,
@@ -678,7 +678,7 @@
       }
     },
     "llm_cache_hits": 0,
-    "llm_calls": 9,
+    "llm_calls": 11,
     "llm_failures": 0,
     "llm_retries": 0,
     "llm_seconds": 0.0,
