@@ -3,7 +3,7 @@
 from reqcheck.agents import Critic, visible_lines
 from reqcheck.clarify import Resolver, apply_effects, wording_matches_answer
 from reqcheck.grounding import Grounder
-from reqcheck.llm import FakeLLM
+from reqcheck.llm import FakeLLM, LLMError
 from reqcheck.loaders import load_document
 from reqcheck.models import Finding, Question, Quote
 from reqcheck.rules import RuleEngine
@@ -94,6 +94,46 @@ def test_finding_skipped_by_resolver_is_marked_not_silently_open(tmp_path):
     resolved, followups = apply_effects(effects, [f1, f2], [q])
     assert resolved == {"F-002"} and not followups
     assert "не вынес" in f1.resolution
+    assert [r for r, _ in llm.prompts] == ["resolver", "resolver"]  # пропуск переспрошен один раз
+
+
+def test_resolver_asks_again_only_about_skipped_findings(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nОтвет 403 при запрете.\n\nДля чужой карты 404.\n")
+    f1 = Finding(fid="F-001", scope="set", criterion="set_consistent", severity="major", title="403 или 404",
+                 explanation="", quotes=[Quote("Ответ 403 при запрете", 3, True)])
+    f2 = Finding(fid="F-002", scope="requirement", criterion="singular", severity="minor", title="Два условия",
+                 explanation="", quotes=[Quote("Для чужой карты 404", 5, True)])
+    q = Question(qid="Q-01", text="403 или 404?", priority="blocker", fids=["F-001", "F-002"])
+
+    def answer(prompt):
+        if "Связанные находки: F-001, F-002" in prompt:  # первый запрос: модель пропускает F-001
+            return {"effects": [{"fid": "F-002", "qid": "Q-01", "status": "resolved", "comment": "404"}]}
+        assert "Связанные находки: F-001\n" in prompt and "F-002 [" not in prompt  # переспрос — только о пропущенной
+        return {"effects": [{"fid": "F-001", "qid": "Q-01", "status": "resolved", "comment": "выбран 404"}]}
+
+    effects = Resolver(FakeLLM({"resolver": answer}), doc).run(
+        [(q, {"qid": "Q-01", "question": "403 или 404?", "answer": "404"})], [f1, f2])
+    assert {e["fid"]: e["status"] for e in effects} == {"F-002": "resolved", "F-001": "resolved"}
+
+
+def test_failed_resolver_retry_keeps_first_answer(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nОтвет 403 при запрете.\n\nДля чужой карты 404.\n")
+    f1 = Finding(fid="F-001", scope="set", criterion="set_consistent", severity="major", title="403 или 404",
+                 explanation="", quotes=[Quote("Ответ 403 при запрете", 3, True)])
+    f2 = Finding(fid="F-002", scope="requirement", criterion="singular", severity="minor", title="Два условия",
+                 explanation="", quotes=[Quote("Для чужой карты 404", 5, True)])
+    q = Question(qid="Q-01", text="403 или 404?", priority="blocker", fids=["F-001", "F-002"])
+    calls = []
+
+    def answer(prompt):
+        calls.append(1)
+        if len(calls) > 1:
+            raise LLMError("квота")
+        return {"effects": [{"fid": "F-002", "qid": "Q-01", "status": "resolved", "comment": "404"}]}
+
+    effects = Resolver(FakeLLM({"resolver": answer}), doc).run(
+        [(q, {"qid": "Q-01", "question": "403 или 404?", "answer": "404"})], [f1, f2])
+    assert {e["fid"]: e["status"] for e in effects} == {"F-002": "resolved", "F-001": "undecided"}
 
 
 def test_wording_check_covers_text_choices():
@@ -167,7 +207,7 @@ def test_avoided_rework_is_discounted_by_measured_precision(monkeypatch):
     from reqcheck.value import estimate
     monkeypatch.delenv("REQCHECK_PRECISION", raising=False)
     v = estimate(40, 30, n_critical=4, agent_seconds=300, n_major=6)
-    assert v.precision == 0.86 and v.avoided_rework_hours == round((4 + 0.5 * 6) * 0.86 * 1 * 6, 1)
+    assert v.precision == 0.85 and v.avoided_rework_hours == round((4 + 0.5 * 6) * 0.85 * 1 * 6, 1)
     monkeypatch.setenv("REQCHECK_PRECISION", "1")
     assert estimate(40, 30, 4, 300, n_major=6).avoided_rework_hours == 42.0
 
@@ -177,6 +217,7 @@ def test_passport_lists_every_model_including_cached_answers(tmp_path, monkeypat
     from reqcheck.llm import GeminiClient
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     llm = GeminiClient(model="model-a", retries=0, cache_dir=str(tmp_path))
+    llm._chain = ["model-a", "model-b"]  # как у модели по умолчанию с запасной
     for model, prompt in (("model-a", "p1"), ("model-b", "p2")):
         llm.model = model
         llm._cache_path("sys\n\n" + prompt).write_text(_json.dumps({"model": model, "parsed": {"ok": 1}}), encoding="utf-8")
@@ -207,6 +248,7 @@ def test_answer_after_model_switch_is_cached_under_the_model_that_answered(tmp_p
     def client(model):
         c = GeminiClient(model=None, retries=1, cache_dir=str(tmp_path))
         c.model, c._fallbacks, c._client, c.min_interval = model, ["model-b"], Client(), 0
+        c._chain = [model, "model-b"]
         return c
 
     first = client("model-a")
@@ -214,16 +256,11 @@ def test_answer_after_model_switch_is_cached_under_the_model_that_answered(tmp_p
     # Ответ model-b лежит под ключом model-b, а не под ключом модели, с которой начинали
     assert not first._cache_path("sys\n\np", "model-a").exists()
     assert _json.loads(first._cache_path("sys\n\np", "model-b").read_text(encoding="utf-8"))["model"] == "model-b"
-    # Следующий прогон: model-a снова упирается в квоту, после переключения ответ берётся из кэша без запроса
+    # Следующий прогон: поиск по цепочке моделей находит ответ запасной сразу, без запроса к основной
     calls.clear()
     second = client("model-a")
-    assert second.generate_json("critic", "sys", "p") == {"ok": 1} and calls == ["model-a"]
-    # Поиск по цепочке моделей: ответ запасной модели находится сразу, без запроса к основной
-    calls.clear()
-    third = client("model-a")
-    third._chain = ["model-a", "model-b"]
-    assert third.generate_json("critic", "sys", "p") == {"ok": 1} and calls == []
-    assert third.stats.models_used == ["model-b"]
+    assert second.generate_json("critic", "sys", "p") == {"ok": 1} and calls == []
+    assert second.stats.models_used == ["model-b"]
 
 
 def test_set_finding_repeating_requirement_finding_is_merged(tmp_path):
@@ -259,3 +296,44 @@ def test_merge_step_keeps_one_finding_with_both_quotes(sample_md):
     step.apply(ctx, step.run(ctx))
     assert ctx.findings == [a] and a.severity == "critical" and len(a.quotes) == 2
     assert ctx.metrics["merged_overlap"] == 1
+
+
+def test_merged_finding_marks_criterion_violated_at_added_requirement(sample_md):
+    from reqcheck.orchestrator import Options, RunContext
+    from reqcheck.models import RunResult, RequirementAssessment, CriterionMark
+    from reqcheck.steps import MergeOverlapStep, NumberStep
+    main = Finding(fid="T-1", scope="requirement", criterion="correct", severity="major", title="403 или 404 для чужой карты",
+                   explanation="", rids=["R-043"], quotes=[Quote("403", 175, True)], source="llm")
+    dup = Finding(fid="T-2", scope="set", criterion="set_consistent", severity="major", title="Противоречие 403 и 404 карты",
+                  explanation="", rids=["R-043", "R-045"], quotes=[Quote("403", 175, True), Quote("404", 189, True)], source="llm")
+    ctx = RunContext(input_path=str(sample_md), opts=Options(), result=RunResult(document=None))
+    ctx.result.assessments = {"R-043": RequirementAssessment("R-043", [CriterionMark("correct", "violation")]),
+                              "R-045": RequirementAssessment("R-045", [CriterionMark("correct", "ok")])}
+    ctx.findings = [main, dup]
+    for step in (MergeOverlapStep(), NumberStep()):  # оценки сверяются с окончательным составом находок
+        step.apply(ctx, step.run(ctx))
+    assert ctx.findings == [main] and main.rids == ["R-043", "R-045"]
+    assert ctx.result.assessments["R-045"].marks[0].status == "violation"
+
+
+def test_undecided_does_not_block_closure_by_another_answer():
+    f = Finding(fid="F-001", scope="requirement", criterion="correct", severity="major", title="400 или 200",
+                explanation="", rids=["R-001"])
+    q1 = Question(qid="Q-01", text="?", priority="blocker", fids=["F-001"], answer="400")
+    q2 = Question(qid="Q-02", text="?", priority="important", fids=["F-001"], answer="да")
+    effects = [{"fid": "F-001", "qid": "Q-01", "status": "resolved", "comment": "400", "revised_wording": "", "follow_up": ""},
+               {"fid": "F-001", "qid": "Q-02", "status": "undecided", "comment": "", "revised_wording": "", "follow_up": ""}]
+    resolved, _ = apply_effects(effects, [f], [q1, q2])
+    assert resolved == {"F-001"}
+
+
+def test_nonstandard_resolver_status_counts_as_partial(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nGET /save сохраняет порог.\n")
+    f = Finding(fid="F-001", scope="requirement", criterion="correct", severity="critical", title="GET для сохранения",
+                explanation="", quotes=[Quote("GET /save сохраняет порог", 3, True)])
+    q = Question(qid="Q-01", text="GET или POST?", priority="blocker", fids=["F-001"])
+    llm = FakeLLM({"resolver": {"effects": [{"fid": "F-001", "qid": "Q-01", "status": "revised_wording",
+                                             "comment": "автор выбрал POST"}]}})
+    effects = Resolver(llm, doc).run([(q, {"qid": "Q-01", "question": "GET или POST?", "answer": "POST"})], [f])
+    assert [(e["fid"], e["status"]) for e in effects] == [("F-001", "partial")]
+    assert len(llm.prompts) == 1  # решение есть — переспрашивать не нужно

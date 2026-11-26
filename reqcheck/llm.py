@@ -171,17 +171,14 @@ class GeminiClient:
 
         Модели проверяются по цепочке (основная, затем запасные), а не только текущая: тогда повторный прогон
         берёт те же ответы независимо от того, в какой момент параллельные шаги переключили модель."""
-        models = getattr(self, "_chain", None) or [self.model]
-        if self.model not in models:
-            models = [self.model] + models
-        for model in models:
+        for model in self._chain:
             cache = self._cache_path(payload, model)
             if not (cache and cache.exists()):
                 continue
             try:
                 data = json.loads(cache.read_text(encoding="utf-8"))
                 if data.get("model", model) != model:
-                    continue
+                    continue  # старые записи кэша могли лечь под ключом одной модели с ответом другой
                 parsed = data["parsed"]
             except (OSError, ValueError, KeyError):
                 continue
@@ -276,9 +273,6 @@ class GeminiClient:
                 if status == 429 and self._is_daily_quota(exc):
                     # Дневная квота не восстановится за минуты: ждать бессмысленно, сразу берём запасную модель
                     if self._switch_model(model, "дневная квота {} исчерпана"):
-                        hit, cached = self._from_cache(role, payload)  # у запасной модели ответ может быть в кэше
-                        if hit:
-                            return cached
                         continue
                     self.stats.add(failures=1)
                     self._exhausted = (f"Исчерпана дневная квота бесплатного ключа для «{self.model}». "
@@ -286,9 +280,6 @@ class GeminiClient:
                     raise LLMError(self._exhausted) from exc
                 if status == 404:
                     if self._switch_model(model, "модель {} недоступна"):
-                        hit, cached = self._from_cache(role, payload)
-                        if hit:
-                            return cached
                         continue
                     self.stats.add(failures=1)
                     raise LLMError(f"Модель «{self.model}» не найдена. Укажите другую через GEMINI_MODEL или --model.") from exc

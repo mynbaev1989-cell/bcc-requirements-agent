@@ -25,8 +25,8 @@ from pathlib import Path
 from typing import Any
 
 from reqcheck.agents import (
-    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, dedupe, number_requirements, overlap_duplicates,
-    requirements_from_blocks,
+    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, absorb, dedupe, number_requirements, overlap_duplicates,
+    requirements_from_blocks, sync_marks,
     visible_lines,
 )
 from reqcheck.clarify import (
@@ -314,9 +314,7 @@ class MergeOverlapStep(Step):
     def apply(self, ctx: RunContext, out: Any) -> None:
         dup_ids = set()
         for dup, main in out:
-            main.rids = sorted(set(main.rids) | set(dup.rids))
-            if SEV_RANK.get(dup.severity, 9) < SEV_RANK.get(main.severity, 9):
-                main.severity = dup.severity  # берём старшую критичность из двух мнений
+            absorb(main, dup)
             seen = {(q.line, q.text) for q in main.quotes}
             main.quotes += [q for q in dup.quotes if (q.line, q.text) not in seen]
             dup_ids.add(id(dup))
@@ -344,6 +342,8 @@ class NumberStep(Step):
         for i, f in enumerate(out, start=1):
             f.fid = f"F-{i:03d}"
         ctx.findings = ctx.result.findings = out
+        # Состав находок окончательный (после сверки, критика и слияний) — оценки требований приводим к нему
+        sync_marks(out, ctx.result.assessments)
 
     def summary(self, out: Any) -> str:
         return f"находок {len(out)}"

@@ -86,6 +86,7 @@ def render_markdown(result: RunResult) -> str:
     a("")
     a("| Параметр | Значение |")
     a("| :--- | :--- |")
+    hits, calls = result.metrics.get("llm_cache_hits", 0), result.metrics.get("llm_calls", 0)
     rows = [
         ("Название документа", p.get("document_title")),
         ("Файл", p.get("file")),
@@ -98,10 +99,8 @@ def render_markdown(result: RunResult) -> str:
         ("Режим", p.get("mode")),
         ("Нарезка требований", p.get("segmentation", "—")),
         ("Длительность прогона", f"{p.get('duration_sec', '—')} с" + (
-            f" (ответов модели из кэша: {result.metrics['llm_cache_hits']} из "
-            f"{result.metrics['llm_cache_hits'] + result.metrics.get('llm_calls', 0)}; время и токены — только новых запросов)"
-            if result.metrics.get("llm_cache_hits") else "")),
-        ("Вызовы LLM", f"{result.metrics.get('llm_calls', 0)} (из кэша: {result.metrics.get('llm_cache_hits', 0)}, "
+            f" (ответов модели из кэша: {hits} из {hits + calls}; время и токены — только новых запросов)" if hits else "")),
+        ("Вызовы LLM", f"{calls} (из кэша: {hits}, "
                        f"повторов: {result.metrics.get('llm_retries', 0)})"),
         ("Токены (вход / выход)", f"{result.metrics.get('input_tokens', 0)} / {result.metrics.get('output_tokens', 0)}"),
         ("Критерии", p.get("standards")),

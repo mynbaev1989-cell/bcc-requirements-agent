@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 from difflib import SequenceMatcher
 
 from reqcheck import prompts
@@ -263,6 +264,36 @@ class Resolver:
         scope = [f for f in findings if f.fid in linked or (unmatched and f.severity in (CRITICAL, MAJOR))]
         if not scope:
             return []
+        effects = self._ask(pairs, scope, fmap)
+        # Модель могла пропустить находку отвеченного вопроса (так бывает с лёгкими моделями на длинном списке).
+        # Переспрашиваем один раз, только по пропущенным находкам: короткий запрос модель отрабатывает полностью.
+        missing = self._missing(pairs, effects, fmap)
+        if missing:
+            retry = [(replace(q, fids=missing[q.qid]), a) for q, a in pairs if q and q.qid in missing]
+            try:
+                effects += self._ask(retry, [fmap[fid] for fids in missing.values() for fid in fids], fmap)
+            except Exception:  # noqa: BLE001 — первый ответ уже есть; сбой переспроса не должен его терять
+                pass
+        # Что осталось без решения, молча открытым не оставляем: автор ответил, а в отчёте нет следа.
+        # Помечаем «без решения», находка остаётся в вердикте.
+        effects += [{"fid": fid, "qid": qid, "status": "undecided", "comment": "", "revised_wording": "", "follow_up": ""}
+                    for qid, fids in self._missing(pairs, effects, fmap).items() for fid in fids]
+        return effects
+
+    @staticmethod
+    def _missing(pairs: list[tuple[Question | None, dict]], effects: list[dict], fmap: dict) -> dict[str, list[str]]:
+        """Находки отвеченных вопросов этого прогона, по которым модель не вернула решения: {qid: [fid…]}."""
+        decided = {(e["qid"], e["fid"]) for e in effects}
+        out: dict[str, list[str]] = {}
+        for q, _ in pairs:
+            if q:
+                fids = [fid for fid in q.fids if fid in fmap and (q.qid, fid) not in decided]
+                if fids:
+                    out[q.qid] = fids
+        return out
+
+    def _ask(self, pairs: list[tuple[Question | None, dict]], scope: list[Finding], fmap: dict) -> list[dict]:
+        """Один запрос к модели и проверка её решений кодом."""
         qa = "\n\n".join(
             f"{self._key(q, a)}. Вопрос: {q.text if q else a['question']}\n"
             f"Связанные находки: {', '.join(q.fids) if q else 'определи сам по смыслу'}\n"
@@ -289,7 +320,11 @@ class Resolver:
             if not isinstance(e, dict):
                 continue
             fid, qid = _s(e.get("fid"), 12), _s(e.get("qid"), 24)
-            status = _s(e.get("status"), 12).lower()
+            status = _s(e.get("status"), 20).lower()
+            if status not in ("resolved", "partial", "open") and _s(e.get("comment")):
+                # Нестандартный статус (например, «revised_wording»): решение есть, но закрывать по нему нельзя —
+                # считаем «частично снято», находка остаётся в вердикте, комментарий модели виден в отчёте
+                status = "partial"
             if fid not in fmap or qid not in valid_q or status not in ("resolved", "partial", "open"):
                 continue
             if qid in allowed and fid not in allowed[qid]:
@@ -307,16 +342,6 @@ class Resolver:
             # В отчёт и файл ответов — исходный номер вопроса
             effects.append({"fid": fid, "qid": orig_qid.get(qid, qid), "status": status, "comment": comment,
                             "revised_wording": wording, "follow_up": _s(e.get("follow_up"), 600)})
-        # Модель могла пропустить находку отвеченного вопроса. Молча оставлять её открытой нельзя:
-        # автор ответил, а в отчёте нет следа. Помечаем «без решения», находка остаётся в вердикте.
-        decided = {(e["qid"], e["fid"]) for e in effects}
-        for q, a in pairs:
-            if q is None:
-                continue
-            for fid in q.fids:
-                if fid in fmap and (q.qid, fid) not in decided:
-                    effects.append({"fid": fid, "qid": q.qid, "status": "undecided", "comment": "", "revised_wording": "",
-                                    "follow_up": ""})
         return effects
 
 
@@ -339,8 +364,7 @@ def apply_effects(effects: list[dict], findings: list[Finding], questions: list[
             if e["status"] == "resolved":
                 notes.append(f"закрыто ответом {e['qid']}: {e['comment']}")
             elif e["status"] == "undecided":
-                notes.append(f"ответ {e['qid']} учтён, но Resolver не вынес по этой находке решения: "
-                             f"находка остаётся открытой, проверьте вручную")
+                notes.append(f"по ответу {e['qid']} Resolver решения не вынес, проверьте вручную")
             elif e["status"] == "partial":
                 notes.append(f"частично снято ответом {e['qid']}: {e['comment']}")
             else:
@@ -354,7 +378,8 @@ def apply_effects(effects: list[dict], findings: list[Finding], questions: list[
                         addressee=base.addressee if base else (f.addressee or "Аналитик"), fids=[f.fid],
                         lines=[q.line for q in f.quotes if q.line], source="resolver"))
         f.resolution = "; ".join(notes)
-        if all(e["status"] == "resolved" for e in items):
+        # «Без решения» не мешает закрытию: если другой ответ находку закрыл, а модель промолчала — она закрыта
+        if {e["status"] for e in items} - {"undecided"} == {"resolved"}:
             wording = next((e["revised_wording"] for e in items if e["revised_wording"]), "")
             if wording:
                 f.suggestion = wording

@@ -434,6 +434,26 @@ def score_requirement(assessment: RequirementAssessment | None, findings: list[F
     return score, light
 
 
+def sync_marks(findings: list[Finding], assessments: dict[str, RequirementAssessment]) -> None:
+    """Находка показана у требования — значит, её критерий у этого требования нарушен.
+
+    Слияние дублей (dedupe, Critic, слияние повторов) добавляет находке требования, которые Reviewer оценивал
+    отдельно; без этой сверки отчёт показал бы у требования дефект «Корректность» рядом с «Соблюдено: Корректность».
+    Обратная операция после ответов автора — clarify.close_marks."""
+    for f in findings:
+        if f.scope != "requirement":
+            continue
+        for rid in f.rids:
+            a = assessments.get(rid)
+            if a is None:
+                continue
+            mark = next((m for m in a.marks if m.criterion == f.criterion), None)
+            if mark is None:
+                a.marks.append(CriterionMark(f.criterion, VIOLATION, f.title))
+            elif mark.status != VIOLATION:
+                mark.status, mark.comment = VIOLATION, f.title
+
+
 DEDUPE_TITLE_SIMILARITY = 0.6  # заголовки «одного и того же» дефекта
 
 
@@ -441,7 +461,6 @@ def dedupe(findings: list[Finding]) -> list[Finding]:
     """Убрать дубли: одинаковый критерий + те же требования + одна и та же первая цитата/заголовок."""
     # Ключ без rids: экстрактор иногда режет один блок на несколько требований с одной цитатой,
     # и ревьюер повторяет один дефект на каждом. Такие находки сливаем: rids объединяем, берём старшую критичность.
-    rank = SEV_RANK
     seen: dict[tuple, list[Finding]] = {}
     titles: dict[int, str] = {}
     out = []
@@ -459,18 +478,23 @@ def dedupe(findings: list[Finding]) -> list[Finding]:
             seen.setdefault(key, []).append(f)
             out.append(f)
             continue
-        main.rids = sorted(set(main.rids) | set(f.rids))
-        if rank.get(f.severity, 3) < rank.get(main.severity, 3):
-            main.severity = f.severity
+        absorb(main, f)
     return out
 
 
+def absorb(main: Finding, dup: Finding) -> None:
+    """Слить дубль в основную находку: требования объединяются, критичность берётся старшая из двух."""
+    main.rids = sorted(set(main.rids) | set(dup.rids))
+    if SEV_RANK.get(dup.severity, 9) < SEV_RANK.get(main.severity, 9):
+        main.severity = dup.severity
+
+
 OVERLAP_TITLE_SIMILARITY = 0.25  # доля общих основ слов в заголовках (мера Жаккара)
-_STOP = {"для", "при", "или", "без", "над", "под", "что", "как", "это", "требо", "треб", "одно", "един"}
+_STOP = {"для", "при", "или", "без", "над", "под", "что", "как", "это", "треб", "одно", "един"}
 
 
 def _stems(title: str) -> set[str]:
-    words = re.findall(r"[a-zа-яё0-9]{3,}", normalize(title).lower())
+    words = re.findall(r"[a-zа-яё0-9]{3,}", normalize(title))  # normalize уже приводит к нижнему регистру
     return {w[:4] for w in words if w[:4] not in _STOP}
 
 
@@ -479,21 +503,22 @@ def overlap_duplicates(findings: list[Finding]) -> list[tuple[Finding, Finding]]
 
     Reviewer (по одному требованию) и ConsistencyReviewer (по набору) часто находят один дефект и подписывают его
     разными критериями — обычный dedupe по критерию их не сливает. Дубль, если: находка набора от LLM, у неё есть общее
-    требование с основной, хотя бы одна цитата на той же строке (±1) и заголовки похожи по основам слов."""
-    def lines(f: Finding) -> set[int]:
-        return {q.line for q in f.quotes if q.line}
-
-    targets = [f for f in findings if f.scope == "requirement" and lines(f)]
+    требование с основной, хотя бы одна цитата на той же строке (±1) и заголовки похожи по основам слов.
+    Сходство — Жаккар по основам, а не SequenceMatcher, как в dedupe: агенты пересказывают один дефект разными словами
+    («Отсутствует URL для среды Prod» / «Отсутствие Prod URL»), и посимвольное сходство таких заголовков низкое."""
+    lines = {id(f): {q.line for q in f.quotes if q.line} for f in findings}
+    stems = {id(f): _stems(f.title) for f in findings}
+    targets = [f for f in findings if f.scope == "requirement" and lines[id(f)]]
     pairs = []
     for s in findings:
-        sl = lines(s)
+        sl, ss = lines[id(s)], stems[id(s)]
         if s.scope == "requirement" or s.source != "llm" or not s.rids or not sl:
             continue
         best, score = None, OVERLAP_TITLE_SIMILARITY
         for t in targets:
-            if not set(s.rids) & set(t.rids) or not any(abs(a - b) <= 1 for a in sl for b in lines(t)):
+            if not set(s.rids) & set(t.rids) or not any(abs(a - b) <= 1 for a in sl for b in lines[id(t)]):
                 continue
-            ss, ts = _stems(s.title), _stems(t.title)
+            ts = stems[id(t)]
             j = len(ss & ts) / max(len(ss | ts), 1)
             if j >= score:
                 best, score = t, j
