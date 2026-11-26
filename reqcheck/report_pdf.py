@@ -151,8 +151,11 @@ def render_pdf(markdown_text: str, out_path: str) -> None:
         if stripped.startswith(">"):
             pdf.set_text_color(70, 70, 70)
             pdf.set_font("DejaVu", "I", 8.5)
+            body = stripped.lstrip("> ")
+            body = re.sub(r"^[-*]\s+", "• ", body)  # пункт списка внутри цитаты (врезка «Кратко»)
             pdf.set_x(pdf.l_margin + 3)
-            pdf.multi_cell(width - 3, 4.2, _plain(stripped.lstrip("> ")), new_x="LMARGIN", new_y="NEXT")
+            # markdown=True: **жирный** во врезке печатается жирным, а не звёздочками
+            pdf.multi_cell(width - 3, 4.2, _md_inline(body), markdown=True, new_x="LMARGIN", new_y="NEXT")
             pdf.set_font("DejaVu", size=9)
             pdf.set_text_color(0, 0, 0)
             i += 1

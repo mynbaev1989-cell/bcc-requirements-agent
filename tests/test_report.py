@@ -67,3 +67,15 @@ def test_summary_box_absent_when_document_not_checked(tmp_path):
     broken = tmp_path / "broken.pdf"
     broken.write_bytes(b"%PDF-1.4\n%broken")
     assert "**Кратко.**" not in render_markdown(run(str(broken), Options(offline=True)))
+
+
+def test_pdf_blockquote_renders_bold_without_asterisks(tmp_path):
+    # Регрессия: строки цитат в PDF печатались с сырыми «**» и «- »
+    from pypdf import PdfReader
+
+    from reqcheck.report_pdf import render_pdf
+
+    out = tmp_path / "r.pdf"
+    render_pdf("# Т\n\n> **Кратко.** Находок: 2.\n>\n> - **F-001** — дефект (строка 7)\n", str(out))
+    text = PdfReader(str(out)).pages[0].extract_text()
+    assert "Кратко." in text and "F-001" in text and "**" not in text and "• " in text
