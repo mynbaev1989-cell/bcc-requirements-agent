@@ -408,6 +408,10 @@ def render_markdown(result: RunResult) -> str:
         a(f"- Замечаний «нет идентификатора» по отдельным пунктам сведено в одну находку: {m['merged_id_findings']}")
     for t in m.get("dropped_by_critic_titles", [])[:10]:
         a(f"  - {t}")
+    if m.get("merged_overlap"):
+        a(f"- Повторов одного дефекта от разных агентов (по требованию и по набору) слито кодом: {m['merged_overlap']}")
+        for t in m.get("merged_overlap_titles", [])[:10]:
+            a(f"  - {t}")
     a("")
     journal = m.get("journal") or []
     if journal:

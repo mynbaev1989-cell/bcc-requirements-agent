@@ -25,7 +25,8 @@ from pathlib import Path
 from typing import Any
 
 from reqcheck.agents import (
-    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, dedupe, number_requirements, requirements_from_blocks,
+    Analyst, ConsistencyReviewer, Critic, Extractor, Reviewer, dedupe, number_requirements, overlap_duplicates,
+    requirements_from_blocks,
     visible_lines,
 )
 from reqcheck.clarify import (
@@ -303,6 +304,31 @@ class CriticStep(Step):
         return f"оставлено {len(out[0])}, отклонено/слито {len(out[1])}"
 
 
+class MergeOverlapStep(Step):
+    """Один дефект — одна находка: находка по набору, повторяющая находку по требованию, сливается с ней (код)."""
+    name, agent = "Слияние повторов между агентами", "dedupe по требованиям и строкам (код)"
+
+    def run(self, ctx: RunContext) -> Any:
+        return overlap_duplicates(ctx.findings)
+
+    def apply(self, ctx: RunContext, out: Any) -> None:
+        dup_ids = set()
+        for dup, main in out:
+            main.rids = sorted(set(main.rids) | set(dup.rids))
+            if SEV_RANK.get(dup.severity, 9) < SEV_RANK.get(main.severity, 9):
+                main.severity = dup.severity  # берём старшую критичность из двух мнений
+            seen = {(q.line, q.text) for q in main.quotes}
+            main.quotes += [q for q in dup.quotes if (q.line, q.text) not in seen]
+            dup_ids.add(id(dup))
+        ctx.findings = [f for f in ctx.findings if id(f) not in dup_ids]
+        m = ctx.metrics
+        m["merged_overlap"] = len(dup_ids)
+        m["merged_overlap_titles"] = [f"{d.title} → {mn.title}" for d, mn in out]
+
+    def summary(self, out: Any) -> str:
+        return f"слито повторов {len(out)}"
+
+
 class NumberStep(Step):
     """Порядок отчёта: сначала находки по требованиям (в порядке требований, затем по важности), потом по набору."""
     name, agent = "Нумерация находок", "Оркестратор (код)"
@@ -441,6 +467,7 @@ def build_plan() -> list[Step | list[Step]]:
         SetCheckStep(),
         GroundStep(),
         CriticStep(),
+        MergeOverlapStep(),
         NumberStep(),
         ClarifyStep(),
         ReadAnswersStep(),

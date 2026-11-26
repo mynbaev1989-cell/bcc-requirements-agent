@@ -307,6 +307,16 @@ class Resolver:
             # В отчёт и файл ответов — исходный номер вопроса
             effects.append({"fid": fid, "qid": orig_qid.get(qid, qid), "status": status, "comment": comment,
                             "revised_wording": wording, "follow_up": _s(e.get("follow_up"), 600)})
+        # Модель могла пропустить находку отвеченного вопроса. Молча оставлять её открытой нельзя:
+        # автор ответил, а в отчёте нет следа. Помечаем «без решения», находка остаётся в вердикте.
+        decided = {(e["qid"], e["fid"]) for e in effects}
+        for q, a in pairs:
+            if q is None:
+                continue
+            for fid in q.fids:
+                if fid in fmap and (q.qid, fid) not in decided:
+                    effects.append({"fid": fid, "qid": q.qid, "status": "undecided", "comment": "", "revised_wording": "",
+                                    "follow_up": ""})
         return effects
 
 
@@ -328,6 +338,9 @@ def apply_effects(effects: list[dict], findings: list[Finding], questions: list[
         for e in items:
             if e["status"] == "resolved":
                 notes.append(f"закрыто ответом {e['qid']}: {e['comment']}")
+            elif e["status"] == "undecided":
+                notes.append(f"ответ {e['qid']} учтён, но Resolver не вынес по этой находке решения: "
+                             f"находка остаётся открытой, проверьте вручную")
             elif e["status"] == "partial":
                 notes.append(f"частично снято ответом {e['qid']}: {e['comment']}")
             else:

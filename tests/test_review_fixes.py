@@ -1,7 +1,7 @@
 """Регрессионные тесты на исправления по ревью кода: правила, сверка цитат, Critic, Resolver."""
 
 from reqcheck.agents import Critic, visible_lines
-from reqcheck.clarify import Resolver, wording_matches_answer
+from reqcheck.clarify import Resolver, apply_effects, wording_matches_answer
 from reqcheck.grounding import Grounder
 from reqcheck.llm import FakeLLM
 from reqcheck.loaders import load_document
@@ -79,6 +79,21 @@ def test_resolver_cannot_close_finding_of_another_question(tmp_path):
     effects = Resolver(llm, doc).run([(q, {"qid": "Q-01", "question": "Какой лимит?", "answer": "1 000 000"})],
                                      [limit, api])
     assert [e["fid"] for e in effects] == ["F-001"]
+
+
+def test_finding_skipped_by_resolver_is_marked_not_silently_open(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nОтвет 403 при запрете.\n\nДля чужой карты 404.\n")
+    f1 = Finding(fid="F-001", scope="set", criterion="set_consistent", severity="major", title="403 или 404",
+                 explanation="", quotes=[Quote("Ответ 403 при запрете", 3, True)])
+    f2 = Finding(fid="F-002", scope="requirement", criterion="singular", severity="minor", title="Два условия",
+                 explanation="", quotes=[Quote("Для чужой карты 404", 5, True)])
+    q = Question(qid="Q-01", text="403 или 404?", priority="blocker", fids=["F-001", "F-002"])
+    llm = FakeLLM({"resolver": {"effects": [{"fid": "F-002", "qid": "Q-01", "status": "resolved", "comment": "404"}]}})
+    effects = Resolver(llm, doc).run([(q, {"qid": "Q-01", "question": "403 или 404?", "answer": "404"})], [f1, f2])
+    assert {e["fid"]: e["status"] for e in effects} == {"F-002": "resolved", "F-001": "undecided"}
+    resolved, followups = apply_effects(effects, [f1, f2], [q])
+    assert resolved == {"F-002"} and not followups
+    assert "не вынес" in f1.resolution
 
 
 def test_wording_check_covers_text_choices():
@@ -209,3 +224,38 @@ def test_answer_after_model_switch_is_cached_under_the_model_that_answered(tmp_p
     third._chain = ["model-a", "model-b"]
     assert third.generate_json("critic", "sys", "p") == {"ok": 1} and calls == []
     assert third.stats.models_used == ["model-b"]
+
+
+def test_set_finding_repeating_requirement_finding_is_merged(tmp_path):
+    from reqcheck.agents import overlap_duplicates
+    get_req = Finding(fid="T-1", scope="requirement", criterion="appropriate", severity="critical",
+                      title="Использование HTTP-метода GET для мутирующей операции сохранения настройки", explanation="",
+                      rids=["R-025"], quotes=[Quote("Заменить настройку", 120, True)], source="llm")
+    get_set = Finding(fid="T-2", scope="set", criterion="set_consistent", severity="major",
+                      title="Использование метода GET для операции сохранения данных", explanation="",
+                      rids=["R-017", "R-025"], quotes=[Quote("REST type | GET", 104, True), Quote("Заменить", 120, True)],
+                      source="llm")
+    other_set = Finding(fid="T-3", scope="set", criterion="set_complete", severity="major",
+                        title="Не описан таймаут push-сервиса", explanation="", rids=["R-025"],
+                        quotes=[Quote("Заменить настройку", 120, True)], source="llm")
+    rule_set = Finding(fid="T-4", scope="set", criterion="set_validatable", severity="major",
+                       title="Использование GET для сохранения", explanation="", rids=["R-025"],
+                       quotes=[Quote("x", 120, True)], source="rule")
+    pairs = overlap_duplicates([get_req, get_set, other_set, rule_set])
+    assert pairs == [(get_set, get_req)]  # другой дефект на той же строке и находка правила не сливаются
+
+
+def test_merge_step_keeps_one_finding_with_both_quotes(sample_md):
+    from reqcheck.orchestrator import Options, RunContext
+    from reqcheck.models import RunResult
+    from reqcheck.steps import MergeOverlapStep
+    a = Finding(fid="T-1", scope="requirement", criterion="complete", severity="major", title="Отсутствует URL для среды Prod",
+                explanation="", rids=["R-020"], quotes=[Quote("Prod: —", 108, True)], source="llm")
+    b = Finding(fid="T-2", scope="set", criterion="set_complete", severity="critical", title="Отсутствие Prod URL для API",
+                explanation="", rids=["R-020"], quotes=[Quote("Request URL", 108, True)], source="llm")
+    ctx = RunContext(input_path=str(sample_md), opts=Options(), result=RunResult(document=None))
+    ctx.findings = [a, b]
+    step = MergeOverlapStep()
+    step.apply(ctx, step.run(ctx))
+    assert ctx.findings == [a] and a.severity == "critical" and len(a.quotes) == 2
+    assert ctx.metrics["merged_overlap"] == 1

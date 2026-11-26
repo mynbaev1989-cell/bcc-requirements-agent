@@ -79,6 +79,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None) -> dict
         "model": result.passport.get("model"),
         "dropped_ungrounded": result.metrics.get("dropped_ungrounded", 0),
         "merged_by_critic": result.metrics.get("merged_duplicates", 0),
+        "merged_overlap": result.metrics.get("merged_overlap", 0),
         "rejected_by_critic": result.metrics.get("dropped_by_critic", 0),
     }
 

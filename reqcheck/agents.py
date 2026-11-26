@@ -8,6 +8,7 @@ Extractor → Reviewer → Consistency → Critic → Analyst (чек-лист, 
 from __future__ import annotations
 
 import json
+import re
 import os
 from difflib import SequenceMatcher
 from collections import Counter
@@ -462,3 +463,40 @@ def dedupe(findings: list[Finding]) -> list[Finding]:
         if rank.get(f.severity, 3) < rank.get(main.severity, 3):
             main.severity = f.severity
     return out
+
+
+OVERLAP_TITLE_SIMILARITY = 0.25  # доля общих основ слов в заголовках (мера Жаккара)
+_STOP = {"для", "при", "или", "без", "над", "под", "что", "как", "это", "требо", "треб", "одно", "един"}
+
+
+def _stems(title: str) -> set[str]:
+    words = re.findall(r"[a-zа-яё0-9]{3,}", normalize(title).lower())
+    return {w[:4] for w in words if w[:4] not in _STOP}
+
+
+def overlap_duplicates(findings: list[Finding]) -> list[tuple[Finding, Finding]]:
+    """Пары (дубль, основная): находка по набору повторяет находку по требованию.
+
+    Reviewer (по одному требованию) и ConsistencyReviewer (по набору) часто находят один дефект и подписывают его
+    разными критериями — обычный dedupe по критерию их не сливает. Дубль, если: находка набора от LLM, у неё есть общее
+    требование с основной, хотя бы одна цитата на той же строке (±1) и заголовки похожи по основам слов."""
+    def lines(f: Finding) -> set[int]:
+        return {q.line for q in f.quotes if q.line}
+
+    targets = [f for f in findings if f.scope == "requirement" and lines(f)]
+    pairs = []
+    for s in findings:
+        sl = lines(s)
+        if s.scope == "requirement" or s.source != "llm" or not s.rids or not sl:
+            continue
+        best, score = None, OVERLAP_TITLE_SIMILARITY
+        for t in targets:
+            if not set(s.rids) & set(t.rids) or not any(abs(a - b) <= 1 for a in sl for b in lines(t)):
+                continue
+            ss, ts = _stems(s.title), _stems(t.title)
+            j = len(ss & ts) / max(len(ss | ts), 1)
+            if j >= score:
+                best, score = t, j
+        if best is not None:
+            pairs.append((s, best))
+    return pairs

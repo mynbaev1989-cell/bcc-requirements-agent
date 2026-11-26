@@ -81,6 +81,7 @@ def run_variant(name: str, model: str) -> dict:
         "dropped_ungrounded": sum(r.get("dropped_ungrounded", 0) for r in rows),
         "merged_by_critic": sum(r.get("merged_by_critic", 0) for r in rows),
         "rejected_by_critic": sum(r.get("rejected_by_critic", 0) for r in rows),
+        "merged_overlap": sum(r.get("merged_overlap", 0) for r in rows),
         "docs": rows,
     }
 
@@ -91,12 +92,12 @@ def main() -> int:
     args = ap.parse_args()
     results = [run_variant(v, args.model) for v in ("full", "no_critic", "no_grounding", "rules_only")]
     print("| Вариант | Найдено дефектов | Находок | Точность | Ложные major на чистых | Отсеяно сверкой | "
-          "Слито критиком | Отклонено критиком | Промахов кэша |")
-    print("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+          "Слито критиком | Отклонено критиком | Слито кодом | Промахов кэша |")
+    print("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
     for r in results:
         print(f"| {r['variant']} | {r['found']}/{r['gold']} | {r['findings']} | {r['precision']:.0%} | "
               f"{r['false_major_on_clean']} | {r['dropped_ungrounded']} | {r['merged_by_critic']} | "
-              f"{r['rejected_by_critic']} | {r['cache_misses']} |")
+              f"{r['rejected_by_critic']} | {r['merged_overlap']} | {r['cache_misses']} |")
     out = ROOT / "eval" / "ablation.json"
     out.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Результаты: {out}")
