@@ -2,15 +2,33 @@
   {
     "document": "blind_card_block.md",
     "gold_defects": 16,
-    "found": 13,
-    "recall": 0.812,
-    "agent_findings": 22,
-    "precision": 0.773,
-    "precision_items": 0.773,
+    "found": 14,
+    "recall": 0.875,
+    "agent_findings": 25,
+    "precision": 0.8,
+    "precision_with_extra": 0.92,
+    "extra_defects": 3,
+    "precision_items": 0.8,
     "false_major_on_clean": 1,
-    "questions": 18,
-    "gold_covered_by_questions": 13,
-    "question_coverage": 0.812,
+    "questions": 12,
+    "gold_covered_by_questions": 11,
+    "question_coverage": 0.688,
+    "severe_gold": 10,
+    "severe_covered_by_questions": 8,
+    "severe_question_coverage": 0.8,
+    "severity_exact": 0.357,
+    "severity_within_one": 1.0,
+    "severity_exact_n": 5,
+    "severity_within_one_n": 14,
+    "false_critical": 0,
+    "question_quality": {
+      "n": 12,
+      "with_addressee": 1.0,
+      "with_options": 1.0,
+      "with_assumption": 1.0,
+      "with_line": 1.0,
+      "duplicate_pairs": 0
+    },
     "by_type": {
       "ambiguity": "2/2",
       "contradiction": "2/2",
@@ -19,17 +37,63 @@
       "incomplete": "2/4",
       "no_version": "1/1",
       "non_singular": "1/1",
-      "units": "2/3",
+      "units": "3/3",
       "unverifiable": "1/1"
     },
     "missed": [
       "Не описано поведение для карт, заблокированных банком или оператором.",
-      "Лимит указан без периода действия.",
       "Не описано, что делать, если push не доставлен или отключён."
+    ],
+    "unmatched": [
+      {
+        "fid": "F-006",
+        "severity": "major",
+        "lines": [
+          49
+        ],
+        "title": "Не указано, какого именно кода подтверждения касается ограничение попыток",
+        "quote": "после 3 неверных вводов кода подтверждения"
+      },
+      {
+        "fid": "F-007",
+        "severity": "minor",
+        "lines": [
+          51
+        ],
+        "title": "Не уточнен способ отображения оставшихся попыток ввода кода",
+        "quote": "сообщать клиенту, сколько попыток ввода кода у него осталось"
+      },
+      {
+        "fid": "F-011",
+        "severity": "minor",
+        "lines": [
+          81
+        ],
+        "title": "Нарушена атомарность требования из-за двух разных логических условий",
+        "quote": "Клиент может отключить push-уведомления в настройках, при этом SMS остаются обязательными."
+      },
+      {
+        "fid": "F-014",
+        "severity": "major",
+        "lines": [
+          93
+        ],
+        "title": "Неопределенность понятия устройства, привязанного к клиенту",
+        "quote": "с устройства, не привязанного к клиенту"
+      },
+      {
+        "fid": "F-015",
+        "severity": "minor",
+        "lines": [
+          95
+        ],
+        "title": "Неопределенность периода «за сутки» для подсчета блокировок",
+        "quote": "за сутки"
+      }
     ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 0,
-    "merged_by_critic": 2,
+    "merged_by_critic": 0,
     "merged_overlap": 0,
     "merged_singular": 0,
     "rejected_by_critic": 0
@@ -41,11 +105,29 @@
     "recall": 1.0,
     "agent_findings": 24,
     "precision": 0.833,
+    "precision_with_extra": 0.875,
+    "extra_defects": 1,
     "precision_items": 0.833,
     "false_major_on_clean": 2,
-    "questions": 15,
-    "gold_covered_by_questions": 15,
-    "question_coverage": 0.938,
+    "questions": 20,
+    "gold_covered_by_questions": 16,
+    "question_coverage": 1.0,
+    "severe_gold": 12,
+    "severe_covered_by_questions": 12,
+    "severe_question_coverage": 1.0,
+    "severity_exact": 0.375,
+    "severity_within_one": 0.938,
+    "severity_exact_n": 6,
+    "severity_within_one_n": 15,
+    "false_critical": 0,
+    "question_quality": {
+      "n": 20,
+      "with_addressee": 1.0,
+      "with_options": 1.0,
+      "with_assumption": 1.0,
+      "with_line": 1.0,
+      "duplicate_pairs": 0
+    },
     "by_type": {
       "ambiguity": "1/1",
       "api": "4/4",
@@ -58,10 +140,48 @@
       "unverifiable": "1/1"
     },
     "missed": [],
+    "unmatched": [
+      {
+        "fid": "F-005",
+        "severity": "major",
+        "lines": [
+          43
+        ],
+        "title": "Неопределенность термина «дата выплаты»",
+        "quote": "не позднее 2 рабочих дней с даты выплаты"
+      },
+      {
+        "fid": "F-006",
+        "severity": "minor",
+        "lines": [
+          45
+        ],
+        "title": "Не указан канал передачи сформированного отчета",
+        "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
+      },
+      {
+        "fid": "F-023",
+        "severity": "major",
+        "lines": [
+          29
+        ],
+        "title": "Пропущено поведение для нулевого или минимального размера файла реестра",
+        "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
+      },
+      {
+        "fid": "F-024",
+        "severity": "minor",
+        "lines": [
+          63
+        ],
+        "title": "9 из 37 требований без идентификатора в документе",
+        "quote": "Метод загрузки реестра: `POST /api/v1/payroll/registries`. Формат тела запроса: JSON, кодировка UTF-8."
+      }
+    ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 0,
-    "merged_by_critic": 0,
-    "merged_overlap": 3,
+    "merged_by_critic": 7,
+    "merged_overlap": 0,
     "merged_singular": 0,
     "rejected_by_critic": 0
   }

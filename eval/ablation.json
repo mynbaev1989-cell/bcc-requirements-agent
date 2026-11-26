@@ -7,18 +7,18 @@
     "precision": 0.861,
     "precision_items": 0.841,
     "false_major_on_clean": 6,
-    "severe_covered": 72,
+    "severe_covered": 74,
     "severe_gold": 78,
-    "severe_question_coverage": 0.923,
+    "severe_question_coverage": 0.949,
     "false_critical": 0,
     "severity_exact": 0.402,
-    "severity_within_one": 0.941,
+    "severity_within_one": 0.971,
     "precision_with_extra": 0.933,
-    "cache_misses": 13,
+    "cache_misses": 1,
     "dropped_ungrounded": 8,
-    "merged_by_critic": 6,
+    "merged_by_critic": 13,
     "rejected_by_critic": 0,
-    "merged_overlap": 27,
+    "merged_overlap": 24,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -31,7 +31,7 @@
         "extra_defects": 2,
         "precision_items": 0.929,
         "false_major_on_clean": 0,
-        "questions": 15,
+        "questions": 12,
         "gold_covered_by_questions": 12,
         "question_coverage": 0.857,
         "severe_gold": 11,
@@ -43,12 +43,12 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -89,7 +89,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 0
       },
       {
         "document": "credit_card_application.md",
@@ -102,9 +102,9 @@
         "extra_defects": 2,
         "precision_items": 0.731,
         "false_major_on_clean": 2,
-        "questions": 17,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.923,
+        "questions": 15,
+        "gold_covered_by_questions": 13,
+        "question_coverage": 1.0,
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
@@ -114,7 +114,7 @@
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 15,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -178,7 +178,7 @@
         "merged_overlap": 2,
         "merged_singular": 6,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "p2p_phone.md",
@@ -191,7 +191,7 @@
         "extra_defects": 3,
         "precision_items": 0.826,
         "false_major_on_clean": 0,
-        "questions": 14,
+        "questions": 18,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -203,7 +203,7 @@
         "severity_within_one_n": 13,
         "false_critical": 0,
         "question_quality": {
-          "n": 14,
+          "n": 18,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -258,7 +258,7 @@
         "merged_overlap": 2,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "holdout_deposit.md",
@@ -271,24 +271,24 @@
         "extra_defects": 0,
         "precision_items": 0.806,
         "false_major_on_clean": 0,
-        "questions": 19,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 0.933,
+        "questions": 17,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.533,
         "severity_within_one": 1.0,
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 19,
+          "n": 17,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -357,7 +357,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 0
       },
       {
         "document": "holdout_installments.md",
@@ -370,7 +370,7 @@
         "extra_defects": 1,
         "precision_items": 0.962,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 14,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -382,12 +382,12 @@
         "severity_within_one_n": 16,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 14,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -421,7 +421,7 @@
         "merged_overlap": 2,
         "merged_singular": 3,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 0
       },
       {
         "document": "blind_card_block.md",
@@ -434,7 +434,7 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 12,
         "gold_covered_by_questions": 11,
         "question_coverage": 0.688,
         "severe_gold": 10,
@@ -446,7 +446,7 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -521,7 +521,7 @@
         "merged_overlap": 0,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 0
       },
       {
         "document": "blind_payroll.md",
@@ -534,19 +534,19 @@
         "extra_defects": 1,
         "precision_items": 0.833,
         "false_major_on_clean": 2,
-        "questions": 15,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 0.938,
+        "questions": 20,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.375,
-        "severity_within_one": 0.75,
+        "severity_within_one": 0.938,
         "severity_exact_n": 6,
-        "severity_within_one_n": 12,
+        "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 20,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -585,7 +585,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-021",
+            "fid": "F-023",
             "severity": "major",
             "lines": [
               29
@@ -605,11 +605,11 @@
         ],
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
-        "merged_by_critic": 0,
-        "merged_overlap": 3,
+        "merged_by_critic": 7,
+        "merged_overlap": 0,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 3
+        "cache_misses": 1
       }
     ]
   },
@@ -617,22 +617,22 @@
     "variant": "no_critic",
     "found": 102,
     "gold": 104,
-    "findings": 176,
-    "precision": 0.863,
-    "precision_items": 0.844,
+    "findings": 178,
+    "precision": 0.865,
+    "precision_items": 0.846,
     "false_major_on_clean": 6,
-    "severe_covered": 72,
+    "severe_covered": 73,
     "severe_gold": 78,
-    "severe_question_coverage": 0.923,
+    "severe_question_coverage": 0.936,
     "false_critical": 0,
     "severity_exact": 0.402,
     "severity_within_one": 0.941,
-    "precision_with_extra": 0.934,
-    "cache_misses": 9,
+    "precision_with_extra": 0.935,
+    "cache_misses": 4,
     "dropped_ungrounded": 8,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
-    "merged_overlap": 30,
+    "merged_overlap": 32,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -645,7 +645,7 @@
         "extra_defects": 2,
         "precision_items": 0.929,
         "false_major_on_clean": 0,
-        "questions": 15,
+        "questions": 12,
         "gold_covered_by_questions": 12,
         "question_coverage": 0.857,
         "severe_gold": 11,
@@ -657,12 +657,12 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -703,7 +703,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "credit_card_application.md",
@@ -885,24 +885,24 @@
         "extra_defects": 0,
         "precision_items": 0.806,
         "false_major_on_clean": 0,
-        "questions": 19,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 0.933,
+        "questions": 17,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.533,
         "severity_within_one": 1.0,
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 19,
+          "n": 17,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -971,7 +971,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "holdout_installments.md",
@@ -984,7 +984,7 @@
         "extra_defects": 1,
         "precision_items": 0.962,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 14,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -996,12 +996,12 @@
         "severity_within_one_n": 16,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 14,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1035,7 +1035,7 @@
         "merged_overlap": 2,
         "merged_singular": 3,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "blind_card_block.md",
@@ -1048,7 +1048,7 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 12,
         "gold_covered_by_questions": 11,
         "question_coverage": 0.688,
         "severe_gold": 10,
@@ -1060,7 +1060,7 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -1135,20 +1135,20 @@
         "merged_overlap": 0,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "blind_payroll.md",
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.833,
-        "precision_with_extra": 0.875,
+        "agent_findings": 26,
+        "precision": 0.846,
+        "precision_with_extra": 0.885,
         "extra_defects": 1,
-        "precision_items": 0.833,
+        "precision_items": 0.846,
         "false_major_on_clean": 2,
-        "questions": 15,
+        "questions": 18,
         "gold_covered_by_questions": 15,
         "question_coverage": 0.938,
         "severe_gold": 12,
@@ -1160,12 +1160,12 @@
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 18,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 2
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1199,7 +1199,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-021",
+            "fid": "F-025",
             "severity": "major",
             "lines": [
               29
@@ -1208,7 +1208,7 @@
             "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
           },
           {
-            "fid": "F-024",
+            "fid": "F-026",
             "severity": "minor",
             "lines": [
               63
@@ -1220,10 +1220,10 @@
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
         "merged_by_critic": 0,
-        "merged_overlap": 3,
+        "merged_overlap": 5,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 3
+        "cache_misses": 2
       }
     ]
   },
@@ -1231,22 +1231,22 @@
     "variant": "no_grounding",
     "found": 102,
     "gold": 104,
-    "findings": 184,
-    "precision": 0.825,
-    "precision_items": 0.811,
+    "findings": 186,
+    "precision": 0.827,
+    "precision_items": 0.813,
     "false_major_on_clean": 6,
-    "severe_covered": 72,
+    "severe_covered": 73,
     "severe_gold": 78,
-    "severe_question_coverage": 0.923,
+    "severe_question_coverage": 0.936,
     "false_critical": 3,
     "severity_exact": 0.402,
     "severity_within_one": 0.941,
-    "precision_with_extra": 0.892,
-    "cache_misses": 9,
+    "precision_with_extra": 0.893,
+    "cache_misses": 6,
     "dropped_ungrounded": 0,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
-    "merged_overlap": 30,
+    "merged_overlap": 32,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -1548,24 +1548,24 @@
         "extra_defects": 0,
         "precision_items": 0.806,
         "false_major_on_clean": 0,
-        "questions": 19,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 0.933,
+        "questions": 17,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.533,
         "severity_within_one": 1.0,
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 19,
+          "n": 17,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1634,7 +1634,7 @@
         "merged_overlap": 4,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "holdout_installments.md",
@@ -1718,7 +1718,7 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 12,
         "gold_covered_by_questions": 11,
         "question_coverage": 0.688,
         "severe_gold": 10,
@@ -1730,7 +1730,7 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -1805,20 +1805,20 @@
         "merged_overlap": 0,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "blind_payroll.md",
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.833,
-        "precision_with_extra": 0.875,
+        "agent_findings": 26,
+        "precision": 0.846,
+        "precision_with_extra": 0.885,
         "extra_defects": 1,
-        "precision_items": 0.833,
+        "precision_items": 0.846,
         "false_major_on_clean": 2,
-        "questions": 15,
+        "questions": 18,
         "gold_covered_by_questions": 15,
         "question_coverage": 0.938,
         "severe_gold": 12,
@@ -1830,12 +1830,12 @@
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 18,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 2
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1869,7 +1869,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-021",
+            "fid": "F-025",
             "severity": "major",
             "lines": [
               29
@@ -1878,7 +1878,7 @@
             "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
           },
           {
-            "fid": "F-024",
+            "fid": "F-026",
             "severity": "minor",
             "lines": [
               63
@@ -1890,10 +1890,10 @@
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
         "merged_by_critic": 0,
-        "merged_overlap": 3,
+        "merged_overlap": 5,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 3
+        "cache_misses": 2
       }
     ]
   },
@@ -1901,9 +1901,9 @@
     "variant": "no_critic_no_consistency",
     "found": 100,
     "gold": 104,
-    "findings": 167,
-    "precision": 0.856,
-    "precision_items": 0.836,
+    "findings": 169,
+    "precision": 0.858,
+    "precision_items": 0.838,
     "false_major_on_clean": 5,
     "severe_covered": 70,
     "severe_gold": 77,
@@ -1911,12 +1911,12 @@
     "false_critical": 0,
     "severity_exact": 0.41,
     "severity_within_one": 0.94,
-    "precision_with_extra": 0.931,
-    "cache_misses": 10,
+    "precision_with_extra": 0.932,
+    "cache_misses": 8,
     "dropped_ungrounded": 8,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
-    "merged_overlap": 17,
+    "merged_overlap": 19,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -2430,13 +2430,13 @@
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 23,
-        "precision": 0.826,
-        "precision_with_extra": 0.87,
+        "agent_findings": 25,
+        "precision": 0.84,
+        "precision_with_extra": 0.88,
         "extra_defects": 1,
-        "precision_items": 0.826,
+        "precision_items": 0.84,
         "false_major_on_clean": 2,
-        "questions": 15,
+        "questions": 17,
         "gold_covered_by_questions": 15,
         "question_coverage": 0.938,
         "severe_gold": 12,
@@ -2448,7 +2448,7 @@
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 15,
+          "n": 17,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -2487,7 +2487,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-020",
+            "fid": "F-024",
             "severity": "major",
             "lines": [
               29
@@ -2496,7 +2496,7 @@
             "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
           },
           {
-            "fid": "F-023",
+            "fid": "F-025",
             "severity": "minor",
             "lines": [
               63
@@ -2508,29 +2508,29 @@
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
         "merged_by_critic": 0,
-        "merged_overlap": 2,
+        "merged_overlap": 4,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 4
+        "cache_misses": 2
       }
     ]
   },
   {
     "variant": "no_critic_no_gaps",
-    "found": 98,
+    "found": 100,
     "gold": 104,
-    "findings": 156,
-    "precision": 0.867,
-    "precision_items": 0.846,
+    "findings": 160,
+    "precision": 0.871,
+    "precision_items": 0.849,
     "false_major_on_clean": 5,
-    "severe_covered": 68,
-    "severe_gold": 74,
-    "severe_question_coverage": 0.919,
+    "severe_covered": 70,
+    "severe_gold": 76,
+    "severe_question_coverage": 0.921,
     "false_critical": 0,
-    "severity_exact": 0.388,
-    "severity_within_one": 0.959,
-    "precision_with_extra": 0.946,
-    "cache_misses": 10,
+    "severity_exact": 0.4,
+    "severity_within_one": 0.96,
+    "precision_with_extra": 0.948,
+    "cache_misses": 7,
     "dropped_ungrounded": 8,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
@@ -2936,7 +2936,7 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 17,
+        "questions": 12,
         "gold_covered_by_questions": 11,
         "question_coverage": 0.688,
         "severe_gold": 10,
@@ -2948,7 +2948,7 @@
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 12,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -3023,41 +3023,41 @@
         "merged_overlap": 0,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "blind_payroll.md",
         "gold_defects": 16,
-        "found": 14,
-        "recall": 0.875,
-        "agent_findings": 20,
-        "precision": 0.85,
-        "precision_with_extra": 0.9,
+        "found": 16,
+        "recall": 1.0,
+        "agent_findings": 24,
+        "precision": 0.875,
+        "precision_with_extra": 0.917,
         "extra_defects": 1,
-        "precision_items": 0.85,
+        "precision_items": 0.875,
         "false_major_on_clean": 1,
-        "questions": 12,
-        "gold_covered_by_questions": 13,
-        "question_coverage": 0.812,
-        "severe_gold": 10,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.9,
-        "severity_exact": 0.286,
-        "severity_within_one": 0.786,
-        "severity_exact_n": 4,
-        "severity_within_one_n": 11,
+        "questions": 16,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 0.938,
+        "severe_gold": 12,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 0.917,
+        "severity_exact": 0.375,
+        "severity_within_one": 0.812,
+        "severity_exact_n": 6,
+        "severity_within_one_n": 13,
         "false_critical": 0,
         "question_quality": {
-          "n": 12,
+          "n": 16,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
-          "api": "2/4",
+          "api": "4/4",
           "contradiction": "2/2",
           "design_in_req": "1/1",
           "empty_section": "1/1",
@@ -3066,10 +3066,7 @@
           "units": "2/2",
           "unverifiable": "1/1"
         },
-        "missed": [
-          "У параметра registry_id не указан тип.",
-          "Формат даты pay_date не определён."
-        ],
+        "missed": [],
         "unmatched": [
           {
             "fid": "F-005",
@@ -3090,7 +3087,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-020",
+            "fid": "F-024",
             "severity": "minor",
             "lines": [
               63
@@ -3105,7 +3102,7 @@
         "merged_overlap": 1,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 4
+        "cache_misses": 2
       }
     ]
   },

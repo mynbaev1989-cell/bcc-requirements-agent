@@ -6,11 +6,29 @@
     "recall": 1.0,
     "agent_findings": 27,
     "precision": 0.926,
+    "precision_with_extra": 1.0,
+    "extra_defects": 2,
     "precision_items": 0.929,
     "false_major_on_clean": 0,
     "questions": 12,
     "gold_covered_by_questions": 12,
     "question_coverage": 0.857,
+    "severe_gold": 11,
+    "severe_covered_by_questions": 9,
+    "severe_question_coverage": 0.818,
+    "severity_exact": 0.286,
+    "severity_within_one": 1.0,
+    "severity_exact_n": 4,
+    "severity_within_one_n": 14,
+    "false_critical": 0,
+    "question_quality": {
+      "n": 12,
+      "with_addressee": 1.0,
+      "with_options": 1.0,
+      "with_assumption": 1.0,
+      "with_line": 1.0,
+      "duplicate_pairs": 0
+    },
     "by_type": {
       "ambiguity": "2/2",
       "api": "2/2",
@@ -24,6 +42,26 @@
       "unverifiable": "1/1"
     },
     "missed": [],
+    "unmatched": [
+      {
+        "fid": "F-021",
+        "severity": "major",
+        "lines": [
+          98
+        ],
+        "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+        "quote": "Требования пронумерованы и не дублируются"
+      },
+      {
+        "fid": "F-023",
+        "severity": "minor",
+        "lines": [
+          47
+        ],
+        "title": "22 из 40 требований без идентификатора в документе",
+        "quote": "Поле: rule_id; Тип: UUID; Обязательность: да; Описание: Идентификатор правила"
+      }
+    ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 1,
     "merged_by_critic": 0,
@@ -38,11 +76,29 @@
     "recall": 1.0,
     "agent_findings": 21,
     "precision": 0.81,
+    "precision_with_extra": 0.905,
+    "extra_defects": 2,
     "precision_items": 0.731,
     "false_major_on_clean": 2,
-    "questions": 18,
+    "questions": 15,
     "gold_covered_by_questions": 13,
     "question_coverage": 1.0,
+    "severe_gold": 10,
+    "severe_covered_by_questions": 10,
+    "severe_question_coverage": 1.0,
+    "severity_exact": 0.615,
+    "severity_within_one": 0.923,
+    "severity_exact_n": 8,
+    "severity_within_one_n": 12,
+    "false_critical": 0,
+    "question_quality": {
+      "n": 15,
+      "with_addressee": 1.0,
+      "with_options": 1.0,
+      "with_assumption": 1.0,
+      "with_line": 1.0,
+      "duplicate_pairs": 1
+    },
     "by_type": {
       "ambiguity": "1/1",
       "api": "2/2",
@@ -56,6 +112,44 @@
       "unverifiable": "1/1"
     },
     "missed": [],
+    "unmatched": [
+      {
+        "fid": "F-009",
+        "severity": "major",
+        "lines": [
+          49
+        ],
+        "title": "Не определены условия расчета доступности сервиса",
+        "quote": "Сервис подачи заявок доступен не менее 99,5% времени в месяц."
+      },
+      {
+        "fid": "F-014",
+        "severity": "major",
+        "lines": [
+          19
+        ],
+        "title": "34 из 34 требований без идентификатора в документе",
+        "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
+      },
+      {
+        "fid": "F-017",
+        "severity": "major",
+        "lines": [
+          89
+        ],
+        "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+        "quote": "Возрастные ограничения согласованы во всех разделах"
+      },
+      {
+        "fid": "F-020",
+        "severity": "minor",
+        "lines": [
+          40
+        ],
+        "title": "Не определен часовой пояс и момент начала отсчета для хранения черновика",
+        "quote": "черновик сохраняется на 30 суток, после чего удаляется."
+      }
+    ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 3,
     "merged_by_critic": 2,
@@ -70,11 +164,29 @@
     "recall": 1.0,
     "agent_findings": 22,
     "precision": 0.864,
+    "precision_with_extra": 1.0,
+    "extra_defects": 3,
     "precision_items": 0.826,
     "false_major_on_clean": 0,
-    "questions": 14,
+    "questions": 18,
     "gold_covered_by_questions": 14,
     "question_coverage": 1.0,
+    "severe_gold": 11,
+    "severe_covered_by_questions": 11,
+    "severe_question_coverage": 1.0,
+    "severity_exact": 0.286,
+    "severity_within_one": 0.929,
+    "severity_exact_n": 4,
+    "severity_within_one_n": 13,
+    "false_critical": 0,
+    "question_quality": {
+      "n": 18,
+      "with_addressee": 1.0,
+      "with_options": 1.0,
+      "with_assumption": 1.0,
+      "with_line": 1.0,
+      "duplicate_pairs": 0
+    },
     "by_type": {
       "ambiguity": "2/2",
       "api": "2/2",
@@ -88,6 +200,35 @@
       "unverifiable": "1/1"
     },
     "missed": [],
+    "unmatched": [
+      {
+        "fid": "F-015",
+        "severity": "major",
+        "lines": [
+          55
+        ],
+        "title": "Раздел «6. Требования к отказоустойчивости» не заполнен",
+        "quote": "TBD"
+      },
+      {
+        "fid": "F-017",
+        "severity": "major",
+        "lines": [
+          98
+        ],
+        "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+        "quote": "Лимиты и комиссии заданы числами"
+      },
+      {
+        "fid": "F-020",
+        "severity": "minor",
+        "lines": [
+          46
+        ],
+        "title": "23 из 40 требований без идентификатора в документе",
+        "quote": "Поле: transfer_id; Тип: UUID; Обязательность: да; Описание: Идентификатор перевода"
+      }
+    ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 3,
     "merged_by_critic": 4,
