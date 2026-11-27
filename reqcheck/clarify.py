@@ -25,6 +25,21 @@ PRIORITY_ICON = {"blocker": "🔴", "important": "🟠", "clarify": "🟡"}
 MAX_QUESTIONS = 20
 
 
+SCATTER_GAP = 5  # строк: критичные дефекты дальше друг от друга — разные места документа
+
+
+def scattered_blocker(q: Question, fmap: dict[str, Finding]) -> bool:
+    """Вопрос связывает два и больше критичных дефекта, между строками которых больше SCATTER_GAP строк."""
+    spots = []
+    for fid in q.fids:
+        f = fmap.get(fid)
+        if f is not None and f.severity == CRITICAL:
+            spots.append({x.line for x in f.quotes if x.line})
+    spots = [s for s in spots if s]
+    return any(min(abs(a - b) for a in s1 for b in s2) > SCATTER_GAP
+               for i, s1 in enumerate(spots) for s2 in spots[i + 1:])
+
+
 def _lines(fids: list[str], fmap: dict[str, Finding]) -> list[int]:
     out: list[int] = []
     for fid in fids:
@@ -200,6 +215,9 @@ class Clarifier:
                 why=_s(item.get("why"), 400), options=[_s(o, 300).rstrip(" .;") for o in _list(item.get("options")) if _s(o)][:4],
                 assumption=_s(item.get("assumption"), 400), fids=fids, lines=_lines(fids, fmap),
             ))
+        # Блокирующий вопрос — про одно место документа: вопрос, который связал критичные дефекты из разных мест,
+        # автор не закроет одним ответом. Такой вопрос не берём, его находки получают отдельные вопросы ниже.
+        out = [q for q in out if not scattered_blocker(q, fmap)]
         # Каждый критичный дефект должен быть покрыт вопросом: недостающие добираем из находок
         covered = {fid for q in out for fid in q.fids}
         missing = [f for f in findings if f.severity in (CRITICAL, MAJOR) and f.fid not in covered]
