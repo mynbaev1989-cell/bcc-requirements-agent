@@ -28,6 +28,26 @@ SEVERE = ("critical", "major")
 _LINE_IN_TEXT = re.compile(r"(строк\w*|стр\.?|line)\s*№?\s*\d", re.IGNORECASE)
 
 
+# Ворота качества (tools/ablation.py --gate, шаг CI): текущий результат полного конвейера на 7 документах —
+# 102 из 104, средняя точность 86,1%, ложных critical 0 — с запасом 1 п. по точности. Промах кэша недопустим:
+# без ответа модели шаг тихо уходит в запасной вариант, и метрики почти не меняются (проверено: 86,0% вместо 86,1%).
+GATE = {"found": 102, "precision": 0.85, "false_critical": 0, "cache_misses": 0}
+
+
+def gate_failures(r: dict) -> list[str]:
+    """Нарушенные пороги ворот для итога варианта full (пустой список — ворота пройдены)."""
+    out = []
+    if r["found"] < GATE["found"]:
+        out.append(f"найдено {r['found']} < {GATE['found']}")
+    if r["precision"] < GATE["precision"]:
+        out.append(f"точность {r['precision']:.1%} < {GATE['precision']:.0%}")
+    if r["false_critical"] > GATE["false_critical"]:
+        out.append(f"ложных critical {r['false_critical']}")
+    if r["cache_misses"] > GATE["cache_misses"]:
+        out.append(f"промахов кэша {r['cache_misses']}: ответа модели нет в кэше, шаг ушёл в запасной вариант")
+    return out
+
+
 def _lines_of(defect: dict, grounder: Grounder) -> set[int]:
     lines = set()
     for key in ("quote", "related_quote"):

@@ -1,5 +1,6 @@
 # Тесты и офлайн-прогон агента на каждый push и PR. Ключ Gemini не нужен: тесты ходят в подставную FakeLLM,
-# прогон идёт с --offline (только детерминированные правила).
+# прогон идёт с --offline (только детерминированные правила). Ворота качества пересчитывают точность
+# по закоммиченным ответам модели (eval/llm_cache/) и падают, если она ниже порогов.
 name: tests
 
 on:
@@ -30,6 +31,8 @@ jobs:
         run: curl -sSfL -o input/requirements.md --create-dirs https://raw.githubusercontent.com/BCC-HUB/ai-requirements-validator-task/main/docs/requirements.md
       - name: Тесты и покрытие reqcheck/ (порог 90%)
         run: python -m pytest -q --cov=reqcheck --cov-report=term --cov-fail-under=90
+      - name: Ворота качества — точность на 7 размеченных документах из закоммиченного кэша, без сети и ключа
+        run: python tools/ablation.py --cache eval/llm_cache --gate
       - name: Офлайн-прогон на размеченном документе
         run: python main.py --input eval_holdout/holdout_deposit.md --output out/report.md --offline
       - uses: actions/upload-artifact@v4

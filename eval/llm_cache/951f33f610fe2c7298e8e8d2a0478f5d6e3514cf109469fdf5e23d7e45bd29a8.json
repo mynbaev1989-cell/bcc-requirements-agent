@@ -1,0 +1,1 @@
+{"role": "analyst_checklist", "model": "gemini-3.5-flash-lite", "parsed": {"checklist": [], "trace": [{"rid": "R-001", "acceptance": ["R-044", "R-047"], "api": ["R-034"], "note": "Покрыто критериями приёмки и методом API"}]}}

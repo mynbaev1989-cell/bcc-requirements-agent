@@ -15,6 +15,13 @@
 - rules_only    — только детерминированные правила, без LLM (`--offline`).
 Промах кэша = сбой LLM без запроса; такой шаг уходит в запасной вариант, и это видно в колонке «промахов кэша».
 Итог печатается таблицей Markdown и сохраняется в eval/ablation.json.
+
+Ворота качества (CI): ответы модели, которые использует полный конвейер на 7 документах, лежат в репозитории
+(eval/llm_cache/). Тогда точность пересчитывается в CI без сети и без ключа:
+    python tools/ablation.py --cache eval/llm_cache --gate
+падает (код 1), если найдено меньше GATE["found"] дефектов, средняя по документам точность ниже GATE["precision"],
+есть ложные critical или хоть один промах кэша (иначе пропавший файл тихо ушёл бы в запасной вариант).
+Обновить закоммиченный кэш после живого перезамера: python tools/ablation.py --export-cache eval/llm_cache
 """
 
 from __future__ import annotations
@@ -32,9 +39,10 @@ os.environ.setdefault("GEMINI_API_KEY", "cache-only")  # ключ не испо�
 from reqcheck import agents, steps  # noqa: E402
 from reqcheck.llm import GeminiClient, LLMError  # noqa: E402
 from reqcheck.pipeline import Options  # noqa: E402
-from tools.eval_score import score_document  # noqa: E402
+from tools.eval_score import GATE, gate_failures, score_document  # noqa: E402,F401
 
 FOLDERS = ("eval", "eval_holdout", "eval_blind")
+CACHE_DIR = ROOT / ".reqcheck_cache"
 
 
 class _NoNetwork:
@@ -46,10 +54,31 @@ class _NoNetwork:
             raise RuntimeError("промах кэша: в режиме аблации сеть отключена")
 
 
+class _RecordingClient(GeminiClient):
+    """Клиент только на кэше, который запоминает файлы кэша, давшие ответ (для --export-cache)."""
+
+    used: set[Path]
+
+    def _from_cache(self, role, payload):
+        hit, parsed = super()._from_cache(role, payload)
+        if hit:
+            for model in self._chain:
+                path = self._cache_path(payload, model)
+                if path and path.exists():
+                    self.used.add(path)
+                    break
+        return hit, parsed
+
+
 def _cached_llm(model: str) -> GeminiClient:
-    llm = GeminiClient(model=model, retries=0, cache_dir=str(ROOT / ".reqcheck_cache"))
+    llm = _RecordingClient(model=model, retries=0, cache_dir=str(CACHE_DIR))
+    llm.used = set()
     llm._client = _NoNetwork()
+    _USED.append(llm.used)
     return llm
+
+
+_USED: list[set[Path]] = []
 
 
 def _keep_ungrounded(self, ctx):  # подмена GroundStep.run: ничего не отбрасывать
@@ -138,11 +167,51 @@ def run_variant(name: str, model: str) -> dict:
     }
 
 
+def export_cache(model: str, dest: Path) -> int:
+    """Скопировать в dest файлы кэша, которые использует полный конвейер (только они нужны воротам)."""
+    import shutil
+
+    _USED.clear()
+    r = run_variant("full", model)
+    if r["cache_misses"]:
+        print(f"Промахов кэша {r['cache_misses']}: сначала живой перезамер (tools/eval_score.py), потом экспорт.")
+        return 1
+    used = set().union(*_USED) if _USED else set()
+    dest.mkdir(parents=True, exist_ok=True)
+    for old in dest.glob("*.json"):
+        if old not in {dest / p.name for p in used}:
+            old.unlink()
+    for p in sorted(used):
+        shutil.copyfile(p, dest / p.name)
+    size = sum(f.stat().st_size for f in dest.glob("*.json"))
+    print(f"Скопировано файлов кэша: {len(used)}, {size / 1e6:.1f} МБ → {dest}")
+    return 0
+
+
 def main() -> int:
+    global CACHE_DIR
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--model", default="gemini-3.5-flash-lite")
     ap.add_argument("--list-unmatched", action="store_true", help="напечатать находки агента, не совпавшие с эталоном")
+    ap.add_argument("--cache", type=Path, default=None, help="папка кэша ответов модели (по умолчанию .reqcheck_cache)")
+    ap.add_argument("--gate", action="store_true", help="только полный конвейер; код 1, если метрики ниже порогов")
+    ap.add_argument("--export-cache", type=Path, default=None, metavar="DIR",
+                    help="скопировать в DIR файлы кэша, нужные полному конвейеру")
     args = ap.parse_args()
+    if args.cache:
+        CACHE_DIR = args.cache.resolve()
+    if args.export_cache:
+        return export_cache(args.model, args.export_cache.resolve())
+    if args.gate:
+        r = run_variant("full", args.model)
+        print(f"Ворота качества: найдено {r['found']}/{r['gold']}, точность {r['precision']:.1%}, "
+              f"ложных critical {r['false_critical']}, промахов кэша {r['cache_misses']}, "
+              f"критичность точно {r['severity_exact']:.0%}")
+        bad = gate_failures(r)
+        for b in bad:
+            print(f"  ✗ {b}")
+        print("Ворота пройдены." if not bad else "Ворота НЕ пройдены.")
+        return 1 if bad else 0
     if args.list_unmatched:
         _list_unmatched(args.model)
         return 0
