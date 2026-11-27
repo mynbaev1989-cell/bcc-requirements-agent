@@ -240,7 +240,7 @@ def test_write_failed_for_one_format_does_not_block_others(sample_md, tmp_path, 
 
 
 def test_write_failed_all_formats_gives_exit_2(sample_md, tmp_path):
-    for name in ("r.md", "r.pdf", "r.json", "r.html", "r_questions.md"):  # на месте каждого файла лежит папка
+    for name in ("r.md", "r.pdf", "r.json", "r.html", "r_jira.csv", "r_questions.md"):  # на месте каждого файла лежит папка
         (tmp_path / name).mkdir()
     assert main([str(sample_md), str(tmp_path / "r.md"), "--offline"]) == 2
 

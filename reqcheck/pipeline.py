@@ -231,6 +231,10 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
     md_text = render_markdown(result)
     for fmt in wanted:
         target = out if fmt == main_ext and out.suffix else stem.with_suffix("." + fmt)
+        if fmt in ("csv", "jira"):  # вопросы автору для импорта в Jira — отдельный файл <отчёт>_jira.csv
+            if not result.questions:
+                continue
+            target = Path(f"{stem}_jira.csv")
         if overwrites_input(target):
             continue
         try:
@@ -242,6 +246,9 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
                 render_pdf(md_text, str(target))
             elif fmt == "html":
                 target.write_text(render_html(result), encoding="utf-8")
+            elif fmt in ("csv", "jira"):
+                from reqcheck.report_jira import render_jira_csv
+                target.write_text(render_jira_csv(result), encoding="utf-8", newline="")
             else:
                 problems.append(Diagnostic("warning", "UNKNOWN_FORMAT", f"Неизвестный формат отчёта «{fmt}» пропущен."))
                 continue
