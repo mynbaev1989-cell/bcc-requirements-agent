@@ -12,8 +12,8 @@
     "document_title": "Техническое задание: Зарплатный проект для юридических лиц",
     "file": "blind_payroll.md",
     "input_path": "eval_blind/blind_payroll.md",
-    "run_at": "2026-11-27T10:23:21+05:00",
-    "agent_version": "0.1.0 (dba0a89)",
+    "run_at": "2026-11-27T02:48:56+05:00",
+    "agent_version": "0.1.0 (621c707)",
     "model": "gemini-3.5-flash-lite",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -24,7 +24,7 @@
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
     "answers_file": "reports/independent_answers/blind/blind_payroll_answers.md",
-    "duration_sec": 0.9,
+    "duration_sec": 5.18,
     "report_questions_file": "blind_payroll_questions.md"
   },
   "requirements": [
@@ -4203,7 +4203,7 @@
     "dropped_ungrounded": 1,
     "dropped_by_critic": 0,
     "downgraded_by_critic": 0,
-    "llm_calls": 0,
+    "llm_calls": 1,
     "journal": [
       {
         "stage": "1",
@@ -4227,7 +4227,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 0.77,
+        "seconds": 0.74,
         "status": "ok",
         "out": "gemini-3.5-flash-lite",
         "roles": []
@@ -4341,7 +4341,7 @@
         "stage": "12",
         "step": "Чтение ответов автора",
         "agent": "Loader (код)",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "status": "ok",
         "out": "ответов 10",
         "roles": []
@@ -4350,7 +4350,7 @@
         "stage": "13",
         "step": "Учёт ответов автора",
         "agent": "Resolver (LLM)",
-        "seconds": 0.01,
+        "seconds": 4.33,
         "status": "ok",
         "out": "решений по находкам 12",
         "roles": [
@@ -4378,13 +4378,13 @@
       "critical": 5,
       "major": 13
     },
-    "llm_cache_hits": 13,
+    "llm_cache_hits": 12,
     "llm_retries": 0,
     "llm_failures": 0,
-    "input_tokens": 0,
-    "output_tokens": 0,
+    "input_tokens": 5958,
+    "output_tokens": 1552,
     "thinking_tokens": 0,
-    "llm_seconds": 0.0,
+    "llm_seconds": 4.3,
     "llm_by_role": {
       "extractor": {
         "calls": 0,
@@ -4459,26 +4459,26 @@
         "seconds": 0.0
       },
       "resolver": {
-        "calls": 0,
-        "cache_hits": 1,
+        "calls": 1,
+        "cache_hits": 0,
         "failures": 0,
-        "input_tokens": 0,
-        "output_tokens": 0,
+        "input_tokens": 5958,
+        "output_tokens": 1552,
         "thinking_tokens": 0,
-        "seconds": 0.0
+        "seconds": 4.3
       }
     },
-    "duration_sec": 0.9,
+    "duration_sec": 5.18,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
       "manual_min_per_requirement": 6.0,
       "check_min_per_finding": 1.5,
       "manual_hours": 4.2,
-      "agent_hours": 0.0,
+      "agent_hours": 0.001,
       "check_hours": 0.65,
       "saved_hours": 3.55,
-      "saved_kzt": 17749,
+      "saved_kzt": 17743,
       "critical_found": 5,
       "major_found": 13,
       "fix_hours_at_requirements": 1.0,
@@ -4486,7 +4486,7 @@
       "precision": 0.85,
       "avoided_rework_hours": 58.7,
       "avoided_rework_kzt": 293250,
-      "tokens_total": 0,
+      "tokens_total": 7510,
       "llm_cost_kzt": 0.0,
       "llm_price_note": "бесплатный тариф (цена токенов не задана)",
       "roi": 95.7,
@@ -4497,7 +4497,7 @@
           "escalation": 7.0,
           "precision": 0.85,
           "avoided_rework_hours": 58.7,
-          "benefit_kzt": 310999,
+          "benefit_kzt": 310993,
           "roi": 95.7
         },
         {
@@ -4505,7 +4505,7 @@
           "escalation": 3.0,
           "precision": 0.7,
           "avoided_rework_hours": 16.1,
-          "benefit_kzt": 98249,
+          "benefit_kzt": 98243,
           "roi": 30.2
         },
         {
@@ -4513,7 +4513,7 @@
           "escalation": 1.0,
           "precision": 0.85,
           "avoided_rework_hours": 0.0,
-          "benefit_kzt": 17749,
+          "benefit_kzt": 17743,
           "roi": 5.5
         }
       ]
