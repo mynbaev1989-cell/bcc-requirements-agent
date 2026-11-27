@@ -43,6 +43,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 12,
           "with_addressee": 1.0,
@@ -119,6 +191,73 @@
         "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D7",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 15,
           "with_addressee": 1.0,
@@ -213,6 +352,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 13,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 16,
           "with_addressee": 1.0,
@@ -298,6 +509,83 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D7",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 14,
           "with_addressee": 1.0,
@@ -402,6 +690,88 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 16,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 19,
           "with_addressee": 1.0,
@@ -471,6 +841,78 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 13,
           "with_addressee": 1.0,
@@ -576,6 +1018,88 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 20,
           "with_addressee": 1.0,
@@ -709,6 +1233,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 12,
           "with_addressee": 1.0,
@@ -785,6 +1381,73 @@
         "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D7",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -879,6 +1542,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 13,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 16,
           "with_addressee": 1.0,
@@ -964,6 +1699,83 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D7",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -1068,6 +1880,88 @@
         "severity_exact_n": 7,
         "severity_within_one_n": 16,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 17,
           "with_addressee": 1.0,
@@ -1137,6 +2031,78 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 13,
           "with_addressee": 1.0,
@@ -1242,6 +2208,88 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 20,
           "with_addressee": 1.0,
@@ -1358,6 +2406,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 16,
           "with_addressee": 1.0,
@@ -1441,6 +2561,73 @@
         "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 1,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D7",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 20,
           "with_addressee": 1.0,
@@ -1556,6 +2743,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 13,
         "false_critical": 2,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -1662,6 +2921,83 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D7",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -1766,6 +3102,88 @@
         "severity_exact_n": 7,
         "severity_within_one_n": 16,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -1842,6 +3260,78 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 13,
           "with_addressee": 1.0,
@@ -1947,6 +3437,88 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 1,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 20,
           "with_addressee": 1.0,
@@ -2070,6 +3642,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 15,
           "with_addressee": 1.0,
@@ -2146,6 +3790,73 @@
         "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D7",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 17,
           "with_addressee": 1.0,
@@ -2240,6 +3951,73 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 14,
           "with_addressee": 1.0,
@@ -2327,6 +4105,83 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D7",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 19,
           "with_addressee": 1.0,
@@ -2431,6 +4286,83 @@
         "severity_exact_n": 7,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 15,
           "with_addressee": 1.0,
@@ -2502,6 +4434,78 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 15,
           "with_addressee": 1.0,
@@ -2607,6 +4611,88 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 18,
           "with_addressee": 1.0,
@@ -2723,6 +4809,78 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 14,
           "with_addressee": 1.0,
@@ -2799,6 +4957,73 @@
         "severity_exact_n": 9,
         "severity_within_one_n": 13,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D7",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "critical"
+          }
+        ],
         "question_quality": {
           "n": 16,
           "with_addressee": 1.0,
@@ -2884,6 +5109,73 @@
         "severity_exact_n": 5,
         "severity_within_one_n": 12,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 15,
           "with_addressee": 1.0,
@@ -2971,6 +5263,83 @@
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D7",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 19,
           "with_addressee": 1.0,
@@ -3066,6 +5435,83 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 15,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 14,
           "with_addressee": 1.0,
@@ -3137,6 +5583,78 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D9",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 13,
           "with_addressee": 1.0,
@@ -3242,6 +5760,88 @@
         "severity_exact_n": 6,
         "severity_within_one_n": 13,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D2",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D5",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "critical",
+            "agent": "critical"
+          },
+          {
+            "defect": "D7",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "critical"
+          },
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "critical"
+          },
+          {
+            "defect": "D13",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 16,
           "with_addressee": 1.0,
@@ -3349,6 +5949,58 @@
         "severity_exact_n": 4,
         "severity_within_one_n": 8,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D4",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D11",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          }
+        ],
         "question_quality": {
           "n": 3,
           "with_addressee": 1.0,
@@ -3439,6 +6091,28 @@
         "severity_exact_n": 2,
         "severity_within_one_n": 4,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "major"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          }
+        ],
         "question_quality": {
           "n": 4,
           "with_addressee": 1.0,
@@ -3525,6 +6199,33 @@
         "severity_exact_n": 2,
         "severity_within_one_n": 4,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D2",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D3",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D6",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D9",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "minor"
+          }
+        ],
         "question_quality": {
           "n": 3,
           "with_addressee": 1.0,
@@ -3620,6 +6321,43 @@
         "severity_exact_n": 2,
         "severity_within_one_n": 7,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D8",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D10",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D11",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "minor",
+            "agent": "major"
+          },
+          {
+            "defect": "D15",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 3,
           "with_addressee": 1.0,
@@ -3696,6 +6434,38 @@
         "severity_exact_n": 3,
         "severity_within_one_n": 5,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D2",
+            "gold": "critical",
+            "agent": "minor"
+          },
+          {
+            "defect": "D4",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D5",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D12",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "major",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 2,
           "with_addressee": 1.0,
@@ -3776,6 +6546,33 @@
         "severity_exact_n": 2,
         "severity_within_one_n": 5,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D1",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D5",
+            "gold": "major",
+            "agent": "minor"
+          },
+          {
+            "defect": "D10",
+            "gold": "critical",
+            "agent": "major"
+          },
+          {
+            "defect": "D14",
+            "gold": "minor",
+            "agent": "minor"
+          },
+          {
+            "defect": "D16",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 3,
           "with_addressee": 1.0,
@@ -3854,6 +6651,13 @@
         "severity_exact_n": 0,
         "severity_within_one_n": 1,
         "false_critical": 0,
+        "severity_pairs": [
+          {
+            "defect": "D10",
+            "gold": "minor",
+            "agent": "major"
+          }
+        ],
         "question_quality": {
           "n": 2,
           "with_addressee": 1.0,

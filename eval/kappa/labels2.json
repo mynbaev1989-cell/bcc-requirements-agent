@@ -1,0 +1,640 @@
+{
+  "p2p_phone.md": {
+    "D4": {
+      "item": "K001",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D11": {
+      "item": "K003",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D3": {
+      "item": "K013",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D9": {
+      "item": "K024",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K040",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D8": {
+      "item": "K041",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": true
+    },
+    "D5": {
+      "item": "K053",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K072",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D13": {
+      "item": "K081",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K085",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D10": {
+      "item": "K089",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D1": {
+      "item": "K092",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D12": {
+      "item": "K096",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K100",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    }
+  },
+  "holdout_installments.md": {
+    "D8": {
+      "item": "K002",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D12": {
+      "item": "K025",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K026",
+      "gold": "minor",
+      "second": "major",
+      "unsure": false
+    },
+    "D15": {
+      "item": "K027",
+      "gold": "major",
+      "second": "critical",
+      "unsure": true
+    },
+    "D3": {
+      "item": "K035",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K043",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D4": {
+      "item": "K048",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D11": {
+      "item": "K068",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D1": {
+      "item": "K069",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D16": {
+      "item": "K076",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K077",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": true
+    },
+    "D13": {
+      "item": "K084",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D9": {
+      "item": "K091",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K095",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K098",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D10": {
+      "item": "K099",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    }
+  },
+  "autopay_utilities.md": {
+    "D9": {
+      "item": "K004",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K012",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D3": {
+      "item": "K019",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D11": {
+      "item": "K028",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D4": {
+      "item": "K030",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": true
+    },
+    "D7": {
+      "item": "K034",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K047",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D1": {
+      "item": "K055",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D12": {
+      "item": "K064",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K065",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D8": {
+      "item": "K066",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": true
+    },
+    "D10": {
+      "item": "K079",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D13": {
+      "item": "K087",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K101",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    }
+  },
+  "blind_payroll.md": {
+    "D3": {
+      "item": "K005",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": true
+    },
+    "D9": {
+      "item": "K014",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D16": {
+      "item": "K015",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D11": {
+      "item": "K016",
+      "gold": "critical",
+      "second": "major",
+      "unsure": false
+    },
+    "D4": {
+      "item": "K017",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D8": {
+      "item": "K038",
+      "gold": "major",
+      "second": "minor",
+      "unsure": true
+    },
+    "D13": {
+      "item": "K039",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D1": {
+      "item": "K045",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K046",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": true
+    },
+    "D15": {
+      "item": "K050",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K062",
+      "gold": "major",
+      "second": "minor",
+      "unsure": false
+    },
+    "D12": {
+      "item": "K067",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K070",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K074",
+      "gold": "critical",
+      "second": "major",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K088",
+      "gold": "minor",
+      "second": "major",
+      "unsure": true
+    },
+    "D10": {
+      "item": "K103",
+      "gold": "minor",
+      "second": "major",
+      "unsure": false
+    }
+  },
+  "credit_card_application.md": {
+    "D11": {
+      "item": "K006",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D3": {
+      "item": "K007",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D10": {
+      "item": "K009",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D9": {
+      "item": "K031",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K033",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D1": {
+      "item": "K044",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K049",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": true
+    },
+    "D2": {
+      "item": "K051",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D8": {
+      "item": "K052",
+      "gold": "minor",
+      "second": "major",
+      "unsure": true
+    },
+    "D12": {
+      "item": "K061",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D13": {
+      "item": "K071",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K082",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D4": {
+      "item": "K090",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    }
+  },
+  "blind_card_block.md": {
+    "D12": {
+      "item": "K008",
+      "gold": "major",
+      "second": "minor",
+      "unsure": true
+    },
+    "D1": {
+      "item": "K022",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K023",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D16": {
+      "item": "K029",
+      "gold": "minor",
+      "second": "major",
+      "unsure": false
+    },
+    "D10": {
+      "item": "K032",
+      "gold": "critical",
+      "second": "major",
+      "unsure": false
+    },
+    "D13": {
+      "item": "K036",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K042",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D9": {
+      "item": "K054",
+      "gold": "critical",
+      "second": "major",
+      "unsure": false
+    },
+    "D4": {
+      "item": "K056",
+      "gold": "major",
+      "second": "minor",
+      "unsure": true
+    },
+    "D11": {
+      "item": "K057",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K060",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K075",
+      "gold": "minor",
+      "second": "major",
+      "unsure": true
+    },
+    "D15": {
+      "item": "K080",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K083",
+      "gold": "critical",
+      "second": "major",
+      "unsure": false
+    },
+    "D8": {
+      "item": "K086",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D3": {
+      "item": "K093",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    }
+  },
+  "holdout_deposit.md": {
+    "D4": {
+      "item": "K010",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D14": {
+      "item": "K011",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D7": {
+      "item": "K018",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D3": {
+      "item": "K020",
+      "gold": "major",
+      "second": "critical",
+      "unsure": true
+    },
+    "D1": {
+      "item": "K021",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    },
+    "D8": {
+      "item": "K037",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D10": {
+      "item": "K058",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D12": {
+      "item": "K059",
+      "gold": "minor",
+      "second": "major",
+      "unsure": false
+    },
+    "D6": {
+      "item": "K063",
+      "gold": "major",
+      "second": "major",
+      "unsure": true
+    },
+    "D15": {
+      "item": "K073",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D2": {
+      "item": "K078",
+      "gold": "minor",
+      "second": "major",
+      "unsure": false
+    },
+    "D5": {
+      "item": "K094",
+      "gold": "major",
+      "second": "major",
+      "unsure": false
+    },
+    "D11": {
+      "item": "K097",
+      "gold": "minor",
+      "second": "minor",
+      "unsure": false
+    },
+    "D13": {
+      "item": "K102",
+      "gold": "major",
+      "second": "critical",
+      "unsure": false
+    },
+    "D9": {
+      "item": "K104",
+      "gold": "critical",
+      "second": "critical",
+      "unsure": false
+    }
+  }
+}

@@ -144,6 +144,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
 
     # Критичность: для найденного эталонного дефекта берём максимальную критичность среди совпавших находок
     sev_exact = sev_one = severe_gold = severe_asked = 0
+    severity_pairs = []  # (id дефекта, критичность по разметке, по агенту) — для κ Коэна (tools/kappa.py)
     for d, dl in gold:
         matches = [f for f, fl in agent if near(dl, fl)]
         if not matches:
@@ -153,7 +154,10 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
             severe_gold += 1
             if any(f.fid in asked for f in matches):
                 severe_asked += 1
-        diff = abs(max(SEV_RANK.get(f.severity, 0) for f in matches) - SEV_RANK.get(gold_sev, 1))
+        agent_rank = max(SEV_RANK.get(f.severity, 0) for f in matches)
+        severity_pairs.append({"defect": d.get("id"), "gold": gold_sev,
+                               "agent": next(k for k, v in SEV_RANK.items() if v == agent_rank)})
+        diff = abs(agent_rank - SEV_RANK.get(gold_sev, 1))
         sev_exact += diff == 0
         sev_one += diff <= 1
     false_critical = [f for f, fl in agent if f.severity == "critical" and not any(near(fl, dl) for _, dl in gold)]
@@ -190,6 +194,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
         "severity_exact_n": sev_exact,
         "severity_within_one_n": sev_one,
         "false_critical": len(false_critical),
+        "severity_pairs": severity_pairs,
         "question_quality": question_quality(result.questions),
         "by_type": {k: f"{v[0]}/{v[1]}" for k, v in sorted(by_type.items())},
         "missed": [d.get("explanation") or d.get("quote") for d in defects if d not in hit_gold],
