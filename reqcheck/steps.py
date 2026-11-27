@@ -43,6 +43,7 @@ from reqcheck.models import SEV_RANK
 from reqcheck.orchestrator import RunContext, Step
 from reqcheck.rules import RuleEngine, injection_lines
 from reqcheck.segmenter import segment
+from reqcheck.severity import calibrate
 
 
 # ---------- код ----------
@@ -328,6 +329,21 @@ class CriticStep(Step):
         return f"оставлено {len(out[0])}, отклонено/слито {len(out[1])}"
 
 
+class CalibrateSeverityStep(Step):
+    """«Критичный» — только для конфликтов: неясность и неполнота без противоречия понижаются до «существенный»
+    (reqcheck/severity.py; правило подобрано по замеру с двумя разметчиками, eval/README.md)."""
+    name, agent = "Калибровка критичности", "Калибровка критичности (код)"
+
+    def run(self, ctx: RunContext) -> Any:
+        return calibrate(ctx.findings)
+
+    def apply(self, ctx: RunContext, out: Any) -> None:
+        ctx.metrics["downgraded_by_calibration"] = len(out)
+
+    def summary(self, out: Any) -> str:
+        return f"понижено до «существенный»: {len(out)}"
+
+
 class MergeOverlapStep(Step):
     """Один дефект — одна находка: находка по набору, повторяющая находку по требованию, сливается с ней;
     незначительные замечания «Единичность» сводятся в одну находку (код)."""
@@ -496,6 +512,7 @@ def build_plan() -> list[Step | list[Step]]:
         GroundStep(),
         CriticStep(),
         MergeOverlapStep(),
+        CalibrateSeverityStep(),
         NumberStep(),
         ClarifyStep(),
         ReadAnswersStep(),

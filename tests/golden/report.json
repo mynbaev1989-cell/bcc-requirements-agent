@@ -55,7 +55,7 @@
         }
       ],
       "rid": "R-001",
-      "score": 57
+      "score": 72
     },
     "R-002": {
       "light": "green",
@@ -261,12 +261,12 @@
     "size_bytes": 1043,
     "title": "Тестовый документ требований"
   },
-  "document_score": 71,
+  "document_score": 75,
   "findings": [
     {
       "addressee": "Бизнес-заказчик",
       "criterion": "verifiable",
-      "critic": "подтверждено критиком",
+      "critic": "подтверждено критиком; критичность понижена кодом до «существенный»: неясность без конфликта утверждений закрывается уточнением",
       "example": "SMS через 10 минут — это быстро?",
       "explanation": "Нет измеримого времени.",
       "fid": "F-001",
@@ -284,7 +284,7 @@
         "R-001"
       ],
       "scope": "requirement",
-      "severity": "critical",
+      "severity": "major",
       "source": "llm",
       "suggestion": "Когда оплата проведена, система должна отправить SMS не позднее 30 с.",
       "title": "Непроверяемый срок отправки SMS",
@@ -459,7 +459,8 @@
     }
   ],
   "metrics": {
-    "critical": 2,
+    "critical": 1,
+    "downgraded_by_calibration": 1,
     "downgraded_by_critic": 0,
     "dropped_by_critic": 1,
     "dropped_by_critic_titles": [
@@ -583,11 +584,20 @@
         "step": "Слияние повторов между агентами"
       },
       {
+        "agent": "Калибровка критичности (код)",
+        "out": "понижено до «существенный»: 1",
+        "roles": [],
+        "seconds": 0,
+        "stage": "10",
+        "status": "ok",
+        "step": "Калибровка критичности"
+      },
+      {
         "agent": "Оркестратор (код)",
         "out": "находок 7",
         "roles": [],
         "seconds": 0,
-        "stage": "10",
+        "stage": "11",
         "status": "ok",
         "step": "Нумерация находок"
       },
@@ -598,7 +608,7 @@
           "clarifier"
         ],
         "seconds": 0,
-        "stage": "11",
+        "stage": "12",
         "status": "ok",
         "step": "Вопросы автору"
       }
@@ -682,7 +692,7 @@
     "llm_failures": 0,
     "llm_retries": 0,
     "llm_seconds": 0.0,
-    "major": 2,
+    "major": 3,
     "merged_duplicates": 0,
     "merged_id_findings": 0,
     "merged_overlap": 0,
@@ -691,46 +701,46 @@
     "minor": 3,
     "output_tokens": 0,
     "questions": 5,
-    "questions_blocker_open": 2,
+    "questions_blocker_open": 1,
     "requirements": 4,
     "thinking_tokens": 0,
     "value": {
       "agent_hours": 0.0,
-      "avoided_rework_hours": 15.3,
-      "avoided_rework_kzt": 76500,
+      "avoided_rework_hours": 12.8,
+      "avoided_rework_kzt": 63750,
       "check_hours": 0.17,
       "check_min_per_finding": 1.5,
-      "critical_found": 2,
+      "critical_found": 1,
       "escalation_factor": 7.0,
       "fix_hours_at_requirements": 1.0,
       "llm_cost_kzt": 0.0,
       "llm_price_note": "бесплатный тариф (цена токенов не задана)",
-      "major_found": 2,
+      "major_found": 3,
       "major_weight": 0.5,
       "manual_base_min": 30.0,
       "manual_hours": 0.9,
       "manual_min_per_requirement": 6.0,
       "precision": 0.85,
       "rate_kzt_per_hour": 5000.0,
-      "roi": 91.6,
+      "roi": 77.0,
       "saved_hours": 0.73,
       "saved_kzt": 3625,
       "scenarios": [
         {
-          "avoided_rework_hours": 15.3,
-          "benefit_kzt": 80125,
+          "avoided_rework_hours": 12.8,
+          "benefit_kzt": 67375,
           "escalation": 7.0,
           "name": "основной",
           "precision": 0.85,
-          "roi": 91.6
+          "roi": 77.0
         },
         {
-          "avoided_rework_hours": 4.2,
-          "benefit_kzt": 24625,
+          "avoided_rework_hours": 3.5,
+          "benefit_kzt": 21125,
           "escalation": 3.0,
           "name": "осторожный",
           "precision": 0.7,
-          "roi": 28.1
+          "roi": 24.1
         },
         {
           "avoided_rework_hours": 0.0,
@@ -764,32 +774,11 @@
   },
   "priorities": [
     "F-003",
-    "F-001",
     "F-004",
-    "F-005"
+    "F-005",
+    "F-001"
   ],
   "questions": [
-    {
-      "addressee": "Бизнес-заказчик",
-      "answer": "",
-      "assumption": "До ответа требование считается неготовым: разработку этой части не начинаем.",
-      "fids": [
-        "F-001"
-      ],
-      "lines": [
-        7
-      ],
-      "options": [
-        "Принять исправление: Когда оплата проведена, система должна отправить SMS не позднее 30 с",
-        "Оставить как есть: пояснить, почему это не дефект"
-      ],
-      "outcome": "",
-      "priority": "blocker",
-      "qid": "Q-01",
-      "source": "findings",
-      "text": "Какой максимальный срок отправки SMS?",
-      "why": "Нет измеримого времени."
-    },
     {
       "addressee": "Аналитик",
       "answer": "",
@@ -804,10 +793,31 @@
       "options": [],
       "outcome": "",
       "priority": "blocker",
-      "qid": "Q-02",
+      "qid": "Q-01",
       "source": "findings",
       "text": "Какой верхний лимит перевода верный?",
       "why": "Верхняя граница 50 000 и 30 000."
+    },
+    {
+      "addressee": "Бизнес-заказчик",
+      "answer": "",
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-001"
+      ],
+      "lines": [
+        7
+      ],
+      "options": [
+        "Принять исправление: Когда оплата проведена, система должна отправить SMS не позднее 30 с",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "outcome": "",
+      "priority": "important",
+      "qid": "Q-02",
+      "source": "findings",
+      "text": "Какой максимальный срок отправки SMS?",
+      "why": "Нет измеримого времени."
     },
     {
       "addressee": "Аналитик / QA",
@@ -1004,6 +1014,6 @@
       "rid": "R-002"
     }
   ],
-  "verdict_dev": "Нет — найдено критичных дефектов: 2. Начинать разработку до их устранения нельзя. (Оценка неполная: смысловая проверка LLM выполнена не полностью, см. Приложение E.)",
+  "verdict_dev": "Нет — найдено критичных дефектов: 1. Начинать разработку до их устранения нельзя. (Оценка неполная: смысловая проверка LLM выполнена не полностью, см. Приложение E.)",
   "verdict_test": "Нет — есть противоречивые или непроверяемые требования: по ним нельзя однозначно сформулировать ожидаемый результат теста."
 }

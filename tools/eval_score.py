@@ -106,6 +106,18 @@ def question_quality(questions: list) -> dict:
     }
 
 
+def _closest(defect: dict, dl: set[int], matches: list):
+    """Находка, которая по смыслу про этот дефект: ближайшая по строке, при равенстве — с самой похожей цитатой."""
+    gq = normalize(defect.get("quote") or "")
+
+    def key(item):
+        f, fl = item
+        sim = max((SequenceMatcher(None, gq, normalize(q.text)).ratio() for q in f.quotes), default=0.0)
+        return (-min(abs(x - y) for x in fl for y in dl), sim)
+
+    return max(matches, key=key)[0]
+
+
 def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: dict | None = None) -> dict:
     result = run(str(md_path), opts, llm=llm)
     if result.document is None:
@@ -143,7 +155,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
     gold_asked = [d for d, dl in gold if any(near(dl, fl) and f.fid in asked for f, fl in agent)]
 
     # Критичность: для найденного эталонного дефекта берём максимальную критичность среди совпавших находок
-    sev_exact = sev_one = severe_gold = severe_asked = 0
+    sev_exact = sev_one = severe_gold = severe_asked = sev_closest = 0
     severity_pairs = []  # (id дефекта, критичность по разметке, по агенту) — для κ Коэна (tools/kappa.py)
     for d, dl in gold:
         matches = [f for f, fl in agent if near(dl, fl)]
@@ -155,8 +167,14 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
             if any(f.fid in asked for f in matches):
                 severe_asked += 1
         agent_rank = max(SEV_RANK.get(f.severity, 0) for f in matches)
+        # Строже к агенту — старшая критичность среди всех находок рядом (так считалась заголовочная цифра).
+        # Точнее по смыслу — критичность ближайшей находки (строка, затем сходство цитаты с эталонной):
+        # у половины дефектов рядом есть находки про соседний дефект с другой критичностью.
+        best = _closest(d, dl, [(f, fl) for f, fl in agent if near(dl, fl)])
         severity_pairs.append({"defect": d.get("id"), "gold": gold_sev,
-                               "agent": next(k for k, v in SEV_RANK.items() if v == agent_rank)})
+                               "agent": next(k for k, v in SEV_RANK.items() if v == agent_rank),
+                               "agent_closest": best.severity})
+        sev_closest += best.severity == gold_sev
         diff = abs(agent_rank - SEV_RANK.get(gold_sev, 1))
         sev_exact += diff == 0
         sev_one += diff <= 1
@@ -192,6 +210,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
         "severity_exact": round(sev_exact / max(len(hit_gold), 1), 3),
         "severity_within_one": round(sev_one / max(len(hit_gold), 1), 3),
         "severity_exact_n": sev_exact,
+        "severity_closest_n": sev_closest,
         "severity_within_one_n": sev_one,
         "false_critical": len(false_critical),
         "severity_pairs": severity_pairs,
@@ -237,7 +256,8 @@ def main(argv: list[str]) -> int:
         def qshare(key: str) -> str:
             return f"{sum(r['question_quality'][key] * r['question_quality']['n'] for r in ok) / max(qn, 1):.0%}"
 
-        print(f"Критичность: точно {sum(r['severity_exact_n'] for r in ok)}/{tot_found}, "
+        print(f"Критичность: точно {sum(r['severity_exact_n'] for r in ok)}/{tot_found} "
+              f"(по ближайшей находке {sum(r['severity_closest_n'] for r in ok)}/{tot_found}), "
               f"±1 уровень {sum(r['severity_within_one_n'] for r in ok)}/{tot_found}; "
               f"ложных critical: {sum(r['false_critical'] for r in ok)}; "
               f"critical/major дефектов, покрытых вопросом: {sum(r['severe_covered_by_questions'] for r in ok)}/{sev_gold}; "

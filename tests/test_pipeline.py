@@ -230,7 +230,8 @@ def test_clarifier_questions_and_answers_loop(sample_md, tmp_path):
     write_outputs(result2, str(md), ("md",))
     body = md.read_text(encoding="utf-8")
     assert "Находки, закрытые ответами автора" in body and "Ответ автора" in body
-    assert "критичных было 2 → стало 1" in body  # итог показывает, что изменили ответы
+    # итог показывает, что изменили ответы (непроверяемый срок SMS — «существенный» после калибровки, severity.py)
+    assert "критичных было 1 → стало 0" in body
 
 
 def test_answers_file_parsing_and_offline_fallback(sample_md, tmp_path):

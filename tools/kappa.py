@@ -50,18 +50,25 @@ def load(labels2_path: Path, ablation_path: Path = ROOT / "eval" / "ablation.jso
         for did, rec in marks.items():
             key = (doc, did)
             out[key] = {"gold": rec["gold"], "second": rec["second"],
-                        "agent": agent[key]["agent"] if key in agent else None}
+                        "agent": agent[key]["agent"] if key in agent else None,
+                        "agent_closest": agent[key].get("agent_closest") if key in agent else None}
     return out
 
 
 def report(rows: dict) -> dict[str, dict]:
     vals = list(rows.values())
     with_agent = [v for v in vals if v["agent"]]
-    return {
+    out = {
         "разметка ↔ второй разметчик": pair_stats([v["gold"] for v in vals], [v["second"] for v in vals]),
         "разметка ↔ агент": pair_stats([v["gold"] for v in with_agent], [v["agent"] for v in with_agent]),
         "второй разметчик ↔ агент": pair_stats([v["second"] for v in with_agent], [v["agent"] for v in with_agent]),
     }
+    closest = [v for v in with_agent if v.get("agent_closest")]
+    if closest:  # критичность ближайшей к дефекту находки (eval_score._closest)
+        out["разметка ↔ агент (ближайшая находка)"] = pair_stats([v["gold"] for v in closest], [v["agent_closest"] for v in closest])
+        out["второй разметчик ↔ агент (ближайшая находка)"] = pair_stats([v["second"] for v in closest],
+                                                                          [v["agent_closest"] for v in closest])
+    return out
 
 
 def main(argv: list[str]) -> int:

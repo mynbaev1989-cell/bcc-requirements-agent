@@ -39,7 +39,11 @@ def severity_exact(docs: Sequence[dict]) -> float:
     return sum(d["severity_exact_n"] for d in docs) / max(sum(d["found"] for d in docs), 1)
 
 
-METRICS = {"recall": recall, "precision": precision, "severity_exact": severity_exact}
+def severity_closest(docs: Sequence[dict]) -> float:
+    return sum(d.get("severity_closest_n", 0) for d in docs) / max(sum(d["found"] for d in docs), 1)
+
+
+METRICS = {"recall": recall, "precision": precision, "severity_exact": severity_exact, "severity_closest": severity_closest}
 
 
 def intervals(docs: Sequence[dict]) -> dict[str, dict[str, float]]:

@@ -156,6 +156,8 @@ def run_variant(name: str, model: str) -> dict:
         "severe_question_coverage": round(sum(r["severe_covered_by_questions"] for r in rows) / max(sum(r["severe_gold"] for r in rows), 1), 3),
         "false_critical": sum(r["false_critical"] for r in rows),
         "severity_exact": round(sum(r["severity_exact_n"] for r in rows) / max(sum(r["found"] for r in rows), 1), 3),
+
+        "severity_closest": round(sum(r["severity_closest_n"] for r in rows) / max(sum(r["found"] for r in rows), 1), 3),
         "severity_within_one": round(sum(r["severity_within_one_n"] for r in rows) / max(sum(r["found"] for r in rows), 1), 3),
         "precision_with_extra": round(sum(r["precision_with_extra"] for r in rows) / len(rows), 3),
         "cache_misses": sum(r["cache_misses"] for r in rows),
