@@ -8,7 +8,7 @@
 
 Отборочное задание BCC-HUB × MNU FinTech Hackathon, кейс [ai-requirements-validator-task](https://github.com/BCC-HUB/ai-requirements-validator-task).
 
-**Проверить за 2 минуты:** [что агент нашёл в документе кейса](#отчёт-по-выданному-документу) · [какие вопросы задал автору](reports/requirements_report_questions.md) · [как ответы меняют вердикт](#отчёт-по-выданному-документу) (4 критичных → 2) · [насколько точен](#точность-на-размеченных-документах) · [как устроен](#как-устроен-агент) · [где в коде каждый пункт ТЗ](#соответствие-тз). Без ключа и сети: `python main.py --input eval_holdout/holdout_deposit.md --output out/report.md --offline`.
+**Проверить за 2 минуты:** [интерактивный отчёт в браузере](https://htmlpreview.github.io/?https://github.com/mynbaev1989-cell/bcc-requirements-agent/blob/main/reports/requirements_report.html) · [что агент нашёл в документе кейса](#отчёт-по-выданному-документу) · [какие вопросы задал автору](reports/requirements_report_questions.md) · [как ответы меняют вердикт](#отчёт-по-выданному-документу) (4 критичных → 2) · [насколько точен](#точность-на-размеченных-документах) · [как устроен](#как-устроен-агент) · [где в коде каждый пункт ТЗ](#соответствие-тз). Без ключа и сети: `python main.py --input eval_holdout/holdout_deposit.md --output out/report.md --offline`.
 
 **Главное в цифрах** (7 размеченных документов, 104 дефекта, всё пересчитывается скриптами из закоммиченного кэша):
 - найдено **100 из 104** дефектов, полнота 96% [92–99%], точность находок 86% [82–90%];
@@ -25,7 +25,7 @@
 - [`reports/requirements_report.pdf`](reports/requirements_report.pdf) — PDF-версия
 - [`reports/requirements_report.json`](reports/requirements_report.json) — машиночитаемая версия
 - [`reports/requirements_report_questions.md`](reports/requirements_report_questions.md) — вопросы агента автору, файл для ответов
-- [`reports/requirements_report.html`](reports/requirements_report.html) — интерактивный отчёт одним файлом, работает без сети: скачайте и откройте в браузере
+- [`reports/requirements_report.html`](reports/requirements_report.html) — интерактивный отчёт одним файлом, работает без сети. **[Открыть в браузере без скачивания](https://htmlpreview.github.io/?https://github.com/mynbaev1989-cell/bcc-requirements-agent/blob/main/reports/requirements_report.html)** (через htmlpreview.github.io) или скачайте файл и откройте двойным кликом
 - [`reports/requirements_report_jira.csv`](reports/requirements_report_jira.csv) — вопросы автору для импорта в Jira: задача на вопрос, приоритет, роль адресата, цитаты со строками
 
 <p align="center">
