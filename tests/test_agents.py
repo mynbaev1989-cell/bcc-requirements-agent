@@ -201,3 +201,29 @@ def test_reviewer_ignores_assessment_of_requirement_from_another_batch(tmp_path,
     assessments, findings = agents.Reviewer(PerBatch(), doc, Grounder(doc)).run(reqs, {})
     mark = next(m for m in assessments["R-001"].marks if m.criterion == "verifiable")
     assert mark.status == "ok" and findings == []
+
+
+def test_critic_reject_without_reason_keeps_finding(tmp_path):
+    # ADR 0004: отклонение без записанной причины не принимается
+    doc = _doc(tmp_path, "# ТЗ\n\nЛимит 30 000 тенге.\n")
+    f = Finding(fid="T-001", scope="set", criterion="set_consistent", severity="critical", title="A", explanation="",
+                rids=["R-001"], source="llm", verified=True)
+    kept, dropped = Critic(FakeLLM({"critic": {"verdicts": [{"fid": "T-001", "verdict": "reject"}]}}), doc).run([f])
+    assert [x.fid for x in kept] == ["T-001"] and not dropped and "без причины" in kept[0].critic
+
+
+def test_reviewer_reports_requirements_with_missing_marks(tmp_path):
+    from reqcheck import criteria
+    from reqcheck.agents import Reviewer
+    doc = _doc(tmp_path, "# ТЗ\n\nФТ-1. Система должна сохранять порог.\n\nФТ-2. Система должна читать порог.\n")
+    blocks = segment(doc)
+    from reqcheck.models import Requirement
+    reqs = [Requirement(rid=f"R-00{i}", source_id="", source_id_assigned=True, summary="", quote=b.text,
+                        line_start=b.line_start, line_end=b.line_end, section="ТЗ", block_ids=[b.bid])
+            for i, b in enumerate([b for b in blocks if b.kind == "paragraph"], start=1)]
+    full = [{"criterion": c, "status": "ok"} for c in criteria.REQ_CODES]
+    llm = FakeLLM({"reviewer": {"assessments": [{"rid": "R-001", "marks": full},
+                                                {"rid": "R-002", "marks": [{"criterion": "verifiable", "status": "ok"}]}]}})
+    rv = Reviewer(llm, doc, Grounder(doc))
+    rv.run(reqs, {b.bid: b for b in blocks})
+    assert rv.partial == ["R-002"]

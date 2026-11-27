@@ -26,7 +26,9 @@ __all__ = ["Options", "agent_version", "run", "write_outputs"]
 
 
 # Диагностики, после которых смысловая проверка считается неполной (вердикт не может быть «Да»)
-INCOMPLETE_CODES = ("LLM_UNAVAILABLE", "OFFLINE", "LLM_STEP_FAILED", "REVIEW_INCOMPLETE", "DOC_TRUNCATED")
+# Неполное чтение документа (часть страниц PDF, текст обрезан) — тоже: непрочитанное не проверено
+INCOMPLETE_CODES = ("LLM_UNAVAILABLE", "OFFLINE", "LLM_STEP_FAILED", "REVIEW_INCOMPLETE", "DOC_TRUNCATED",
+                    "PDF_TRUNCATED", "PDF_BAD_PAGES", "TEXT_TRUNCATED", "MARKS_INCOMPLETE")
 
 
 def agent_version() -> str:

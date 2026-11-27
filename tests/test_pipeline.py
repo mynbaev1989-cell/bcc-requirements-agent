@@ -3,6 +3,8 @@
 import json
 import re
 
+import pytest
+
 from helpers import _doc
 from reqcheck.cli import main
 from reqcheck.llm import FakeLLM, parse_json_loose
@@ -378,3 +380,23 @@ def test_no_green_verdict_when_semantic_check_is_incomplete(tmp_path):
     _finalize(result)
     assert result.verdict_dev.startswith("Условно") and "Оценка неполная" in result.verdict_dev
     assert result.verdict_test.startswith("Условно")
+
+
+@pytest.mark.parametrize("code", [None, "PDF_TRUNCATED", "PDF_BAD_PAGES", "TEXT_TRUNCATED", "MARKS_INCOMPLETE"])
+def test_no_green_verdict_when_document_read_partially(tmp_path, code):
+    # Ревью 87611bf: PDF прочитан не весь (страницы обрезаны) — по прочитанному всё «ок», но «Да» давать нельзя
+    from reqcheck import criteria
+    from reqcheck.models import OK, CriterionMark, Diagnostic, Requirement, RequirementAssessment, RunResult
+    from reqcheck.pipeline import _finalize
+    result = RunResult(document=load_document(_doc(tmp_path, "# ТЗ\n\nСистема должна сохранять порог.\n").path)[0])
+    result.requirements = [Requirement(rid="R-001", source_id="", source_id_assigned=True, summary="a", quote="a",
+                                       line_start=3, line_end=3, section="", kind="functional", block_ids=[])]
+    result.assessments = {"R-001": RequirementAssessment("R-001", [CriterionMark(c, OK, "") for c in criteria.REQ_CODES])}
+    result.set_marks = [CriterionMark(c, OK, "") for c in criteria.SET_CODES]
+    if code:
+        result.diagnostics.append(Diagnostic("warning", code, "часть документа не проверена"))
+    _finalize(result)
+    if code is None:
+        assert result.verdict_dev.startswith("Да")
+    else:
+        assert not result.verdict_dev.startswith("Да") and not result.verdict_test.startswith("Да")

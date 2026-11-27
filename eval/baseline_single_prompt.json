@@ -9,7 +9,7 @@
     "false_critical_unconfirmed": 0,
     "precision": 0.941,
     "precision_with_extra": 0.962,
-    "quotes_found_in_document": 0.939,
+    "quotes_found_in_document": 0.915,
     "with_question": 1.0
   },
   "docs": [
@@ -34,7 +34,7 @@
       "precision_with_extra": 1.0,
       "false_critical": 0,
       "false_critical_unconfirmed": 0,
-      "quotes_found_in_document": 1.0,
+      "quotes_found_in_document": 0.833,
       "with_question": 1.0
     },
     {

@@ -141,3 +141,15 @@ def test_decimal_number_is_not_requirement_id():
     assert extract_source_id("0.5 секунды — максимум задержки") is None
     assert extract_source_id("1.5 млн тенге — лимит") is None
     assert extract_source_id("4.2.1 Система должна сохранять порог") == "4.2.1"
+
+
+
+
+def test_fuzzy_match_rejects_changed_number_or_added_negation(tmp_path):
+    # Ревью 87611bf: нечёткое совпадение принимало «90 секунд» вместо «30» и добавленное «не»
+    doc = _doc(tmp_path, "# ТЗ\n\nСервис должен отправлять уведомление в течение 30 секунд после покупки.\n")
+    g = Grounder(doc)
+    assert g.locate("Сервис должен отправлять уведомление в течение 30 секунд после покупки").found
+    assert g.locate("Сервис должен отправлять уведомления в течение 30 секунд после покупок").found  # опечатки модели
+    assert not g.locate("Сервис должен отправлять уведомление в течение 90 секунд после покупки").found
+    assert not g.locate("Сервис не должен отправлять уведомление в течение 30 секунд после покупки").found

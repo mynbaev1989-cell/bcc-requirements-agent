@@ -193,10 +193,10 @@ class ReviewStep(_NeedsRequirements):
     def run(self, ctx: RunContext) -> Any:
         reviewer = Reviewer(ctx.llm, ctx.doc, ctx.grounder)
         assessments, req_findings = reviewer.run(ctx.reqs, {b.bid: b for b in ctx.blocks})
-        return assessments, req_findings, list(reviewer.errors), list(reviewer.skipped)
+        return assessments, req_findings, list(reviewer.errors), list(reviewer.skipped), list(reviewer.partial)
 
     def apply(self, ctx: RunContext, out: Any) -> None:
-        assessments, req_findings, errors, skipped = out
+        assessments, req_findings, errors, skipped, partial = out
         for err in errors:
             ctx.diag("warning", "LLM_STEP_FAILED", f"Часть требований не оценена моделью: {err}",
                      "Отмечены в разделе 3 как «не оценено»; повторите запуск позже.")
@@ -205,6 +205,13 @@ class ReviewStep(_NeedsRequirements):
                      f"Модель не оценила требования даже после переспроса: {', '.join(skipped[:20])}"
                      + (" …" if len(skipped) > 20 else ""),
                      "Отмечены в разделе 3 как «не оценено»; проверьте их вручную или повторите запуск.")
+        partial = [rid for rid in dict.fromkeys(partial) if rid in assessments]
+        if partial:
+            ctx.diag("warning", "MARKS_INCOMPLETE",
+                     f"Модель оценила не все критерии у требований: {', '.join(partial[:20])}"
+                     + (" …" if len(partial) > 20 else ""),
+                     "Недостающие критерии отмечены «модель не дала оценку»; оценка 100/100 у них не итоговая — "
+                     "повторите запуск или проверьте вручную.")
         ctx.result.assessments = assessments
         # «Нет идентификатора / не по шаблону» по каждому пункту сводит правило missing_ids — убираем шум
         noise = [f for f in req_findings if f.criterion in ("traceable", "conforming") and f.severity == "minor"]

@@ -203,6 +203,7 @@ class Reviewer:
         self.llm, self.doc, self.grounder = llm, doc, grounder
         self.errors: list[str] = []
         self.skipped: list[str] = []  # требования, которые модель не оценила и после переспроса
+        self.partial: list[str] = []  # требования, по которым модель оценила не все критерии
         self._last_error = ""  # текст последней ошибки запроса (для распознавания квоты/авторизации)
 
     def run(self, reqs: list[Requirement], blocks_by_id: dict[str, Block]) -> tuple[dict[str, RequirementAssessment], list[Finding]]:
@@ -336,6 +337,8 @@ class Reviewer:
                 status = _s(m.get("status"), 12).lower()
                 if code in criteria.REQ_CODES:
                     marks[code] = CriterionMark(code, status if status in (OK, VIOLATION, NA) else NA, _s(m.get("comment"), 400))
+            if any(code not in marks for code in criteria.REQ_CODES):
+                self.partial.append(rid)  # «не дала оценку» — не то же, что «неприменимо»: 100/100 тут не итог
             for code in criteria.REQ_CODES:
                 marks.setdefault(code, CriterionMark(code, NA, "модель не дала оценку"))
             assessments[rid] = RequirementAssessment(rid, [marks[c] for c in criteria.REQ_CODES])
@@ -438,7 +441,10 @@ class Critic:
                     continue
                 verdict = _s(v.get("verdict"), 12).lower()
                 reason = _s(v.get("reason"), 400)
-                if verdict == "reject":
+                if verdict == "reject" and not reason:
+                    # ADR 0004: отклонение без записанной причины не принимаем — находка остаётся
+                    f.critic = "критик отклонил без причины — находка оставлена"
+                elif verdict == "reject":
                     rejected.add(f.fid)
                     f.critic = f"отклонено критиком: {reason}"
                 elif verdict == "duplicate":

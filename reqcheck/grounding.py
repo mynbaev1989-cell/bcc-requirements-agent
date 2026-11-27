@@ -25,6 +25,26 @@ def normalize(text: str) -> str:
     return t.strip().lower()
 
 
+_NUM = re.compile(r"\d(?:[\d ]*\d)?(?:[.,]\d+)?")
+_NEG = re.compile(r"(?<!\w)(?:не|ни|нет|без)(?!\w)")
+
+
+def _numbers(text: str) -> list[str]:
+    return sorted(m.group(0).replace(" ", "").replace(",", ".") for m in _NUM.finditer(text))
+
+
+def same_facts(quote: str, source: str) -> bool:
+    """Нечёткое совпадение не должно менять смысл: числа цитаты есть в исходном тексте, отрицаний не больше.
+
+    «…в течение 90 секунд» вместо «30 секунд» или добавленное «не» похожи по символам, но это другой текст."""
+    have = _numbers(source)
+    for n in _numbers(quote):
+        if n not in have:
+            return False
+        have.remove(n)
+    return len(_NEG.findall(quote)) <= len(_NEG.findall(source))
+
+
 class Grounder:
     """Индекс документа для быстрого поиска цитат."""
 
@@ -103,7 +123,7 @@ class Grounder:
                 return Quote(text=quote, line=best, found=True)
         if len(q) < self.MIN_FUZZY_LEN:
             return Quote(text=quote, found=False)
-        best_ratio, best_line = 0.0, None
+        best_ratio, best_line, best_window = 0.0, None, ""
         # Префильтр: окно должно содержать хотя бы половину «длинных» слов цитаты (иначе O(N) SequenceMatcher дорог)
         keywords = [w for w in re.findall(r"\w{5,}", q)][:12]
         need = max(1, len(keywords) // 2)
@@ -133,7 +153,8 @@ class Grounder:
                     # Строка — та, где начинается совпадение, а не первая строка окна: окно «пустая/чужая строка +
                     # нужная» набирает тот же балл и иначе сдвигало бы ссылку на строку выше
                     best_ratio, best_line = ratio, self._window_line(i, extra, blocks[0].b if blocks else 0)
-        if best_ratio >= self.FUZZY_THRESHOLD and best_line:
+                    best_window = window
+        if best_ratio >= self.FUZZY_THRESHOLD and best_line and same_facts(q, best_window):
             return Quote(text=quote, line=best_line, found=True)
         return Quote(text=quote, found=False)
 
