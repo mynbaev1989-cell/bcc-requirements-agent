@@ -35,7 +35,7 @@ def test_finding_skipped_by_resolver_is_marked_not_silently_open(tmp_path):
     resolved, followups = apply_effects(effects, [f1, f2], [q])
     assert resolved == {"F-002"} and not followups
     assert "не вынес" in f1.resolution
-    assert [r for r, _ in llm.prompts] == ["resolver", "resolver"]  # пропуск переспрошен один раз
+    assert [r for r, _ in llm.prompts] == ["answer_check", "resolver", "resolver"]  # пропуск переспрошен один раз
 
 
 def test_resolver_asks_again_only_about_skipped_findings(tmp_path):
@@ -103,7 +103,7 @@ def test_nonstandard_resolver_status_counts_as_partial(tmp_path):
                                              "comment": "автор выбрал POST"}]}})
     effects = Resolver(llm, doc).run([(q, {"qid": "Q-01", "question": "GET или POST?", "answer": "POST"})], [f])
     assert [(e["fid"], e["status"]) for e in effects] == [("F-001", "partial")]
-    assert len(llm.prompts) == 1  # решение есть — переспрашивать не нужно
+    assert [r for r, _ in llm.prompts] == ["answer_check", "resolver"]  # решение есть — переспрашивать не нужно
 
 
 def test_answers_parse_nested_followup_ids():

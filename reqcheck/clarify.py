@@ -15,7 +15,7 @@ from difflib import SequenceMatcher
 
 from reqcheck import prompts
 from reqcheck.agents import _list, _s, numbered_document
-from reqcheck.grounding import normalize
+from reqcheck.grounding import Grounder, normalize
 from reqcheck.llm import JsonLLM
 from reqcheck.models import CRITICAL, MAJOR, OK, SEV_RANK, VIOLATION, Document, Finding, Question, RequirementAssessment
 
@@ -355,11 +355,63 @@ def self_contradictions(data, answer_by_q: dict[str, str]) -> dict[str, tuple[st
     return out
 
 
+# Автор сам меняет документ — расхождение ответа с текстом документа не противоречие, а правка
+_REPLACES = re.compile(r"замен|исключ|удал|убра|исправ|вместо|отмен", re.I)
+
+
+def answer_conflicts(data, answer_by_q: dict[str, str], doc: Document | None) -> dict[str, tuple[str, str, str]]:
+    """Конфликты, которые назвал агент «Проверка ответов» и подтвердил код: {qid: (часть ответа, вторая часть, где)}.
+
+    part_a обязана дословно быть в этом ответе; part_b — в нём же (self), в другом ответе (other_answer)
+    или в документе (document; не принимается, если автор в ответе сам заменяет или исключает старое)."""
+    out: dict[str, tuple[str, str, str]] = {}
+    grounder = Grounder(doc) if doc is not None else None
+    norm = {k: normalize(v) for k, v in answer_by_q.items()}
+
+    def clean(x: str) -> str:
+        return normalize(x).strip(" .,;:«»\"")
+
+    for c in _list(data.get("conflicts") if isinstance(data, dict) else None):
+        if not isinstance(c, dict):
+            continue
+        qid, kind = _s(c.get("qid"), 24), _s(c.get("kind"), 20).lower()
+        a, b = _s(c.get("part_a"), 300), _s(c.get("part_b"), 300)
+        na, nb = clean(a), clean(b)
+        if qid not in norm or qid in out or len(na) < 5 or len(nb) < 5 or na not in norm[qid]:
+            continue
+        if kind == "self":
+            if na != nb and na not in nb and nb not in na and nb in norm[qid]:
+                out[qid] = (a.strip(), b.strip(), "сам себе")
+        elif kind == "other_answer":
+            other = _s(c.get("other_qid"), 24)
+            if other != qid and other in norm and nb in norm[other]:
+                out[qid] = (a.strip(), b.strip(), f"ответу на {other}")
+        elif kind == "document" and grounder is not None and na not in nb and nb not in na                 and not _REPLACES.search(answer_by_q[qid]):
+            loc = grounder.locate(b)
+            if loc.found and loc.line:
+                out[qid] = (a.strip(), b.strip(), f"документу (строка {loc.line})")
+    return out
+
+
 class Resolver:
     """Учёт ответов автора: какие находки ответ закрыл, какие частично, какие остались (с новым вопросом)."""
 
     def __init__(self, llm: JsonLLM, doc: Document):
         self.llm, self.doc = llm, doc
+        self.conflicts: dict[str, tuple[str, str, str]] = {}  # подтверждённые кодом конфликты ответов (агент проверки)
+
+    def check_answers(self, pairs: list[tuple[Question | None, dict]]) -> dict[str, tuple[str, str, str]]:
+        """Отдельный запрос «Проверка ответов». Сбой не мешает учёту ответов: тогда конфликтов просто нет."""
+        qa = "\n\n".join(f"{self._key(q, a)}. Вопрос: {q.text if q else a['question']}\n"
+                          f"<ответ автора>\n{_strip_tags(a['answer'])}\n</ответ автора>" for q, a in pairs)
+        try:
+            data = self.llm.generate_json(
+                "answer_check", prompts.BASE_SYSTEM,
+                f"{prompts.ANSWER_CHECK}\nВопросы и ответы автора:\n{qa}"
+                f"\n\nВесь документ (номер строки: текст):\n{numbered_document(self.doc)}")
+        except Exception:  # noqa: BLE001 — проверка дополнительная, основной учёт ответов идёт без неё
+            return {}
+        return answer_conflicts(data, {self._key(q, a): a["answer"] for q, a in pairs}, self.doc)
 
     @staticmethod
     def _key(q: Question | None, a: dict) -> str:
@@ -373,6 +425,7 @@ class Resolver:
         scope = [f for f in findings if f.fid in linked or (unmatched and f.severity in (CRITICAL, MAJOR))]
         if not scope:
             return []
+        self.conflicts = self.check_answers(pairs)
         effects = self._ask(pairs, scope, fmap)
         # Модель могла пропустить находку отвеченного вопроса (так бывает с лёгкими моделями на длинном списке).
         # Переспрашиваем один раз, только по пропущенным находкам: короткий запрос модель отрабатывает полностью.
@@ -424,7 +477,9 @@ class Resolver:
         # Ответ на вопрос этого прогона может решать только находки этого вопроса; ответ на вопрос
         # прошлого прогона (без пары) — любую находку из списка, переданного модели
         allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
-        clash = self_contradictions(data, answer_by_q)
+        clash = {k: (a, b, "сам себе") for k, (a, b) in self_contradictions(data, answer_by_q).items()}
+        for k, v in self.conflicts.items():
+            clash.setdefault(k, v)
         asked: set[str] = set()
         effects = []
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
@@ -454,11 +509,11 @@ class Resolver:
             if qid in clash and status in ("resolved", "partial"):
                 # Ответ сам себе противоречит (обе части найдены в ответе дословно): закрывать нельзя,
                 # иначе модель молча выбрала бы одно из значений за автора. Уточнение — одно на ответ.
-                a_part, b_part = clash[qid]
+                a_part, b_part, where = clash[qid]
                 status, wording = "open", ""
-                comment = f"ответ противоречит сам себе: «{a_part}» и «{b_part}»"
+                comment = f"ответ противоречит {where}: «{a_part}» и «{b_part}»"
                 follow_up = "" if qid in asked else (
-                    f"В ответе два несовместимых утверждения: «{a_part}» и «{b_part}». Какое из них верно?")
+                    f"Ответ противоречит {where}: «{a_part}» и «{b_part}». Какое из утверждений верно?")
             if status == "open" and follow_up:
                 asked.add(qid)
             # В отчёт и файл ответов — исходный номер вопроса
