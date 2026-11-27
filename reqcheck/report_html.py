@@ -22,7 +22,7 @@ def _data(result: RunResult) -> dict:
     open_q = [q for q in result.questions if not q.answer]
     findings = []
     # Сначала критичные: жюри и автор документа видят главное без прокрутки (порядок внутри уровня — как в отчёте)
-    for f in sorted(result.findings, key=lambda x: -SEV_RANK.get(x.severity, 0)):
+    for f in sorted(result.findings, key=lambda x: SEV_RANK.get(x.severity, len(SEV_RANK))):
         findings.append({
             "fid": f.fid, "severity": f.severity, "criterion": criteria.name(f.criterion),
             "title": f.title, "explanation": f.explanation, "example": f.example, "suggestion": f.suggestion,

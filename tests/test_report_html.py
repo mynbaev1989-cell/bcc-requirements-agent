@@ -60,3 +60,13 @@ def test_answers_in_html_format_are_parsed():
     got = parse_answers(text)
     assert [a["qid"] for a in got] == ["Q-01"]
     assert got[0]["answer"].startswith("Вариант 1: 30 секунд") and "не более минуты" in got[0]["answer"]
+
+
+def test_findings_go_from_critical_to_minor(sample_md):
+    result = _result(sample_md)
+    result.findings.insert(0, Finding(fid="F-MIN", scope="set", criterion="complete", severity="minor", title="m",
+                                      explanation=""))
+    result.findings.append(Finding(fid="F-CRIT", scope="set", criterion="correct", severity="critical", title="c",
+                                   explanation=""))
+    out = render_html(result)
+    assert out.index('"F-CRIT"') < out.index('"F-MIN"')
