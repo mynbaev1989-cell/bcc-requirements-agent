@@ -11,14 +11,14 @@
     "precision_items": 0.929,
     "false_major_on_clean": 0,
     "questions": 12,
-    "gold_covered_by_questions": 12,
-    "question_coverage": 0.857,
+    "gold_covered_by_questions": 14,
+    "question_coverage": 1.0,
     "severe_gold": 11,
-    "severe_covered_by_questions": 9,
-    "severe_question_coverage": 0.818,
-    "severity_exact": 0.286,
+    "severe_covered_by_questions": 11,
+    "severe_question_coverage": 1.0,
+    "severity_exact": 0.357,
     "severity_within_one": 1.0,
-    "severity_exact_n": 4,
+    "severity_exact_n": 5,
     "severity_within_one_n": 14,
     "false_critical": 0,
     "question_quality": {
@@ -44,7 +44,7 @@
     "missed": [],
     "unmatched": [
       {
-        "fid": "F-021",
+        "fid": "F-020",
         "severity": "major",
         "lines": [
           98
@@ -53,7 +53,7 @@
         "quote": "Требования пронумерованы и не дублируются"
       },
       {
-        "fid": "F-023",
+        "fid": "F-022",
         "severity": "minor",
         "lines": [
           47
@@ -86,9 +86,9 @@
     "severe_gold": 10,
     "severe_covered_by_questions": 10,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.615,
+    "severity_exact": 0.692,
     "severity_within_one": 0.923,
-    "severity_exact_n": 8,
+    "severity_exact_n": 9,
     "severity_within_one_n": 12,
     "false_critical": 0,
     "question_quality": {
@@ -97,7 +97,7 @@
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 1
+      "duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "1/1",
@@ -132,7 +132,7 @@
         "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
       },
       {
-        "fid": "F-017",
+        "fid": "F-016",
         "severity": "major",
         "lines": [
           89
@@ -162,25 +162,25 @@
     "gold_defects": 14,
     "found": 14,
     "recall": 1.0,
-    "agent_findings": 22,
-    "precision": 0.864,
+    "agent_findings": 24,
+    "precision": 0.875,
     "precision_with_extra": 1.0,
     "extra_defects": 3,
-    "precision_items": 0.826,
+    "precision_items": 0.84,
     "false_major_on_clean": 0,
-    "questions": 18,
+    "questions": 16,
     "gold_covered_by_questions": 14,
     "question_coverage": 1.0,
     "severe_gold": 11,
     "severe_covered_by_questions": 11,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.286,
+    "severity_exact": 0.357,
     "severity_within_one": 0.929,
-    "severity_exact_n": 4,
+    "severity_exact_n": 5,
     "severity_within_one_n": 13,
     "false_critical": 0,
     "question_quality": {
-      "n": 18,
+      "n": 16,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
@@ -202,7 +202,7 @@
     "missed": [],
     "unmatched": [
       {
-        "fid": "F-015",
+        "fid": "F-017",
         "severity": "major",
         "lines": [
           55
@@ -211,7 +211,7 @@
         "quote": "TBD"
       },
       {
-        "fid": "F-017",
+        "fid": "F-018",
         "severity": "major",
         "lines": [
           98
@@ -220,7 +220,7 @@
         "quote": "Лимиты и комиссии заданы числами"
       },
       {
-        "fid": "F-020",
+        "fid": "F-021",
         "severity": "minor",
         "lines": [
           46
@@ -231,8 +231,8 @@
     ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 3,
-    "merged_by_critic": 4,
-    "merged_overlap": 2,
+    "merged_by_critic": 1,
+    "merged_overlap": 3,
     "merged_singular": 2,
     "rejected_by_critic": 0
   }

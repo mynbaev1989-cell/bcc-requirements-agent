@@ -10,19 +10,19 @@
     "extra_defects": 3,
     "precision_items": 0.8,
     "false_major_on_clean": 1,
-    "questions": 12,
-    "gold_covered_by_questions": 11,
-    "question_coverage": 0.688,
+    "questions": 13,
+    "gold_covered_by_questions": 14,
+    "question_coverage": 0.875,
     "severe_gold": 10,
-    "severe_covered_by_questions": 8,
-    "severe_question_coverage": 0.8,
-    "severity_exact": 0.357,
+    "severe_covered_by_questions": 10,
+    "severe_question_coverage": 1.0,
+    "severity_exact": 0.429,
     "severity_within_one": 1.0,
-    "severity_exact_n": 5,
+    "severity_exact_n": 6,
     "severity_within_one_n": 14,
     "false_critical": 0,
     "question_quality": {
-      "n": 12,
+      "n": 13,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
@@ -103,11 +103,11 @@
     "gold_defects": 16,
     "found": 16,
     "recall": 1.0,
-    "agent_findings": 24,
-    "precision": 0.833,
-    "precision_with_extra": 0.875,
+    "agent_findings": 26,
+    "precision": 0.846,
+    "precision_with_extra": 0.885,
     "extra_defects": 1,
-    "precision_items": 0.833,
+    "precision_items": 0.846,
     "false_major_on_clean": 2,
     "questions": 20,
     "gold_covered_by_questions": 16,
@@ -116,9 +116,9 @@
     "severe_covered_by_questions": 12,
     "severe_question_coverage": 1.0,
     "severity_exact": 0.375,
-    "severity_within_one": 0.938,
+    "severity_within_one": 0.75,
     "severity_exact_n": 6,
-    "severity_within_one_n": 15,
+    "severity_within_one_n": 12,
     "false_critical": 0,
     "question_quality": {
       "n": 20,
@@ -160,7 +160,7 @@
         "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
       },
       {
-        "fid": "F-023",
+        "fid": "F-024",
         "severity": "major",
         "lines": [
           29
@@ -169,7 +169,7 @@
         "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
       },
       {
-        "fid": "F-024",
+        "fid": "F-026",
         "severity": "minor",
         "lines": [
           63
@@ -179,9 +179,9 @@
       }
     ],
     "model": "gemini-3.5-flash-lite",
-    "dropped_ungrounded": 0,
-    "merged_by_critic": 7,
-    "merged_overlap": 0,
+    "dropped_ungrounded": 1,
+    "merged_by_critic": 0,
+    "merged_overlap": 4,
     "merged_singular": 0,
     "rejected_by_critic": 0
   }

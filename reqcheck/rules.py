@@ -296,7 +296,9 @@ class RuleEngine:
             anchor_line = self._passport_anchor()
         anchor = self.doc.lines[anchor_line - 1].strip()[:120] or self.doc.title
         return [self._finding(
-            scope="set", criterion="modifiable", severity=MAJOR,
+            # Оформление, а не содержание: ТЗ §6 относит к критичным непроверяемые, противоречивые и неполные
+            # формулировки; разработку отсутствие версии не блокирует
+            scope="set", criterion="modifiable", severity=MINOR,
             title="Не указаны версия и дата документа",
             explanation="Без версии нельзя понять, какую редакцию согласовали и проверяли (управление изменениями).",
             quotes=[Quote(anchor, anchor_line, True)],

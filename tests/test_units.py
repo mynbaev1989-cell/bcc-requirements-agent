@@ -1191,7 +1191,7 @@ def test_missing_version(text, missing):
     found = eng.missing_version()
     assert bool(found) is missing
     if missing:
-        assert found[0].severity == MAJOR and found[0].criterion == "modifiable"
+        assert found[0].severity == MINOR and found[0].criterion == "modifiable"
 
 
 # Регрессия: «Версия документа: 1.0» не распознавалась как версия — ложное «нет версии»

@@ -5,20 +5,20 @@
     "gold": 104,
     "findings": 173,
     "precision": 0.861,
-    "precision_items": 0.841,
+    "precision_items": 0.842,
     "false_major_on_clean": 6,
-    "severe_covered": 74,
+    "severe_covered": 78,
     "severe_gold": 78,
-    "severe_question_coverage": 0.949,
+    "severe_question_coverage": 1.0,
     "false_critical": 0,
-    "severity_exact": 0.402,
-    "severity_within_one": 0.971,
-    "precision_with_extra": 0.933,
-    "cache_misses": 1,
-    "dropped_ungrounded": 8,
-    "merged_by_critic": 13,
+    "severity_exact": 0.461,
+    "severity_within_one": 0.941,
+    "precision_with_extra": 0.932,
+    "cache_misses": 0,
+    "dropped_ungrounded": 9,
+    "merged_by_critic": 10,
     "rejected_by_critic": 0,
-    "merged_overlap": 24,
+    "merged_overlap": 26,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -32,14 +32,14 @@
         "precision_items": 0.929,
         "false_major_on_clean": 0,
         "questions": 12,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.857,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
         "severe_gold": 11,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.818,
-        "severity_exact": 0.286,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
         "severity_within_one": 1.0,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
@@ -65,7 +65,7 @@
         "missed": [],
         "unmatched": [
           {
-            "fid": "F-021",
+            "fid": "F-020",
             "severity": "major",
             "lines": [
               98
@@ -74,7 +74,7 @@
             "quote": "Требования пронумерованы и не дублируются"
           },
           {
-            "fid": "F-023",
+            "fid": "F-022",
             "severity": "minor",
             "lines": [
               47
@@ -108,9 +108,9 @@
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.615,
+        "severity_exact": 0.692,
         "severity_within_one": 0.923,
-        "severity_exact_n": 8,
+        "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
@@ -119,7 +119,7 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -154,7 +154,7 @@
             "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
           },
           {
-            "fid": "F-017",
+            "fid": "F-016",
             "severity": "major",
             "lines": [
               89
@@ -185,620 +185,6 @@
         "gold_defects": 14,
         "found": 14,
         "recall": 1.0,
-        "agent_findings": 22,
-        "precision": 0.864,
-        "precision_with_extra": 1.0,
-        "extra_defects": 3,
-        "precision_items": 0.826,
-        "false_major_on_clean": 0,
-        "questions": 18,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 1.0,
-        "severe_gold": 11,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 1.0,
-        "severity_exact": 0.286,
-        "severity_within_one": 0.929,
-        "severity_exact_n": 4,
-        "severity_within_one_n": 13,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 18,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "2/2",
-          "api": "2/2",
-          "contradiction": "3/3",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "1/1",
-          "no_version": "1/1",
-          "non_singular": "1/1",
-          "units": "1/1",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-015",
-            "severity": "major",
-            "lines": [
-              55
-            ],
-            "title": "Раздел «6. Требования к отказоустойчивости» не заполнен",
-            "quote": "TBD"
-          },
-          {
-            "fid": "F-017",
-            "severity": "major",
-            "lines": [
-              98
-            ],
-            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
-            "quote": "Лимиты и комиссии заданы числами"
-          },
-          {
-            "fid": "F-020",
-            "severity": "minor",
-            "lines": [
-              46
-            ],
-            "title": "23 из 40 требований без идентификатора в документе",
-            "quote": "Поле: transfer_id; Тип: UUID; Обязательность: да; Описание: Идентификатор перевода"
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 3,
-        "merged_by_critic": 4,
-        "merged_overlap": 2,
-        "merged_singular": 2,
-        "rejected_by_critic": 0,
-        "cache_misses": 0
-      },
-      {
-        "document": "holdout_deposit.md",
-        "gold_defects": 15,
-        "found": 15,
-        "recall": 1.0,
-        "agent_findings": 30,
-        "precision": 0.833,
-        "precision_with_extra": 0.833,
-        "extra_defects": 0,
-        "precision_items": 0.806,
-        "false_major_on_clean": 0,
-        "questions": 17,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 1.0,
-        "severe_gold": 12,
-        "severe_covered_by_questions": 12,
-        "severe_question_coverage": 1.0,
-        "severity_exact": 0.533,
-        "severity_within_one": 1.0,
-        "severity_exact_n": 8,
-        "severity_within_one_n": 15,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 17,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "1/1",
-          "api": "3/3",
-          "contradiction": "2/2",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "3/3",
-          "non_singular": "1/1",
-          "security": "1/1",
-          "units": "1/1",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-001",
-            "severity": "major",
-            "lines": [
-              20
-            ],
-            "title": "Требование объединяет системную функцию и бизнес-цели",
-            "quote": "Клиент должен открыть депозит полностью онлайн"
-          },
-          {
-            "fid": "F-002",
-            "severity": "major",
-            "lines": [
-              20
-            ],
-            "title": "Бизнес-метрики не имеют механизма системной проверки",
-            "quote": "Банк рассчитывает привлечь не менее 20 000 новых депозитов"
-          },
-          {
-            "fid": "F-026",
-            "severity": "minor",
-            "lines": [
-              20
-            ],
-            "title": "38 из 47 требований без идентификатора в документе",
-            "quote": "Клиент должен открыть депозит полностью онлайн, без визита в отделение."
-          },
-          {
-            "fid": "F-028",
-            "severity": "minor",
-            "lines": [
-              83
-            ],
-            "title": "Не определен ключ дедупликации для предотвращения повторного открытия депозита при дублировании запросов",
-            "quote": "POST | /deposits | Открытие депозита"
-          },
-          {
-            "fid": "F-030",
-            "severity": "minor",
-            "lines": [
-              48,
-              61
-            ],
-            "title": "Неатомарные требования: 2 (в одном пункте несколько действий или условий)",
-            "quote": "Снятие оформляется заявкой в мобильном приложении, средства зачисляются на текущий счёт клиента в течение 1 рабочего дня."
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
-        "merged_by_critic": 0,
-        "merged_overlap": 4,
-        "merged_singular": 2,
-        "rejected_by_critic": 0,
-        "cache_misses": 0
-      },
-      {
-        "document": "holdout_installments.md",
-        "gold_defects": 16,
-        "found": 16,
-        "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.958,
-        "precision_with_extra": 1.0,
-        "extra_defects": 1,
-        "precision_items": 0.962,
-        "false_major_on_clean": 1,
-        "questions": 14,
-        "gold_covered_by_questions": 16,
-        "question_coverage": 1.0,
-        "severe_gold": 12,
-        "severe_covered_by_questions": 12,
-        "severe_question_coverage": 1.0,
-        "severity_exact": 0.375,
-        "severity_within_one": 1.0,
-        "severity_exact_n": 6,
-        "severity_within_one_n": 16,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 14,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "1/1",
-          "api": "2/2",
-          "contradiction": "2/2",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "3/3",
-          "no_version": "1/1",
-          "non_singular": "1/1",
-          "regulatory": "1/1",
-          "security": "1/1",
-          "units": "1/1",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-021",
-            "severity": "minor",
-            "lines": [
-              50
-            ],
-            "title": "18 из 40 требований без идентификатора в документе",
-            "quote": "Поле: order_id; Тип: string; Описание: Идентификатор заявки"
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 1,
-        "merged_by_critic": 0,
-        "merged_overlap": 2,
-        "merged_singular": 3,
-        "rejected_by_critic": 0,
-        "cache_misses": 0
-      },
-      {
-        "document": "blind_card_block.md",
-        "gold_defects": 16,
-        "found": 14,
-        "recall": 0.875,
-        "agent_findings": 25,
-        "precision": 0.8,
-        "precision_with_extra": 0.92,
-        "extra_defects": 3,
-        "precision_items": 0.8,
-        "false_major_on_clean": 1,
-        "questions": 12,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.688,
-        "severe_gold": 10,
-        "severe_covered_by_questions": 8,
-        "severe_question_coverage": 0.8,
-        "severity_exact": 0.357,
-        "severity_within_one": 1.0,
-        "severity_exact_n": 5,
-        "severity_within_one_n": 14,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 12,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "2/2",
-          "contradiction": "2/2",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "2/4",
-          "no_version": "1/1",
-          "non_singular": "1/1",
-          "units": "3/3",
-          "unverifiable": "1/1"
-        },
-        "missed": [
-          "Не описано поведение для карт, заблокированных банком или оператором.",
-          "Не описано, что делать, если push не доставлен или отключён."
-        ],
-        "unmatched": [
-          {
-            "fid": "F-006",
-            "severity": "major",
-            "lines": [
-              49
-            ],
-            "title": "Не указано, какого именно кода подтверждения касается ограничение попыток",
-            "quote": "после 3 неверных вводов кода подтверждения"
-          },
-          {
-            "fid": "F-007",
-            "severity": "minor",
-            "lines": [
-              51
-            ],
-            "title": "Не уточнен способ отображения оставшихся попыток ввода кода",
-            "quote": "сообщать клиенту, сколько попыток ввода кода у него осталось"
-          },
-          {
-            "fid": "F-011",
-            "severity": "minor",
-            "lines": [
-              81
-            ],
-            "title": "Нарушена атомарность требования из-за двух разных логических условий",
-            "quote": "Клиент может отключить push-уведомления в настройках, при этом SMS остаются обязательными."
-          },
-          {
-            "fid": "F-014",
-            "severity": "major",
-            "lines": [
-              93
-            ],
-            "title": "Неопределенность понятия устройства, привязанного к клиенту",
-            "quote": "с устройства, не привязанного к клиенту"
-          },
-          {
-            "fid": "F-015",
-            "severity": "minor",
-            "lines": [
-              95
-            ],
-            "title": "Неопределенность периода «за сутки» для подсчета блокировок",
-            "quote": "за сутки"
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
-        "merged_by_critic": 0,
-        "merged_overlap": 0,
-        "merged_singular": 0,
-        "rejected_by_critic": 0,
-        "cache_misses": 0
-      },
-      {
-        "document": "blind_payroll.md",
-        "gold_defects": 16,
-        "found": 16,
-        "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.833,
-        "precision_with_extra": 0.875,
-        "extra_defects": 1,
-        "precision_items": 0.833,
-        "false_major_on_clean": 2,
-        "questions": 20,
-        "gold_covered_by_questions": 16,
-        "question_coverage": 1.0,
-        "severe_gold": 12,
-        "severe_covered_by_questions": 12,
-        "severe_question_coverage": 1.0,
-        "severity_exact": 0.375,
-        "severity_within_one": 0.938,
-        "severity_exact_n": 6,
-        "severity_within_one_n": 15,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 20,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "1/1",
-          "api": "4/4",
-          "contradiction": "2/2",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "3/3",
-          "non_singular": "1/1",
-          "units": "2/2",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-005",
-            "severity": "major",
-            "lines": [
-              43
-            ],
-            "title": "Неопределенность термина «дата выплаты»",
-            "quote": "не позднее 2 рабочих дней с даты выплаты"
-          },
-          {
-            "fid": "F-006",
-            "severity": "minor",
-            "lines": [
-              45
-            ],
-            "title": "Не указан канал передачи сформированного отчета",
-            "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
-          },
-          {
-            "fid": "F-023",
-            "severity": "major",
-            "lines": [
-              29
-            ],
-            "title": "Пропущено поведение для нулевого или минимального размера файла реестра",
-            "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
-          },
-          {
-            "fid": "F-024",
-            "severity": "minor",
-            "lines": [
-              63
-            ],
-            "title": "9 из 37 требований без идентификатора в документе",
-            "quote": "Метод загрузки реестра: `POST /api/v1/payroll/registries`. Формат тела запроса: JSON, кодировка UTF-8."
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
-        "merged_by_critic": 7,
-        "merged_overlap": 0,
-        "merged_singular": 0,
-        "rejected_by_critic": 0,
-        "cache_misses": 1
-      }
-    ]
-  },
-  {
-    "variant": "no_critic",
-    "found": 102,
-    "gold": 104,
-    "findings": 178,
-    "precision": 0.865,
-    "precision_items": 0.846,
-    "false_major_on_clean": 6,
-    "severe_covered": 73,
-    "severe_gold": 78,
-    "severe_question_coverage": 0.936,
-    "false_critical": 0,
-    "severity_exact": 0.402,
-    "severity_within_one": 0.941,
-    "precision_with_extra": 0.935,
-    "cache_misses": 4,
-    "dropped_ungrounded": 8,
-    "merged_by_critic": 0,
-    "rejected_by_critic": 0,
-    "merged_overlap": 32,
-    "docs": [
-      {
-        "document": "autopay_utilities.md",
-        "gold_defects": 14,
-        "found": 14,
-        "recall": 1.0,
-        "agent_findings": 27,
-        "precision": 0.926,
-        "precision_with_extra": 1.0,
-        "extra_defects": 2,
-        "precision_items": 0.929,
-        "false_major_on_clean": 0,
-        "questions": 12,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.857,
-        "severe_gold": 11,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.818,
-        "severity_exact": 0.286,
-        "severity_within_one": 1.0,
-        "severity_exact_n": 4,
-        "severity_within_one_n": 14,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 12,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 0
-        },
-        "by_type": {
-          "ambiguity": "2/2",
-          "api": "2/2",
-          "contradiction": "3/3",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "1/1",
-          "no_version": "1/1",
-          "non_singular": "1/1",
-          "units": "1/1",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-021",
-            "severity": "major",
-            "lines": [
-              98
-            ],
-            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
-            "quote": "Требования пронумерованы и не дублируются"
-          },
-          {
-            "fid": "F-023",
-            "severity": "minor",
-            "lines": [
-              47
-            ],
-            "title": "22 из 40 требований без идентификатора в документе",
-            "quote": "Поле: rule_id; Тип: UUID; Обязательность: да; Описание: Идентификатор правила"
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 1,
-        "merged_by_critic": 0,
-        "merged_overlap": 4,
-        "merged_singular": 2,
-        "rejected_by_critic": 0,
-        "cache_misses": 0
-      },
-      {
-        "document": "credit_card_application.md",
-        "gold_defects": 13,
-        "found": 13,
-        "recall": 1.0,
-        "agent_findings": 22,
-        "precision": 0.818,
-        "precision_with_extra": 0.909,
-        "extra_defects": 2,
-        "precision_items": 0.741,
-        "false_major_on_clean": 2,
-        "questions": 18,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.923,
-        "severe_gold": 10,
-        "severe_covered_by_questions": 10,
-        "severe_question_coverage": 1.0,
-        "severity_exact": 0.615,
-        "severity_within_one": 0.923,
-        "severity_exact_n": 8,
-        "severity_within_one_n": 12,
-        "false_critical": 0,
-        "question_quality": {
-          "n": 18,
-          "with_addressee": 1.0,
-          "with_options": 1.0,
-          "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 2
-        },
-        "by_type": {
-          "ambiguity": "1/1",
-          "api": "2/2",
-          "contradiction": "3/3",
-          "design_in_req": "1/1",
-          "empty_section": "1/1",
-          "incomplete": "1/1",
-          "no_version": "1/1",
-          "non_singular": "1/1",
-          "units": "1/1",
-          "unverifiable": "1/1"
-        },
-        "missed": [],
-        "unmatched": [
-          {
-            "fid": "F-010",
-            "severity": "major",
-            "lines": [
-              49
-            ],
-            "title": "Не определены условия расчета доступности сервиса",
-            "quote": "Сервис подачи заявок доступен не менее 99,5% времени в месяц."
-          },
-          {
-            "fid": "F-015",
-            "severity": "major",
-            "lines": [
-              19
-            ],
-            "title": "34 из 34 требований без идентификатора в документе",
-            "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
-          },
-          {
-            "fid": "F-018",
-            "severity": "major",
-            "lines": [
-              89
-            ],
-            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
-            "quote": "Возрастные ограничения согласованы во всех разделах"
-          },
-          {
-            "fid": "F-021",
-            "severity": "minor",
-            "lines": [
-              40
-            ],
-            "title": "Не определен часовой пояс и момент начала отсчета для хранения черновика",
-            "quote": "черновик сохраняется на 30 суток, после чего удаляется."
-          }
-        ],
-        "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 3,
-        "merged_by_critic": 0,
-        "merged_overlap": 3,
-        "merged_singular": 6,
-        "rejected_by_critic": 0,
-        "cache_misses": 1
-      },
-      {
-        "document": "p2p_phone.md",
-        "gold_defects": 14,
-        "found": 14,
-        "recall": 1.0,
         "agent_findings": 24,
         "precision": 0.875,
         "precision_with_extra": 1.0,
@@ -811,9 +197,9 @@
         "severe_gold": 11,
         "severe_covered_by_questions": 11,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.286,
+        "severity_exact": 0.357,
         "severity_within_one": 0.929,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 13,
         "false_critical": 0,
         "question_quality": {
@@ -822,7 +208,7 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -848,7 +234,7 @@
             "quote": "TBD"
           },
           {
-            "fid": "F-019",
+            "fid": "F-018",
             "severity": "major",
             "lines": [
               98
@@ -857,7 +243,7 @@
             "quote": "Лимиты и комиссии заданы числами"
           },
           {
-            "fid": "F-022",
+            "fid": "F-021",
             "severity": "minor",
             "lines": [
               46
@@ -868,24 +254,24 @@
         ],
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 3,
-        "merged_by_critic": 0,
-        "merged_overlap": 4,
+        "merged_by_critic": 1,
+        "merged_overlap": 3,
         "merged_singular": 2,
         "rejected_by_critic": 0,
-        "cache_misses": 1
+        "cache_misses": 0
       },
       {
         "document": "holdout_deposit.md",
         "gold_defects": 15,
         "found": 15,
         "recall": 1.0,
-        "agent_findings": 30,
-        "precision": 0.833,
-        "precision_with_extra": 0.833,
+        "agent_findings": 27,
+        "precision": 0.815,
+        "precision_with_extra": 0.815,
         "extra_defects": 0,
-        "precision_items": 0.806,
+        "precision_items": 0.786,
         "false_major_on_clean": 0,
-        "questions": 17,
+        "questions": 14,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -897,7 +283,7 @@
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 14,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -937,7 +323,7 @@
             "quote": "Банк рассчитывает привлечь не менее 20 000 новых депозитов"
           },
           {
-            "fid": "F-026",
+            "fid": "F-023",
             "severity": "minor",
             "lines": [
               20
@@ -946,7 +332,7 @@
             "quote": "Клиент должен открыть депозит полностью онлайн, без визита в отделение."
           },
           {
-            "fid": "F-028",
+            "fid": "F-025",
             "severity": "minor",
             "lines": [
               83
@@ -955,7 +341,7 @@
             "quote": "POST | /deposits | Открытие депозита"
           },
           {
-            "fid": "F-030",
+            "fid": "F-027",
             "severity": "minor",
             "lines": [
               48,
@@ -967,8 +353,8 @@
         ],
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
-        "merged_by_critic": 0,
-        "merged_overlap": 4,
+        "merged_by_critic": 4,
+        "merged_overlap": 3,
         "merged_singular": 2,
         "rejected_by_critic": 0,
         "cache_misses": 0
@@ -978,30 +364,30 @@
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.958,
+        "agent_findings": 23,
+        "precision": 0.957,
         "precision_with_extra": 1.0,
         "extra_defects": 1,
-        "precision_items": 0.962,
+        "precision_items": 0.96,
         "false_major_on_clean": 1,
-        "questions": 14,
+        "questions": 19,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
         "severe_covered_by_questions": 12,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.375,
+        "severity_exact": 0.5,
         "severity_within_one": 1.0,
-        "severity_exact_n": 6,
+        "severity_exact_n": 8,
         "severity_within_one_n": 16,
         "false_critical": 0,
         "question_quality": {
-          "n": 14,
+          "n": 19,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1020,7 +406,7 @@
         "missed": [],
         "unmatched": [
           {
-            "fid": "F-021",
+            "fid": "F-019",
             "severity": "minor",
             "lines": [
               50
@@ -1031,8 +417,8 @@
         ],
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 1,
-        "merged_by_critic": 0,
-        "merged_overlap": 2,
+        "merged_by_critic": 3,
+        "merged_overlap": 0,
         "merged_singular": 3,
         "rejected_by_critic": 0,
         "cache_misses": 0
@@ -1048,19 +434,19 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 12,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.688,
+        "questions": 13,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 0.875,
         "severe_gold": 10,
-        "severe_covered_by_questions": 8,
-        "severe_question_coverage": 0.8,
-        "severity_exact": 0.357,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.429,
         "severity_within_one": 1.0,
-        "severity_exact_n": 5,
+        "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 12,
+          "n": 13,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -1148,24 +534,24 @@
         "extra_defects": 1,
         "precision_items": 0.846,
         "false_major_on_clean": 2,
-        "questions": 18,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 0.938,
+        "questions": 20,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.375,
         "severity_within_one": 0.75,
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 18,
+          "n": 20,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1199,7 +585,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-025",
+            "fid": "F-024",
             "severity": "major",
             "lines": [
               29
@@ -1218,12 +604,626 @@
           }
         ],
         "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
+        "dropped_ungrounded": 1,
         "merged_by_critic": 0,
-        "merged_overlap": 5,
+        "merged_overlap": 4,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 0
+      }
+    ]
+  },
+  {
+    "variant": "no_critic",
+    "found": 102,
+    "gold": 104,
+    "findings": 178,
+    "precision": 0.865,
+    "precision_items": 0.846,
+    "false_major_on_clean": 6,
+    "severe_covered": 78,
+    "severe_gold": 78,
+    "severe_question_coverage": 1.0,
+    "false_critical": 0,
+    "severity_exact": 0.451,
+    "severity_within_one": 0.941,
+    "precision_with_extra": 0.935,
+    "cache_misses": 2,
+    "dropped_ungrounded": 9,
+    "merged_by_critic": 0,
+    "rejected_by_critic": 0,
+    "merged_overlap": 31,
+    "docs": [
+      {
+        "document": "autopay_utilities.md",
+        "gold_defects": 14,
+        "found": 14,
+        "recall": 1.0,
+        "agent_findings": 27,
+        "precision": 0.926,
+        "precision_with_extra": 1.0,
+        "extra_defects": 2,
+        "precision_items": 0.929,
+        "false_major_on_clean": 0,
+        "questions": 12,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
+        "severe_gold": 11,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
+        "severity_within_one": 1.0,
+        "severity_exact_n": 5,
+        "severity_within_one_n": 14,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 12,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 0
+        },
+        "by_type": {
+          "ambiguity": "2/2",
+          "api": "2/2",
+          "contradiction": "3/3",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "1/1",
+          "no_version": "1/1",
+          "non_singular": "1/1",
+          "units": "1/1",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-020",
+            "severity": "major",
+            "lines": [
+              98
+            ],
+            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+            "quote": "Требования пронумерованы и не дублируются"
+          },
+          {
+            "fid": "F-022",
+            "severity": "minor",
+            "lines": [
+              47
+            ],
+            "title": "22 из 40 требований без идентификатора в документе",
+            "quote": "Поле: rule_id; Тип: UUID; Обязательность: да; Описание: Идентификатор правила"
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "merged_overlap": 4,
+        "merged_singular": 2,
+        "rejected_by_critic": 0,
+        "cache_misses": 0
+      },
+      {
+        "document": "credit_card_application.md",
+        "gold_defects": 13,
+        "found": 13,
+        "recall": 1.0,
+        "agent_findings": 22,
+        "precision": 0.818,
+        "precision_with_extra": 0.909,
+        "extra_defects": 2,
+        "precision_items": 0.741,
+        "false_major_on_clean": 2,
+        "questions": 18,
+        "gold_covered_by_questions": 13,
+        "question_coverage": 1.0,
+        "severe_gold": 10,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.692,
+        "severity_within_one": 0.923,
+        "severity_exact_n": 9,
+        "severity_within_one_n": 12,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 18,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 2
+        },
+        "by_type": {
+          "ambiguity": "1/1",
+          "api": "2/2",
+          "contradiction": "3/3",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "1/1",
+          "no_version": "1/1",
+          "non_singular": "1/1",
+          "units": "1/1",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-010",
+            "severity": "major",
+            "lines": [
+              49
+            ],
+            "title": "Не определены условия расчета доступности сервиса",
+            "quote": "Сервис подачи заявок доступен не менее 99,5% времени в месяц."
+          },
+          {
+            "fid": "F-015",
+            "severity": "major",
+            "lines": [
+              19
+            ],
+            "title": "34 из 34 требований без идентификатора в документе",
+            "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
+          },
+          {
+            "fid": "F-017",
+            "severity": "major",
+            "lines": [
+              89
+            ],
+            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+            "quote": "Возрастные ограничения согласованы во всех разделах"
+          },
+          {
+            "fid": "F-021",
+            "severity": "minor",
+            "lines": [
+              40
+            ],
+            "title": "Не определен часовой пояс и момент начала отсчета для хранения черновика",
+            "quote": "черновик сохраняется на 30 суток, после чего удаляется."
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 3,
+        "merged_by_critic": 0,
+        "merged_overlap": 3,
+        "merged_singular": 6,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
+      },
+      {
+        "document": "p2p_phone.md",
+        "gold_defects": 14,
+        "found": 14,
+        "recall": 1.0,
+        "agent_findings": 24,
+        "precision": 0.875,
+        "precision_with_extra": 1.0,
+        "extra_defects": 3,
+        "precision_items": 0.84,
+        "false_major_on_clean": 0,
+        "questions": 16,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
+        "severe_gold": 11,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
+        "severity_within_one": 0.929,
+        "severity_exact_n": 5,
+        "severity_within_one_n": 13,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 16,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 0
+        },
+        "by_type": {
+          "ambiguity": "2/2",
+          "api": "2/2",
+          "contradiction": "3/3",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "1/1",
+          "no_version": "1/1",
+          "non_singular": "1/1",
+          "units": "1/1",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-017",
+            "severity": "major",
+            "lines": [
+              55
+            ],
+            "title": "Раздел «6. Требования к отказоустойчивости» не заполнен",
+            "quote": "TBD"
+          },
+          {
+            "fid": "F-018",
+            "severity": "major",
+            "lines": [
+              98
+            ],
+            "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+            "quote": "Лимиты и комиссии заданы числами"
+          },
+          {
+            "fid": "F-021",
+            "severity": "minor",
+            "lines": [
+              46
+            ],
+            "title": "23 из 40 требований без идентификатора в документе",
+            "quote": "Поле: transfer_id; Тип: UUID; Обязательность: да; Описание: Идентификатор перевода"
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 3,
+        "merged_by_critic": 0,
+        "merged_overlap": 4,
+        "merged_singular": 2,
+        "rejected_by_critic": 0,
+        "cache_misses": 0
+      },
+      {
+        "document": "holdout_deposit.md",
+        "gold_defects": 15,
+        "found": 15,
+        "recall": 1.0,
+        "agent_findings": 30,
+        "precision": 0.833,
+        "precision_with_extra": 0.833,
+        "extra_defects": 0,
+        "precision_items": 0.806,
+        "false_major_on_clean": 0,
+        "questions": 18,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
+        "severe_gold": 12,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.533,
+        "severity_within_one": 1.0,
+        "severity_exact_n": 8,
+        "severity_within_one_n": 15,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 18,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 0
+        },
+        "by_type": {
+          "ambiguity": "1/1",
+          "api": "3/3",
+          "contradiction": "2/2",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "3/3",
+          "non_singular": "1/1",
+          "security": "1/1",
+          "units": "1/1",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-001",
+            "severity": "major",
+            "lines": [
+              20
+            ],
+            "title": "Требование объединяет системную функцию и бизнес-цели",
+            "quote": "Клиент должен открыть депозит полностью онлайн"
+          },
+          {
+            "fid": "F-002",
+            "severity": "major",
+            "lines": [
+              20
+            ],
+            "title": "Бизнес-метрики не имеют механизма системной проверки",
+            "quote": "Банк рассчитывает привлечь не менее 20 000 новых депозитов"
+          },
+          {
+            "fid": "F-026",
+            "severity": "minor",
+            "lines": [
+              20
+            ],
+            "title": "38 из 47 требований без идентификатора в документе",
+            "quote": "Клиент должен открыть депозит полностью онлайн, без визита в отделение."
+          },
+          {
+            "fid": "F-028",
+            "severity": "minor",
+            "lines": [
+              83
+            ],
+            "title": "Не определен ключ дедупликации для предотвращения повторного открытия депозита при дублировании запросов",
+            "quote": "POST | /deposits | Открытие депозита"
+          },
+          {
+            "fid": "F-030",
+            "severity": "minor",
+            "lines": [
+              48,
+              61
+            ],
+            "title": "Неатомарные требования: 2 (в одном пункте несколько действий или условий)",
+            "quote": "Снятие оформляется заявкой в мобильном приложении, средства зачисляются на текущий счёт клиента в течение 1 рабочего дня."
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "merged_overlap": 4,
+        "merged_singular": 2,
+        "rejected_by_critic": 0,
+        "cache_misses": 0
+      },
+      {
+        "document": "holdout_installments.md",
+        "gold_defects": 16,
+        "found": 16,
+        "recall": 1.0,
+        "agent_findings": 24,
+        "precision": 0.958,
+        "precision_with_extra": 1.0,
+        "extra_defects": 1,
+        "precision_items": 0.962,
+        "false_major_on_clean": 1,
+        "questions": 17,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
+        "severe_gold": 12,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.438,
+        "severity_within_one": 1.0,
+        "severity_exact_n": 7,
+        "severity_within_one_n": 16,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 17,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 3
+        },
+        "by_type": {
+          "ambiguity": "1/1",
+          "api": "2/2",
+          "contradiction": "2/2",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "3/3",
+          "no_version": "1/1",
+          "non_singular": "1/1",
+          "regulatory": "1/1",
+          "security": "1/1",
+          "units": "1/1",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-020",
+            "severity": "minor",
+            "lines": [
+              50
+            ],
+            "title": "18 из 40 требований без идентификатора в документе",
+            "quote": "Поле: order_id; Тип: string; Описание: Идентификатор заявки"
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "merged_overlap": 2,
+        "merged_singular": 3,
+        "rejected_by_critic": 0,
+        "cache_misses": 1
+      },
+      {
+        "document": "blind_card_block.md",
+        "gold_defects": 16,
+        "found": 14,
+        "recall": 0.875,
+        "agent_findings": 25,
+        "precision": 0.8,
+        "precision_with_extra": 0.92,
+        "extra_defects": 3,
+        "precision_items": 0.8,
+        "false_major_on_clean": 1,
+        "questions": 13,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 0.875,
+        "severe_gold": 10,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.429,
+        "severity_within_one": 1.0,
+        "severity_exact_n": 6,
+        "severity_within_one_n": 14,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 13,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 0
+        },
+        "by_type": {
+          "ambiguity": "2/2",
+          "contradiction": "2/2",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "2/4",
+          "no_version": "1/1",
+          "non_singular": "1/1",
+          "units": "3/3",
+          "unverifiable": "1/1"
+        },
+        "missed": [
+          "Не описано поведение для карт, заблокированных банком или оператором.",
+          "Не описано, что делать, если push не доставлен или отключён."
+        ],
+        "unmatched": [
+          {
+            "fid": "F-006",
+            "severity": "major",
+            "lines": [
+              49
+            ],
+            "title": "Не указано, какого именно кода подтверждения касается ограничение попыток",
+            "quote": "после 3 неверных вводов кода подтверждения"
+          },
+          {
+            "fid": "F-007",
+            "severity": "minor",
+            "lines": [
+              51
+            ],
+            "title": "Не уточнен способ отображения оставшихся попыток ввода кода",
+            "quote": "сообщать клиенту, сколько попыток ввода кода у него осталось"
+          },
+          {
+            "fid": "F-011",
+            "severity": "minor",
+            "lines": [
+              81
+            ],
+            "title": "Нарушена атомарность требования из-за двух разных логических условий",
+            "quote": "Клиент может отключить push-уведомления в настройках, при этом SMS остаются обязательными."
+          },
+          {
+            "fid": "F-014",
+            "severity": "major",
+            "lines": [
+              93
+            ],
+            "title": "Неопределенность понятия устройства, привязанного к клиенту",
+            "quote": "с устройства, не привязанного к клиенту"
+          },
+          {
+            "fid": "F-015",
+            "severity": "minor",
+            "lines": [
+              95
+            ],
+            "title": "Неопределенность периода «за сутки» для подсчета блокировок",
+            "quote": "за сутки"
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 0,
+        "merged_by_critic": 0,
+        "merged_overlap": 0,
+        "merged_singular": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 0
+      },
+      {
+        "document": "blind_payroll.md",
+        "gold_defects": 16,
+        "found": 16,
+        "recall": 1.0,
+        "agent_findings": 26,
+        "precision": 0.846,
+        "precision_with_extra": 0.885,
+        "extra_defects": 1,
+        "precision_items": 0.846,
+        "false_major_on_clean": 2,
+        "questions": 20,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
+        "severe_gold": 12,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.375,
+        "severity_within_one": 0.75,
+        "severity_exact_n": 6,
+        "severity_within_one_n": 12,
+        "false_critical": 0,
+        "question_quality": {
+          "n": 20,
+          "with_addressee": 1.0,
+          "with_options": 1.0,
+          "with_assumption": 1.0,
+          "with_line": 1.0,
+          "duplicate_pairs": 0
+        },
+        "by_type": {
+          "ambiguity": "1/1",
+          "api": "4/4",
+          "contradiction": "2/2",
+          "design_in_req": "1/1",
+          "empty_section": "1/1",
+          "incomplete": "3/3",
+          "non_singular": "1/1",
+          "units": "2/2",
+          "unverifiable": "1/1"
+        },
+        "missed": [],
+        "unmatched": [
+          {
+            "fid": "F-005",
+            "severity": "major",
+            "lines": [
+              43
+            ],
+            "title": "Неопределенность термина «дата выплаты»",
+            "quote": "не позднее 2 рабочих дней с даты выплаты"
+          },
+          {
+            "fid": "F-006",
+            "severity": "minor",
+            "lines": [
+              45
+            ],
+            "title": "Не указан канал передачи сформированного отчета",
+            "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
+          },
+          {
+            "fid": "F-024",
+            "severity": "major",
+            "lines": [
+              29
+            ],
+            "title": "Пропущено поведение для нулевого или минимального размера файла реестра",
+            "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
+          },
+          {
+            "fid": "F-026",
+            "severity": "minor",
+            "lines": [
+              63
+            ],
+            "title": "9 из 37 требований без идентификатора в документе",
+            "quote": "Метод загрузки реестра: `POST /api/v1/payroll/registries`. Формат тела запроса: JSON, кодировка UTF-8."
+          }
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "dropped_ungrounded": 1,
+        "merged_by_critic": 0,
+        "merged_overlap": 4,
+        "merged_singular": 0,
+        "rejected_by_critic": 0,
+        "cache_misses": 0
       }
     ]
   },
@@ -1231,22 +1231,22 @@
     "variant": "no_grounding",
     "found": 102,
     "gold": 104,
-    "findings": 186,
-    "precision": 0.827,
-    "precision_items": 0.813,
+    "findings": 187,
+    "precision": 0.823,
+    "precision_items": 0.809,
     "false_major_on_clean": 6,
-    "severe_covered": 73,
+    "severe_covered": 78,
     "severe_gold": 78,
-    "severe_question_coverage": 0.936,
-    "false_critical": 3,
-    "severity_exact": 0.402,
+    "severe_question_coverage": 1.0,
+    "false_critical": 4,
+    "severity_exact": 0.451,
     "severity_within_one": 0.941,
-    "precision_with_extra": 0.893,
-    "cache_misses": 6,
+    "precision_with_extra": 0.888,
+    "cache_misses": 5,
     "dropped_ungrounded": 0,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
-    "merged_overlap": 32,
+    "merged_overlap": 31,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -1260,14 +1260,14 @@
         "precision_items": 0.897,
         "false_major_on_clean": 0,
         "questions": 16,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.857,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
         "severe_gold": 11,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.818,
-        "severity_exact": 0.286,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
         "severity_within_one": 1.0,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
@@ -1300,7 +1300,7 @@
             "quote": "Поле: max_amount; Тип: целое число; Обязательность: да; Описание: Максимальная сумма платежа"
           },
           {
-            "fid": "F-022",
+            "fid": "F-021",
             "severity": "major",
             "lines": [
               98
@@ -1309,7 +1309,7 @@
             "quote": "Требования пронумерованы и не дублируются"
           },
           {
-            "fid": "F-024",
+            "fid": "F-023",
             "severity": "minor",
             "lines": [
               47
@@ -1338,14 +1338,14 @@
         "precision_items": 0.667,
         "false_major_on_clean": 2,
         "questions": 20,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.923,
+        "gold_covered_by_questions": 11,
+        "question_coverage": 0.846,
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.615,
+        "severity_exact": 0.692,
         "severity_within_one": 0.923,
-        "severity_exact_n": 8,
+        "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 1,
         "question_quality": {
@@ -1410,7 +1410,7 @@
             "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
           },
           {
-            "fid": "F-021",
+            "fid": "F-020",
             "severity": "major",
             "lines": [
               89
@@ -1453,9 +1453,9 @@
         "severe_gold": 11,
         "severe_covered_by_questions": 11,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.286,
+        "severity_exact": 0.357,
         "severity_within_one": 0.929,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 13,
         "false_critical": 2,
         "question_quality": {
@@ -1511,7 +1511,7 @@
             "quote": "TBD"
           },
           {
-            "fid": "F-022",
+            "fid": "F-021",
             "severity": "major",
             "lines": [
               98
@@ -1520,7 +1520,7 @@
             "quote": "Лимиты и комиссии заданы числами"
           },
           {
-            "fid": "F-025",
+            "fid": "F-024",
             "severity": "minor",
             "lines": [
               46
@@ -1548,7 +1548,7 @@
         "extra_defects": 0,
         "precision_items": 0.806,
         "false_major_on_clean": 0,
-        "questions": 17,
+        "questions": 18,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1560,7 +1560,7 @@
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 18,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -1653,9 +1653,9 @@
         "severe_gold": 12,
         "severe_covered_by_questions": 12,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.375,
+        "severity_exact": 0.438,
         "severity_within_one": 1.0,
-        "severity_exact_n": 6,
+        "severity_exact_n": 7,
         "severity_within_one_n": 16,
         "false_critical": 0,
         "question_quality": {
@@ -1690,7 +1690,7 @@
             "quote": "Метод: GET; Путь: /installments/{id}/confirm; Назначение: Подтверждение заявки кодом из SMS"
           },
           {
-            "fid": "F-022",
+            "fid": "F-021",
             "severity": "minor",
             "lines": [
               50
@@ -1718,19 +1718,19 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 12,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.688,
+        "questions": 13,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 0.875,
         "severe_gold": 10,
-        "severe_covered_by_questions": 8,
-        "severe_question_coverage": 0.8,
-        "severity_exact": 0.357,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.429,
         "severity_within_one": 1.0,
-        "severity_exact_n": 5,
+        "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 12,
+          "n": 13,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -1812,30 +1812,30 @@
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 26,
-        "precision": 0.846,
-        "precision_with_extra": 0.885,
+        "agent_findings": 27,
+        "precision": 0.815,
+        "precision_with_extra": 0.852,
         "extra_defects": 1,
-        "precision_items": 0.846,
+        "precision_items": 0.815,
         "false_major_on_clean": 2,
-        "questions": 18,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 0.938,
+        "questions": 20,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.375,
         "severity_within_one": 0.75,
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
-        "false_critical": 0,
+        "false_critical": 1,
         "question_quality": {
-          "n": 18,
+          "n": 20,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
-          "with_line": 1.0,
-          "duplicate_pairs": 2
+          "with_line": 0.95,
+          "duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1869,6 +1869,13 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
+            "fid": "F-014",
+            "severity": "critical",
+            "lines": [],
+            "title": "Не указан тип данных параметра registry_id",
+            "quote": "Параметр: registry_id; Тип: ; Обязательность: да; Описание: Идентификатор реестра"
+          },
+          {
             "fid": "F-025",
             "severity": "major",
             "lines": [
@@ -1878,7 +1885,7 @@
             "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
           },
           {
-            "fid": "F-026",
+            "fid": "F-027",
             "severity": "minor",
             "lines": [
               63
@@ -1890,10 +1897,10 @@
         "model": "gemini-3.5-flash-lite",
         "dropped_ungrounded": 0,
         "merged_by_critic": 0,
-        "merged_overlap": 5,
+        "merged_overlap": 4,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 1
       }
     ]
   },
@@ -1905,18 +1912,18 @@
     "precision": 0.858,
     "precision_items": 0.838,
     "false_major_on_clean": 5,
-    "severe_covered": 70,
+    "severe_covered": 77,
     "severe_gold": 77,
-    "severe_question_coverage": 0.909,
+    "severe_question_coverage": 1.0,
     "false_critical": 0,
-    "severity_exact": 0.41,
+    "severity_exact": 0.46,
     "severity_within_one": 0.94,
     "precision_with_extra": 0.932,
-    "cache_misses": 8,
-    "dropped_ungrounded": 8,
+    "cache_misses": 7,
+    "dropped_ungrounded": 9,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
-    "merged_overlap": 19,
+    "merged_overlap": 18,
     "docs": [
       {
         "document": "autopay_utilities.md",
@@ -1930,14 +1937,14 @@
         "precision_items": 0.929,
         "false_major_on_clean": 0,
         "questions": 15,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.857,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
         "severe_gold": 11,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.818,
-        "severity_exact": 0.286,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
         "severity_within_one": 1.0,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
@@ -1963,7 +1970,7 @@
         "missed": [],
         "unmatched": [
           {
-            "fid": "F-021",
+            "fid": "F-020",
             "severity": "major",
             "lines": [
               98
@@ -1972,7 +1979,7 @@
             "quote": "Требования пронумерованы и не дублируются"
           },
           {
-            "fid": "F-023",
+            "fid": "F-022",
             "severity": "minor",
             "lines": [
               47
@@ -2001,14 +2008,14 @@
         "precision_items": 0.731,
         "false_major_on_clean": 1,
         "questions": 17,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.846,
+        "gold_covered_by_questions": 13,
+        "question_coverage": 1.0,
         "severe_gold": 10,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.9,
-        "severity_exact": 0.615,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.692,
         "severity_within_one": 0.923,
-        "severity_exact_n": 8,
+        "severity_exact_n": 9,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
@@ -2052,7 +2059,7 @@
             "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
           },
           {
-            "fid": "F-018",
+            "fid": "F-017",
             "severity": "major",
             "lines": [
               89
@@ -2095,9 +2102,9 @@
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.308,
+        "severity_exact": 0.385,
         "severity_within_one": 0.923,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
@@ -2134,7 +2141,7 @@
             "quote": "TBD"
           },
           {
-            "fid": "F-019",
+            "fid": "F-018",
             "severity": "major",
             "lines": [
               98
@@ -2143,7 +2150,7 @@
             "quote": "Лимиты и комиссии заданы числами"
           },
           {
-            "fid": "F-020",
+            "fid": "F-019",
             "severity": "minor",
             "lines": [
               46
@@ -2171,19 +2178,19 @@
         "extra_defects": 0,
         "precision_items": 0.8,
         "false_major_on_clean": 0,
-        "questions": 18,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 0.933,
+        "questions": 19,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.533,
         "severity_within_one": 1.0,
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 18,
+          "n": 19,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -2276,9 +2283,9 @@
         "severe_gold": 12,
         "severe_covered_by_questions": 12,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.4,
+        "severity_exact": 0.467,
         "severity_within_one": 1.0,
-        "severity_exact_n": 6,
+        "severity_exact_n": 7,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
@@ -2308,7 +2315,7 @@
         ],
         "unmatched": [
           {
-            "fid": "F-019",
+            "fid": "F-018",
             "severity": "minor",
             "lines": [
               50
@@ -2337,14 +2344,14 @@
         "precision_items": 0.783,
         "false_major_on_clean": 1,
         "questions": 15,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.688,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 0.875,
         "severe_gold": 10,
-        "severe_covered_by_questions": 8,
-        "severe_question_coverage": 0.8,
-        "severity_exact": 0.357,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.429,
         "severity_within_one": 1.0,
-        "severity_exact_n": 5,
+        "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
@@ -2436,19 +2443,19 @@
         "extra_defects": 1,
         "precision_items": 0.84,
         "false_major_on_clean": 2,
-        "questions": 17,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 0.938,
+        "questions": 18,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.375,
         "severity_within_one": 0.75,
         "severity_exact_n": 6,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
-          "n": 17,
+          "n": 18,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -2487,7 +2494,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-024",
+            "fid": "F-023",
             "severity": "major",
             "lines": [
               29
@@ -2506,12 +2513,12 @@
           }
         ],
         "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
+        "dropped_ungrounded": 1,
         "merged_by_critic": 0,
-        "merged_overlap": 4,
+        "merged_overlap": 3,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 1
       }
     ]
   },
@@ -2519,19 +2526,19 @@
     "variant": "no_critic_no_gaps",
     "found": 100,
     "gold": 104,
-    "findings": 160,
-    "precision": 0.871,
-    "precision_items": 0.849,
+    "findings": 159,
+    "precision": 0.87,
+    "precision_items": 0.848,
     "false_major_on_clean": 5,
-    "severe_covered": 70,
+    "severe_covered": 76,
     "severe_gold": 76,
-    "severe_question_coverage": 0.921,
+    "severe_question_coverage": 1.0,
     "false_critical": 0,
-    "severity_exact": 0.4,
+    "severity_exact": 0.45,
     "severity_within_one": 0.96,
-    "precision_with_extra": 0.948,
-    "cache_misses": 7,
-    "dropped_ungrounded": 8,
+    "precision_with_extra": 0.947,
+    "cache_misses": 6,
+    "dropped_ungrounded": 9,
     "merged_by_critic": 0,
     "rejected_by_critic": 0,
     "merged_overlap": 23,
@@ -2548,14 +2555,14 @@
         "precision_items": 0.92,
         "false_major_on_clean": 0,
         "questions": 14,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.857,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 1.0,
         "severe_gold": 11,
-        "severe_covered_by_questions": 9,
-        "severe_question_coverage": 0.818,
-        "severity_exact": 0.286,
+        "severe_covered_by_questions": 11,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.357,
         "severity_within_one": 1.0,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
@@ -2581,7 +2588,7 @@
         "missed": [],
         "unmatched": [
           {
-            "fid": "F-021",
+            "fid": "F-020",
             "severity": "major",
             "lines": [
               98
@@ -2590,7 +2597,7 @@
             "quote": "Требования пронумерованы и не дублируются"
           },
           {
-            "fid": "F-022",
+            "fid": "F-021",
             "severity": "minor",
             "lines": [
               47
@@ -2619,14 +2626,14 @@
         "precision_items": 0.75,
         "false_major_on_clean": 2,
         "questions": 16,
-        "gold_covered_by_questions": 12,
-        "question_coverage": 0.923,
+        "gold_covered_by_questions": 13,
+        "question_coverage": 1.0,
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.615,
+        "severity_exact": 0.692,
         "severity_within_one": 1.0,
-        "severity_exact_n": 8,
+        "severity_exact_n": 9,
         "severity_within_one_n": 13,
         "false_critical": 0,
         "question_quality": {
@@ -2670,7 +2677,7 @@
             "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
           },
           {
-            "fid": "F-017",
+            "fid": "F-016",
             "severity": "major",
             "lines": [
               89
@@ -2704,9 +2711,9 @@
         "severe_gold": 10,
         "severe_covered_by_questions": 10,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.308,
+        "severity_exact": 0.385,
         "severity_within_one": 0.923,
-        "severity_exact_n": 4,
+        "severity_exact_n": 5,
         "severity_within_one_n": 12,
         "false_critical": 0,
         "question_quality": {
@@ -2743,7 +2750,7 @@
             "quote": "TBD"
           },
           {
-            "fid": "F-018",
+            "fid": "F-017",
             "severity": "major",
             "lines": [
               98
@@ -2752,7 +2759,7 @@
             "quote": "Лимиты и комиссии заданы числами"
           },
           {
-            "fid": "F-021",
+            "fid": "F-020",
             "severity": "minor",
             "lines": [
               46
@@ -2780,19 +2787,19 @@
         "extra_defects": 0,
         "precision_items": 0.821,
         "false_major_on_clean": 0,
-        "questions": 18,
-        "gold_covered_by_questions": 14,
-        "question_coverage": 0.933,
+        "questions": 19,
+        "gold_covered_by_questions": 15,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.533,
         "severity_within_one": 1.0,
         "severity_exact_n": 8,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
-          "n": 18,
+          "n": 19,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -2876,9 +2883,9 @@
         "severe_gold": 11,
         "severe_covered_by_questions": 11,
         "severe_question_coverage": 1.0,
-        "severity_exact": 0.333,
+        "severity_exact": 0.4,
         "severity_within_one": 1.0,
-        "severity_exact_n": 5,
+        "severity_exact_n": 6,
         "severity_within_one_n": 15,
         "false_critical": 0,
         "question_quality": {
@@ -2908,7 +2915,7 @@
         ],
         "unmatched": [
           {
-            "fid": "F-018",
+            "fid": "F-017",
             "severity": "minor",
             "lines": [
               50
@@ -2936,19 +2943,19 @@
         "extra_defects": 3,
         "precision_items": 0.8,
         "false_major_on_clean": 1,
-        "questions": 12,
-        "gold_covered_by_questions": 11,
-        "question_coverage": 0.688,
+        "questions": 13,
+        "gold_covered_by_questions": 14,
+        "question_coverage": 0.875,
         "severe_gold": 10,
-        "severe_covered_by_questions": 8,
-        "severe_question_coverage": 0.8,
-        "severity_exact": 0.357,
+        "severe_covered_by_questions": 10,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.429,
         "severity_within_one": 1.0,
-        "severity_exact_n": 5,
+        "severity_exact_n": 6,
         "severity_within_one_n": 14,
         "false_critical": 0,
         "question_quality": {
-          "n": 12,
+          "n": 13,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -3030,18 +3037,18 @@
         "gold_defects": 16,
         "found": 16,
         "recall": 1.0,
-        "agent_findings": 24,
-        "precision": 0.875,
-        "precision_with_extra": 0.917,
+        "agent_findings": 23,
+        "precision": 0.87,
+        "precision_with_extra": 0.913,
         "extra_defects": 1,
-        "precision_items": 0.875,
+        "precision_items": 0.87,
         "false_major_on_clean": 1,
         "questions": 16,
-        "gold_covered_by_questions": 15,
-        "question_coverage": 0.938,
+        "gold_covered_by_questions": 16,
+        "question_coverage": 1.0,
         "severe_gold": 12,
-        "severe_covered_by_questions": 11,
-        "severe_question_coverage": 0.917,
+        "severe_covered_by_questions": 12,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.375,
         "severity_within_one": 0.812,
         "severity_exact_n": 6,
@@ -3053,7 +3060,7 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -3087,7 +3094,7 @@
             "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
           },
           {
-            "fid": "F-024",
+            "fid": "F-023",
             "severity": "minor",
             "lines": [
               63
@@ -3097,12 +3104,12 @@
           }
         ],
         "model": "gemini-3.5-flash-lite",
-        "dropped_ungrounded": 0,
+        "dropped_ungrounded": 1,
         "merged_by_critic": 0,
         "merged_overlap": 1,
         "merged_singular": 0,
         "rejected_by_critic": 0,
-        "cache_misses": 2
+        "cache_misses": 1
       }
     ]
   },
@@ -3114,11 +3121,11 @@
     "precision": 0.702,
     "precision_items": 0.702,
     "false_major_on_clean": 0,
-    "severe_covered": 5,
+    "severe_covered": 24,
     "severe_gold": 24,
-    "severe_question_coverage": 0.208,
+    "severe_question_coverage": 1.0,
     "false_critical": 0,
-    "severity_exact": 0.263,
+    "severity_exact": 0.395,
     "severity_within_one": 0.895,
     "precision_with_extra": 0.782,
     "cache_misses": 0,
@@ -3139,14 +3146,14 @@
         "precision_items": 0.667,
         "false_major_on_clean": 0,
         "questions": 3,
-        "gold_covered_by_questions": 2,
-        "question_coverage": 0.143,
+        "gold_covered_by_questions": 10,
+        "question_coverage": 0.714,
         "severe_gold": 7,
-        "severe_covered_by_questions": 1,
-        "severe_question_coverage": 0.143,
-        "severity_exact": 0.3,
+        "severe_covered_by_questions": 7,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.4,
         "severity_within_one": 0.8,
-        "severity_exact_n": 3,
+        "severity_exact_n": 4,
         "severity_within_one_n": 8,
         "false_critical": 0,
         "question_quality": {
@@ -3186,7 +3193,7 @@
             "quote": "удобной"
           },
           {
-            "fid": "F-007",
+            "fid": "F-006",
             "severity": "major",
             "lines": [
               98
@@ -3195,7 +3202,7 @@
             "quote": "Требования пронумерованы и не дублируются"
           },
           {
-            "fid": "F-008",
+            "fid": "F-007",
             "severity": "minor",
             "lines": [
               15
@@ -3224,14 +3231,14 @@
         "precision_items": 0.667,
         "false_major_on_clean": 0,
         "questions": 4,
-        "gold_covered_by_questions": 2,
-        "question_coverage": 0.154,
+        "gold_covered_by_questions": 4,
+        "question_coverage": 0.308,
         "severe_gold": 3,
-        "severe_covered_by_questions": 1,
-        "severe_question_coverage": 0.333,
-        "severity_exact": 0.25,
+        "severe_covered_by_questions": 3,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.5,
         "severity_within_one": 1.0,
-        "severity_exact_n": 1,
+        "severity_exact_n": 2,
         "severity_within_one_n": 4,
         "false_critical": 0,
         "question_quality": {
@@ -3276,7 +3283,7 @@
             "quote": "Банк хочет сократить срок оформления кредитной карты и перевести подачу заявки полностью в цифровой канал. Сервис должен"
           },
           {
-            "fid": "F-006",
+            "fid": "F-005",
             "severity": "major",
             "lines": [
               89
@@ -3305,14 +3312,14 @@
         "precision_items": 0.571,
         "false_major_on_clean": 0,
         "questions": 3,
-        "gold_covered_by_questions": 1,
-        "question_coverage": 0.071,
+        "gold_covered_by_questions": 5,
+        "question_coverage": 0.357,
         "severe_gold": 3,
-        "severe_covered_by_questions": 0,
-        "severe_question_coverage": 0.0,
-        "severity_exact": 0.2,
+        "severe_covered_by_questions": 3,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.4,
         "severity_within_one": 0.8,
-        "severity_exact_n": 1,
+        "severity_exact_n": 2,
         "severity_within_one_n": 4,
         "false_critical": 0,
         "question_quality": {
@@ -3357,7 +3364,7 @@
             "quote": "TBD"
           },
           {
-            "fid": "F-006",
+            "fid": "F-005",
             "severity": "major",
             "lines": [
               98
@@ -3366,7 +3373,7 @@
             "quote": "Лимиты и комиссии заданы числами"
           },
           {
-            "fid": "F-007",
+            "fid": "F-006",
             "severity": "minor",
             "lines": [
               15
@@ -3394,19 +3401,19 @@
         "extra_defects": 0,
         "precision_items": 0.875,
         "false_major_on_clean": 0,
-        "questions": 2,
-        "gold_covered_by_questions": 2,
-        "question_coverage": 0.133,
+        "questions": 3,
+        "gold_covered_by_questions": 7,
+        "question_coverage": 0.467,
         "severe_gold": 5,
-        "severe_covered_by_questions": 1,
-        "severe_question_coverage": 0.2,
+        "severe_covered_by_questions": 5,
+        "severe_question_coverage": 1.0,
         "severity_exact": 0.286,
         "severity_within_one": 1.0,
         "severity_exact_n": 2,
         "severity_within_one_n": 7,
         "false_critical": 0,
         "question_quality": {
-          "n": 2,
+          "n": 3,
           "with_addressee": 1.0,
           "with_options": 1.0,
           "with_assumption": 1.0,
@@ -3466,14 +3473,14 @@
         "precision_items": 0.8,
         "false_major_on_clean": 0,
         "questions": 2,
-        "gold_covered_by_questions": 2,
-        "question_coverage": 0.125,
+        "gold_covered_by_questions": 6,
+        "question_coverage": 0.375,
         "severe_gold": 4,
-        "severe_covered_by_questions": 1,
-        "severe_question_coverage": 0.25,
-        "severity_exact": 0.333,
+        "severe_covered_by_questions": 4,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.5,
         "severity_within_one": 0.833,
-        "severity_exact_n": 2,
+        "severity_exact_n": 3,
         "severity_within_one_n": 5,
         "false_critical": 0,
         "question_quality": {
@@ -3512,7 +3519,7 @@
         ],
         "unmatched": [
           {
-            "fid": "F-005",
+            "fid": "F-004",
             "severity": "minor",
             "lines": [
               18
@@ -3541,14 +3548,14 @@
         "precision_items": 0.833,
         "false_major_on_clean": 0,
         "questions": 3,
-        "gold_covered_by_questions": 3,
-        "question_coverage": 0.188,
+        "gold_covered_by_questions": 5,
+        "question_coverage": 0.312,
         "severe_gold": 2,
-        "severe_covered_by_questions": 1,
-        "severe_question_coverage": 0.5,
-        "severity_exact": 0.2,
+        "severe_covered_by_questions": 2,
+        "severe_question_coverage": 1.0,
+        "severity_exact": 0.4,
         "severity_within_one": 1.0,
-        "severity_exact_n": 1,
+        "severity_exact_n": 2,
         "severity_within_one_n": 5,
         "false_critical": 0,
         "question_quality": {
@@ -3585,7 +3592,7 @@
         ],
         "unmatched": [
           {
-            "fid": "F-006",
+            "fid": "F-005",
             "severity": "minor",
             "lines": [
               11
