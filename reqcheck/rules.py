@@ -125,6 +125,25 @@ def _name_tokens(name: str) -> set[str]:
     return {t.lower() for t in re.findall(r"[A-Za-z][a-z0-9]*|[A-Z]+(?![a-z])", name.replace("_", " "))}
 
 
+# --- Правило «Ограничение и правило в обход него» -------------------------------------------------------
+# Ограничение частоты или количества за период («не более N … в сутки», «максимум один … за месяц») и в другом
+# предложении правило, которое разрешает действие «независимо от …», «повторно», «снова» или сбрасывает счётчик.
+# Если у них общий предмет, требования могут противоречить: что делать, когда второе правило сработает после
+# исчерпания лимита? Это не всегда ошибка (правило-исключение бывает задумано), поэтому — вопрос и severity major.
+LIMIT_FREQ_RE = re.compile(
+    r"\b(максимум|не\s+более|не\s+больше|не\s+чаще|не\s+свыше|только|лишь)\s+(од[иноу]\w*|\d+)\b[^.;]{0,60}?"
+    r"\b(за|в)\s+(\w+\s+)?(месяц|сутки|день|час|неделю|год|период|квартал|сессию)\b", re.IGNORECASE)
+BYPASS_RE = re.compile(r"\bнезависимо\s+от\b|\bповторно\b|\bснова\b|\bещ[её]\s+раз\b|\bзаново\b"
+                       r"|\bсбрасыва\w*|\bобнуля\w*", re.IGNORECASE)
+_SUBJECT_STOP = {"макси", "более", "больш", "чаще", "свыше", "тольк", "лишь", "одного", "одна", "один", "одну",
+                 "такой", "такая", "такое", "месяц", "сутки", "неделю", "период", "кален", "незав", "повто",
+                 "снова", "заново", "если", "когда", "после", "систе", "должн", "может", "котор", "этого", "также"}
+
+
+def _subject_stems(text: str) -> set[str]:
+    return {w[:5] for w in re.findall(r"[a-zа-яё]{4,}", text.lower())} - _SUBJECT_STOP
+
+
 class RuleEngine:
     def __init__(self, doc: Document, blocks: list[Block]):
         self.doc = doc
@@ -373,6 +392,39 @@ class RuleEngine:
                 break  # одной находки на блок достаточно
         return out
 
+    def limit_bypass(self) -> list[Finding]:
+        """Ограничение частоты/количества за период и правило в обход него с общим предметом (см. LIMIT_FREQ_RE)."""
+        sentences: list[tuple[int, str]] = []
+        for b in self.blocks:
+            if b.kind not in ("paragraph", "list_item", "table_row") or b.kind == "table_row" and b.table_header:
+                continue
+            for ln in range(b.line_start, b.line_end + 1):
+                line = self.doc.lines[ln - 1] if 0 < ln <= len(self.doc.lines) else ""
+                sentences += [(ln, part.strip()) for part in re.split(r"(?<=[.;!?])\s+", line) if part.strip()]
+        limits = [(ln, t, m) for ln, t in sentences if (m := LIMIT_FREQ_RE.search(t))]
+        bypasses = [(ln, t, m) for ln, t in sentences if (m := BYPASS_RE.search(t))]
+        out, seen = [], set()
+        for l_ln, l_text, lm in limits:
+            for b_ln, b_text, bm in bypasses:
+                common = _subject_stems(l_text) & _subject_stems(b_text)
+                if l_text == b_text or not common or (l_ln, b_ln) in seen:
+                    continue
+                seen.add((l_ln, b_ln))
+                out.append(self._finding(
+                    scope="set", criterion="set_consistent", severity=MAJOR,
+                    title="Ограничение за период и правило, которое может его обойти",
+                    explanation=f"Строка {l_ln} ограничивает «{lm.group(0)}», а строка {b_ln} разрешает действие "
+                                f"«{bm.group(0)}». Не сказано, какое правило главнее, когда второе срабатывает после "
+                                "того, как ограничение уже исчерпано.",
+                    quotes=[Quote(lm.group(0), l_ln, True), Quote(bm.group(0), b_ln, True)],
+                    suggestion="Явно указать приоритет: ограничение действует всегда или правило из второй строки "
+                               "сбрасывает его (и тогда сколько раз за период).",
+                    question=f"Если ограничение «{lm.group(0)}» уже исчерпано, а затем выполняется условие строки {b_ln} "
+                             f"(«{bm.group(0)}»), действие разрешено или нет?",
+                    addressee="Бизнес-заказчик",
+                ))
+        return out
+
     def _tables(self) -> list[dict]:
         """Таблицы параметров: {fields: {имя: номер строки}, section: str} — колонка Параметр/Поле/Name/Имя."""
         tables: list[dict] = []
@@ -510,5 +562,5 @@ class RuleEngine:
         checklist = self.find_checklists()
         findings = (self.placeholders() + self.empty_sections() + self.empty_tables() + self.missing_version()
                     + self.mixed_units() + self.unfilled_checklist(checklist)
-                    + self.limit_without_period() + self.api_example_mismatch())
+                    + self.limit_without_period() + self.api_example_mismatch() + self.limit_bypass())
         return findings, checklist
