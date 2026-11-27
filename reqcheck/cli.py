@@ -26,7 +26,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--output", "-o", dest="output_opt", metavar="ОТЧЁТ", help="то же, что позиционный путь к отчёту")
     p.add_argument("--model", help="модель (Gemini: GEMINI_MODEL или gemini-3.5-flash; при REQCHECK_LLM_BASE_URL: REQCHECK_LLM_MODEL)")
     p.add_argument("--offline", action="store_true", help="без LLM: только детерминированные правила")
-    p.add_argument("--formats", default="md,pdf,json", help="форматы отчёта через запятую (по умолчанию md,pdf,json)")
+    p.add_argument("--formats", default="md,pdf,json,html", help="форматы отчёта через запятую: md, pdf, json, html (по умолчанию md,pdf,json,html)")
     p.add_argument("--max-size-mb", type=float, default=20.0, help="лимит размера входного файла, МБ (по умолчанию 20)")
     p.add_argument("--timeout", type=float, default=240.0, help="таймаут одного запроса к LLM, с (по умолчанию 240)")
     p.add_argument("--no-cache", action="store_true", help="не использовать кэш ответов LLM")

@@ -1,0 +1,62 @@
+"""Тесты интерактивного HTML-отчёта: содержимое, экранирование, запись рядом с другими форматами, формат ответов."""
+
+import re
+
+from reqcheck.clarify import parse_answers
+from reqcheck.models import Finding, Question, Quote
+from reqcheck.pipeline import Options, run, write_outputs
+from reqcheck.report_html import render_html
+
+
+def _result(sample_md):
+    from test_pipeline import _fake
+    result = run(str(sample_md), Options(), llm=_fake(sample_md))
+    # Вопросы и находка с вредным текстом задаём явно: от фикстуры LLM их наличие не зависит
+    result.questions = [Question(qid="Q-01", text="Какой срок SMS?", priority="blocker", addressee="Аналитик",
+                                 why="Нельзя проверить", options=["30 секунд", "5 минут"], assumption="30 секунд",
+                                 fids=["F-001"], lines=[3])]
+    result.findings.append(Finding(fid="F-XSS", scope="set", criterion="complete", severity="minor",
+                                   title="<script>alert(1)</script>", explanation="</script><img src=x onerror=alert(2)>",
+                                   quotes=[Quote(text="<b>x</b>", line=1, found=True)]))
+    return result
+
+
+def test_html_has_all_ids(sample_md):
+    result = _result(sample_md)
+    out = render_html(result)
+    assert out.lower().startswith("<!doctype html>")
+    for f in result.findings:
+        assert f.fid in out
+    for q in result.questions:
+        assert q.qid in out
+
+
+def test_html_escapes_model_text(sample_md):
+    out = render_html(_result(sample_md))
+    assert "<script>alert" not in out and "<img src=x" not in out
+    assert out.count("</script>") == 2  # только свои закрывающие теги (данные и код)
+
+
+def test_html_has_no_external_resources(sample_md):
+    out = render_html(_result(sample_md))
+    assert not re.findall(r"https?://", out)
+
+
+def test_write_outputs_writes_html(sample_md, tmp_path):
+    result = _result(sample_md)
+    written, problems = write_outputs(result, str(tmp_path / "out" / "r.md"), ("md", "html"))
+    html_file = tmp_path / "out" / "r.html"
+    assert str(html_file) in written and html_file.read_text(encoding="utf-8").lower().startswith("<!doctype html>")
+    assert not [p for p in problems if p.code == "UNKNOWN_FORMAT"]
+
+
+def test_answers_in_html_format_are_parsed():
+    # Тот же формат, что собирает JS: «Вариант N: текст», затем свой текст ответа
+    text = ("# Вопросы агента автору требований: ТЗ\n\n"
+            "## Q-01 · блокирует разработку · Кому: Аналитик\n\nВопрос: Какой срок SMS?\n"
+            "Варианты: (1) 30 секунд; (2) 5 минут\nНаходки: F-001\n"
+            "Ответ: Вариант 1: 30 секунд\nНо не более минуты при сбоях\n\n"
+            "## Q-02 · можно уточнить по ходу · Кому: Аналитик\n\nВопрос: Другое?\nНаходки: F-002\nОтвет:\n")
+    got = parse_answers(text)
+    assert [a["qid"] for a in got] == ["Q-01"]
+    assert got[0]["answer"].startswith("Вариант 1: 30 секунд") and "не более минуты" in got[0]["answer"]

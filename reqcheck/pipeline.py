@@ -201,6 +201,7 @@ def _resolved(path: str) -> Path | None:
 
 def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...]) -> tuple[list[str], list[Diagnostic]]:
     """Записать отчёт. Формат основного файла — по расширению; остальные — рядом с тем же именем."""
+    from reqcheck.report_html import render_html
     from reqcheck.report_md import render_markdown
     from reqcheck.report_pdf import render_pdf
 
@@ -239,6 +240,8 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
                 target.write_text(json.dumps(result.to_dict(), ensure_ascii=False, indent=2, default=str), encoding="utf-8")
             elif fmt == "pdf":
                 render_pdf(md_text, str(target))
+            elif fmt == "html":
+                target.write_text(render_html(result), encoding="utf-8")
             else:
                 problems.append(Diagnostic("warning", "UNKNOWN_FORMAT", f"Неизвестный формат отчёта «{fmt}» пропущен."))
                 continue
