@@ -51,6 +51,9 @@ class LLMStats:
     errors: list[str] = field(default_factory=list)
     models_used: list[str] = field(default_factory=list)
     thinking_tokens: int = 0
+    # Наблюдение за схемами ответов (reqcheck.schemas): только счётчики, на отчёт и поведение не влияют
+    schema_violations: dict[str, int] = field(default_factory=dict)  # роль -> число нарушений
+    schema_samples: dict[str, list[str]] = field(default_factory=dict)  # роль -> первые сообщения
     by_role: dict[str, dict[str, float]] = field(default_factory=dict)  # журнал по агентам: вызовы, кэш, токены, время
     # Агенты работают в нескольких потоках на одном клиенте: счётчики меняем только под блокировкой
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
@@ -67,6 +70,20 @@ class LLMStats:
                 setattr(self, key, getattr(self, key) + val)
                 if rs is not None and key in rs:
                     rs[key] += val
+
+    def note_schema(self, role: str, data: Any) -> None:
+        """Сверить ответ роли со схемой, записать нарушения в статистику. Данные не меняет, исключений не бросает."""
+        try:
+            from reqcheck.schemas import violations
+            found = violations(role, data)
+        except Exception:  # noqa: BLE001 — наблюдение не должно ломать прогон
+            return
+        if not found:
+            return
+        with self._lock:
+            self.schema_violations[role] = self.schema_violations.get(role, 0) + len(found)
+            samples = self.schema_samples.setdefault(role, [])
+            samples.extend(m for m in found[:2] if len(samples) < 2)
 
     def note(self, error: str = "", model_version: str = "") -> None:
         with self._lock:
@@ -192,6 +209,7 @@ class GeminiClient:
         payload = system + "\n\n" + prompt
         hit, cached = self._from_cache(role, payload)
         if hit:
+            self.stats.note_schema(role, cached)
             return cached
         if self._exhausted:
             raise LLMError(self._exhausted)
@@ -248,6 +266,7 @@ class GeminiClient:
                                                     ensure_ascii=False), encoding="utf-8")
                     except OSError:
                         pass
+                self.stats.note_schema(role, parsed)
                 return parsed
             except (ValueError, json.JSONDecodeError) as exc:
                 # Невалидный JSON: повторяем с явным напоминанием

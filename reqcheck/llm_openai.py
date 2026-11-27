@@ -113,6 +113,7 @@ class OpenAICompatClient:
         payload = system + "\n\n" + prompt
         hit, cached = self._from_cache(role, payload)
         if hit:
+            self.stats.note_schema(role, cached)
             return cached
         if self._exhausted:
             raise LLMError(self._exhausted)
@@ -136,6 +137,7 @@ class OpenAICompatClient:
                                                     ensure_ascii=False), encoding="utf-8")
                     except OSError:
                         pass
+                self.stats.note_schema(role, parsed)
                 return parsed
             except (ValueError, json.JSONDecodeError) as exc:
                 self.stats.add(seconds=time.perf_counter() - started)
