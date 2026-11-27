@@ -12,7 +12,7 @@ from reqcheck.models import Finding, Question, Quote
 
 
 def _contradiction():
-    return Finding(fid="F-001", scope="set", criterion="consistent", severity="critical", title="Срок хранения",
+    return Finding(fid="F-001", scope="set", criterion="set_consistent", severity="critical", title="Срок хранения",
                    explanation="", quotes=[Quote("Черновик хранится 30 суток", 3, True),
                                            Quote("Черновик удаляется через 45 суток", 5, True)])
 
@@ -41,7 +41,7 @@ def test_no_conflict_when_only_chosen_side_kept():
 
 
 def test_no_conflict_for_scope_narrowing_without_keep_marker():
-    f = Finding(fid="F-002", scope="set", criterion="consistent", severity="major", title="Код ошибки",
+    f = Finding(fid="F-002", scope="set", criterion="set_consistent", severity="major", title="Код ошибки",
                 explanation="", quotes=[Quote("возвращается 403", 3, True), Quote("возвращается 404", 5, True)])
     assert kept_conflict("Для карт возвращаем 404. Код 403 остаётся только для запрета по роли.", f) is None
 
@@ -59,6 +59,17 @@ def test_kept_conflict_parts_without_punctuation_and_split_by_lines():
 
 def test_no_conflict_when_author_says_it_is_another_matter():
     assert kept_conflict("Принимаем 45 суток. Срок 30 суток для другого процесса, не трогаем.", _contradiction()) is None
+
+
+def test_no_conflict_when_chosen_side_is_another_matter():
+    # «45 суток — для другого процесса»: автор оставляет 30 и спорит с находкой, а не оставляет противоречие
+    assert kept_conflict("Оставляем 30 суток как есть. 45 суток — для другого процесса.", _contradiction()) is None
+
+
+def test_no_conflict_for_finding_that_is_not_a_contradiction():
+    f = Finding(fid="F-004", scope="requirement", criterion="singular", severity="major", title="Два требования",
+                explanation="", quotes=[Quote("Срок 30 дней", 3, True), Quote("Доступность 99%", 5, True)])
+    assert kept_conflict("Срок 30 дней подтверждаем. Доступность 99% оставляем как есть.", f) is None
 
 
 # --- в Resolver ------------------------------------------------------------------------------------

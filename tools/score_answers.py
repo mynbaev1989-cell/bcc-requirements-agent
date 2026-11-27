@@ -33,7 +33,7 @@ def score_folder(folder: Path) -> dict:
         key = json.loads(key_path.read_text(encoding="utf-8"))
         report_path = folder / f"{name}.json"
         if not report_path.exists():
-            raise SystemExit(f"Нет отчёта {report_path}: соберите его с --answers {name}_answers.md")
+            raise FileNotFoundError(f"Нет отчёта {report_path}: соберите его с --answers {name}_answers.md")
         report = json.loads(report_path.read_text(encoding="utf-8"))
         qmap = {q["qid"]: q for q in report.get("questions", [])}
         rows = []
@@ -52,7 +52,10 @@ def score_folder(folder: Path) -> dict:
 
 def main() -> int:
     folder = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("reports/independent_answers/blind2")
-    res = score_folder(folder)
+    try:
+        res = score_folder(folder)
+    except FileNotFoundError as e:
+        raise SystemExit(str(e)) from None
     (folder / "score.json").write_text(json.dumps(res, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for t in TYPES:
         ok, n = res["by_type"][t]

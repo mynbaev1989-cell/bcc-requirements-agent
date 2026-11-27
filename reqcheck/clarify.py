@@ -361,6 +361,7 @@ def self_contradictions(data, answer_by_q: dict[str, str]) -> dict[str, tuple[st
 # мы пробовали и убрали: ответ «срок рассмотрения 5 дней, срок исполнения 10 дней» она принимала за противоречие.
 _KEEP_AS_IS = re.compile(r"как есть|не трога|без изменени|не меня", re.I)
 _OTHER_MATTER = re.compile(r"друг(?:ой|ого|ая|ое|ие|их)\b|отдельн|не связан", re.I)
+_CONFLICT_CRITERIA = ("set_consistent", "correct")  # противоречие между строками / с фактами в документе
 _REWRITE = re.compile(r"замен|исправ|удал|убра|исключ|вместо|отмен|перепис|привест|привед", re.I)
 
 
@@ -374,7 +375,10 @@ def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
 
     Стороны — цитаты находки с разных строк; их значения — числа, которые есть только у этой стороны.
     Сторона «оставлена», если предложение с её числом содержит «как есть» / «не трогаем» и не содержит глагола
-    замены. Сторона «выбрана», если её число стоит в ответе вне предложения с заменой."""
+    замены. Сторона «выбрана», если её число стоит в ответе вне предложения с заменой и вне «это другое».
+    Проверяются только находки-противоречия: у других находок две цитаты — не две стороны спора."""
+    if finding.criterion not in _CONFLICT_CRITERIA:
+        return None
     by_line: dict[int, set[str]] = {}
     for q in finding.quotes:
         if q.line:
@@ -392,7 +396,8 @@ def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
             continue
         for j, other in enumerate(sides):
             other_own = other - side
-            chosen = [s for s in sents if s not in kept and not _REWRITE.search(s) and _numbers(s) & other_own]
+            chosen = [s for s in sents if s not in kept and not _REWRITE.search(s) and not _OTHER_MATTER.search(s)
+                      and _numbers(s) & other_own]
             if j != i and chosen:
                 return chosen[0], kept[0]
     return None
