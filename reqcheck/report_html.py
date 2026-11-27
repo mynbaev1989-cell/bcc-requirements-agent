@@ -1,6 +1,6 @@
 """Интерактивный HTML-отчёт: один самодостаточный файл (CSS и JS внутри, без сети).
 
-Данные встраиваются JSON-ом в <script type="application/json"> и рисуются из JS через textContent,
+Данные встраиваются JSON-ом (он же литерал JS) в обычный <script> и рисуются из JS через textContent,
 поэтому текст модели и документа не может внедрить разметку. В JSON дополнительно экранируются < > &."""
 
 from __future__ import annotations
@@ -147,11 +147,11 @@ button.btn{background:var(--accent);color:#fff;border:0;border-radius:6px;paddin
 <div class="pane" id="pane-reqs" hidden><div id="rlist"></div></div>
 </section>
 </main>
-<script type="application/json" id="data">{{DATA}}</script>
 <script>
 (function(){
 "use strict";
-var D=JSON.parse(document.getElementById("data").textContent);
+// Литерал вместо <script type="application/json">: так отчёт работает и в просмотрщиках, которые исполняют все <script>
+var D={{DATA}};
 var SEV=["critical","major","minor"],RANK={critical:0,major:1,minor:2};
 // Создать элемент; текст всегда через textContent (никакого innerHTML)
 function el(tag,cls,text,parent){var e=document.createElement(tag);if(cls)e.className=cls;
