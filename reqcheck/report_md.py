@@ -479,7 +479,8 @@ def render_markdown(result: RunResult) -> str:
         a("")
         a("| Показатель | Значение |")
         a("| :--- | ---: |")
-        a(f"| Ручное ревью (допущение: {v['manual_base_min']:.0f} мин + {v['manual_min_per_requirement']:.0f} мин × требование) | {v['manual_hours']} ч |")
+        a(f"| Ручное ревью (допущение: {v['manual_base_min']:.0f} мин + {v['manual_min_per_requirement']:.0f} мин × требование) "
+          f"| {v['manual_hours']} ч |")
         a(f"| Работа агента (замер) | {v['agent_hours'] * 60:.1f} мин |")
         a(f"| Проверка отчёта человеком ({v['check_min_per_finding']} мин × находка) | {v['check_hours']} ч |")
         a(f"| Экономия времени ревью на документ | **{v['saved_hours']} ч ≈ {sp(v['saved_kzt'])} ₸** при ставке {sp(v['rate_kzt_per_hour'])} ₸/ч |")

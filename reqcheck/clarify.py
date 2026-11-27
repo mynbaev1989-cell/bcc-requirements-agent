@@ -278,7 +278,7 @@ def match_answers(answers: list[dict], questions: list[Question]) -> list[tuple[
     used: set[str] = set()
     pairs = []
     for a in answers:
-        sim = lambda x: SequenceMatcher(None, normalize(x.text), normalize(a["question"])).ratio()  # noqa: E731
+        sim = lambda x: SequenceMatcher(None, normalize(x.text), normalize(a["question"])).ratio()  # noqa: E731, B023 — вызывается в той же итерации
         q = by_id.get(a["qid"])
         if q is None or q.qid in used or (a["question"] and sim(q) < 0.6):
             free = [x for x in questions if x.qid not in used]

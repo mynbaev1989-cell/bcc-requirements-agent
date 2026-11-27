@@ -39,7 +39,7 @@ class Grounder:
         parts: list[str] = []
         self._offsets: list[int] = []
         pos = 0
-        for i, nl in enumerate(self.norm_lines):
+        for nl in self.norm_lines:
             self._offsets.append(pos)
             parts.append(nl)
             pos += len(nl) + 1
@@ -84,7 +84,7 @@ class Grounder:
             pieces = [p.strip() for p in re.split(r"\.\.\.|…", q) if len(p.strip()) >= 6]
             # Части ищем по порядку и рядом друг с другом: иначе цитату можно склеить из фраз разных разделов
             start = self.joined.find(pieces[0]) if pieces else -1
-            lines: list[int] = []
+            hits: list[int] = []
             while start >= 0:
                 pos, ok = start + len(pieces[0]), True
                 for p in pieces[1:]:
@@ -94,12 +94,12 @@ class Grounder:
                         break
                     pos = nxt + len(p)
                 if ok:
-                    lines.append(self._line_at(start))
+                    hits.append(self._line_at(start))
                     if not near:
                         break
                 start = self.joined.find(pieces[0], start + 1)
-            if lines:  # как и у точной цитаты: из нескольких вхождений — ближайшее к требованию
-                best = min(lines, key=lambda ln: (min(abs(ln - n) for n in near), ln)) if near else lines[0]
+            if hits:  # как и у точной цитаты: из нескольких вхождений — ближайшее к требованию
+                best = min(hits, key=lambda ln: (min(abs(ln - n) for n in near), ln)) if near else hits[0]
                 return Quote(text=quote, line=best, found=True)
         if len(q) < self.MIN_FUZZY_LEN:
             return Quote(text=quote, found=False)
@@ -108,8 +108,8 @@ class Grounder:
         keywords = [w for w in re.findall(r"\w{5,}", q)][:12]
         need = max(1, len(keywords) // 2)
         for i in range(len(self.norm_lines)):
-            near = " ".join(self.norm_lines[i:i + 3])
-            if keywords and sum(1 for w in keywords if w in near) < need:
+            nearby = " ".join(self.norm_lines[i:i + 3])
+            if keywords and sum(1 for w in keywords if w in nearby) < need:
                 continue
             window = self.norm_lines[i]
             for extra in range(0, 3):

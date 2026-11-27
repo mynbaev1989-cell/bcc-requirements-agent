@@ -132,7 +132,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
             clean_lines.add(loc.line)
     false_on_clean = [f for f, fl in agent if fl & clean_lines and f.severity in ("critical", "major")]
     by_type: dict[str, list[int]] = {}
-    for d, dl in gold:
+    for d, _ in gold:
         t = d.get("type", "other")
         by_type.setdefault(t, [0, 0])
         by_type[t][1] += 1

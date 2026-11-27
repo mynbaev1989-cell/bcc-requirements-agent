@@ -163,7 +163,7 @@ class GeminiClient:
     def _cache_path(self, payload: str, model: str | None = None) -> Path | None:
         if not self.cache_dir:
             return None
-        digest = hashlib.sha256(f"{model or self.model}\n{payload}".encode("utf-8")).hexdigest()
+        digest = hashlib.sha256(f"{model or self.model}\n{payload}".encode()).hexdigest()
         return self.cache_dir / f"{digest}.json"
 
     def _from_cache(self, role: str, payload: str) -> tuple[bool, Any]:

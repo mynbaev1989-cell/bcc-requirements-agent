@@ -14,7 +14,8 @@ import re
 import threading
 import zipfile
 from pathlib import Path
-from typing import Callable, TypeVar
+from typing import TypeVar
+from collections.abc import Callable
 
 from reqcheck.models import Diagnostic, Document
 
@@ -122,7 +123,7 @@ def _read_pdf(raw: bytes, max_pages: int) -> tuple[str, list[int], int, list[Dia
     try:
         reader = PdfReader(io.BytesIO(raw), strict=False)
     except (PdfReadError, ValueError, OSError, KeyError, TypeError) as exc:
-        raise _fail("PDF_CORRUPTED", f"PDF повреждён и не читается: {exc}", "Пересохраните PDF из исходного редактора.")
+        raise _fail("PDF_CORRUPTED", f"PDF повреждён и не читается: {exc}", "Пересохраните PDF из исходного редактора.") from exc
     if reader.is_encrypted:
         try:
             ok = reader.decrypt("")
@@ -138,7 +139,7 @@ def _read_pdf(raw: bytes, max_pages: int) -> tuple[str, list[int], int, list[Dia
         pages = reader.pages
         n_pages = len(pages)
     except Exception as exc:  # noqa: BLE001
-        raise _fail("PDF_CORRUPTED", f"Не удалось прочитать структуру страниц PDF: {exc}", "Пересохраните PDF.")
+        raise _fail("PDF_CORRUPTED", f"Не удалось прочитать структуру страниц PDF: {exc}", "Пересохраните PDF.") from exc
     if n_pages == 0:
         raise _fail("PDF_NO_PAGES", "В PDF нет ни одной страницы.", "Проверьте, что выгружен правильный файл.")
     if n_pages > max_pages:
@@ -301,7 +302,7 @@ def _read_docx(raw: bytes) -> str:
     try:
         document = docx.Document(io.BytesIO(raw))
     except Exception as exc:  # noqa: BLE001
-        raise _fail("DOCX_CORRUPTED", f"DOCX повреждён: {exc}", "Откройте файл в Word и сохраните заново.")
+        raise _fail("DOCX_CORRUPTED", f"DOCX повреждён: {exc}", "Откройте файл в Word и сохраните заново.") from exc
     out: list[str] = []
     numbering = _DocxNumbering(document)
     # Абзацы и таблицы в порядке следования в документе
@@ -362,7 +363,7 @@ def load_document(
     try:
         size = p.stat().st_size
     except OSError as exc:
-        raise _fail("FILE_UNREADABLE", f"Нет доступа к файлу: {exc}", "Проверьте права доступа.")
+        raise _fail("FILE_UNREADABLE", f"Нет доступа к файлу: {exc}", "Проверьте права доступа.") from exc
     if size > max_bytes:
         raise _fail(
             "FILE_TOO_LARGE",
@@ -372,7 +373,7 @@ def load_document(
     try:
         raw = p.read_bytes()
     except OSError as exc:
-        raise _fail("FILE_UNREADABLE", f"Не удалось прочитать файл: {exc}", "Проверьте, что файл не открыт эксклюзивно другой программой.")
+        raise _fail("FILE_UNREADABLE", f"Не удалось прочитать файл: {exc}", "Проверьте, что файл не открыт эксклюзивно другой программой.") from exc
 
     suffix = p.suffix.lower()
     kind = detect_format(raw, suffix)

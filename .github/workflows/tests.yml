@@ -26,6 +26,11 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: pip
       - run: pip install -r requirements-dev.txt
+      - name: Линтер (ruff) и строгая типизация ядра — модели данных и сверка цитат (mypy --strict)
+        shell: bash  # в pwsh шаг вернул бы код только последней команды
+        run: |
+          python -m ruff check reqcheck tools main.py
+          python -m mypy
       - name: Документ кейса для теста PDF (input/ не хранится в репозитории)
         shell: bash
         run: curl -sSfL -o input/requirements.md --create-dirs https://raw.githubusercontent.com/BCC-HUB/ai-requirements-validator-task/main/docs/requirements.md
