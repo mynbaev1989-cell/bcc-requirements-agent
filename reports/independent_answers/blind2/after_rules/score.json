@@ -199,8 +199,8 @@
           "qid": "Q-07",
           "type": "contradictory",
           "should_close": false,
-          "closed": 0,
-          "correct": true
+          "closed": 1,
+          "correct": false
         },
         {
           "qid": "Q-08",
@@ -236,10 +236,10 @@
       6
     ],
     "contradictory": [
-      5,
+      4,
       6
     ]
   },
-  "correct": 29,
+  "correct": 28,
   "answers": 30
 }
