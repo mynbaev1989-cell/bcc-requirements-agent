@@ -34,6 +34,11 @@ _LINE_IN_TEXT = re.compile(r"(строк\w*|стр\.?|line)\s*№?\s*\d", re.IGN
 # ни в подтверждённых вручную дефектах <имя>.extra.json: реальный дефект вне разметки — не ложная тревога. Промах кэша недопустим:
 # без ответа модели шаг тихо уходит в запасной вариант, и метрики почти не меняются (проверено: 86,0% вместо 86,1%).
 GATE = {"found": 100, "precision": 0.85, "false_critical_unconfirmed": 0, "cache_misses": 0}
+# Порог по каждому документу: найдено не меньше, чем в эталонном замере, минус 1. Иначе регрессия на одном
+# документе прячется в сумме за случайной находкой на другом.
+GATE_DOC_FOUND = {"autopay_utilities.md": 13, "credit_card_application.md": 12, "p2p_phone.md": 12,
+                  "holdout_deposit.md": 14, "holdout_installments.md": 14,
+                  "blind_card_block.md": 13, "blind_payroll.md": 15}
 
 
 def gate_failures(r: dict) -> list[str]:
@@ -47,6 +52,10 @@ def gate_failures(r: dict) -> list[str]:
         out.append(f"ложных critical вне эталона и extra.json: {r['false_critical_unconfirmed']}")
     if r["cache_misses"] > GATE["cache_misses"]:
         out.append(f"промахов кэша {r['cache_misses']}: ответа модели нет в кэше, шаг ушёл в запасной вариант")
+    for d in r.get("docs", []):
+        need = GATE_DOC_FOUND.get(d.get("document", ""))
+        if need is not None and d.get("found", 0) < need:
+            out.append(f"{d['document']}: найдено {d.get('found', 0)} < {need}")
     return out
 
 

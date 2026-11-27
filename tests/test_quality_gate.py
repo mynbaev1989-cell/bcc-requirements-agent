@@ -23,6 +23,15 @@ def test_each_threshold_fails_gate():
     assert msg and "промах" in msg[0]  # пропавший файл кэша не проходит молча
 
 
+def test_per_document_threshold_catches_regression_hidden_in_total():
+    from tools.eval_score import GATE_DOC_FOUND
+    docs = [{"document": k, "found": v + 1} for k, v in GATE_DOC_FOUND.items()]
+    assert gate_failures({**GOOD, "docs": docs}) == []
+    docs[0] = {**docs[0], "found": docs[0]["found"] - 2}  # сумма почти та же, но один документ просел на 2
+    msg = gate_failures({**GOOD, "docs": docs})
+    assert msg and docs[0]["document"] in msg[0]
+
+
 def test_committed_cache_is_clean():
     """В репозиторий попадают только ответы модели: без ключей, путей и посторонних полей."""
     files = sorted(CACHE.glob("*.json"))
