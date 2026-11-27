@@ -657,10 +657,20 @@ def overlap_duplicates(findings: list[Finding]) -> list[tuple[Finding, Finding]]
                 best, score = t, j
         if best is not None:
             pairs.append((s, best))
+    taken = {id(d) for d, _ in pairs} | {id(m) for _, m in pairs}
+    # Находка правила кода о возможном противоречии (rules.limit_bypass), которое LLM уже описала на тех же строках
+    for r in findings:
+        if r.source != "rule" or r.criterion != "set_consistent" or id(r) in taken or not lines[id(r)]:
+            continue
+        for t in findings:
+            if (t.source == "llm" and t.criterion in ("set_consistent", "correct") and id(t) not in taken
+                    and all(any(abs(a - b) <= 1 for b in lines[id(t)]) for a in lines[id(r)])):
+                pairs.append((r, t))
+                taken |= {id(r), id(t)}
+                break
     # Две находки по требованию об одном дефекте под разными критериями (Reviewer подписал «Уместность»,
     # ConsistencyReviewer — «Корректность»): общее требование, строки рядом и почти одинаковый заголовок.
     # Порог строже, чем для пары «набор — требование»: на одном требовании бывает несколько разных дефектов.
-    taken = {id(d) for d, _ in pairs} | {id(m) for _, m in pairs}
     for i, a in enumerate(targets):
         for b in targets[i + 1:]:
             if id(a) in taken or id(b) in taken or a.criterion == b.criterion or not set(a.rids) & set(b.rids):

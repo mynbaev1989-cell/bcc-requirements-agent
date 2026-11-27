@@ -28,3 +28,17 @@ def test_no_hit_without_common_subject_or_without_bypass(tmp_path):
     assert _hits(tmp_path, "* Не более 5 переводов в сутки.\n* Перевод подтверждается кодом.\n") == []
     # Обе части в одном предложении — это уточнение правила, а не два правила
     assert _hits(tmp_path, "* Не более 2 выписок в месяц, повторно выписку можно заказать в отделении.\n") == []
+
+
+def test_rule_finding_merged_into_llm_contradiction_on_same_lines():
+    from reqcheck.agents import overlap_duplicates
+    from reqcheck.models import Finding, Quote
+
+    llm = Finding("F-1", "set", "set_consistent", "critical", "Противоречие лимита уведомлений", "",
+                  quotes=[Quote("a", line=39, found=True), Quote("b", line=40, found=True)])
+    rule = Finding("F-2", "set", "set_consistent", "major", "Ограничение за период и правило, которое может его обойти", "",
+                   source="rule", quotes=[Quote("a", line=39, found=True), Quote("b", line=40, found=True)])
+    other = Finding("F-3", "set", "set_consistent", "major", "Противоречие сроков", "",
+                    quotes=[Quote("c", line=80, found=True)])
+    assert overlap_duplicates([llm, rule, other]) == [(rule, llm)]
+    assert overlap_duplicates([rule, other]) == []  # LLM этого не нашла — находка правила остаётся
