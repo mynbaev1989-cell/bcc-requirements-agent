@@ -400,3 +400,15 @@ def test_no_green_verdict_when_document_read_partially(tmp_path, code):
         assert result.verdict_dev.startswith("Да")
     else:
         assert not result.verdict_dev.startswith("Да") and not result.verdict_test.startswith("Да")
+
+
+def test_requirement_card_flags_set_level_conflict(sample_md):
+    # Ревью 87611bf: у Ф-3 и Ф-4 стояло «100/100» без пометки, хотя они участвуют в критичном противоречии набора
+    from reqcheck.report_md import render_markdown
+    res = run(str(sample_md), Options(formats=()), llm=_fake(sample_md))
+    conflict = next(f for f in res.findings if f.scope == "set" and f.severity == "critical" and len(f.rids) >= 2)
+    md = render_markdown(res)
+    for rid in conflict.rids:
+        card = md.split(f"### {rid} · ", 1)[1].split("\n### ", 1)[0]
+        assert f"участвует в дефекте набора {conflict.fid}" in card.splitlines()[0]
+        assert f"дефекте набора **{conflict.fid}**" in card

@@ -6,7 +6,7 @@ from collections import Counter, defaultdict
 
 from reqcheck import criteria
 from reqcheck.clarify import PRIORITY_ICON, PRIORITY_RU
-from reqcheck.models import CRITICAL, NA, OK, SEVERITY_RU, VIOLATION, Finding, Quote, RunResult
+from reqcheck.models import CRITICAL, MAJOR, NA, OK, SEVERITY_RU, VIOLATION, Finding, Quote, RunResult
 
 LIGHT = {"green": "🟢", "yellow": "🟡", "red": "🔴"}
 SEV_ICON = {"critical": "🔴", "major": "🟠", "minor": "🟡"}
@@ -175,14 +175,22 @@ def render_markdown(result: RunResult) -> str:
     a("")
     by_rid: dict[str, list[Finding]] = defaultdict(list)
     grouped_by_rid: dict[str, list[Finding]] = defaultdict(list)  # сводные находки: у требования — только ссылка
+    set_by_rid: dict[str, list[Finding]] = defaultdict(list)  # дефекты набора (противоречия), где участвует пункт
     for f in findings:
         if f.scope == "requirement" or f.grouped:
             for rid in f.rids:
                 (grouped_by_rid if f.grouped else by_rid)[rid].append(f)
+        elif f.severity in (CRITICAL, MAJOR):
+            for rid in f.rids:
+                set_by_rid[rid].append(f)
     for r in reqs:
         asm = result.assessments.get(r.rid)
         score = f"{LIGHT.get(asm.light, '')} {asm.score}/100" if asm else ""
-        a(f"### {r.rid} · {r.source_id or 'без номера'} · {score}")
+        in_set = set_by_rid.get(r.rid, [])
+        # Балл — по критериям самого пункта; противоречие с другим пунктом считается в наборе (раздел 4),
+        # но у карточки «100/100» без пометки читатель решит, что с пунктом всё хорошо
+        flag = (" · ⚠️ участвует в дефекте набора " + ", ".join(f.fid for f in in_set)) if in_set else ""
+        a(f"### {r.rid} · {r.source_id or 'без номера'} · {score}{flag}")
         a("")
         a(f"> {' '.join(r.quote.split())} ({_where(result, r.line_start)})")
         a("")
@@ -206,8 +214,15 @@ def render_markdown(result: RunResult) -> str:
             for f in fs:
                 L.extend(_finding_md(result, f, rid_map))
             a("")
-        elif not grouped_by_rid.get(r.rid):
+        elif not grouped_by_rid.get(r.rid) and not in_set:
             a("Дефектов не найдено.")
+            a("")
+        elif not grouped_by_rid.get(r.rid):
+            a("Дефектов в самом пункте не найдено.")
+            a("")
+        for f in in_set:
+            a(f"⚠️ Пункт участвует в дефекте набора **{f.fid}** · {SEV_ICON.get(f.severity, '')} "
+              f"{SEVERITY_RU.get(f.severity, f.severity)}: {f.title} — см. раздел 4.")
             a("")
         for f in grouped_by_rid.get(r.rid, []):
             a(f"См. сводную находку **{f.fid}** в дефектах набора: {f.title}.")

@@ -35,11 +35,18 @@ def _data(result: RunResult) -> dict:
         "options": q.options, "assumption": q.assumption, "fids": q.fids, "lines": q.lines, "answer": q.answer,
     } for q in result.questions]
     reqs = []
+    # Противоречия набора, где участвует пункт: балл пункта их не учитывает, поэтому показываем рядом с баллом
+    in_set: dict[str, list[str]] = {}
+    for f in result.findings:
+        if f.scope != "requirement" and not f.grouped and f.severity in ("critical", "major"):
+            for rid in f.rids:
+                in_set.setdefault(rid, []).append(f.fid)
     for r in result.requirements:
         asm = result.assessments.get(r.rid)
         reqs.append({"rid": r.rid, "source_id": r.source_id if not r.source_id_assigned else "", "summary": r.summary,
                      "quote": r.quote, "kind": r.kind, "line_start": r.line_start, "line_end": r.line_end,
-                     "section": r.section, "score": asm.score if asm else None, "light": asm.light if asm else ""})
+                     "section": r.section, "score": asm.score if asm else None, "light": asm.light if asm else "",
+                     "in_set": in_set.get(r.rid, [])})
     return {
         "title": (doc.title if doc else "") or p.get("document_title", "") or "Документ",
         "lines": list(doc.lines) if doc else [],
@@ -272,7 +279,8 @@ $("dl").addEventListener("click",function(){
 var rl=$("rlist");
 if(!D.requirements.length)el("div","empty","Требований нет.",rl);
 D.requirements.forEach(function(r){var c=el("div","card",null,rl);
- el("div","meta",r.rid+(r.source_id?" · "+r.source_id:"")+" · "+r.kind+(r.score!==null?" · балл "+r.score+"/100":"")+" · "+r.section,c);
+ var inSet=(r.in_set||[]).length?" · ⚠️ в дефекте набора "+r.in_set.join(", "):"";
+ el("div","meta",r.rid+(r.source_id?" · "+r.source_id:"")+" · "+r.kind+(r.score!==null?" · балл "+r.score+"/100":"")+inSet+" · "+r.section,c);
  el("div",null,r.summary,c);if(r.quote)el("div","quote",r.quote,c);
  var a=el("a","lnk","стр. "+r.line_start+(r.line_end!==r.line_start?"–"+r.line_end:""),c);
  a.addEventListener("click",function(){flash(r.line_start);});});

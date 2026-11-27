@@ -1,0 +1,730 @@
+[
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "«быстро» неизмеримо"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-012",
+  "reason": "удобство без метрики"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-005",
+  "reason": "конфликт лимитов 5 и 10"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-017",
+  "reason": "расчёт комиссии 1% vs 300"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D5",
+  "verdict": "same",
+  "fid": "F-001",
+  "reason": "24 ч vs 48 ч"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D6",
+  "verdict": "same",
+  "fid": "F-007",
+  "reason": "«по возможности» неопределённо"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D7",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "нет параметров повтора запроса"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-027",
+  "reason": "неатомарность того же пункта"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-009",
+  "reason": "навязана СУБД"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-013",
+  "reason": "тенге vs тиыны"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D11",
+  "verdict": "same",
+  "fid": "F-019",
+  "reason": "заглушка в разделе"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-023",
+  "reason": "нет версии и даты"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "GET меняет состояние"
+ },
+ {
+  "doc": "autopay_utilities.md",
+  "defect_id": "D14",
+  "verdict": "same",
+  "fid": "F-016",
+  "reason": "код 201 для ошибки"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "«быстро»"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-007",
+  "reason": "непроверяемый интерфейс"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-001",
+  "reason": "21 vs 18 лет"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-012",
+  "reason": "19 лет в приёмке vs минимум 21"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D5",
+  "verdict": "same",
+  "fid": "F-006",
+  "reason": "55 vs 60 дней"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D6",
+  "verdict": "same",
+  "fid": "F-002",
+  "reason": "нет обработки недоступности базы"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D7",
+  "verdict": "same",
+  "fid": "F-022",
+  "reason": "неатомарность, цитата пункта включена"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-005",
+  "reason": "навязан XGBoost/Kubernetes"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D9",
+  "verdict": "related",
+  "fid": "F-022",
+  "reason": "цитата ставок только как неатомарность, разные периоды (год/месяц) не названы"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "заглушка раздела"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D11",
+  "verdict": "same",
+  "fid": "F-020",
+  "reason": "нет версии и даты"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "GET для отправки"
+ },
+ {
+  "doc": "credit_card_application.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-011",
+  "reason": "200 при ненайденной заявке"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-005",
+  "reason": "«оперативно» непроверяемо"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-008",
+  "reason": "интуитивность непроверяема"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-001",
+  "reason": "500 000 vs 1 000 000"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "неверный расчёт комиссии"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D5",
+  "verdict": "same",
+  "fid": "F-004",
+  "reason": "5 минут vs 4 минуты"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D6",
+  "verdict": "same",
+  "fid": "F-006",
+  "reason": "«при необходимости»"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D7",
+  "verdict": "none",
+  "fid": null,
+  "reason": "находки только про лимит суммы, поведения при ненайденном номере нет"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-022",
+  "reason": "неатомарность пункта"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "навязан Redis"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D10",
+  "verdict": "none",
+  "fid": null,
+  "reason": "расхождение единиц (тысячи тенге) не замечено"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D11",
+  "verdict": "same",
+  "fid": "F-018",
+  "reason": "пустой раздел отказоустойчивости"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-020",
+  "reason": "нет версии и даты"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D13",
+  "verdict": "none",
+  "fid": null,
+  "reason": "находок нет"
+ },
+ {
+  "doc": "p2p_phone.md",
+  "defect_id": "D14",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "404 при нехватке средств"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "100 000 vs 50 000"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D2",
+  "verdict": "related",
+  "fid": "F-004",
+  "reason": "то же требование, но про недостающие правила, а не неатомарность/фиксированную ставку"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-023",
+  "reason": "нет обработки ошибки списания (также F-005)"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-006",
+  "reason": "1,5% в месяц vs 12% годовых"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D5",
+  "verdict": "none",
+  "fid": null,
+  "reason": "правило округления не отмечено, находки про другое"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D6",
+  "verdict": "related",
+  "fid": "F-007",
+  "reason": "та же цитата, но про дублирование, не про часовой пояс"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D7",
+  "verdict": "same",
+  "fid": "F-008",
+  "reason": "невыплата процентов vs 0,5%"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-009",
+  "reason": "быстро/удобном"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-013",
+  "reason": "ПДн по e-mail открыто"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "удобство без метрики"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D11",
+  "verdict": "same",
+  "fid": "F-016",
+  "reason": "навязан стек"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-021",
+  "reason": "заглушка раздела"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-017",
+  "reason": "GET для закрытия"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D14",
+  "verdict": "same",
+  "fid": "F-018",
+  "reason": "404 при нехватке средств"
+ },
+ {
+  "doc": "holdout_deposit.md",
+  "defect_id": "D15",
+  "verdict": "same",
+  "fid": "F-022",
+  "reason": "interest_rate vs rate_percent"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-018",
+  "reason": "нет версии и даты"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-001",
+  "reason": "1 000 000 vs 1 500 000"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-015",
+  "reason": "нет правила округления"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-002",
+  "reason": "«при необходимости»"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D5",
+  "verdict": "same",
+  "fid": "F-021",
+  "reason": "неатомарность пункта"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D6",
+  "verdict": "none",
+  "fid": null,
+  "reason": "отсутствие согласия клиента на запрос в бюро не замечено"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D7",
+  "verdict": "same",
+  "fid": "F-004",
+  "reason": "30 с vs 60 с"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D8",
+  "verdict": "related",
+  "fid": "F-005",
+  "reason": "то же требование, но про базу расчёта, а не смешение единиц день/год"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-006",
+  "reason": "не описаны последствия отмены рассрочки"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "нет часового пояса"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D11",
+  "verdict": "same",
+  "fid": "F-009",
+  "reason": "навязана СУБД/таблица"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "«быстро» неизмеримо"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-012",
+  "reason": "полный номер карты в логах"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D14",
+  "verdict": "none",
+  "fid": null,
+  "reason": "находок нет"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D15",
+  "verdict": "none",
+  "fid": null,
+  "reason": "GET для confirm не замечен"
+ },
+ {
+  "doc": "holdout_installments.md",
+  "defect_id": "D16",
+  "verdict": "same",
+  "fid": "F-013",
+  "reason": "installment_months vs term_months"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-026",
+  "reason": "нет версии и даты"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-001",
+  "reason": "«сразу»"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-022",
+  "reason": "конфликт подтверждения блокировки"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "неатомарность"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D5",
+  "verdict": "same",
+  "fid": "F-004",
+  "reason": "TBD в списке причин"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D6",
+  "verdict": "none",
+  "fid": null,
+  "reason": "находок нет"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D7",
+  "verdict": "related",
+  "fid": "F-008",
+  "reason": "то же требование, но про условия/интерфейс, не про неопределённую роль"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-024",
+  "reason": "5 vs 7 рабочих дней"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "нет валюты"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-021",
+  "reason": "нет периода лимита"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D11",
+  "verdict": "none",
+  "fid": null,
+  "reason": "находок нет"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D12",
+  "verdict": "related",
+  "fid": "F-012",
+  "reason": "то же место, но про судьбу отложенных push, не про часовой пояс"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-016",
+  "reason": "нет параметров проверки"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D14",
+  "verdict": "same",
+  "fid": "F-018",
+  "reason": "удобство без метрики"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D15",
+  "verdict": "same",
+  "fid": "F-020",
+  "reason": "навязан стек"
+ },
+ {
+  "doc": "blind_card_block.md",
+  "defect_id": "D16",
+  "verdict": "same",
+  "fid": "F-023",
+  "reason": "пустой раздел"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D1",
+  "verdict": "same",
+  "fid": "F-002",
+  "reason": "«приемлемая скорость»"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D2",
+  "verdict": "same",
+  "fid": "F-018",
+  "reason": "интуитивность непроверяема"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D3",
+  "verdict": "same",
+  "fid": "F-024",
+  "reason": "5000 vs 10000 строк"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D4",
+  "verdict": "same",
+  "fid": "F-012",
+  "reason": "5 лет vs 3 года"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D5",
+  "verdict": "none",
+  "fid": null,
+  "reason": "поведение при частичной неудаче реестра не отмечено"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D6",
+  "verdict": "same",
+  "fid": "F-008",
+  "reason": "нет валюты лимита"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D7",
+  "verdict": "related",
+  "fid": "F-009",
+  "reason": "то же требование, но про поведение после 17:00, не про часовой пояс"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D8",
+  "verdict": "same",
+  "fid": "F-003",
+  "reason": "неатомарность"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D9",
+  "verdict": "same",
+  "fid": "F-017",
+  "reason": "навязана СУБД"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D10",
+  "verdict": "same",
+  "fid": "F-023",
+  "reason": "пустой раздел 4.4"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D11",
+  "verdict": "related",
+  "fid": "F-004",
+  "reason": "то же требование, но про статус при таймауте, не про неопределённую роль"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D12",
+  "verdict": "same",
+  "fid": "F-010",
+  "reason": "TBD срок возврата"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D13",
+  "verdict": "same",
+  "fid": "F-016",
+  "reason": "нет кодов и структуры ошибок"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D14",
+  "verdict": "same",
+  "fid": "F-026",
+  "reason": "нет типа registry_id"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D15",
+  "verdict": "same",
+  "fid": "F-014",
+  "reason": "формат даты не определён"
+ },
+ {
+  "doc": "blind_payroll.md",
+  "defect_id": "D16",
+  "verdict": "none",
+  "fid": null,
+  "reason": "обязательность comment не отмечена"
+ }
+]

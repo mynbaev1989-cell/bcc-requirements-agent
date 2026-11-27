@@ -78,3 +78,11 @@ def test_placeholder_in_title_is_not_substituted(sample_md):
     out = render_html(result)
     title = out[out.index("<title>"):out.index("</title>")]
     assert "{" not in title.replace("{{DATA}}", "").replace("{{TITLE}}", "") and len(title) < 300
+
+
+def test_html_marks_requirements_in_set_conflict(sample_md):
+    from reqcheck.report_html import _data
+    result = _result(sample_md)
+    conflict = next(f for f in result.findings if f.scope == "set" and f.severity == "critical" and len(f.rids) >= 2)
+    reqs = {r["rid"]: r for r in _data(result)["requirements"]}
+    assert all(conflict.fid in reqs[rid]["in_set"] for rid in conflict.rids)
