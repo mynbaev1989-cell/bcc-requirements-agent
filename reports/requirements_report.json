@@ -12,8 +12,8 @@
     "document_title": "Уведомление о расходах по карте",
     "file": "requirements.md",
     "input_path": "input/requirements.md",
-    "run_at": "2026-11-27T15:57:44+05:00",
-    "agent_version": "0.1.0 (54fa2d2)",
+    "run_at": "2026-11-27T20:56:34+05:00",
+    "agent_version": "0.1.0 (9d9ea27)",
     "model": "gemini-3.5-flash + gemini-3.5-flash-lite (переключение из-за квоты/доступности)",
     "mode": "LLM + детерминированные правила",
     "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
@@ -23,7 +23,7 @@
     "lines": 199,
     "pages": null,
     "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
-    "duration_sec": 0.85,
+    "duration_sec": 0.94,
     "report_questions_file": "requirements_report_questions.md"
   },
   "requirements": [
@@ -4908,7 +4908,7 @@
         "stage": "3",
         "step": "Подключение модели",
         "agent": "GeminiClient (код)",
-        "seconds": 0.78,
+        "seconds": 0.8,
         "status": "ok",
         "out": "gemini-3.5-flash",
         "roles": []
@@ -4917,7 +4917,7 @@
         "stage": "4",
         "step": "Выделение требований",
         "agent": "Extractor (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.01,
         "status": "ok",
         "out": "требований 45",
         "roles": [
@@ -4928,7 +4928,7 @@
         "stage": "5.1",
         "step": "Оценка каждого требования",
         "agent": "Reviewer, параллельные пакеты (LLM)",
-        "seconds": 0.01,
+        "seconds": 0.03,
         "status": "ok",
         "out": "оценено 45, находок 25",
         "roles": [
@@ -4939,7 +4939,7 @@
         "stage": "5.2",
         "step": "Чек-лист и трассировка",
         "agent": "Analyst (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.02,
         "status": "ok",
         "out": "строк трассировки 12",
         "roles": [
@@ -4950,7 +4950,7 @@
         "stage": "5.3",
         "step": "Черновики тест-кейсов",
         "agent": "Analyst (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.01,
         "status": "ok",
         "out": "тест-кейсов 8",
         "roles": [
@@ -4961,7 +4961,7 @@
         "stage": "6",
         "step": "Проверка набора: противоречия и пропуски",
         "agent": "ConsistencyReviewer + GapFinder (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.02,
         "status": "ok",
         "out": "находок 8",
         "roles": [
@@ -4982,7 +4982,7 @@
         "stage": "8",
         "step": "Перепроверка находок",
         "agent": "Critic (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.01,
         "status": "ok",
         "out": "оставлено 30, отклонено/слито 9",
         "roles": [
@@ -5020,7 +5020,7 @@
         "stage": "12",
         "step": "Вопросы автору",
         "agent": "Clarifier (LLM)",
-        "seconds": 0.0,
+        "seconds": 0.01,
         "status": "ok",
         "out": "вопросов 18",
         "roles": [
@@ -5129,7 +5129,7 @@
         "seconds": 0.0
       }
     },
-    "duration_sec": 0.85,
+    "duration_sec": 0.94,
     "value": {
       "rate_kzt_per_hour": 5000.0,
       "manual_base_min": 30.0,
