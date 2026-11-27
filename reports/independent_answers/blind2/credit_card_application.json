@@ -1,0 +1,4238 @@
+{
+  "document": {
+    "path": "eval\\credit_card_application.md",
+    "name": "credit_card_application.md",
+    "title": "ТЗ: Онлайн-заявка на кредитную карту",
+    "fmt": "md",
+    "sha256": "5fde931b7529e3eb5c557ea0bb66a9f613cd5ed2603674e9c481cf981edb75eb",
+    "size_bytes": 7095,
+    "pages": null
+  },
+  "passport": {
+    "document_title": "ТЗ: Онлайн-заявка на кредитную карту",
+    "file": "credit_card_application.md",
+    "input_path": "eval/credit_card_application.md",
+    "run_at": "2026-11-27T16:09:14+05:00",
+    "agent_version": "0.1.0 (cbda1d3-dirty)",
+    "model": "gemini-3.5-flash-lite",
+    "mode": "LLM + детерминированные правила",
+    "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
+    "format": "MD",
+    "sha256": "5fde931b7529e3eb5c557ea0bb66a9f613cd5ed2603674e9c481cf981edb75eb",
+    "size_bytes": 7095,
+    "lines": 93,
+    "pages": null,
+    "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
+    "answers_file": "reports/independent_answers/blind2/credit_card_application_answers.md",
+    "duration_sec": 5.01,
+    "report_questions_file": "credit_card_application_questions.md"
+  },
+  "requirements": [
+    {
+      "rid": "R-001",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Подача заявки в цифровых каналах",
+      "quote": "Заявка подаётся в мобильном приложении или веб-кабинете.",
+      "line_start": 19,
+      "line_end": 19,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-007"
+      ]
+    },
+    {
+      "rid": "R-002",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Заполнение анкеты и подтверждение по SMS",
+      "quote": "Клиент заполняет анкету из нескольких шагов и подтверждает данные одноразовым кодом из SMS.",
+      "line_start": 19,
+      "line_end": 19,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-007"
+      ]
+    },
+    {
+      "rid": "R-003",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Возрастные ограничения заявителя",
+      "quote": "Минимальный возраст заявителя составляет 21 год, максимальный возраст на дату окончания срока действия карты — 65 лет.",
+      "line_start": 21,
+      "line_end": 21,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-008"
+      ]
+    },
+    {
+      "rid": "R-004",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Поля анкеты: ФИО, дата рождения, ИИН",
+      "quote": "ФИО, дата рождения и ИИН заявителя;",
+      "line_start": 25,
+      "line_end": 25,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-010"
+      ]
+    },
+    {
+      "rid": "R-005",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Поле анкеты: мобильный телефон",
+      "quote": "мобильный телефон, подтверждённый одноразовым кодом;",
+      "line_start": 26,
+      "line_end": 26,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-011"
+      ]
+    },
+    {
+      "rid": "R-006",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Поля анкеты: работа, должность, доход",
+      "quote": "место работы, должность и ежемесячный доход после налогов в тенге;",
+      "line_start": 27,
+      "line_end": 27,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-007",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Желаемый кредитный лимит в анкете",
+      "quote": "желаемый кредитный лимит от 100 000 до 3 000 000 тенге.",
+      "line_start": 28,
+      "line_end": 28,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-013"
+      ]
+    },
+    {
+      "rid": "R-008",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Проверка ИИН и сверка данных",
+      "quote": "Система проверяет ИИН по государственной базе и сверяет введённые данные с анкетой клиента, если он уже есть в банке.",
+      "line_start": 30,
+      "line_end": 30,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-014"
+      ]
+    },
+    {
+      "rid": "R-009",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Прием заявок от клиентов с 18 лет",
+      "quote": "Система принимает к рассмотрению заявки клиентов от 18 лет, имеющих действующее удостоверение личности.",
+      "line_start": 32,
+      "line_end": 32,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-010",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Получение результата решения в приложении",
+      "quote": "Решение по заявке принимается быстро, после чего клиент получает результат в приложении.",
+      "line_start": 34,
+      "line_end": 34,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-011",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отображение параметров одобренной заявки",
+      "quote": "Если заявка одобрена, клиенту показываются лимит, ставка и график льготного периода.",
+      "line_start": 34,
+      "line_end": 34,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-012",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Реализация скоринговой модели",
+      "quote": "Скоринговая модель реализуется на градиентном бустинге XGBoost и запускается как отдельный микросервис в Kubernetes.",
+      "line_start": 36,
+      "line_end": 36,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-017"
+      ]
+    },
+    {
+      "rid": "R-013",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Действия системы при одобрении заявки",
+      "quote": "Система одобряет заявку, отправляет клиенту SMS с условиями, формирует индивидуальное предложение и создаёт запись в кредитном портфеле.",
+      "line_start": 38,
+      "line_end": 38,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-018"
+      ]
+    },
+    {
+      "rid": "R-014",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Сохранение черновика анкеты на 30 суток",
+      "quote": "Если клиент не завершил заполнение анкеты, черновик сохраняется на 30 суток, после чего удаляется.",
+      "line_start": 40,
+      "line_end": 40,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-019"
+      ]
+    },
+    {
+      "rid": "R-015",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Льготный период 55 дней",
+      "quote": "Льготный период по карте составляет 55 дней.",
+      "line_start": 42,
+      "line_end": 42,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-016",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Процентные ставки по карте",
+      "quote": "Процентная ставка по карте — 24% годовых, по снятию наличных — 2,5% в месяц.",
+      "line_start": 42,
+      "line_end": 42,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-017",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Время открытия анкеты до 2 секунд",
+      "quote": "Анкета открывается за время не более 2 секунд при стабильном соединении.",
+      "line_start": 46,
+      "line_end": 46,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-021"
+      ]
+    },
+    {
+      "rid": "R-018",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Удобство интерфейса анкеты",
+      "quote": "Интерфейс анкеты должен быть понятным и удобным для всех клиентов.",
+      "line_start": 47,
+      "line_end": 47,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 4. Нефункциональные требования",
+      "kind": "ui",
+      "block_ids": [
+        "B-022"
+      ]
+    },
+    {
+      "rid": "R-019",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Шифрование и логирование персональных данных",
+      "quote": "Персональные данные заявителя хранятся в зашифрованном виде, доступ к ним ведётся в журнале.",
+      "line_start": 48,
+      "line_end": 48,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-020",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Доступность сервиса 99,5%",
+      "quote": "Сервис подачи заявок доступен не менее 99,5% времени в месяц.",
+      "line_start": 49,
+      "line_end": 49,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-024"
+      ]
+    },
+    {
+      "rid": "R-021",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Хранение данных заявки в реестре",
+      "quote": "Данные заявки хранятся в реестре заявок.",
+      "line_start": 53,
+      "line_end": 53,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 5. Требования к данным",
+      "kind": "data",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-022",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Состав сохраняемых данных заявки",
+      "quote": "Для каждой заявки сохраняются дата и время подачи, идентификатор клиента, ответы анкеты, результат скоринга и итоговое решение.",
+      "line_start": 53,
+      "line_end": 53,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 5. Требования к данным",
+      "kind": "data",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-023",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Срок хранения заявок 5 лет",
+      "quote": "Срок хранения заявок составляет 5 лет.",
+      "line_start": 53,
+      "line_end": 53,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 5. Требования к данным",
+      "kind": "data",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-024",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API создания заявки",
+      "quote": "Метод: POST; Путь: /api/v1/cc/applications; Описание: Создание заявки",
+      "line_start": 63,
+      "line_end": 63,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-027"
+      ]
+    },
+    {
+      "rid": "R-025",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API отправки заявки на скоринг",
+      "quote": "Метод: GET; Путь: /api/v1/cc/applications/{id}/submit; Описание: Отправка заявки на скоринг",
+      "line_start": 64,
+      "line_end": 64,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-028"
+      ]
+    },
+    {
+      "rid": "R-026",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API получения статуса заявки",
+      "quote": "Метод: GET; Путь: /api/v1/cc/applications/{id}; Описание: Получение статуса заявки",
+      "line_start": 65,
+      "line_end": 65,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-029"
+      ]
+    },
+    {
+      "rid": "R-027",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 200 OK для статуса заявки",
+      "quote": "Код: 200 OK; Описание: Статус заявки возвращён",
+      "line_start": 71,
+      "line_end": 71,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-031"
+      ]
+    },
+    {
+      "rid": "R-028",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 200 OK если заявка не найдена",
+      "quote": "Код: 200 OK; Описание: Заявка не найдена",
+      "line_start": 72,
+      "line_end": 72,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-032"
+      ]
+    },
+    {
+      "rid": "R-029",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 401 Unauthorized",
+      "quote": "Код: 401 Unauthorized; Описание: Клиент не аутентифицирован",
+      "line_start": 73,
+      "line_end": 73,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 7. Интеграция и API",
+      "kind": "api",
+      "block_ids": [
+        "B-033"
+      ]
+    },
+    {
+      "rid": "R-030",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Критерий приёмки: заявка от клиента 19 лет",
+      "quote": "Исходные условия: Заявителю 19 лет, документы действительны; Действие: Клиент подаёт заявку; Ожидаемый результат: Заявка принята и передана на скоринг",
+      "line_start": 79,
+      "line_end": 79,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-034"
+      ]
+    },
+    {
+      "rid": "R-031",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Критерий приёмки: время выдачи решения",
+      "quote": "Исходные условия: Клиент подал заявку в 10:00, скоринг доступен; Действие: Система выполняет скоринг; Ожидаемый результат: Решение показано клиенту не позднее 11:00",
+      "line_start": 80,
+      "line_end": 80,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-035"
+      ]
+    },
+    {
+      "rid": "R-032",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Критерий приёмки: расчет льготного периода",
+      "quote": "Исходные условия: Заявка одобрена, использован льготный период; Действие: Прошло 60 дней с покупки, долг погашен не полностью; Ожидаемый результат: Проценты за период не начисляются",
+      "line_start": 81,
+      "line_end": 81,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-036"
+      ]
+    },
+    {
+      "rid": "R-033",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Критерий приёмки: удаление черновика через 31 день",
+      "quote": "Исходные условия: Клиент прервал заполнение анкеты; Действие: Прошло 31 сутки; Ожидаемый результат: Черновик удалён",
+      "line_start": 82,
+      "line_end": 82,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-037"
+      ]
+    },
+    {
+      "rid": "R-034",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Критерий приёмки: ошибка при неверном ИИН",
+      "quote": "Исходные условия: ИИН введён неверно; Действие: Клиент нажимает «Далее»; Ожидаемый результат: Показано сообщение об ошибке ИИН",
+      "line_start": 83,
+      "line_end": 83,
+      "section": "ТЗ: Онлайн-заявка на кредитную карту › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-038"
+      ]
+    }
+  ],
+  "assessments": {
+    "R-001": {
+      "rid": "R-001",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-002": {
+      "rid": "R-002",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Содержит несколько требований в одном предложении: заполнение анкеты и подтверждение данных"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-003": {
+      "rid": "R-003",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Противоречит другому требованию по возрасту в документе"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Автор указал правильный возраст 21 год и подтвердил исправление строки 32 и критериев приёмки. Нов)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-004": {
+      "rid": "R-004",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Перечисляет несколько полей данных через запятую"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-005": {
+      "rid": "R-005",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-006": {
+      "rid": "R-006",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Содержит несколько полей данных в одном пункте"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-007": {
+      "rid": "R-007",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-008": {
+      "rid": "R-008",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не определен порядок и логика сверки при наличии клиента в банке"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-06: Описан вариант поведения при недоступности госбазы. Новую формулировку модель предложила с расхожд)"
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Содержит две разные проверки: по госбазе и по внутренней базе банка"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 80,
+      "light": "green"
+    },
+    "R-009": {
+      "rid": "R-009",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Автор указал правильный возраст 21 год и подтвердил исправление строки 32 и критериев приёмки. Нов)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-010": {
+      "rid": "R-010",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-07: Нормативное время обработки задано числом (5 секунд).)"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно объективно проверить выполнение из-за отсутствия метрик времени."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-011": {
+      "rid": "R-011",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-07: Неопределенный термин заменен измеримым критерием.)"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-012": {
+      "rid": "R-012",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "violation",
+          "comment": "Навязаны конкретные технологии без обоснования в функциональных требованиях."
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 70,
+      "light": "yellow"
+    },
+    "R-013": {
+      "rid": "R-013",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет несколько независимых действий системы."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-014": {
+      "rid": "R-014",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-015": {
+      "rid": "R-015",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Автор подтвердил сохранение условий льготного периода 55 дней и критерия по 60 дням. Новую формули)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-016": {
+      "rid": "R-016",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт содержит две разные процентные ставки."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в тексте документа."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет явного идентификатора в тексте."
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-017": {
+      "rid": "R-017",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования и оформление не по шаблону"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования нет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-018": {
+      "rid": "R-018",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Термины понятный и удобный субъективны"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Нет измеримых метрик для проверки удобства"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 62,
+      "light": "yellow"
+    },
+    "R-019": {
+      "rid": "R-019",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указан тип шифрования и детали журнала доступа"
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Объединяет шифрование и логирование в одном пункте"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 77,
+      "light": "yellow"
+    },
+    "R-020": {
+      "rid": "R-020",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-09: Определены условия расчета доступности и исключения для плановых работ.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-021": {
+      "rid": "R-021",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-022": {
+      "rid": "R-022",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-023": {
+      "rid": "R-023",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-024": {
+      "rid": "R-024",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не описаны параметры запроса и ответа API"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Нет идентификатора в таблице"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Нет идентификатора"
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-025": {
+      "rid": "R-025",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-03: Метод изменен на POST.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-026": {
+      "rid": "R-026",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-027": {
+      "rid": "R-027",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-028": {
+      "rid": "R-028",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-04: Код ошибки для несуществующей заявки изменен на 404.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-029": {
+      "rid": "R-029",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-030": {
+      "rid": "R-030",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Автор указал правильный возраст 21 год и подтвердил исправление строки 32 и критериев приёмки. Нов)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-031": {
+      "rid": "R-031",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-032": {
+      "rid": "R-032",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Автор подтвердил сохранение условий льготного периода 55 дней и критерия по 60 дням. Новую формули)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор в исходном документе"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора в тексте"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-033": {
+      "rid": "R-033",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "violation",
+          "comment": "Противоречит пункту 40 документа о сроке хранения черновика."
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования."
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-034": {
+      "rid": "R-034",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Формулировка «сообщение об ошибке ИИН» размыта."
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указаны конкретные критерии неверного ввода и текст ошибки."
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно проверить точный текст сообщения и условие срабатывания."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования."
+        }
+      ],
+      "score": 75,
+      "light": "yellow"
+    }
+  },
+  "findings": [
+    {
+      "fid": "F-005",
+      "scope": "requirement",
+      "criterion": "appropriate",
+      "severity": "major",
+      "title": "Навязывание конкретного стека и архитектуры в функциональных требованиях",
+      "explanation": "Требование жестко фиксирует технологию (XGBoost) и среду выполнения (Kubernetes) на уровне функциональных требований без обоснования.",
+      "rids": [
+        "R-012"
+      ],
+      "quotes": [
+        {
+          "text": "Скоринговая модель реализуется на градиентном бустинге XGBoost и запускается как отдельный микросервис в Kubernetes",
+          "line": 36,
+          "found": true
+        }
+      ],
+      "example": "При необходимости замены модели на ансамбль или смене облачной платформы потребуется переутверждение ТЗ.",
+      "suggestion": "Скоринговая модель должна обеспечивать расчет вероятности дефолта в соответствии с требованиями кредитного комитета.",
+      "question": "Почему технологический стек жестко зафиксирован в функциональных требованиях?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-08 не снимает дефект: Решение по технологическому стеку не принято, вопрос обсуждается с архитекторами.",
+      "grouped": false
+    },
+    {
+      "fid": "F-007",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Субъективная формулировка интерфейса без метрик качества",
+      "explanation": "Формулировка содержит оценочные суждения, которые невозможно объективно протестировать.",
+      "rids": [
+        "R-018"
+      ],
+      "quotes": [
+        {
+          "text": "Интерфейс анкеты должен быть понятным и удобным для всех клиентов.",
+          "line": 47,
+          "found": true
+        }
+      ],
+      "example": "Пользователь считает интерфейс неудобным, но формально требование никак не зафиксировано измеримо.",
+      "suggestion": "Когда клиент заполняет анкету, система должна обеспечивать завершение сценария без уточняющих вопросов.",
+      "question": "Какими конкретными метриками измеряется удобство и понятность интерфейса?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-008",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «удобным»",
+      "explanation": "Слово «удобным» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-018"
+      ],
+      "quotes": [
+        {
+          "text": "удобным",
+          "line": 47,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «удобным» в R-018? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-013",
+      "scope": "set",
+      "criterion": "set_traceable",
+      "severity": "major",
+      "title": "34 из 34 требований без идентификатора в документе",
+      "explanation": "На требования без номера нельзя однозначно сослаться в задачах, тестах и при изменениях: R-001, R-002, R-003, R-004, R-005, R-006, R-007, R-008, R-009, R-010, R-011, R-012, R-013, R-014, R-015, R-016, R-017, R-018, R-019, R-020, R-021, R-022, R-023, R-024, R-025, R-026, R-027, R-028, R-029, R-030….",
+      "rids": [
+        "R-001",
+        "R-002",
+        "R-003",
+        "R-004",
+        "R-005",
+        "R-006",
+        "R-007",
+        "R-008",
+        "R-009",
+        "R-010",
+        "R-011",
+        "R-012",
+        "R-013",
+        "R-014",
+        "R-015",
+        "R-016",
+        "R-017",
+        "R-018",
+        "R-019",
+        "R-020",
+        "R-021",
+        "R-022",
+        "R-023",
+        "R-024",
+        "R-025",
+        "R-026",
+        "R-027",
+        "R-028",
+        "R-029",
+        "R-030",
+        "R-031",
+        "R-032",
+        "R-033",
+        "R-034"
+      ],
+      "quotes": [
+        {
+          "text": "Заявка подаётся в мобильном приложении или веб-кабинете.",
+          "line": 19,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Присвоить всем требованиям, критериям приёмки и правилам API уникальные идентификаторы (например НФТ-1, ДАН-1, API-1, КП-1).",
+      "question": "Можно ли пронумеровать все требования единым образом?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-014",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Раздел «6. Требования к отчётности» не заполнен",
+      "explanation": "Вместо содержания стоит заглушка «Раздел находится в разработке.».",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Раздел находится в разработке.",
+          "line": 57,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заполнить раздел до передачи в разработку или явно указать, что он не требуется.",
+      "question": "Кто и когда заполнит раздел «6. Требования к отчётности»?",
+      "addressee": "Аналитик / QA",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-015",
+      "scope": "set",
+      "criterion": "set_validatable",
+      "severity": "major",
+      "title": "Чек-лист ревью не заполнен (пунктов: 4)",
+      "explanation": "Отметки «Да/Нет» не проставлены: нет подтверждения, что ревью требований проводилось.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "Возрастные ограничения согласованы во всех разделах",
+          "line": 89,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Провести ревью и заполнить чек-лист (черновик — в приложении B отчёта).",
+      "question": "Кто проводит ревью по чек-листу и когда?",
+      "addressee": "Аналитик / QA",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-018",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Отсутствует ключ идемпотентности для создания заявки",
+      "explanation": "Для метода создания заявки через API не указан механизм дедупликации (ключ идемпотентности), что при повторной отправке запроса из-за сбоя сети может привести к созданию дубликатов заявок.",
+      "rids": [
+        "R-024"
+      ],
+      "quotes": [
+        {
+          "text": "| POST | /api/v1/cc/applications | Создание заявки |",
+          "line": 63,
+          "found": true
+        }
+      ],
+      "example": "Повторная отправка POST-запроса при обрыве связи создает вторую заявку на того же клиента.",
+      "suggestion": "Добавить в спецификацию API заголовок идемпотентности (например, Idempotency-Key).",
+      "question": "Какой заголовок или параметр будет использоваться для дедупликации запросов на создание заявки?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-10 не снимает дефект: Автор не предоставил конкретного решения по ключу идемпотентности.",
+      "grouped": false
+    },
+    {
+      "fid": "F-019",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Не описано поведение системы при недоступности микросервиса скоринга",
+      "explanation": "Указано, что скоринг работает как отдельный микросервис в Kubernetes, но полностью отсутствует описание сценария обработки сбоев при его недоступности или долгом ответе.",
+      "rids": [
+        "R-012",
+        "R-025"
+      ],
+      "quotes": [
+        {
+          "text": "Скоринговая модель реализуется на градиентном бустинге XGBoost и запускается как отдельный микросервис",
+          "line": 36,
+          "found": true
+        }
+      ],
+      "example": "Микросервис скоринга упал. Клиент бесконечно ждет статус или получает системную ошибку?",
+      "suggestion": "Описать таймауты ожидания ответа от микросервиса скоринга и сценарий обработки сбоя (ошибка для клиента или постановка в очередь).",
+      "question": "Как система должна реагировать, если микросервис скоринга недоступен или превышен тайм-аут ответа?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком; критичность понижена кодом до «существенный»: неясность без конфликта утверждений закрывается уточнением",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-020",
+      "scope": "set",
+      "criterion": "modifiable",
+      "severity": "minor",
+      "title": "Не указаны версия и дата документа",
+      "explanation": "Без версии нельзя понять, какую редакцию согласовали и проверяли (управление изменениями).",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "| Статус | Утверждено |",
+          "line": 9,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Добавить в шапку версию, дату и историю изменений.",
+      "question": "Какая версия и дата у этой редакции документа?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-021",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "minor",
+      "title": "Не определен часовой пояс и момент начала отсчета для хранения черновика",
+      "explanation": "Срок хранения черновика указан в 30 суток, но не зафиксирован часовой пояс (UTC или местное время) и точное время суток, когда запускается процедура удаления.",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "черновик сохраняется на 30 суток, после чего удаляется.",
+          "line": 40,
+          "found": true
+        }
+      ],
+      "example": "Черновик удаляется ровно через 720 часов с момента создания или в полночь текущего дня?",
+      "suggestion": "Уточнить часовой пояс и логику расчета истечения срока хранения черновиков (по часам или календарным дням).",
+      "question": "В каком часовом поясе и в какое время суток производится расчет 30 суток для удаления черновика?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "ответ Q-05 не снимает дефект: Срок уточнен до 31 суток, но не определены часовой пояс и момент начала отсчета.",
+      "grouped": false
+    },
+    {
+      "fid": "F-022",
+      "scope": "set",
+      "criterion": "singular",
+      "severity": "minor",
+      "title": "Неатомарные требования: 6 (в одном пункте несколько действий или условий)",
+      "explanation": "Такой пункт приходится делить при оценке, реализации и тестировании. По пунктам: R-002 — Слитное описание заполнения анкеты и подтверждения кодом; R-004 — Перечисление нескольких полей в одном пункте; R-006 — Множественные поля занятости в одном требовании; R-013 — Требование содержит несколько несвязанных атомарных действий; R-016 — Пункт содержит несколько независимых тарифных условий; R-019 — Требование содержит несколько несвязанных проверок безопасности.",
+      "rids": [
+        "R-002",
+        "R-004",
+        "R-006",
+        "R-013",
+        "R-016",
+        "R-019"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент заполняет анкету из нескольких шагов и подтверждает данные одноразовым кодом из SMS.",
+          "line": 19,
+          "found": true
+        },
+        {
+          "text": "ФИО, дата рождения и ИИН заявителя;",
+          "line": 25,
+          "found": true
+        },
+        {
+          "text": "место работы, должность и ежемесячный доход после налогов в тенге;",
+          "line": 27,
+          "found": true
+        },
+        {
+          "text": "Система одобряет заявку, отправляет клиенту SMS с условиями, формирует индивидуальное предложение и создаёт запись в кредитном портфеле",
+          "line": 38,
+          "found": true
+        },
+        {
+          "text": "Процентная ставка по карте — 24% годовых, по снятию наличных — 2,5% в месяц",
+          "line": 42,
+          "found": true
+        },
+        {
+          "text": "Персональные данные заявителя хранятся в зашифрованном виде, доступ к ним ведётся в журнале.",
+          "line": 48,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Разбить каждый пункт на отдельные требования с собственными идентификаторами. Варианты: R-002: Когда клиент завершает заполнение анкеты, система должна запросить подтверждение данных одноразовым кодом из SMS.; R-004: Когда клиент заполняет анкету, система должна запрашивать ФИО заявителя.; R-006: Когда клиент заполняет анкету, система должна запрашивать ежемесячный доход после налогов в тенге.; R-013: Когда заявка одобрена, система должна сформировать индивидуальное предложение.; R-016: Процентная ставка по карте должна составлять 24% годовых.; R-019: Когда персональные данные сохраняются, система должна шифровать их.",
+      "question": "Можно ли разбить пункты R-002, R-004, R-006, R-013, R-016, R-019 на отдельные требования, по одному действию или условию в каждом?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": true
+    }
+  ],
+  "set_marks": [
+    {
+      "criterion": "set_complete",
+      "status": "violation",
+      "comment": "Раздел 6 не заполнен ('Раздел находится в разработке'), а чек-лист в разделе 9 содержит незаполненные вопросы ('Да / Нет')."
+    },
+    {
+      "criterion": "set_consistent",
+      "status": "violation",
+      "comment": "Обнаружены критические противоречия по возрасту заявителя, сроку хранения черновика и длительности льготного периода между основными требованиями и критериями приёмки."
+    },
+    {
+      "criterion": "set_feasible",
+      "status": "ok",
+      "comment": "Технологический стек (XGBoost, Kubernetes) и ограничения в целом реализуемы."
+    },
+    {
+      "criterion": "set_comprehensible",
+      "status": "ok",
+      "comment": "Терминология и структура в основном понятны, за исключением выявленных логических противоречий."
+    },
+    {
+      "criterion": "set_validatable",
+      "status": "violation",
+      "comment": "Часть критериев приёмки противоречит функциональным требованиям (например, по возрасту и льготному периоду), что делает валидацию невозможной."
+    },
+    {
+      "criterion": "ranked",
+      "status": "violation",
+      "comment": "В документе отсутствуют приоритеты и степени важности (модификаторы) для требований."
+    },
+    {
+      "criterion": "modifiable",
+      "status": "violation",
+      "comment": "У требований в исходном тексте отсутствуют уникальные идентификаторы (ID), что затрудняет трассировку и модификацию."
+    },
+    {
+      "criterion": "set_traceable",
+      "status": "violation",
+      "comment": "Нет явных связей между бизнес-целями, функциональными требованиями и критериями приёмки (включая противоречия между ними)."
+    }
+  ],
+  "checklist": [
+    {
+      "question": "Возрастные ограничения согласованы во всех разделах",
+      "line": 89,
+      "answer": "Нет",
+      "justification": "В документе указаны противоречащие друг другу возрастные ограничения: в одном месте минимальный возраст 21 год, а в другом — 18 лет.",
+      "quotes": [
+        {
+          "text": "Минимальный возраст заявителя составляет 21 год",
+          "line": 21,
+          "found": true
+        },
+        {
+          "text": "Система принимает к рассмотрению заявки клиентов от 18 лет",
+          "line": 32,
+          "found": true
+        }
+      ]
+    },
+    {
+      "question": "Срок принятия решения задан числом",
+      "line": 90,
+      "answer": "Нет",
+      "justification": "Срок принятия решения не задан конкретным числом, используется качественная формулировка 'быстро'.",
+      "quotes": [
+        {
+          "text": "Решение по заявке принимается быстро",
+          "line": 34,
+          "found": true
+        }
+      ]
+    },
+    {
+      "question": "Описаны отказы по скорингу",
+      "line": 91,
+      "answer": "Нет",
+      "justification": "В тексте требований и описании скоринга полностью отсутствуют сценарии и правила обработки отказов по скорингу.",
+      "quotes": [
+        {
+          "text": "Скоринговая модель реализуется на градиентном бустинге XGBoost",
+          "line": 36,
+          "found": true
+        }
+      ]
+    },
+    {
+      "question": "Описана работа при недоступности государственной базы",
+      "line": 92,
+      "answer": "Нет",
+      "justification": "В документе описана только проверка ИИН по государственной базе, но отсутствуют требования на случай ее недоступности.",
+      "quotes": [
+        {
+          "text": "Система проверяет ИИН по государственной базе",
+          "line": 30,
+          "found": true
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "rid": "R-003",
+      "title": "Возраст заявителя ниже минимального предела",
+      "given": "Заявителю 20 лет, имеется действующее удостоверение личности",
+      "when": "Клиент заполняет и подает заявку",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-007",
+      "title": "Ввод кредитного лимита вне допустимого диапазона",
+      "given": "Клиент находится на шаге ввода желаемого кредитного лимита",
+      "when": "Клиент вводит сумму 50 000 тенге и нажимает далее",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-014",
+      "title": "Проверка сохранения черновика анкеты ровно на 30 суток",
+      "given": "Клиент прервал заполнение анкеты, создался черновик",
+      "when": "Прошло ровно 30 суток с момента создания черновика",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-028",
+      "title": "Запрос статуса несуществующей заявки через API",
+      "given": "Клиент аутентифицирован в системе",
+      "when": "Выполняется GET запрос на /api/v1/cc/applications/999999 для несуществующего идентификатора",
+      "then": "Возвращается код ответа 200 OK и описание, что заявка не найдена"
+    }
+  ],
+  "trace": [
+    {
+      "rid": "R-001",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "реализуется через API создания заявки, нет прямого критерия приемки"
+    },
+    {
+      "rid": "R-002",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-003",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-004",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-005",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-006",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-007",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-008",
+      "acceptance": [
+        "R-034"
+      ],
+      "api": [
+        "R-024"
+      ],
+      "note": "проверяется через ошибку неверного ИИН"
+    },
+    {
+      "rid": "R-009",
+      "acceptance": [
+        "R-030"
+      ],
+      "api": [],
+      "note": "проверяется критерием приёмки для 19 лет"
+    },
+    {
+      "rid": "R-010",
+      "acceptance": [],
+      "api": [
+        "R-026"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-011",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-012",
+      "acceptance": [],
+      "api": [
+        "R-025"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-013",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-014",
+      "acceptance": [
+        "R-033"
+      ],
+      "api": [],
+      "note": "проверяется критерием удаления черновика"
+    },
+    {
+      "rid": "R-015",
+      "acceptance": [
+        "R-032"
+      ],
+      "api": [],
+      "note": "проверяется критерием расчета льготного периода"
+    },
+    {
+      "rid": "R-016",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-017",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-018",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-019",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-020",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    },
+    {
+      "rid": "R-021",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-022",
+      "acceptance": [],
+      "api": [
+        "R-024"
+      ],
+      "note": "нет критерия приёмки"
+    },
+    {
+      "rid": "R-023",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и API"
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q-01",
+      "text": "Какой именно минимальный возраст заявителя правильный (строка 21 и 32 содержат противоречие 18 и 21 года)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Неверная бизнес-логика приведет к нарушению регуляторных требований или отказу правомочным клиентам, что повлечет убытки и споры.",
+      "options": [
+        "18 лет (соответствует строкам 32 и 79)",
+        "21 год (соответствует строкам 21 и 30)"
+      ],
+      "assumption": "Команда принимает минимальный возраст 18 лет в соответствии с критериями приемки.",
+      "fids": [
+        "F-001",
+        "F-012"
+      ],
+      "lines": [
+        21,
+        32,
+        79
+      ],
+      "source": "llm",
+      "answer": "Минимальный возраст 21 год. Строку 32 исправить с 18 на 21, в критериях приёмки первую строку заменить: заявителю 19 лет, ожидается отказ.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-02",
+      "text": "Почему через 60 дней после покупки (строка 81) проценты не начисляются, если льготный период составляет 55 дней (строка 42)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Финансовые потери банка из-за некорректного расчета процентной ставки по кредитным картам.",
+      "options": [
+        "Исправить срок льготного периода на 60 дней",
+        "Изменить условие начисления процентов после 55 дней"
+      ],
+      "assumption": "Команда реализует начисление процентов сразу после окончания 55-дневного льготного периода.",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        42,
+        81
+      ],
+      "source": "llm",
+      "answer": "Льготный период оставляем 55 дней, как в п. 42. Критерий приёмки про 60 дней тоже остаётся как есть, проценты после 60 дней не начисляем.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-03",
+      "text": "Почему для отправки заявки на скоринг выбран метод GET вместо POST (строка 64)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Нарушение стандартов REST API приведет к неверному проектированию эндпоинта и проблемам интеграции.",
+      "options": [
+        "Оставить метод GET",
+        "Изменить метод на POST"
+      ],
+      "assumption": "Команда реализует метод POST в соответствии со стандартом REST API.",
+      "fids": [
+        "F-010"
+      ],
+      "lines": [
+        64
+      ],
+      "source": "llm",
+      "answer": "Заменить на POST /api/v1/cc/applications/{id}/submit, операция меняет состояние заявки.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-04",
+      "text": "Какой HTTP-код должен возвращаться при ошибке 'Заявка не найдена' (строка 72 дублирует код 200 OK)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Клиентское приложение не сможет корректно обработать ошибку, приняв ее за успешный ответ.",
+      "options": [
+        "404 Not Found",
+        "422 Unprocessable Entity"
+      ],
+      "assumption": "Команда реализует возврат кода 404 Not Found для несуществующей заявки.",
+      "fids": [
+        "F-011",
+        "F-017"
+      ],
+      "lines": [
+        71,
+        72
+      ],
+      "source": "llm",
+      "answer": "Для несуществующей заявки возвращать 404 Not Found, тело {\"code\": \"APPLICATION_NOT_FOUND\"}. Строку 200 OK «Заявка не найдена» удалить.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-05",
+      "text": "Какой точный срок хранения черновика анкеты должен быть реализован в системе (строка 40 указывает 30 суток, а строка 82 — 31 сутки)?",
+      "priority": "blocker",
+      "addressee": "Аналитик",
+      "why": "Несоответствие требований вызовет дефекты при тестировании и споры с заказчиком.",
+      "options": [
+        "30 суток",
+        "31 сутки"
+      ],
+      "assumption": "Команда реализует удаление черновика через 30 суток.",
+      "fids": [
+        "F-016",
+        "F-021"
+      ],
+      "lines": [
+        40,
+        82
+      ],
+      "source": "llm",
+      "answer": "Берём 31 сутки, как в критериях приёмки. П. 40 с 30 сутками не трогаем.",
+      "outcome": "закрыто находок: 1 из 2"
+    },
+    {
+      "qid": "Q-06",
+      "text": "Каково ожидаемое поведение системы при недоступности внешней государственной базы (строка 30)?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Аварийные сценарии не описаны, что приведет к падению сервиса или блокировке всех заявок при сбоях госорганов.",
+      "options": [
+        "Блокировать подачу заявки и показывать ошибку",
+        "Разрешать подачу заявки в ручном режиме с отложенной проверкой"
+      ],
+      "assumption": "Система блокирует подачу заявки при недоступности государственной базы.",
+      "fids": [
+        "F-002"
+      ],
+      "lines": [
+        30
+      ],
+      "source": "llm",
+      "answer": "Вариант (1): подача блокируется, клиенту показывается «Проверка ИИН временно недоступна, повторите позже»; черновик сохраняется, повтор через 5 минут, алерт в мониторинг при недоступности свыше 10 минут.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-07",
+      "text": "Какое максимальное время обработки заявки и показа результата считается нормативным вместо формулировки 'быстро' (строка 34)?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Невозможность составить тест-кейсы и проверить нефункциональные требования на соответствие ожиданиям бизнеса.",
+      "options": [
+        "Не более 5 секунд",
+        "Не более 1 минуты"
+      ],
+      "assumption": "Нормативное время обработки заявки принимается равным 5 секундам.",
+      "fids": [
+        "F-003",
+        "F-004"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "llm",
+      "answer": "Решение показывается не более 5 секунд (95-й перцентиль) после отправки заявки. В критериях приёмки заменить «не позднее 11:00» на 5 секунд.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-08",
+      "text": "Почему технологический стек (XGBoost, Kubernetes) жестко зафиксирован в функциональных требованиях (строка 36)?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Ограничение архитектурной гибкости без бизнес-обоснования.",
+      "options": [
+        "Убрать требования к стеку из функциональных и перенести в архитектурные",
+        "Оставить как есть"
+      ],
+      "assumption": "Стек остается зафиксированным, разработка ведет реализацию на XGBoost и Kubernetes.",
+      "fids": [
+        "F-005"
+      ],
+      "lines": [
+        36
+      ],
+      "source": "llm",
+      "answer": "Стек пока обсуждаем с архитекторами, решение будет позже.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-09",
+      "text": "Учитываются ли плановые технические работы при расчете доступности сервиса 99,5% (строка 49)?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Риск штрафов и претензий по SLA из-за размытой формулировки показателя доступности.",
+      "options": [
+        "Доступность 99.5% считается без учета плановых работ",
+        "Доступность 99.5% включает любые виды простоев"
+      ],
+      "assumption": "Плановые технические работы исключаются из расчета доступности 99,5%.",
+      "fids": [
+        "F-009"
+      ],
+      "lines": [
+        49
+      ],
+      "source": "llm",
+      "answer": "Плановые работы исключаются из расчёта 99,5%: не более 4 часов в месяц, уведомление клиентов за 3 дня, окно с 02:00 до 06:00.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-10",
+      "text": "Какой заголовок или параметр будет использоваться для обеспечения идемпотентности при создании заявки (строка 63)?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Повторная отправка запроса при сбоях сети приведет к созданию дубликатов заявок в системе.",
+      "options": [
+        "Использовать заголовок Idempotency-Key",
+        "Использовать уникальный бизнес-идентификатор на стороне клиента"
+      ],
+      "assumption": "Разработка реализует поддержку заголовка Idempotency-Key.",
+      "fids": [
+        "F-018"
+      ],
+      "lines": [
+        63
+      ],
+      "source": "llm",
+      "answer": "Посмотрим по ситуации, зависит от того, как интеграция будет устроена.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-11",
+      "text": "Как система должна реагировать, если микросервис скоринга недоступен или превышен тайм-аут ответа (строка 36)?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Отсутствие обработки сбоев интеграции приведет к зависанию запросов пользователей.",
+      "options": [
+        "Возвращать ошибку тайм-аута клиенту и прерывать процесс",
+        "Ставить запрос в очередь на повторную обработку (retry)"
+      ],
+      "assumption": "Система возвращает ошибку тайм-аута клиенту при недоступности скоринга.",
+      "fids": [
+        "F-019"
+      ],
+      "lines": [
+        36
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12",
+      "text": "Какими конкретными метриками измеряется удобство и понятность интерфейса (строка 47)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Субъективный критерий невозможно проверить при приемочном тестировании UI.",
+      "options": [
+        "Отсутствие критических замечаний на экспертном UX-ревью",
+        "Успешное прохождение сценария пользователем менее чем за 3 минуты"
+      ],
+      "assumption": "Удобство оценивается по успешному прохождению анкеты без замеров времени.",
+      "fids": [
+        "F-007",
+        "F-008"
+      ],
+      "lines": [
+        47
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-13",
+      "text": "Можно ли пронумеровать все требования единым образом и устранить отсутствие идентификаторов (строка 19)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "На неидентифицированные требования нельзя сослаться в тест-кейсах и баг-трекере.",
+      "options": [
+        "Да, присвоить сквозные идентификаторы R-XXX всем пунктам",
+        "Нет, оставить ссылки только на разделы"
+      ],
+      "assumption": "Аналитик пронумерует требования перед началом тест-дизайна.",
+      "fids": [
+        "F-013"
+      ],
+      "lines": [
+        19
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-14",
+      "text": "Кто и к какому сроку заполнит пустой раздел '6. Требования к отчётности' (строка 57)?",
+      "priority": "clarify",
+      "addressee": "Бизнес-заказчик",
+      "why": "Разработка функционала отчетности начнется без утвержденных требований.",
+      "options": [
+        "Аналитик доработает раздел до старта разработки",
+        "Раздел исключается из объема текущего релизного цикла"
+      ],
+      "assumption": "Раздел по отчетности не реализуется в текущей итерации.",
+      "fids": [
+        "F-014"
+      ],
+      "lines": [
+        57
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-15",
+      "text": "Кто проводит ревью по чек-листу и проставит отметки в разделе 9 (строка 89)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Отсутствие подтверждения качества проработки документа перед передачей в разработку.",
+      "options": [
+        "QA-инженер и системный аналитик",
+        "Руководитель продукта"
+      ],
+      "assumption": "Аналитик и QA заполняют чек-лист до конца текущего дня.",
+      "fids": [
+        "F-015"
+      ],
+      "lines": [
+        89
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-16",
+      "text": "Какая версия и дата у этой редакции документа (строка 9)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Невозможность контроля версий при изменении требований и согласовании с подрядчиком.",
+      "options": [
+        "Проставить версию 1.0 и текущую дату",
+        "Оставить документ без указания версии"
+      ],
+      "assumption": "Документу присваивается версия 1.0 от текущей даты.",
+      "fids": [
+        "F-020"
+      ],
+      "lines": [
+        9
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-17",
+      "text": "Можно ли разбить неатомарные пункты R-002, R-004, R-006, R-013, R-016, R-019 на отдельные требования с одним условием в каждом?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Сложность оценки трудозатрат и покрытия тестами комплексных требований.",
+      "options": [
+        "Да, декомпозировать на атомарные требования",
+        "Нет, оставить в текущем виде"
+      ],
+      "assumption": "Разработка и тестирование опираются на текущую декомпозицию пунктов.",
+      "fids": [
+        "F-022"
+      ],
+      "lines": [
+        19,
+        25,
+        27,
+        38,
+        42,
+        48
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-05.1",
+      "text": "Уточните, пожалуйста, какой часовой пояс и точное время суток используются для отсчета 31 суток хранения черновика.",
+      "priority": "blocker",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-021"
+      ],
+      "lines": [
+        40
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-08.1",
+      "text": "Уточните итоговое решение по технологическому стеку (XGBoost и Kubernetes) для вынесения его в требования.",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-005"
+      ],
+      "lines": [
+        36
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-10.1",
+      "text": "Уточните конкретный заголовок или параметр для обеспечения идемпотентности при создании заявки.",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-018"
+      ],
+      "lines": [
+        63
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    }
+  ],
+  "resolved": [
+    {
+      "fid": "F-001",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие по минимальному возрасту заявителя в документе",
+      "explanation": "В данном требовании указан возраст от 21 года, в то время как в строке 32 указано требование от 18 лет, что создает логический конфликт.",
+      "rids": [
+        "R-003",
+        "R-009",
+        "R-030"
+      ],
+      "quotes": [
+        {
+          "text": "Минимальный возраст заявителя составляет 21 год",
+          "line": 21,
+          "found": true
+        },
+        {
+          "text": "Система принимает к рассмотрению заявки клиентов от 18 лет",
+          "line": 32,
+          "found": true
+        }
+      ],
+      "example": "Заявителю 19 лет: по пункту R-003 отказ, по пункту в строке 32 — прием к рассмотрению.",
+      "suggestion": "Когда клиент подает заявку, система должна проверять, что возраст заявителя составляет от 21 до 65 лет на дату окончания срока действия карты.",
+      "question": "Какой именно минимальный возраст правильный: 18 или 21 год?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Автор указал правильный возраст 21 год и подтвердил исправление строки 32 и критериев приёмки. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-002",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Отсутствует обработка недоступности государственной базы",
+      "explanation": "Не указано, что должна делать система, если государственная база недоступна во время проверки ИИН.",
+      "rids": [
+        "R-008"
+      ],
+      "quotes": [
+        {
+          "text": "Система проверяет ИИН по государственной базе",
+          "line": 30,
+          "found": true
+        },
+        {
+          "text": "Система проверяет ИИН по государственной базе и сверяет введённые данные",
+          "line": 30,
+          "found": true
+        }
+      ],
+      "example": "Госбаза возвращает таймаут 504. Что видит клиент?",
+      "suggestion": "Когда государственная база недоступна, система должна выводить сообщение о технической ошибке и предлагать повторить попытку позже.",
+      "question": "Каково ожидаемое поведение системы при недоступности внешней государственной базы?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-06: Описан вариант поведения при недоступности госбазы. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-003",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Использование неопределенного термина «быстро»",
+      "explanation": "Слово «быстро» является субъективным и не позволяет однозначно определить целевое время ответа системы.",
+      "rids": [
+        "R-010"
+      ],
+      "quotes": [
+        {
+          "text": "Решение по заявке принимается быстро",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "Заявка обрабатывается 5 минут — для бизнеса это быстро, а для пользователя может быть долго.",
+      "suggestion": "Когда заявка отправлена, решение показывается не более 5 секунд (95-й перцентиль).",
+      "question": "Какое максимальное время обработки заявки и показа результата считается нормативным?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-07: Нормативное время обработки задано числом (5 секунд).",
+      "grouped": false
+    },
+    {
+      "fid": "F-004",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «быстро»",
+      "explanation": "Слово «быстро» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-010",
+        "R-011"
+      ],
+      "quotes": [
+        {
+          "text": "быстро",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Когда заявка отправлена, решение показывается не позднее 5 секунд.",
+      "question": "Что именно означает «быстро» в R-010? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "закрыто ответом Q-07: Неопределенный термин заменен измеримым критерием.",
+      "grouped": false
+    },
+    {
+      "fid": "F-006",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие условий льготного периода",
+      "explanation": "Указано, что по истечении 60 дней проценты не начисляются, хотя льготный период составляет 55 дней, после чего проценты должны начисляться.",
+      "rids": [
+        "R-015",
+        "R-032"
+      ],
+      "quotes": [
+        {
+          "text": "Прошло 60 дней с покупки",
+          "line": 81,
+          "found": true
+        },
+        {
+          "text": "Проценты за период не начисляются",
+          "line": 81,
+          "found": true
+        },
+        {
+          "text": "Льготный период по карте составляет 55 дней",
+          "line": 42,
+          "found": true
+        },
+        {
+          "text": "Прошло 60 дней с покупки, долг погашен не полностью | Проценты за период не начисляются",
+          "line": 81,
+          "found": true
+        }
+      ],
+      "example": "Прошло 60 дней, что больше 55-дневного льготного периода, но проценты не начисляются, что противоречит бизнес-правилам.",
+      "suggestion": "Когда прошло 60 дней с покупки и долг погашен не полностью, система должна начислить проценты за период.",
+      "question": "Почему через 60 дней (после окончания 55-дневного льготного периода) проценты не начисляются?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Автор подтвердил сохранение условий льготного периода 55 дней и критерия по 60 дням. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-009",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не определены условия расчета доступности сервиса",
+      "explanation": "Отсутствует уточнение, входят ли плановые технические обслуживания в расчет показателя 99,5%.",
+      "rids": [
+        "R-020"
+      ],
+      "quotes": [
+        {
+          "text": "Сервис подачи заявок доступен не менее 99,5% времени в месяц.",
+          "line": 49,
+          "found": true
+        }
+      ],
+      "example": "Система была недоступна 12 часов из-за планового обновления, что формально нарушает 99,5% при отсутствии оговорок.",
+      "suggestion": "Сервис подачи заявок доступен не менее 99,5% времени в месяц, исключая плановые работы не более 4 часов в месяц с уведомлением за 3 дня в окно с 02:00 до 06:00.",
+      "question": "Учитываются ли плановые технические работы при расчете доступности 99,5%?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-09: Определены условия расчета доступности и исключения для плановых работ.",
+      "grouped": false
+    },
+    {
+      "fid": "F-010",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Использование метода GET для отправки заявки на скоринг",
+      "explanation": "Метод GET не должен использоваться для изменения состояния системы и отправки данных на обработку, по стандартам REST API для этого применяется POST.",
+      "rids": [
+        "R-025"
+      ],
+      "quotes": [
+        {
+          "text": "Отправка заявки на скоринг",
+          "line": 64,
+          "found": true
+        },
+        {
+          "text": "/api/v1/cc/applications/{id}/submit",
+          "line": 64,
+          "found": true
+        }
+      ],
+      "example": "Клиент выполняет GET-запрос для отправки заявки, что нарушает идемпотентность и стандарты проектирования API.",
+      "suggestion": "Когда клиент отправляет заявку на скоринг, система использует метод POST /api/v1/cc/applications/{id}/submit.",
+      "question": "Почему для отправки заявки на скоринг выбран метод GET вместо POST?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-03: Метод изменен на POST.",
+      "grouped": false
+    },
+    {
+      "fid": "F-011",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Возврат кода 200 OK при отсутствии заявки",
+      "explanation": "Возврат успешного кода 200 OK для сценария, когда заявка не найдена, противоречит стандартам HTTP (должен быть 404 Not Found).",
+      "rids": [
+        "R-028"
+      ],
+      "quotes": [
+        {
+          "text": "200 OK",
+          "line": 72,
+          "found": true
+        },
+        {
+          "text": "Заявка не найдена",
+          "line": 72,
+          "found": true
+        }
+      ],
+      "example": "При запросе несуществующего id клиенту возвращается 200 OK вместо 404 Not Found.",
+      "suggestion": "Когда заявка не найдена, система возвращает 404 Not Found и тело {\"code\": \"APPLICATION_NOT_FOUND\"}.",
+      "question": "Почему для сценария 'Заявка не найдена' указан код 200 OK вместо 404?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-04: Код ошибки для несуществующей заявки изменен на 404.",
+      "grouped": false
+    },
+    {
+      "fid": "F-012",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "major",
+      "title": "Противоречие возрастных ограничений в критерии приёмки",
+      "explanation": "В критерии приёмки указан возраст 19 лет, хотя в требованиях минимальный возраст составляет 21 год.",
+      "rids": [
+        "R-030"
+      ],
+      "quotes": [
+        {
+          "text": "Заявителю 19 лет",
+          "line": 79,
+          "found": true
+        },
+        {
+          "text": "Заявка принята и передана на скоринг",
+          "line": 79,
+          "found": true
+        }
+      ],
+      "example": "Заявителю 19 лет, система должна отклонить заявку согласно возрастному лимиту 21 год.",
+      "suggestion": "Когда заявителю 21 год, документы действительны, система должна принять заявку и передать на скоринг.",
+      "question": "Какой минимальный возраст должен быть у заявителя для принятия заявки на скоринг (19 или 21 год)?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Возраст в критериях приёмки скорректирован под требования. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-016",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Несогласованность срока хранения черновика анкеты",
+      "explanation": "Функциональное требование и критерий приёмки устанавливают разные сроки удаления незаполненной анкеты.",
+      "rids": [
+        "R-014",
+        "R-033"
+      ],
+      "quotes": [
+        {
+          "text": "черновик сохраняется на 30 суток, после чего удаляется",
+          "line": 40,
+          "found": true
+        },
+        {
+          "text": "Прошло 31 сутки | Черновик удалён",
+          "line": 82,
+          "found": true
+        }
+      ],
+      "example": "Прошло ровно 30 суток с момента прерывания заполнения. По требованию R-014 черновик должен быть уже удален, тогда как критерий R-033 проверяет удаление только на 31-е сутки.",
+      "suggestion": "Когда прошло 31 сутки с момента прерывания заполнения анкеты, черновик удалён.",
+      "question": "Какой точный срок хранения черновика должен быть реализован в системе?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-05: Автор выбрал срок хранения черновика 31 сутки.",
+      "grouped": false
+    },
+    {
+      "fid": "F-017",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Дублирование кода ответа 200 OK для несуществующего ресурса",
+      "explanation": "Для успешного получения статуса и для ошибки отсутствия заявки указан одинаковый HTTP-код 200 OK.",
+      "rids": [
+        "R-027",
+        "R-028"
+      ],
+      "quotes": [
+        {
+          "text": "200 OK | Статус заявки возвращён",
+          "line": 71,
+          "found": true
+        },
+        {
+          "text": "200 OK | Заявка не найдена",
+          "line": 72,
+          "found": true
+        }
+      ],
+      "example": "Клиент запрашивает статус по несущему ID. Сервер возвращает 200 OK вместо стандартного 404 Not Found, что нарушает REST API стандарты.",
+      "suggestion": "Изменить код ответа для ситуации отсутствия заявки на 404 Not Found.",
+      "question": "Почему для ошибки 'Заявка не найдена' выбран успешный код 200?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-04: Дублирование кода 200 устранено. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "dropped_ungrounded": 3,
+    "dropped_by_critic": 0,
+    "downgraded_by_critic": 0,
+    "llm_calls": 1,
+    "journal": [
+      {
+        "stage": "1",
+        "step": "Чтение документа",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "MD, строк 93",
+        "roles": []
+      },
+      {
+        "stage": "2",
+        "step": "Нарезка и правила набора",
+        "agent": "Segmenter + RuleEngine (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "блоков 42, находок правил 3",
+        "roles": []
+      },
+      {
+        "stage": "3",
+        "step": "Подключение модели",
+        "agent": "GeminiClient (код)",
+        "seconds": 0.77,
+        "status": "ok",
+        "out": "gemini-3.5-flash-lite",
+        "roles": []
+      },
+      {
+        "stage": "4",
+        "step": "Выделение требований",
+        "agent": "Extractor (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "требований 34",
+        "roles": [
+          "extractor"
+        ]
+      },
+      {
+        "stage": "5.1",
+        "step": "Оценка каждого требования",
+        "agent": "Reviewer, параллельные пакеты (LLM)",
+        "seconds": 0.02,
+        "status": "ok",
+        "out": "оценено 34, находок 20",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "stage": "5.2",
+        "step": "Чек-лист и трассировка",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "строк трассировки 23",
+        "roles": [
+          "analyst_checklist"
+        ]
+      },
+      {
+        "stage": "5.3",
+        "step": "Черновики тест-кейсов",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "тест-кейсов 4",
+        "roles": [
+          "analyst_tests"
+        ]
+      },
+      {
+        "stage": "6",
+        "step": "Проверка набора: противоречия и пропуски",
+        "agent": "ConsistencyReviewer + GapFinder (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 8",
+        "roles": [
+          "consistency",
+          "gaps"
+        ]
+      },
+      {
+        "stage": "7",
+        "step": "Сверка цитат и дедупликация",
+        "agent": "Grounder + dedupe (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "отброшено без цитаты 3, слито дублей 1",
+        "roles": []
+      },
+      {
+        "stage": "8",
+        "step": "Перепроверка находок",
+        "agent": "Critic (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "оставлено 28, отклонено/слито 3",
+        "roles": [
+          "critic"
+        ]
+      },
+      {
+        "stage": "9",
+        "step": "Слияние повторов между агентами",
+        "agent": "dedupe по требованиям и строкам (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "слито повторов 1; замечаний «Единичность» сведено в одну: 6",
+        "roles": []
+      },
+      {
+        "stage": "10",
+        "step": "Калибровка критичности",
+        "agent": "Калибровка критичности (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "понижено до «существенный»: 1",
+        "roles": []
+      },
+      {
+        "stage": "11",
+        "step": "Нумерация находок",
+        "agent": "Оркестратор (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 22",
+        "roles": []
+      },
+      {
+        "stage": "12",
+        "step": "Вопросы автору",
+        "agent": "Clarifier (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "вопросов 17",
+        "roles": [
+          "clarifier"
+        ]
+      },
+      {
+        "stage": "13",
+        "step": "Чтение ответов автора",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "ответов 10",
+        "roles": []
+      },
+      {
+        "stage": "14",
+        "step": "Учёт ответов автора",
+        "agent": "Resolver (LLM)",
+        "seconds": 4.16,
+        "status": "ok",
+        "out": "решений по находкам 14",
+        "roles": [
+          "resolver"
+        ]
+      }
+    ],
+    "merged_id_findings": 0,
+    "merged_duplicates": 3,
+    "dropped_by_critic_titles": [
+      "Противоречие возрастных ограничений заявителя в документе — дубль T-008: Дублирует находку T-008 о противоречии возрастных ограничений.",
+      "Противоречие по минимальному возрасту заявителя — дубль T-008: Дублирует находку T-008 о несогласованности возраста.",
+      "Не описано поведение системы при недоступности государственной базы — дубль T-011: Дублирует находку T-011 об отсутствии поведения при недоступности госбазы."
+    ],
+    "merged_overlap": 1,
+    "merged_overlap_titles": [
+      "Противоречие длительности льготного периода и условий проверки → Противоречие условий льготного периода"
+    ],
+    "merged_singular": 6,
+    "downgraded_by_calibration": 1,
+    "answers_used": 10,
+    "answers_unmatched": [],
+    "resolved_by_answers": 11,
+    "before_answers": {
+      "critical": 4,
+      "major": 13
+    },
+    "llm_cache_hits": 12,
+    "llm_retries": 0,
+    "llm_failures": 0,
+    "input_tokens": 4969,
+    "output_tokens": 1686,
+    "thinking_tokens": 0,
+    "llm_seconds": 4.1,
+    "llm_by_role": {
+      "extractor": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 0,
+        "cache_hits": 5,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_checklist": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_tests": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "consistency": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "gaps": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "critic": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "clarifier": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "resolver": {
+        "calls": 1,
+        "cache_hits": 0,
+        "failures": 0,
+        "input_tokens": 4969,
+        "output_tokens": 1686,
+        "thinking_tokens": 0,
+        "seconds": 4.1
+      }
+    },
+    "duration_sec": 5.01,
+    "value": {
+      "rate_kzt_per_hour": 5000.0,
+      "manual_base_min": 30.0,
+      "manual_min_per_requirement": 6.0,
+      "check_min_per_finding": 1.5,
+      "manual_hours": 3.9,
+      "agent_hours": 0.001,
+      "check_hours": 0.55,
+      "saved_hours": 3.35,
+      "saved_kzt": 16743,
+      "critical_found": 4,
+      "major_found": 13,
+      "fix_hours_at_requirements": 1.0,
+      "escalation_factor": 7.0,
+      "precision": 0.85,
+      "avoided_rework_hours": 53.5,
+      "avoided_rework_kzt": 267750,
+      "tokens_total": 6655,
+      "llm_cost_kzt": 0.0,
+      "llm_price_note": "бесплатный тариф (цена токенов не задана)",
+      "roi": 103.5,
+      "major_weight": 0.5,
+      "scenarios": [
+        {
+          "name": "основной",
+          "escalation": 7.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 53.5,
+          "benefit_kzt": 284493,
+          "roi": 103.5
+        },
+        {
+          "name": "осторожный",
+          "escalation": 3.0,
+          "precision": 0.7,
+          "avoided_rework_hours": 14.7,
+          "benefit_kzt": 90243,
+          "roi": 32.8
+        },
+        {
+          "name": "только время ревью",
+          "escalation": 1.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 0.0,
+          "benefit_kzt": 16743,
+          "roi": 6.1
+        }
+      ]
+    },
+    "requirements": 34,
+    "findings": 11,
+    "critical": 0,
+    "major": 7,
+    "minor": 4,
+    "questions": 20,
+    "questions_blocker_open": 1
+  },
+  "document_score": 64,
+  "verdict_dev": "Условно — критичных дефектов нет, но есть существенные (7); разработку можно начинать после их уточнения.",
+  "verdict_test": "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения.",
+  "priorities": [
+    "F-013",
+    "F-019",
+    "F-018",
+    "F-014",
+    "F-015",
+    "F-005",
+    "F-007"
+  ]
+}
