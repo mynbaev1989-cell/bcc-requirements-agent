@@ -1782,3 +1782,22 @@ def test_resolved_helper_tolerates_bad_paths(monkeypatch):
     assert pipeline._resolved("") is None
     monkeypatch.setattr(Path, "resolve", lambda self: (_ for _ in ()).throw(OSError("нет")))
     assert pipeline._resolved("x") is None
+
+
+def test_overlap_merges_same_defect_under_two_criteria_on_one_requirement():
+    """Отчёт кейса: «GET для сохранения» нашли Reviewer («Уместность») и проверка набора («Корректность»)."""
+    from reqcheck.agents import overlap_duplicates
+    from reqcheck.models import Finding, Quote
+
+    main = Finding("F-007", "requirement", "appropriate", "critical",
+                   "Использование HTTP-метода GET для мутирующей операции сохранения настройки", "",
+                   rids=["R-017", "R-025"], quotes=[Quote("GET", line=104, found=True)])
+    dup = Finding("F-008", "requirement", "correct", "major",
+                  "Использование HTTP GET для мутирующей операции сохранения", "",
+                  rids=["R-017"], quotes=[Quote("GET", line=103, found=True)])
+    other = Finding("F-011", "requirement", "complete", "major", "Не описан сценарий обработки невалидной сессии", "",
+                    rids=["R-017"], quotes=[Quote("сессия", line=104, found=True)])
+    assert overlap_duplicates([main, dup, other]) == [(dup, main)]
+    far = Finding("F-020", "requirement", "correct", "major", dup.title, "", rids=["R-017"],
+                  quotes=[Quote("GET", line=150, found=True)])
+    assert overlap_duplicates([main, far]) == []  # строки далеко — разные места документа

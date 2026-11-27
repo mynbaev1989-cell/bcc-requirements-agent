@@ -622,6 +622,7 @@ def collapse_singular(findings: list[Finding]) -> tuple[list[Finding], int]:
 
 
 OVERLAP_TITLE_SIMILARITY = 0.25  # доля общих основ слов в заголовках (мера Жаккара)
+SAME_DEFECT_TITLE_SIMILARITY = 0.6  # то же для двух находок по одному требованию — строже
 _STOP = {"для", "при", "или", "без", "над", "под", "что", "как", "это", "треб", "одно", "един"}
 
 
@@ -656,4 +657,21 @@ def overlap_duplicates(findings: list[Finding]) -> list[tuple[Finding, Finding]]
                 best, score = t, j
         if best is not None:
             pairs.append((s, best))
+    # Две находки по требованию об одном дефекте под разными критериями (Reviewer подписал «Уместность»,
+    # ConsistencyReviewer — «Корректность»): общее требование, строки рядом и почти одинаковый заголовок.
+    # Порог строже, чем для пары «набор — требование»: на одном требовании бывает несколько разных дефектов.
+    taken = {id(d) for d, _ in pairs} | {id(m) for _, m in pairs}
+    for i, a in enumerate(targets):
+        for b in targets[i + 1:]:
+            if id(a) in taken or id(b) in taken or a.criterion == b.criterion or not set(a.rids) & set(b.rids):
+                continue
+            if not any(abs(x - y) <= 1 for x in lines[id(a)] for y in lines[id(b)]):
+                continue
+            sa, sb = stems[id(a)], stems[id(b)]
+            if len(sa & sb) / max(len(sa | sb), 1) < SAME_DEFECT_TITLE_SIMILARITY:
+                continue
+            # Основная — старшая по критичности, при равенстве — с большим числом требований и цитат
+            main, dup = sorted((a, b), key=lambda f: (SEV_RANK.get(f.severity, 9), -len(f.rids), -len(f.quotes)))
+            pairs.append((dup, main))
+            taken |= {id(a), id(b)}
     return pairs
