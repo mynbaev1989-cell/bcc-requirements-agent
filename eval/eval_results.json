@@ -10,24 +10,116 @@
     "extra_defects": 2,
     "precision_items": 0.929,
     "false_major_on_clean": 0,
-    "questions": 12,
+    "questions": 14,
+    "questions_per_found_defect": 1.0,
     "gold_covered_by_questions": 14,
     "question_coverage": 1.0,
     "severe_gold": 11,
     "severe_covered_by_questions": 11,
     "severe_question_coverage": 1.0,
     "severity_exact": 0.357,
-    "severity_within_one": 1.0,
+    "severity_within_one": 0.929,
     "severity_exact_n": 5,
-    "severity_within_one_n": 14,
+    "severity_closest_n": 6,
+    "severity_within_one_n": 13,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "major",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D2",
+        "gold": "major",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D3",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D4",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D5",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D6",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D7",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D8",
+        "gold": "minor",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D9",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D10",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D11",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D12",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D13",
+        "gold": "critical",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D14",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      }
+    ],
     "question_quality": {
-      "n": 12,
+      "n": 14,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 0,
+      "blockers": 8,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.286,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "2/2",
@@ -65,7 +157,7 @@
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 1,
     "merged_by_critic": 0,
-    "merged_overlap": 4,
+    "merged_overlap": 5,
     "merged_singular": 2,
     "rejected_by_critic": 0
   },
@@ -74,30 +166,116 @@
     "gold_defects": 13,
     "found": 13,
     "recall": 1.0,
-    "agent_findings": 21,
-    "precision": 0.81,
-    "precision_with_extra": 0.905,
+    "agent_findings": 22,
+    "precision": 0.818,
+    "precision_with_extra": 0.909,
     "extra_defects": 2,
-    "precision_items": 0.731,
+    "precision_items": 0.741,
     "false_major_on_clean": 2,
-    "questions": 15,
+    "questions": 17,
+    "questions_per_found_defect": 1.308,
     "gold_covered_by_questions": 13,
     "question_coverage": 1.0,
     "severe_gold": 10,
     "severe_covered_by_questions": 10,
     "severe_question_coverage": 1.0,
     "severity_exact": 0.692,
-    "severity_within_one": 0.923,
+    "severity_within_one": 1.0,
     "severity_exact_n": 9,
-    "severity_within_one_n": 12,
+    "severity_closest_n": 9,
+    "severity_within_one_n": 13,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D2",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D3",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D4",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D5",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D6",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D7",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D8",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D9",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D10",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D11",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D12",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D13",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
-      "n": 15,
+      "n": 17,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 1,
+      "blockers": 5,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.647,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "1/1",
@@ -123,7 +301,7 @@
         "quote": "Сервис подачи заявок доступен не менее 99,5% времени в месяц."
       },
       {
-        "fid": "F-014",
+        "fid": "F-013",
         "severity": "major",
         "lines": [
           19
@@ -132,7 +310,7 @@
         "quote": "Заявка подаётся в мобильном приложении или веб-кабинете."
       },
       {
-        "fid": "F-016",
+        "fid": "F-015",
         "severity": "major",
         "lines": [
           89
@@ -141,7 +319,7 @@
         "quote": "Возрастные ограничения согласованы во всех разделах"
       },
       {
-        "fid": "F-020",
+        "fid": "F-021",
         "severity": "minor",
         "lines": [
           40
@@ -152,44 +330,130 @@
     ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 3,
-    "merged_by_critic": 2,
-    "merged_overlap": 2,
+    "merged_by_critic": 3,
+    "merged_overlap": 1,
     "merged_singular": 6,
     "rejected_by_critic": 0
   },
   {
     "document": "p2p_phone.md",
     "gold_defects": 14,
-    "found": 14,
-    "recall": 1.0,
-    "agent_findings": 24,
-    "precision": 0.875,
+    "found": 13,
+    "recall": 0.929,
+    "agent_findings": 22,
+    "precision": 0.864,
     "precision_with_extra": 1.0,
     "extra_defects": 3,
-    "precision_items": 0.84,
+    "precision_items": 0.826,
     "false_major_on_clean": 0,
     "questions": 16,
-    "gold_covered_by_questions": 14,
-    "question_coverage": 1.0,
-    "severe_gold": 11,
-    "severe_covered_by_questions": 11,
+    "questions_per_found_defect": 1.231,
+    "gold_covered_by_questions": 13,
+    "question_coverage": 0.929,
+    "severe_gold": 10,
+    "severe_covered_by_questions": 10,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.357,
-    "severity_within_one": 0.929,
-    "severity_exact_n": 5,
-    "severity_within_one_n": 13,
+    "severity_exact": 0.462,
+    "severity_within_one": 0.923,
+    "severity_exact_n": 6,
+    "severity_closest_n": 11,
+    "severity_within_one_n": 12,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D2",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D3",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D4",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D5",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D6",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D7",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D8",
+        "gold": "minor",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D9",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D10",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D11",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D12",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D14",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
       "n": 16,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 0,
+      "blockers": 5,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.688,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "2/2",
-      "api": "2/2",
+      "api": "1/2",
       "contradiction": "3/3",
       "design_in_req": "1/1",
       "empty_section": "1/1",
@@ -199,10 +463,12 @@
       "units": "1/1",
       "unverifiable": "1/1"
     },
-    "missed": [],
+    "missed": [
+      "GET-метод выполняет списание средств."
+    ],
     "unmatched": [
       {
-        "fid": "F-017",
+        "fid": "F-016",
         "severity": "major",
         "lines": [
           55
@@ -211,7 +477,7 @@
         "quote": "TBD"
       },
       {
-        "fid": "F-018",
+        "fid": "F-017",
         "severity": "major",
         "lines": [
           98
@@ -220,7 +486,7 @@
         "quote": "Лимиты и комиссии заданы числами"
       },
       {
-        "fid": "F-021",
+        "fid": "F-019",
         "severity": "minor",
         "lines": [
           46
@@ -231,8 +497,8 @@
     ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 3,
-    "merged_by_critic": 1,
-    "merged_overlap": 3,
+    "merged_by_critic": 0,
+    "merged_overlap": 5,
     "merged_singular": 2,
     "rejected_by_critic": 0
   }

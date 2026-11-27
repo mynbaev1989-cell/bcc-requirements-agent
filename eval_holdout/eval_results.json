@@ -4,30 +4,128 @@
     "gold_defects": 15,
     "found": 15,
     "recall": 1.0,
-    "agent_findings": 27,
-    "precision": 0.815,
-    "precision_with_extra": 0.815,
+    "agent_findings": 28,
+    "precision": 0.821,
+    "precision_with_extra": 0.821,
     "extra_defects": 0,
-    "precision_items": 0.786,
+    "precision_items": 0.793,
     "false_major_on_clean": 0,
-    "questions": 14,
+    "questions": 18,
+    "questions_per_found_defect": 1.2,
     "gold_covered_by_questions": 15,
     "question_coverage": 1.0,
     "severe_gold": 12,
     "severe_covered_by_questions": 12,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.533,
+    "severity_exact": 0.6,
     "severity_within_one": 1.0,
-    "severity_exact_n": 8,
+    "severity_exact_n": 9,
+    "severity_closest_n": 10,
     "severity_within_one_n": 15,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D2",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D3",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D4",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D5",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D6",
+        "gold": "major",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D7",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D8",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D9",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D10",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D11",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D12",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D13",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D14",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D15",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
-      "n": 14,
+      "n": 18,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 1,
+      "blockers": 7,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.444,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "1/1",
@@ -62,7 +160,7 @@
         "quote": "Банк рассчитывает привлечь не менее 20 000 новых депозитов"
       },
       {
-        "fid": "F-023",
+        "fid": "F-024",
         "severity": "minor",
         "lines": [
           20
@@ -71,7 +169,7 @@
         "quote": "Клиент должен открыть депозит полностью онлайн, без визита в отделение."
       },
       {
-        "fid": "F-025",
+        "fid": "F-026",
         "severity": "minor",
         "lines": [
           83
@@ -80,7 +178,7 @@
         "quote": "POST | /deposits | Открытие депозита"
       },
       {
-        "fid": "F-027",
+        "fid": "F-028",
         "severity": "minor",
         "lines": [
           48,
@@ -92,7 +190,7 @@
     ],
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 0,
-    "merged_by_critic": 4,
+    "merged_by_critic": 3,
     "merged_overlap": 3,
     "merged_singular": 2,
     "rejected_by_critic": 0
@@ -100,39 +198,137 @@
   {
     "document": "holdout_installments.md",
     "gold_defects": 16,
-    "found": 16,
-    "recall": 1.0,
-    "agent_findings": 23,
-    "precision": 0.957,
+    "found": 15,
+    "recall": 0.938,
+    "agent_findings": 21,
+    "precision": 0.952,
     "precision_with_extra": 1.0,
     "extra_defects": 1,
-    "precision_items": 0.96,
+    "precision_items": 0.957,
     "false_major_on_clean": 1,
-    "questions": 19,
-    "gold_covered_by_questions": 16,
-    "question_coverage": 1.0,
+    "questions": 13,
+    "questions_per_found_defect": 0.867,
+    "gold_covered_by_questions": 15,
+    "question_coverage": 0.938,
     "severe_gold": 12,
     "severe_covered_by_questions": 12,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.5,
+    "severity_exact": 0.667,
     "severity_within_one": 1.0,
-    "severity_exact_n": 8,
-    "severity_within_one_n": 16,
+    "severity_exact_n": 10,
+    "severity_closest_n": 12,
+    "severity_within_one_n": 15,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D2",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D3",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D4",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D5",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D6",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D7",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D8",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D9",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D10",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D11",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D12",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D13",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D15",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D16",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
-      "n": 19,
+      "n": 13,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 1
+      "duplicate_pairs": 0,
+      "blockers": 3,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.846,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "1/1",
       "api": "2/2",
       "contradiction": "2/2",
       "design_in_req": "1/1",
-      "empty_section": "1/1",
+      "empty_section": "0/1",
       "incomplete": "3/3",
       "no_version": "1/1",
       "non_singular": "1/1",
@@ -141,10 +337,12 @@
       "units": "1/1",
       "unverifiable": "1/1"
     },
-    "missed": [],
+    "missed": [
+      "Раздел Отчётность является заглушкой."
+    ],
     "unmatched": [
       {
-        "fid": "F-019",
+        "fid": "F-017",
         "severity": "minor",
         "lines": [
           50
@@ -156,7 +354,7 @@
     "model": "gemini-3.5-flash-lite",
     "dropped_ungrounded": 1,
     "merged_by_critic": 3,
-    "merged_overlap": 0,
+    "merged_overlap": 1,
     "merged_singular": 3,
     "rejected_by_critic": 0
   }

@@ -4,30 +4,122 @@
     "gold_defects": 16,
     "found": 14,
     "recall": 0.875,
-    "agent_findings": 25,
-    "precision": 0.8,
-    "precision_with_extra": 0.92,
+    "agent_findings": 26,
+    "precision": 0.808,
+    "precision_with_extra": 0.923,
     "extra_defects": 3,
-    "precision_items": 0.8,
+    "precision_items": 0.808,
     "false_major_on_clean": 1,
-    "questions": 13,
+    "questions": 12,
+    "questions_per_found_defect": 0.857,
     "gold_covered_by_questions": 14,
     "question_coverage": 0.875,
     "severe_gold": 10,
     "severe_covered_by_questions": 10,
     "severe_question_coverage": 1.0,
-    "severity_exact": 0.429,
+    "severity_exact": 0.5,
     "severity_within_one": 1.0,
-    "severity_exact_n": 6,
+    "severity_exact_n": 7,
+    "severity_closest_n": 8,
     "severity_within_one_n": 14,
     "false_critical": 0,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D2",
+        "gold": "major",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D3",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D4",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D5",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D7",
+        "gold": "major",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D8",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D9",
+        "gold": "critical",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D10",
+        "gold": "critical",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D12",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D13",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D14",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D15",
+        "gold": "minor",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D16",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
-      "n": 13,
+      "n": 12,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 1,
+      "blockers": 4,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.583,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "2/2",
@@ -103,13 +195,14 @@
     "gold_defects": 16,
     "found": 16,
     "recall": 1.0,
-    "agent_findings": 26,
-    "precision": 0.846,
-    "precision_with_extra": 0.885,
+    "agent_findings": 27,
+    "precision": 0.815,
+    "precision_with_extra": 0.889,
     "extra_defects": 1,
-    "precision_items": 0.846,
-    "false_major_on_clean": 2,
-    "questions": 20,
+    "precision_items": 0.815,
+    "false_major_on_clean": 3,
+    "questions": 18,
+    "questions_per_found_defect": 1.125,
     "gold_covered_by_questions": 16,
     "question_coverage": 1.0,
     "severe_gold": 12,
@@ -118,15 +211,118 @@
     "severity_exact": 0.375,
     "severity_within_one": 0.75,
     "severity_exact_n": 6,
+    "severity_closest_n": 7,
     "severity_within_one_n": 12,
-    "false_critical": 0,
+    "false_critical": 1,
+    "severity_pairs": [
+      {
+        "defect": "D1",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D2",
+        "gold": "minor",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D3",
+        "gold": "critical",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D4",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "critical"
+      },
+      {
+        "defect": "D5",
+        "gold": "critical",
+        "agent": "minor",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D6",
+        "gold": "critical",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D7",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D8",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D9",
+        "gold": "minor",
+        "agent": "critical",
+        "agent_closest": "minor"
+      },
+      {
+        "defect": "D10",
+        "gold": "minor",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D11",
+        "gold": "critical",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D12",
+        "gold": "major",
+        "agent": "critical",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D13",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D14",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D15",
+        "gold": "major",
+        "agent": "major",
+        "agent_closest": "major"
+      },
+      {
+        "defect": "D16",
+        "gold": "minor",
+        "agent": "critical",
+        "agent_closest": "major"
+      }
+    ],
     "question_quality": {
-      "n": 20,
+      "n": 18,
       "with_addressee": 1.0,
       "with_options": 1.0,
       "with_assumption": 1.0,
       "with_line": 1.0,
-      "duplicate_pairs": 0
+      "duplicate_pairs": 0,
+      "blockers": 3,
+      "blockers_with_options": 1.0,
+      "routed_addressee": 0.444,
+      "text_duplicate_pairs": 0
     },
     "by_type": {
       "ambiguity": "1/1",
@@ -160,7 +356,17 @@
         "quote": "Система формирует итоговый отчёт по реестру в форматах PDF и XLSX"
       },
       {
-        "fid": "F-024",
+        "fid": "F-021",
+        "severity": "critical",
+        "lines": [
+          28,
+          63
+        ],
+        "title": "Противоречие формата загрузки реестра между ФТ и API",
+        "quote": "Система принимает реестр выплат в формате CSV в кодировке UTF-8 с разделителем «;»."
+      },
+      {
+        "fid": "F-025",
         "severity": "major",
         "lines": [
           29
@@ -169,7 +375,7 @@
         "quote": "Система отклоняет файл реестра размером более 20 МБ с кодом ошибки REG_FILE_TOO_LARGE."
       },
       {
-        "fid": "F-026",
+        "fid": "F-027",
         "severity": "minor",
         "lines": [
           63
