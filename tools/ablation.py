@@ -40,6 +40,7 @@ from reqcheck import agents, steps  # noqa: E402
 from reqcheck.llm import GeminiClient, LLMError  # noqa: E402
 from reqcheck.pipeline import Options  # noqa: E402
 from tools.eval_score import GATE, gate_failures, score_document  # noqa: E402,F401
+from tools.stats import intervals  # noqa: E402
 
 FOLDERS = ("eval", "eval_holdout", "eval_blind")
 CACHE_DIR = ROOT / ".reqcheck_cache"
@@ -227,6 +228,11 @@ def main() -> int:
               f"{r['rejected_by_critic']} | {r['merged_overlap']} | {r['cache_misses']} | "
               f"{r['severe_covered']}/{r['severe_gold']} | {r['false_critical']} | {r['severity_exact']:.0%} | "
               f"{r['severity_within_one']:.0%} | {r['precision_with_extra']:.0%} |")
+    full = results[0]
+    full["ci95"] = intervals(full["docs"])
+    ci = full["ci95"]
+    print("95%-интервалы полного конвейера (bootstrap по 7 документам, 10 000 повторов): "
+          + "; ".join(f"{k} {v['value']:.0%} [{v['lo']:.0%}–{v['hi']:.0%}]" for k, v in ci.items()))
     out = ROOT / "eval" / "ablation.json"
     out.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Результаты: {out}")

@@ -611,7 +611,24 @@
         "rejected_by_critic": 0,
         "cache_misses": 0
       }
-    ]
+    ],
+    "ci95": {
+      "recall": {
+        "value": 0.981,
+        "lo": 0.943,
+        "hi": 1.0
+      },
+      "precision": {
+        "value": 0.861,
+        "lo": 0.822,
+        "hi": 0.905
+      },
+      "severity_exact": {
+        "value": 0.461,
+        "lo": 0.388,
+        "hi": 0.546
+      }
+    }
   },
   {
     "variant": "no_critic",
