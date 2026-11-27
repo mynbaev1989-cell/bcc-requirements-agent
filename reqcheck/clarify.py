@@ -355,6 +355,99 @@ def self_contradictions(data, answer_by_q: dict[str, str]) -> dict[str, tuple[st
     return out
 
 
+# --- Проверки ответа кодом, без модели --------------------------------------------------------------
+# Модель решает, закрывает ли ответ дефект; два вида противоречий она пропускает почти всегда, и их ловит код:
+# автор выбрал одну сторону противоречия, а вторую прямо оставил, и одна величина с двумя значениями в ответе.
+_KEEP_AS_IS = re.compile(r"как есть|не трога|без изменени|не меня", re.I)
+_REWRITE = re.compile(r"замен|исправ|удал|убра|исключ|вместо|отмен|перепис|привест|привед", re.I)
+_CONDITION = re.compile(r"(?<![А-Яа-яЁё])(?:для|если|при|кроме)(?![А-Яа-яЁё])", re.I)
+_QUANTITY = re.compile(r"(\d+(?:[.,]\d+)?)\s*(%|[А-Яа-яЁё]+)(?:\s+(?!(?:в|за)\s)([А-Яа-яЁё]+))?(?:\s+(?:в|за)\s+(день|месяц|год|сутки|час))?")
+_ADJ_UNIT = ("рабоч", "календ", "банков")  # «5 рабочих дней»: единица — следующее слово
+_UNIT_ROOTS = (("дн", "день"), ("ден", "день"), ("сут", "сутки"), ("мес", "месяц"), ("год", "год"), ("лет", "год"),
+               ("час", "час"), ("мин", "минута"), ("сек", "секунда"), ("тенг", "тенге"), ("тг", "тенге"),
+               ("процент", "%"), ("раз", "раз"))
+_CTX_STOP = {"после", "через", "более", "менее", "например", "также", "только", "этого", "этом", "каждый", "всех",
+             "одновременно", "тоже", "этот", "этой", "будет", "должен", "должна", "может"}
+
+
+def _plain_numbers(text: str) -> str:
+    """«1 500 000» → «1500000»: пробел между разрядами не делит число."""
+    return re.sub(r"(?<=\d)[  ](?=\d{3}(?!\d))", "", text)
+
+
+def _clauses(text: str) -> list[str]:
+    """Части ответа: предложения и части через запятую («1,5» без пробела не делится)."""
+    return [s.strip() for s in re.split(r"(?<=[.!?;,])\s+", text) if s.strip()]
+
+
+def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
+    """Ответ выбирает значение одной стороны противоречия и прямо оставляет другую: (выбор, оставленное).
+
+    Стороны — цитаты находки с разных строк; их значения — числа, которые есть только у этой стороны.
+    Сторона «оставлена», если предложение с её числом содержит «как есть» / «не трогаем» и не содержит глагола
+    замены. Сторона «выбрана», если её число стоит в ответе вне предложения с заменой."""
+    by_line: dict[int, set[str]] = {}
+    for q in finding.quotes:
+        if q.line:
+            by_line.setdefault(q.line, set()).update(_numbers(q.text))
+    sides = list(by_line.values())
+    if len(sides) < 2:
+        return None
+    sents = _clauses(answer)
+    for i, side in enumerate(sides):
+        own = side - set().union(*(s for j, s in enumerate(sides) if j != i))
+        kept = [s for s in sents if _KEEP_AS_IS.search(s) and not _REWRITE.search(s) and _numbers(s) & own]
+        if not kept:
+            continue
+        for j, other in enumerate(sides):
+            other_own = other - side
+            chosen = [s for s in sents if s not in kept and not _REWRITE.search(s) and _numbers(s) & other_own]
+            if j != i and chosen:
+                return chosen[0], kept[0]
+    return None
+
+
+def _unit(word: str, nxt: str, per: str) -> str:
+    w = word.lower()
+    if w.startswith(_ADJ_UNIT) and nxt:
+        w = nxt.lower()
+    root = next((name for prefix, name in _UNIT_ROOTS if w.startswith(prefix)), w[:4])
+    return f"{root}/{per}" if per else root
+
+
+def value_clash(answer: str) -> tuple[str, str] | None:
+    """Одна и та же величина с двумя разными значениями в одном ответе: (часть 1, часть 2).
+
+    Величина — число с единицей (и периодом: «в день», «в месяц»); «та же» — если в предложении перед числами
+    (после предыдущего числа) есть общее содержательное слово («срок», «пеня»). Не противоречие: диапазон
+    «от … до …» и значения для разных условий (обе части через запятую с «для» / «если» / «при»)."""
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?;])\s+", _plain_numbers(answer)) if s.strip()]
+    facts = []
+    for si, sent in enumerate(sentences):
+        start = 0
+        for m in _QUANTITY.finditer(sent):
+            words = re.findall(r"[А-Яа-яЁё]{4,}", sent[start:m.start()])
+            ctx = {w.lower()[:5] for w in words if w.lower() not in _CTX_STOP}
+            left, right = sent.rfind(", ", 0, m.start()), sent.find(", ", m.end())
+            clause = sent[left + 2 if left >= 0 else 0: right if right >= 0 else len(sent)]
+            if not m.group(2).lower().startswith("числ"):  # «25 числа» — дата, а не величина
+                facts.append((si, m.group(1).replace(".", ","), _unit(m.group(2), m.group(3) or "", m.group(4) or ""),
+                              ctx, clause))
+            start = m.end()
+    for x, (s1, n1, u1, ctx1, cl1) in enumerate(facts):
+        for s2, n2, u2, ctx2, cl2 in facts[x + 1:]:
+            if u1 != u2 or n1 == n2 or not ctx1 & ctx2:
+                continue
+            if s1 == s2 and re.search(rf"(?<![\d,])от\s+{re.escape(n1)}\b.*\bдо\s+{re.escape(n2)}\b", sentences[s1]):
+                continue
+            if _CONDITION.search(cl1) and _CONDITION.search(cl2):
+                continue
+            # Автору показываем целые предложения; если оба значения в одном — части через запятую
+            a, b = (cl1, cl2) if s1 == s2 else (sentences[s1], sentences[s2])
+            return a.rstrip(".;,"), b.rstrip(".;,")
+    return None
+
+
 class Resolver:
     """Учёт ответов автора: какие находки ответ закрыл, какие частично, какие остались (с новым вопросом)."""
 
@@ -425,6 +518,9 @@ class Resolver:
         # прошлого прогона (без пары) — любую находку из списка, переданного модели
         allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
         clash = self_contradictions(data, answer_by_q)
+        for k, text in answer_by_q.items():
+            if k not in clash and (vc := value_clash(text)):
+                clash[k] = vc  # одна величина с двумя значениями — нашёл код, модель такое пропускает
         asked: set[str] = set()
         effects = []
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
@@ -459,6 +555,16 @@ class Resolver:
                 comment = f"ответ противоречит сам себе: «{a_part}» и «{b_part}»"
                 follow_up = "" if qid in asked else (
                     f"В ответе два несовместимых утверждения: «{a_part}» и «{b_part}». Какое из них верно?")
+            elif status in ("resolved", "partial") and qid in allowed \
+                    and (kept := kept_conflict(answer_by_q.get(qid, ""), fmap[fid])):
+                # Автор выбрал значение одной стороны противоречия, а вторую прямо оставил «как есть»:
+                # после ответа документ всё ещё противоречив, закрывать находку нельзя.
+                chosen, left = kept
+                status, wording = "open", ""
+                comment = f"ответ оставляет противоречие в документе: выбрано «{chosen}», но оставлено «{left}»"
+                follow_up = "" if qid in asked else (
+                    f"Вы выбрали «{chosen}», но оставили «{left}» — документ останется противоречивым. "
+                    "Исправить вторую строку под выбранное значение?")
             if status == "open" and follow_up:
                 asked.add(qid)
             # В отчёт и файл ответов — исходный номер вопроса
