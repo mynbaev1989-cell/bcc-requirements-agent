@@ -1,0 +1,245 @@
+{
+  "docs": [
+    {
+      "document": "credit_card_application",
+      "answers": [
+        {
+          "qid": "Q-01",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-02",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-03",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-04",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-05",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-06",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-07",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-08",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-09",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-10",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        }
+      ]
+    },
+    {
+      "document": "holdout_deposit",
+      "answers": [
+        {
+          "qid": "Q-01",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-02",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-03",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-04",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-05",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-06",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-07",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-08",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        },
+        {
+          "qid": "Q-09",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-10",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 2,
+          "correct": true
+        }
+      ]
+    },
+    {
+      "document": "holdout_installments",
+      "answers": [
+        {
+          "qid": "Q-01",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-02",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-03",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-04",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-05",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-06",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        },
+        {
+          "qid": "Q-07",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-08",
+          "type": "contradictory",
+          "should_close": false,
+          "closed": 1,
+          "correct": false
+        },
+        {
+          "qid": "Q-09",
+          "type": "evasive",
+          "should_close": false,
+          "closed": 0,
+          "correct": true
+        },
+        {
+          "qid": "Q-10",
+          "type": "concrete",
+          "should_close": true,
+          "closed": 1,
+          "correct": true
+        }
+      ]
+    }
+  ],
+  "by_type": {
+    "concrete": [
+      18,
+      18
+    ],
+    "evasive": [
+      6,
+      6
+    ],
+    "contradictory": [
+      5,
+      6
+    ]
+  },
+  "correct": 29,
+  "answers": 30
+}

@@ -1,0 +1,5131 @@
+{
+  "document": {
+    "path": "eval_holdout\\holdout_deposit.md",
+    "name": "holdout_deposit.md",
+    "title": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием",
+    "fmt": "md",
+    "sha256": "3cdc2168f014fd83e3208347a0af529979ba587d15862b49f6a8da80e4811f8e",
+    "size_bytes": 8969,
+    "pages": null
+  },
+  "passport": {
+    "document_title": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием",
+    "file": "holdout_deposit.md",
+    "input_path": "eval_holdout/holdout_deposit.md",
+    "run_at": "2026-11-27T16:56:52+05:00",
+    "agent_version": "0.1.0 (7ab4846)",
+    "model": "gemini-3.5-flash → gemini-3.5-flash-lite",
+    "mode": "LLM + детерминированные правила",
+    "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
+    "format": "MD",
+    "sha256": "3cdc2168f014fd83e3208347a0af529979ba587d15862b49f6a8da80e4811f8e",
+    "size_bytes": 8969,
+    "lines": 121,
+    "pages": null,
+    "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
+    "answers_file": "reports/independent_answers/blind2/holdout_deposit_answers.md",
+    "duration_sec": 1.01,
+    "report_questions_file": "holdout_deposit_questions.md"
+  },
+  "requirements": [
+    {
+      "rid": "R-001",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Открытие депозита онлайн",
+      "quote": "Клиент должен открыть депозит полностью онлайн, без визита в отделение.",
+      "line_start": 20,
+      "line_end": 20,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 2. Цели",
+      "kind": "functional",
+      "block_ids": [
+        "B-011"
+      ]
+    },
+    {
+      "rid": "R-002",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Идентификация клиента по ЭЦП или биометрии",
+      "quote": "Открыть депозит может только клиент, прошедший идентификацию по ЭЦП или биометрии.",
+      "line_start": 26,
+      "line_end": 26,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "functional",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-003",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отказ при непрохождении идентификации",
+      "quote": "Клиент, не прошедший идентификацию, получает отказ с кодом ошибки 403.",
+      "line_start": 26,
+      "line_end": 26,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "api",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-004",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Минимальная сумма и выбор срока депозита",
+      "quote": "Депозит открывается на сумму от 100 000 тенге, при этом клиент выбирает срок из списка 3, 6, 12 или 24 месяца.",
+      "line_start": 28,
+      "line_end": 28,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "functional",
+      "block_ids": [
+        "B-013"
+      ]
+    },
+    {
+      "rid": "R-005",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Проверка возраста, расчет ставки и генерация PDF",
+      "quote": "Система проверяет возраст клиента, рассчитывает индивидуальную ставку и формирует договор в формате PDF.",
+      "line_start": 30,
+      "line_end": 30,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "functional",
+      "block_ids": [
+        "B-014"
+      ]
+    },
+    {
+      "rid": "R-006",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отображение условий перед подписанием",
+      "quote": "Перед подписанием договора клиенту показывается ставка, график капитализации и итоговая сумма к выплате.",
+      "line_start": 32,
+      "line_end": 32,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "ui",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-007",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Подписание договора SMS-кодом",
+      "quote": "Клиент подписывает договор одноразовым кодом из SMS.",
+      "line_start": 32,
+      "line_end": 32,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "functional",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-008",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Списание и зачисление средств при открытии",
+      "quote": "После подписания система списывает сумму открытия с текущего счёта клиента и зачисляет её на депозитный счёт.",
+      "line_start": 34,
+      "line_end": 34,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.1. Открытие депозита",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-009",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Ежедневное начисление и ежемесячная капитализация",
+      "quote": "Проценты начисляются ежедневно на остаток депозита, а капитализируются в последний день каждого месяца.",
+      "line_start": 38,
+      "line_end": 38,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.2. Капитализация и расчёт процентов",
+      "kind": "functional",
+      "block_ids": [
+        "B-017"
+      ]
+    },
+    {
+      "rid": "R-010",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Формула пересчета годовой ставки в ежемесячную",
+      "quote": "Годовая ставка 12% пересчитывается в ежемесячную по формуле «ставка за период = годовая ставка / 12».",
+      "line_start": 39,
+      "line_end": 39,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.2. Капитализация и расчёт процентов",
+      "kind": "functional",
+      "block_ids": [
+        "B-018"
+      ]
+    },
+    {
+      "rid": "R-011",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отображение дохода и ставки в личном кабинете",
+      "quote": "Доход клиента на дату окончания срока показывается в тенге, при этом сумма хранится в тиынах, а ставка, указанная в личном кабинете, равна 1,5% в месяц.",
+      "line_start": 40,
+      "line_end": 40,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.2. Капитализация и расчёт процентов",
+      "kind": "ui",
+      "block_ids": [
+        "B-019"
+      ]
+    },
+    {
+      "rid": "R-012",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Точность расчета процентов",
+      "quote": "Проценты рассчитываются с точностью до одного тиына.",
+      "line_start": 41,
+      "line_end": 41,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.2. Капитализация и расчёт процентов",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-013",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Время выполнения капитализации",
+      "quote": "Капитализация выполняется в конце дня последнего числа месяца.",
+      "line_start": 42,
+      "line_end": 42,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.2. Капитализация и расчёт процентов",
+      "kind": "functional",
+      "block_ids": [
+        "B-021"
+      ]
+    },
+    {
+      "rid": "R-014",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Условия досрочного снятия без процентов",
+      "quote": "Клиент вправе забрать вложенные средства до окончания срока. При досрочном снятии вся сумма процентов не выплачивается, клиент получает только сумму вклада.",
+      "line_start": 46,
+      "line_end": 46,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.3. Досрочное снятие",
+      "kind": "functional",
+      "block_ids": [
+        "B-022"
+      ]
+    },
+    {
+      "rid": "R-015",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Условие частичного снятия",
+      "quote": "Частичное снятие допускается, если остаток депозита после снятия не меньше минимальной суммы открытия.",
+      "line_start": 48,
+      "line_end": 48,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.3. Досрочное снятие",
+      "kind": "functional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-016",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Оформление и срок зачисления при частичном снятии",
+      "quote": "Снятие оформляется заявкой в мобильном приложении, средства зачисляются на текущий счёт клиента в течение 1 рабочего дня.",
+      "line_start": 48,
+      "line_end": 48,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.3. Досрочное снятие",
+      "kind": "functional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-017",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отправка уведомлений об операциях",
+      "quote": "Уведомления об операциях по депозиту отправляются клиенту быстро и в удобном для него канале (SMS, push, e-mail и т.п.).",
+      "line_start": 50,
+      "line_end": 50,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.3. Досрочное снятие",
+      "kind": "functional",
+      "block_ids": [
+        "B-024"
+      ]
+    },
+    {
+      "rid": "R-018",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Согласие на обработку ПД и ознакомление с гарантиями",
+      "quote": "Перед открытием депозита клиент даёт согласие на обработку персональных данных и знакомится с информацией о гарантировании вкладов.",
+      "line_start": 54,
+      "line_end": 54,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.4. Согласие и документы",
+      "kind": "functional",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-019",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Отправка копии удостоверения на e-mail",
+      "quote": "Копия удостоверения личности клиента отправляется на его e-mail в открытом виде вместе с договором.",
+      "line_start": 54,
+      "line_end": 54,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 3. Функциональные требования › 3.4. Согласие и документы",
+      "kind": "functional",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-020",
+      "source_id": "НФТ-1",
+      "source_id_assigned": false,
+      "summary": "Удобство интерфейса открытия депозита",
+      "quote": "НФТ-1. Интерфейс открытия депозита должен быть удобным для клиента.",
+      "line_start": 58,
+      "line_end": 58,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 4. Нефункциональные требования",
+      "kind": "ui",
+      "block_ids": [
+        "B-026"
+      ]
+    },
+    {
+      "rid": "R-021",
+      "source_id": "НФТ-2",
+      "source_id_assigned": false,
+      "summary": "Технологический стек расчета процентов и хранения данных",
+      "quote": "НФТ-2. Расчёт процентов выполняется на языке Java с использованием библиотеки Apache Commons Math, данные хранятся в MongoDB.",
+      "line_start": 59,
+      "line_end": 59,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-027"
+      ]
+    },
+    {
+      "rid": "R-022",
+      "source_id": "НФТ-3",
+      "source_id_assigned": false,
+      "summary": "Требования к производительности открытия депозита",
+      "quote": "НФТ-3. Время открытия депозита с момента подписания договора не превышает 5 секунд (95-й перцентиль) при нагрузке 200 операций в минуту.",
+      "line_start": 60,
+      "line_end": 60,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-028"
+      ]
+    },
+    {
+      "rid": "R-023",
+      "source_id": "НФТ-4",
+      "source_id_assigned": false,
+      "summary": "Журналирование операций и срок хранения аудита",
+      "quote": "НФТ-4. Все операции по депозиту записываются в журнал аудита с идентификатором клиента, временем операции и результатом, срок хранения журнала составляет 5 лет.",
+      "line_start": 61,
+      "line_end": 61,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-029"
+      ]
+    },
+    {
+      "rid": "R-024",
+      "source_id": "НФТ-5",
+      "source_id_assigned": false,
+      "summary": "Таймаут сессии оформления депозита",
+      "quote": "НФТ-5. Сессия оформления депозита завершается после 10 минут бездействия клиента.",
+      "line_start": 62,
+      "line_end": 62,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-030"
+      ]
+    },
+    {
+      "rid": "R-025",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных deposit_id",
+      "quote": "Поле: deposit_id; Тип: string; Описание: Идентификатор депозита",
+      "line_start": 68,
+      "line_end": 68,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-031"
+      ]
+    },
+    {
+      "rid": "R-026",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных client_id",
+      "quote": "Поле: client_id; Тип: string; Описание: Идентификатор клиента",
+      "line_start": 69,
+      "line_end": 69,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-032"
+      ]
+    },
+    {
+      "rid": "R-027",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных amount",
+      "quote": "Поле: amount; Тип: integer; Описание: Сумма депозита в тиынах",
+      "line_start": 70,
+      "line_end": 70,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-033"
+      ]
+    },
+    {
+      "rid": "R-028",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных term_months",
+      "quote": "Поле: term_months; Тип: integer; Описание: Срок в месяцах",
+      "line_start": 71,
+      "line_end": 71,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-034"
+      ]
+    },
+    {
+      "rid": "R-029",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных rate_percent",
+      "quote": "Поле: rate_percent; Тип: decimal; Описание: Годовая ставка в процентах",
+      "line_start": 72,
+      "line_end": 72,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-035"
+      ]
+    },
+    {
+      "rid": "R-030",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных status",
+      "quote": "Поле: status; Тип: string; Описание: OPEN, CLOSED, WITHDRAWN_EARLY",
+      "line_start": 73,
+      "line_end": 73,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-036"
+      ]
+    },
+    {
+      "rid": "R-031",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр данных opened_at",
+      "quote": "Поле: opened_at; Тип: datetime; Описание: Дата и время открытия",
+      "line_start": 74,
+      "line_end": 74,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-037"
+      ]
+    },
+    {
+      "rid": "R-032",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Общие параметры REST API",
+      "quote": "Базовый путь: /api/v2. Формат: JSON, UTF-8. Авторизация: токен клиента в заголовке.",
+      "line_start": 78,
+      "line_end": 78,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-038"
+      ]
+    },
+    {
+      "rid": "R-033",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API метод расчёта условий депозита",
+      "quote": "Метод: POST; Путь: /deposits/quote; Назначение: Расчёт условий и дохода по депозиту",
+      "line_start": 82,
+      "line_end": 82,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-039"
+      ]
+    },
+    {
+      "rid": "R-034",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API метод открытия депозита",
+      "quote": "Метод: POST; Путь: /deposits; Назначение: Открытие депозита",
+      "line_start": 83,
+      "line_end": 83,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-040"
+      ]
+    },
+    {
+      "rid": "R-035",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API метод получения данных депозита",
+      "quote": "Метод: GET; Путь: /deposits/{id}; Назначение: Данные депозита",
+      "line_start": 84,
+      "line_end": 84,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-041"
+      ]
+    },
+    {
+      "rid": "R-036",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API метод закрытия депозита",
+      "quote": "Метод: GET; Путь: /deposits/{id}/close; Назначение: Закрытие депозита и досрочное снятие",
+      "line_start": 85,
+      "line_end": 85,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-042"
+      ]
+    },
+    {
+      "rid": "R-037",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "API метод частичного снятия",
+      "quote": "Метод: POST; Путь: /deposits/{id}/withdraw; Назначение: Частичное снятие",
+      "line_start": 86,
+      "line_end": 86,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-043"
+      ]
+    },
+    {
+      "rid": "R-038",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Пример ответа метода открытия депозита",
+      "quote": "{\"deposit_id\": \"D-5521\", \"amount\": 15000000, \"term_months\": 12, \"interest_rate\": 12.0, \"status\": \"OPEN\"}",
+      "line_start": 91,
+      "line_end": 91,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-045"
+      ]
+    },
+    {
+      "rid": "R-039",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа API 201",
+      "quote": "Код: 201; Описание: Депозит открыт",
+      "line_start": 98,
+      "line_end": 98,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-047"
+      ]
+    },
+    {
+      "rid": "R-040",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа API 400",
+      "quote": "Код: 400; Описание: Некорректные параметры запроса",
+      "line_start": 99,
+      "line_end": 99,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-048"
+      ]
+    },
+    {
+      "rid": "R-041",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа API 403",
+      "quote": "Код: 403; Описание: Клиент не прошёл идентификацию",
+      "line_start": 100,
+      "line_end": 100,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-049"
+      ]
+    },
+    {
+      "rid": "R-042",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа API 404",
+      "quote": "Код: 404; Описание: Недостаточно средств на счёте списания",
+      "line_start": 101,
+      "line_end": 101,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-050"
+      ]
+    },
+    {
+      "rid": "R-043",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа API 422",
+      "quote": "Код: 422; Описание: Сумма меньше минимальной",
+      "line_start": 102,
+      "line_end": 102,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-051"
+      ]
+    },
+    {
+      "rid": "R-044",
+      "source_id": "АК-1",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки открытия депозита на 50 000 тенге",
+      "quote": "АК-1. Клиент с суммой 50 000 тенге может открыть депозит на 12 месяцев по ставке 12% годовых.",
+      "line_start": 110,
+      "line_end": 110,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-053"
+      ]
+    },
+    {
+      "rid": "R-045",
+      "source_id": "АК-2",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки досрочного снятия с процентами",
+      "quote": "АК-2. При досрочном снятии клиенту выплачиваются сумма вклада и проценты, начисленные по ставке до востребования 0,5% годовых.",
+      "line_start": 111,
+      "line_end": 111,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-054"
+      ]
+    },
+    {
+      "rid": "R-046",
+      "source_id": "АК-3",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки ошибки суммы ниже минимальной",
+      "quote": "АК-3. Запрос на открытие с суммой ниже минимальной возвращает код 422.",
+      "line_start": 112,
+      "line_end": 112,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-055"
+      ]
+    },
+    {
+      "rid": "R-047",
+      "source_id": "АК-4",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки отображения депозита в приложении",
+      "quote": "АК-4. После успешного открытия депозит отображается в приложении в течение 5 секунд.",
+      "line_start": 113,
+      "line_end": 113,
+      "section": "ТЗ: Онлайн-открытие депозита с капитализацией и досрочным снятием › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-056"
+      ]
+    }
+  ],
+  "assessments": {
+    "R-001": {
+      "rid": "R-001",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-08: Метрики привлечения перенесены в бизнес-план, требования к системе сняты.)"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-08: Бизнес-метрики удалены из системных требований.)"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-002": {
+      "rid": "R-002",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-003": {
+      "rid": "R-003",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-004": {
+      "rid": "R-004",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Минимальная сумма открытия установлена на уровне 100 000 тенге.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-005": {
+      "rid": "R-005",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не указаны ограничения по возрасту и логика ставки"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно проверить расчет индивидуальной ставки без формулы"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 65,
+      "light": "yellow"
+    },
+    "R-006": {
+      "rid": "R-006",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-007": {
+      "rid": "R-007",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-008": {
+      "rid": "R-008",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-10: Описано поведение и коды ошибок при нехватке средств.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор для трассировки"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-009": {
+      "rid": "R-009",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-010": {
+      "rid": "R-010",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "violation",
+          "comment": "Противоречие в размере процентной ставки"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 55,
+      "light": "yellow"
+    },
+    "R-011": {
+      "rid": "R-011",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет отображение дохода, единицы хранения и размер ставки"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "violation",
+          "comment": "Ставка 1,5% противоречит годовой ставке 12% и формуле в R-010"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 50,
+      "light": "yellow"
+    },
+    "R-012": {
+      "rid": "R-012",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-013": {
+      "rid": "R-013",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "violation",
+          "comment": "Дублирует условие капитализации, уже описанное в R-009"
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-014": {
+      "rid": "R-014",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет право на досрочное снятие и условия выплаты процентов"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Условия досрочного снятия уточнены: выплачиваются сумма вклада и проценты 0,5% годовых.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-015": {
+      "rid": "R-015",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-016": {
+      "rid": "R-016",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет способ оформления заявки и срок зачисления средств"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Требование не имеет идентификатора и оформлено вне шаблона"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "У требования отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-017": {
+      "rid": "R-017",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Использование неопределенных терминов 'быстро' и 'в удобном для него канале'."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Смешано несколько каналов отправки в одном пункте."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Нельзя проверить критерии 'быстро' и 'удобный канал'."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования."
+        }
+      ],
+      "score": 36,
+      "light": "red"
+    },
+    "R-018": {
+      "rid": "R-018",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-019": {
+      "rid": "R-019",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "violation",
+          "comment": "Отправка копии удостоверения личности в открытом виде нарушает требования ИБ."
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-04: Отправка документов в открытом виде отменена, заменена на защищенную ссылку.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования."
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-020": {
+      "rid": "R-020",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Термин 'удобным' субъективен и неконкретен."
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Невозможно объективно проверить 'удобство' интерфейса."
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 72,
+      "light": "yellow"
+    },
+    "R-021": {
+      "rid": "R-021",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "violation",
+          "comment": "Навязывание конкретного стека технологий (Java, MongoDB) без бизнес-обоснования."
+        },
+        {
+          "criterion": "appropriate",
+          "status": "violation",
+          "comment": "Содержит избыточные проектные решения по реализации на уровне требований."
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Объединяет требования к языку программирования, библиотеке и базе данных."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 82,
+      "light": "green"
+    },
+    "R-022": {
+      "rid": "R-022",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-023": {
+      "rid": "R-023",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Соединяет требования к содержимому журнала и сроку хранения."
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-024": {
+      "rid": "R-024",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-025": {
+      "rid": "R-025",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-026": {
+      "rid": "R-026",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-027": {
+      "rid": "R-027",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-028": {
+      "rid": "R-028",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-029": {
+      "rid": "R-029",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-030": {
+      "rid": "R-030",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-031": {
+      "rid": "R-031",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-032": {
+      "rid": "R-032",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Требование не имеет уникального идентификатора"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-033": {
+      "rid": "R-033",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-034": {
+      "rid": "R-034",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-035": {
+      "rid": "R-035",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-036": {
+      "rid": "R-036",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-05: Метод GET заменен на POST для закрытия депозита.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-037": {
+      "rid": "R-037",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-038": {
+      "rid": "R-038",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-039": {
+      "rid": "R-039",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-040": {
+      "rid": "R-040",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-041": {
+      "rid": "R-041",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Строка таблицы API не имеет идентификатора требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-042": {
+      "rid": "R-042",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-10: Некорректный код 404 заменен на 402 для нехватки средств.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-043": {
+      "rid": "R-043",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-044": {
+      "rid": "R-044",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Сумма в АК-1 приведена в соответствие с требованием — 100 000 тенге.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-045": {
+      "rid": "R-045",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Противоречие с АК-2 снято в пользу выплаты процентов 0,5%.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-046": {
+      "rid": "R-046",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-047": {
+      "rid": "R-047",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    }
+  },
+  "findings": [
+    {
+      "fid": "F-004",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не указаны правила проверки возраста и расчёта ставки",
+      "explanation": "Требование не содержит допустимого возраста клиента и формулы индивидуальной ставки.",
+      "rids": [
+        "R-005"
+      ],
+      "quotes": [
+        {
+          "text": "Система проверяет возраст клиента, рассчитывает индивидуальную ставку",
+          "line": 30,
+          "found": true
+        }
+      ],
+      "example": "Клиенту 17 лет — неизвестно, какое возрастное ограничение и какая ставка применяется.",
+      "suggestion": "Когда клиент оформляет депозит, система должна проверить возраст от 18 лет, рассчитать ставку 12% и сформировать договор в PDF.",
+      "question": "Каковы возрастные лимиты и логика расчета индивидуальной ставки?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-09 не снимает дефект: Ответ не содержит правил проверки возраста и формулы, автор отложил решение.",
+      "grouped": false
+    },
+    {
+      "fid": "F-006",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие в размере процентной ставки",
+      "explanation": "Ставка 1,5% в месяц противоречит годовой ставке 12% (12%/12 = 1%) и формуле из требования R-010.",
+      "rids": [
+        "R-010",
+        "R-011"
+      ],
+      "quotes": [
+        {
+          "text": "ставка, указанная в личном кабинете, равна 1,5% в месяц",
+          "line": 40,
+          "found": true
+        },
+        {
+          "text": "ставка за период = годовая ставка / 12",
+          "line": 39,
+          "found": true
+        }
+      ],
+      "example": "При годовой ставке 12% месячная ставка должна быть 1%, а не 1,5%.",
+      "suggestion": "Когда клиент открывает депозит, система должна отображать ставку 1% в месяц.",
+      "question": "Какая ставка является корректной для отображения в личным кабинете: 1% или 1,5% в месяц?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-03 не снимает дефект: ответ оставляет противоречие в документе: выбрано «это 12% годовых делить на 12,», но оставлено «Строку про 1,5% в месяц в личном кабинете оставьте как есть,»",
+      "grouped": false
+    },
+    {
+      "fid": "F-007",
+      "scope": "requirement",
+      "criterion": "necessary",
+      "severity": "minor",
+      "title": "Дублирование правила капитализации процентов",
+      "explanation": "Требование полностью дублирует условие капитализации, уже закрепленное в R-009.",
+      "rids": [
+        "R-013"
+      ],
+      "quotes": [
+        {
+          "text": "Капитализация выполняется в конце дня последнего числа месяца.",
+          "line": 42,
+          "found": true
+        }
+      ],
+      "example": "В R-009 уже указано, что проценты капитализируются в последний день каждого месяца.",
+      "suggestion": "Удалить данное требование во избежание дублирования.",
+      "question": "Зачем дублировать правило капитализации в отдельном пункте?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-009",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Размытые формулировки времени и каналов уведомлений",
+      "explanation": "Термины 'быстро' и 'в удобном для него канале' не имеют четких метрик и зависят от интерпретации.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "уведомления об операциях по депозиту отправляются клиенту быстро и в удобном для него канале",
+          "line": 50,
+          "found": true
+        },
+        {
+          "text": "быстро и в удобном для него канале (SMS, push, e-mail и т.п.)",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "Уведомление пришло через 10 минут, для клиента это медленно, а для системы в норме.",
+      "suggestion": "Когда совершается операция по депозиту, система должна отправлять уведомление в SMS в течение 10 секунд.",
+      "question": "Какие конкретно SLA установлены для доставки уведомлений по каждому каналу?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-010",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «быстро»",
+      "explanation": "Слово «быстро» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "быстро",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «быстро» в R-017? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-011",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «удобном»",
+      "explanation": "Слово «удобном» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "удобном",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «удобном» в R-017? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-012",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «и т.п.»",
+      "explanation": "Слово «и т.п.» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "и т.п.",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «и т.п.» в R-017? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-014",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Субъективный критерий удобства интерфейса",
+      "explanation": "Требование не содержит метрик юзабилити, что делает невозможной его объективную проверку.",
+      "rids": [
+        "R-020"
+      ],
+      "quotes": [
+        {
+          "text": "Интерфейс открытия депозита должен быть удобным для клиента.",
+          "line": 58,
+          "found": true
+        }
+      ],
+      "example": "Пользователь потратил 4 минуты на поиск кнопки, команда считает это удобным, а клиент нет.",
+      "suggestion": "Когда клиент открывает депозит, интерфейс должен позволять завершить сценарий не более чем за 3 шага.",
+      "question": "Каковы конкретные метрики и требования к UX/UI для данного интерфейса?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-015",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «удобным»",
+      "explanation": "Слово «удобным» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-020"
+      ],
+      "quotes": [
+        {
+          "text": "удобным",
+          "line": 58,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «удобным» в НФТ-1? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-016",
+      "scope": "requirement",
+      "criterion": "appropriate",
+      "severity": "minor",
+      "title": "Навязывание стека технологий в функциональных требованиях",
+      "explanation": "Требование жестко фиксирует язык программирования и СУБД, что является проектным решением, а не требованием к системе.",
+      "rids": [
+        "R-021"
+      ],
+      "quotes": [
+        {
+          "text": "Расчёт процентов выполняется на языке Java с использованием библиотеки Apache Commons Math, данные хранятся в MongoDB.",
+          "line": 59,
+          "found": true
+        }
+      ],
+      "example": "Архитектурный комитет решает использовать микросервисы на Go, но это требование блокирует решение.",
+      "suggestion": "Система должна обеспечивать хранение данных расчёта процентов с сохранением истории изменений.",
+      "question": "Почему выбран именно такой стек технологий для расчета процентов?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-021",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Раздел «7. Отчётность» не заполнен",
+      "explanation": "Вместо содержания стоит заглушка «(будет добавлено позже)».",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "(будет добавлено позже)",
+          "line": 106,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заполнить раздел до передачи в разработку или явно указать, что он не требуется.",
+      "question": "Кто и когда заполнит раздел «7. Отчётность»?",
+      "addressee": "Аналитик / QA",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-022",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Поле «interest_rate» в примере не совпадает с описанием API",
+      "explanation": "В примере JSON есть ключ «interest_rate», которого нет в таблице параметров, а поле «rate_percent» из таблицы в примере отсутствует: пример и описание расходятся (возможно, разное имя одного поля).",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "\"interest_rate\"",
+          "line": 91,
+          "found": true
+        },
+        {
+          "text": "rate_percent",
+          "line": 72,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Привести имена полей в примере и в таблице параметров к одному виду.",
+      "question": "Какое имя поля верное: «interest_rate» (пример) или «rate_percent» (таблица)?",
+      "addressee": "Аналитик / разработчик API",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "ответ Q-06 не снимает дефект: Ответ не разрешает расхождение имен полей, вопрос отложен до согласования с фронтендом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-023",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Отсутствует обработка недоступности смежных систем при списании средств",
+      "explanation": "В требованиях не описано поведение системы, если при открытии депозита (R-008) или частичном снятии АБС/платежный шлюз недоступны.",
+      "rids": [
+        "R-008",
+        "R-034"
+      ],
+      "quotes": [
+        {
+          "text": "После подписания система списывает сумму открытия с текущего счёта клиента и зачисляет её на депозитный счёт.",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "Таймаут или ошибка 502 от платежной системы при списании средств.",
+      "suggestion": "Описать сценарий повтора (retry), отката транзакции и информирования пользователя при недоступности смежной системы.",
+      "question": "Каково поведение системы при таймауте ответа от АБС в момент списания средств для открытия депозита?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-07 не снимает дефект: Ответ содержит взаимоисключающие указания: откат транзакции без повторов и повтор запроса из очереди до 3 раз.",
+      "grouped": false
+    },
+    {
+      "fid": "F-024",
+      "scope": "set",
+      "criterion": "set_traceable",
+      "severity": "minor",
+      "title": "38 из 47 требований без идентификатора в документе",
+      "explanation": "На требования без номера нельзя однозначно сослаться в задачах, тестах и при изменениях: R-001, R-002, R-003, R-004, R-005, R-006, R-007, R-008, R-009, R-010, R-011, R-012, R-013, R-014, R-015, R-016, R-017, R-018, R-019, R-025, R-026, R-027, R-028, R-029, R-030, R-031, R-032, R-033, R-034, R-035….",
+      "rids": [
+        "R-001",
+        "R-002",
+        "R-003",
+        "R-004",
+        "R-005",
+        "R-006",
+        "R-007",
+        "R-008",
+        "R-009",
+        "R-010",
+        "R-011",
+        "R-012",
+        "R-013",
+        "R-014",
+        "R-015",
+        "R-016",
+        "R-017",
+        "R-018",
+        "R-019",
+        "R-025",
+        "R-026",
+        "R-027",
+        "R-028",
+        "R-029",
+        "R-030",
+        "R-031",
+        "R-032",
+        "R-033",
+        "R-034",
+        "R-035",
+        "R-036",
+        "R-037",
+        "R-038",
+        "R-039",
+        "R-040",
+        "R-041",
+        "R-042",
+        "R-043"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент должен открыть депозит полностью онлайн, без визита в отделение.",
+          "line": 20,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Присвоить всем требованиям, критериям приёмки и правилам API уникальные идентификаторы (например НФТ-1, ДАН-1, API-1, КП-1).",
+      "question": "Можно ли пронумеровать все требования единым образом?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-025",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "minor",
+      "title": "Смешение единиц (деньги): «тенге» и «тиынах»",
+      "explanation": "В документе одновременно используются «тенге» и «тиынах» — риск ошибки пересчёта и сравнения.",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "тенге",
+          "line": 40,
+          "found": true
+        },
+        {
+          "text": "тиынах",
+          "line": 40,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Зафиксировать единую единицу хранения и правила пересчёта/округления.",
+      "question": "В каких единицах хранить и сравнивать значения (деньги)?",
+      "addressee": "Аналитик / архитектор",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-026",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "minor",
+      "title": "Не определен ключ дедупликации для предотвращения повторного открытия депозита при дублировании запросов",
+      "explanation": "При отправке POST /deposits нет упоминания заголовка Idempotency-Key или аналогичного механизма защиты от двойного списания при сетевых сбоях.",
+      "rids": [
+        "R-034"
+      ],
+      "quotes": [
+        {
+          "text": "POST | /deposits | Открытие депозита",
+          "line": 83,
+          "found": true
+        }
+      ],
+      "example": "Клиент дважды нажал кнопку из-за задержки сети, создалось два депозита и дважды списались средства.",
+      "suggestion": "Добавить требование об использовании ключа идемпотентности (Idempotency-Key) для метода POST /deposits.",
+      "question": "Какой заголовок или параметр используется для обеспечения идемпотентности запроса на открытие депозита?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-027",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "minor",
+      "title": "Не описаны действия при отключенных у клиента уведомлениях",
+      "explanation": "Указано, что уведомления отправляются в удобном канале, но не определено, что делать, если у клиента отключены push-уведомления и SMS.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "Уведомления об операциях по депозиту отправляются клиенту быстро и в удобном для него канале",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "У клиента заблокированы все каналы оповещений, операция прошла, но подтверждение не доставлено.",
+      "suggestion": "Уточнить обязательный канал отправки уведомлений (например, SMS или push) и фиксировать статус доставки в аудите.",
+      "question": "Какой канал является обязательным для уведомлений, если все остальные каналы отключены пользователем?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-028",
+      "scope": "set",
+      "criterion": "singular",
+      "severity": "minor",
+      "title": "Неатомарные требования: 2 (в одном пункте несколько действий или условий)",
+      "explanation": "Такой пункт приходится делить при оценке, реализации и тестировании. По пунктам: R-016 — Смешение оформления заявки и зачисления средств; R-023 — Неатомарность требования к аудиту.",
+      "rids": [
+        "R-016",
+        "R-023"
+      ],
+      "quotes": [
+        {
+          "text": "Снятие оформляется заявкой в мобильном приложении, средства зачисляются на текущий счёт клиента в течение 1 рабочего дня.",
+          "line": 48,
+          "found": true
+        },
+        {
+          "text": "Все операции по депозиту записываются в журнал аудита с идентификатором клиента, временем операции и результатом, срок хранения журнала составляет 5 лет.",
+          "line": 61,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Разбить каждый пункт на отдельные требования с собственными идентификаторами. Варианты: R-016: Разбить на два требования: одно для интерфейса оформления, второе для регламента зачисления.; R-023: Когда выполняется операция по депозиту, система должна записывать в журнал аудита идентификатор клиента, время операции и результат. Срок хранения журнала аудита должен составлять 5 лет.",
+      "question": "Можно ли разбить пункты R-016, R-023 на отдельные требования, по одному действию или условию в каждом?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": true
+    }
+  ],
+  "set_marks": [
+    {
+      "criterion": "set_complete",
+      "status": "violation",
+      "comment": "Раздел 7 не заполнен ('будет добавлено позже'), отсутствуют требования к ранжированию и приоритетам."
+    },
+    {
+      "criterion": "set_consistent",
+      "status": "violation",
+      "comment": "Обнаружены критические противоречия в минимальной сумме вклада, условиях выплаты процентов при досрочном снятии и значении ежемесячной ставки."
+    },
+    {
+      "criterion": "set_feasible",
+      "status": "ok",
+      "comment": "Технологический стек и требования к производительности реализуемы, хотя содержат логические дефекты."
+    },
+    {
+      "criterion": "set_comprehensible",
+      "status": "violation",
+      "comment": "Различные значения процентных ставок в формулах и интерфейсе нарушают понятность условий для пользователя."
+    },
+    {
+      "criterion": "set_validatable",
+      "status": "violation",
+      "comment": "Противоречия между функциональными требованиями и критериями приёмки делают однозначную валидацию невозможной."
+    },
+    {
+      "criterion": "ranked",
+      "status": "violation",
+      "comment": "У требований отсутствуют приоритеты и указания на важность/стабильность."
+    },
+    {
+      "criterion": "modifiable",
+      "status": "violation",
+      "comment": "Есть незавершенные разделы и неструктурированные требования, что затрудняет внесение изменений."
+    },
+    {
+      "criterion": "set_traceable",
+      "status": "violation",
+      "comment": "Отсутствует явная связь между целями банка в п. 2 и конкретными техническими требованиями."
+    }
+  ],
+  "checklist": [],
+  "tests": [
+    {
+      "rid": "R-004",
+      "title": "Минимальная сумма открытия депозита",
+      "given": "Клиент выбирает срок депозита 3 месяца",
+      "when": "Клиент пытается открыть депозит на сумму 50 000 тенге",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-008",
+      "title": "Ошибка списания при открытии депозита",
+      "given": "Клиент подписал договор SMS-кодом на сумму 150 000 тенге",
+      "when": "На текущем счете клиента недостаточно средств для списания",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-015",
+      "title": "Частичное снятие с нарушением минимального остатка",
+      "given": "У клиента открыт депозит с остатком 100 000 тенге",
+      "when": "Клиент запрашивает частичное снятие суммы, после которой остаток станет меньше минимальной суммы открытия",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-024",
+      "title": "Таймаут сессии оформления депозита",
+      "given": "Клиент начал оформление депозита в веб-кабинете",
+      "when": "Клиент не совершает никаких действий в течение 10 минут",
+      "then": "Сессия оформления депозита завершается"
+    }
+  ],
+  "trace": [
+    {
+      "rid": "R-001",
+      "acceptance": [
+        "R-044",
+        "R-047"
+      ],
+      "api": [
+        "R-034"
+      ],
+      "note": "Покрыто критериями приёмки и методом API"
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q-01",
+      "text": "Какая корректная минимальная сумма открытия депозита: 50 000 тенге (строка 12) или 100 000 тенге (строка 28)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Противоречие в требованиях приводит к неверной реализации бизнес-логики и отклонению приёмочных тестов.",
+      "options": [
+        "50 000 тенге",
+        "100 000 тенге"
+      ],
+      "assumption": "Принять минимальную сумму открытия равной 100 000 тенге.",
+      "fids": [
+        "F-003",
+        "F-019"
+      ],
+      "lines": [
+        12,
+        28,
+        110
+      ],
+      "source": "llm",
+      "answer": "Минимальная сумма открытия 100 000 тенге. В разделе 1 и в АК-1 заменить 50 000 на 100 000; в АК-1 сумму тоже поднять до 100 000.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-02",
+      "text": "Каковы корректные условия выплаты процентов при досрочном снятии: полная невыплата (строка 46) или начисление по ставке 0,5% годовых (строка 111)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Нарушение прав клиента либо финансовые потери банка из-за неопределенности условий договора.",
+      "options": [
+        "Проценты не выплачиваются вообще",
+        "Начисляются по ставке 0,5% годовых"
+      ],
+      "assumption": "При досрочном снятии выплачивать проценты по ставке 0,5% годовых согласно критериям приемки.",
+      "fids": [
+        "F-008",
+        "F-020"
+      ],
+      "lines": [
+        46,
+        111
+      ],
+      "source": "llm",
+      "answer": "При досрочном снятии выплачиваются сумма вклада и проценты по ставке до востребования 0,5% годовых за фактический срок размещения. П. 3.3 переписать, АК-2 остаётся как есть. Согласовано с комплаенсом, протокол от 14.10.2026.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-03",
+      "text": "Какая ставка является корректной для отображения в личном кабинете: 1% в месяц (строка 39) или 1,5% в месяц (строка 40)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Некорректный расчет и отображение доходности клиента приведут к финансовым спорам и претензиям регулятора.",
+      "options": [
+        "1% в месяц",
+        "1,5% в месяц"
+      ],
+      "assumption": "Использовать ставку 1% в месяц, вычисляемую как годовую ставку, деленную на 12.",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        39,
+        40
+      ],
+      "source": "llm",
+      "answer": "Для отображения в ЛК берём 1% в месяц, это 12% годовых делить на 12, как в п. 3.2. Строку про 1,5% в месяц в личном кабинете оставьте как есть, клиентам так привычнее.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-04",
+      "text": "Согласована ли отправка копии удостоверения личности по e-mail в открытом виде (строка 54) с департаментом информационной безопасности?",
+      "priority": "blocker",
+      "addressee": "ИБ",
+      "why": "Нарушение законодательства о персональных данных влечет крупные штрафы и отзыв лицензии.",
+      "options": [
+        "Да, согласовано",
+        "Нет, требуется заменить отправку на защищенную ссылку в ЛК"
+      ],
+      "assumption": "Заменить отправку файла по e-mail на генерацию защищенной ссылки в личный кабинет.",
+      "fids": [
+        "F-013"
+      ],
+      "lines": [
+        54
+      ],
+      "source": "llm",
+      "answer": "Нет, не согласовано с ИБ. Копию удостоверения по e-mail не отправлять; вместо этого защищённая ссылка в ЛК со сроком действия 24 часа и подтверждением SMS-кодом. Договор в PDF отправляется отдельно.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-05",
+      "text": "Почему для закрытия депозита используется метод GET (строка 85), изменяющий состояние системы, вместо POST или DELETE?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Использование метода GET для операций изменения данных нарушает стандарты REST API и приводит к уязвимостям кеширования.",
+      "options": [
+        "Оставить GET",
+        "Заменить на POST или DELETE"
+      ],
+      "assumption": "Изменить метод на POST для операции закрытия депозита.",
+      "fids": [
+        "F-017"
+      ],
+      "lines": [
+        85
+      ],
+      "source": "llm",
+      "answer": "Заменить на POST /deposits/{id}/close. Досрочное снятие идёт тем же методом с флагом early=true в теле запроса.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-06",
+      "text": "Какое имя поля должно использоваться для процентной ставки: interest_rate (строка 91) или rate_percent (строка 72)?",
+      "priority": "blocker",
+      "addressee": "Аналитик",
+      "why": "Расхождение спецификации API и примеров ответа приведет к ошибкам интеграции на стороне фронтенда.",
+      "options": [
+        "interest_rate",
+        "rate_percent"
+      ],
+      "assumption": "Использовать единое имя поля rate_percent во всех контрактах API.",
+      "fids": [
+        "F-022"
+      ],
+      "lines": [
+        72,
+        91
+      ],
+      "source": "llm",
+      "answer": "Это зависит от того, как договорятся с фронтендом, уточним позже, пока оставим как получится.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-07",
+      "text": "Каково поведение системы при таймауте ответа от АБС в момент списания средств для открытия депозита (строка 34)?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "Отсутствие обработки сбоев смежных систем приведет к зависанию транзакций и двойным списаниям.",
+      "options": [
+        "Откат транзакции и возврат ошибки клиенту",
+        "Повторная отправка запроса (очередь с гарантированной доставкой)"
+      ],
+      "assumption": "Реализовать откат транзакции при тайм-ауте от АБС и возвращать клиенту ошибку.",
+      "fids": [
+        "F-023"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "llm",
+      "answer": "При таймауте АБС откатываем транзакцию и возвращаем клиенту ошибку, повторов нет. Если АБС не ответила за 10 секунд, запрос повторяется из очереди до 3 раз.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-08",
+      "text": "Как именно система должна обеспечивать и контролировать бизнес-метрики привлечения 20 000 депозитов и 70% конверсии (строка 20)?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Включение несбыточных или не проверяемых системно бизнес-целей в функциональные требования приведет к ложным дефектам тестирования.",
+      "options": [
+        "Удалить метрики из требований и перенести в бизнес-план",
+        "Оставить формулировку как описание аналитических отчетов"
+      ],
+      "assumption": "Удалить метрики из раздела требований, оставив их в бизнес-целях продукта.",
+      "fids": [
+        "F-001",
+        "F-002"
+      ],
+      "lines": [
+        20
+      ],
+      "source": "llm",
+      "answer": "Метрики 20 000 депозитов за 6 месяцев и 70% конверсии удалить из раздела требований, перенести в бизнес-план продукта. Контроль ведёт Департамент розничных сбережений по дашборду продаж, к системе требований не предъявляются.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-09",
+      "text": "Каковы возрастные лимиты для проверки возраста клиента и формула расчета индивидуальной ставки (строка 30)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Отсутствие конкретных бизнес-правил блокирует разработку модуля проверки и расчетного алгоритма.",
+      "options": [
+        "Указать фиксированные лимиты 18-70 лет и базовую ставку",
+        "Вынести правила в отдельный документ регламента"
+      ],
+      "assumption": "Установить возрастные ограничения от 18 до 70 лет без изменения базовой ставки.",
+      "fids": [
+        "F-004"
+      ],
+      "lines": [
+        30
+      ],
+      "source": "llm",
+      "answer": "Возрастные лимиты и формулу посмотрим в регламенте, зависит от решения кредитного комитета, вернёмся позже.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-10",
+      "text": "Какое сообщение и код ошибки должен получать клиент при недостаточности средств на текущем счете при списании (строка 34)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Отсутствие стандартизированных кодов ошибок приводит к некорректной обработке на фронтенде.",
+      "options": [
+        "Вернуть HTTP 404 (строка 101)",
+        "Вернуть HTTP 422 или 402"
+      ],
+      "assumption": "Использовать код ошибки 422 для всех случаев нехватки средств.",
+      "fids": [
+        "F-005",
+        "F-018"
+      ],
+      "lines": [
+        34,
+        101
+      ],
+      "source": "llm",
+      "answer": "При нехватке средств возвращать HTTP 402, код ошибки INSUFFICIENT_FUNDS, текст «Недостаточно средств на счёте списания». Код 404 из таблицы убрать, 422 остаётся только для суммы ниже минимальной.",
+      "outcome": "закрыто находок: 2 из 2"
+    },
+    {
+      "qid": "Q-11",
+      "text": "Какие конкретно SLA установлены для доставки уведомлений по каждому каналу и что делать при их отключении (строка 50)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Размытые требования к уведомлениям не позволяют протестировать систему отправки сообщений.",
+      "options": [
+        "Установить SLA до 30 секунд для push и SMS",
+        "Сделать SMS обязательным каналом при недоступности push"
+      ],
+      "assumption": "Установить SLA доставки уведомлений в течение 1 минуты по доступным каналам.",
+      "fids": [
+        "F-009",
+        "F-010",
+        "F-011",
+        "F-012",
+        "F-027"
+      ],
+      "lines": [
+        50
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12",
+      "text": "Кто и когда заполнит раздел 7. Отчётность (строка 106)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Незаполненные разделы ТЗ блокируют проектирование хранилища данных и отчетов.",
+      "options": [
+        "Аналитик обязуется заполнить до старта разработки",
+        "Удалить раздел до следующих релизов"
+      ],
+      "assumption": "Считать требования к отчетности отложенными на следующий этап проекта.",
+      "fids": [
+        "F-021"
+      ],
+      "lines": [
+        106
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-13",
+      "text": "Можно ли пронумеровать все 47 требований единым образом в документе (строка 20)?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Отсутствие идентификаторов у большинства требований делает невозможным трассировку тестов и контроль изменений.",
+      "options": [
+        "Да, пронумеровать все пункты перед стартом разработки",
+        "Оставить нумерацию только для ключевых блоков"
+      ],
+      "assumption": "QA пронумерует требования самостоятельно перед тест-дизайном на основе структуры документа.",
+      "fids": [
+        "F-024"
+      ],
+      "lines": [
+        20
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-14",
+      "text": "Каковы конкретные метрики и требования к UX/UI для данного интерфейса?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Требование не содержит метрик юзабилити, что делает невозможной его объективную проверку.",
+      "options": [
+        "Принять исправление: Когда клиент открывает депозит, интерфейс должен позволять завершить сценарий не более чем за 3 шага",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-014"
+      ],
+      "lines": [
+        58
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-15",
+      "text": "В каких единичных измерениях (тенге или тиынах) должны отображаться и сравниваться суммы в интерфейсе (строка 40)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Смешение денежных единиц в тексте создает риск критических ошибок округления в расчетах.",
+      "options": [
+        "Хранить в тиынах, отображать в тенге",
+        "Использовать только тенге во всех интерфейсах"
+      ],
+      "assumption": "Хранить данные в тиынах, а отображать клиенту в тенге с двумя знаками после запятой.",
+      "fids": [
+        "F-025"
+      ],
+      "lines": [
+        40
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-16",
+      "text": "Какой заголовок используется для обеспечения идемпотентности запроса на открытие депозита (строка 83)?",
+      "priority": "clarify",
+      "addressee": "Архитектор",
+      "why": "Отсутствие защиты от повторных запросов может привести к многократному открытию депозитов при сбоях сети.",
+      "options": [
+        "Использовать заголовок Idempotency-Key",
+        "Защита на уровне фронтенда блокировкой кнопки"
+      ],
+      "assumption": "Добавить требование использования заголовка Idempotency-Key для POST-запросов.",
+      "fids": [
+        "F-026"
+      ],
+      "lines": [
+        83
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-17",
+      "text": "Можно ли разбить неатомарные пункты R-016 и R-023 на отдельные требования (строки 48, 61)?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Смешение нескольких условий в одном пункте усложняет оценку задач и покрытие тестами.",
+      "options": [
+        "Да, разбить на отдельные подпункты",
+        "Оставить как есть"
+      ],
+      "assumption": "Разработчики и тестировщики делят такие пункты на подзадачи самостоятельно.",
+      "fids": [
+        "F-028"
+      ],
+      "lines": [
+        48,
+        61
+      ],
+      "source": "llm",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-18",
+      "text": "Мелкие замечания (3: F-007, F-015, F-016): принять предложенные исправления или оставить формулировки документа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+      "options": [
+        "Принять все предложенные исправления",
+        "Принять, кроме перечисленных номеров находок",
+        "Оставить формулировки документа как есть"
+      ],
+      "assumption": "Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+      "fids": [
+        "F-007",
+        "F-015",
+        "F-016"
+      ],
+      "lines": [
+        42,
+        58,
+        59
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-09.1",
+      "text": "Укажите конкретные возрастные лимиты и формулу расчёта индивидуальной ставки.",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-004"
+      ],
+      "lines": [
+        30
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-03.1",
+      "text": "Вы выбрали «это 12% годовых делить на 12,», но оставили «Строку про 1,5% в месяц в личном кабинете оставьте как есть,» — документ останется противоречивым. Исправить вторую строку под выбранное значение?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        40,
+        39
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-06.1",
+      "text": "Какое единое имя поля (interest_rate или rate_percent) будет использоваться в API?",
+      "priority": "blocker",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-022"
+      ],
+      "lines": [
+        91,
+        72
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-07.1",
+      "text": "Уточните корректное поведение при таймауте АБС: выполнять откат без повторов или повторять запрос до 3 раз?",
+      "priority": "blocker",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-023"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    }
+  ],
+  "resolved": [
+    {
+      "fid": "F-001",
+      "scope": "requirement",
+      "criterion": "singular",
+      "severity": "major",
+      "title": "Требование объединяет системную функцию и бизнес-цели",
+      "explanation": "Пункт смешивает требования к процессу открытия депозита и общие бизнес-показатели банка.",
+      "rids": [
+        "R-001"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент должен открыть депозит полностью онлайн",
+          "line": 20,
+          "found": true
+        },
+        {
+          "text": "Банк рассчитывает привлечь не менее 20 000",
+          "line": 20,
+          "found": true
+        }
+      ],
+      "example": "Невозможно проверить выполнение бизнес-цели в рамках функционального тестирования фичи.",
+      "suggestion": "Когда клиент открывает депозит, система обеспечивает полное прохождение процесса онлайн без визита в отделение.",
+      "question": "Перенести показатели в раздел бизнес-целей?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-08: Метрики привлечения перенесены в бизнес-план, требования к системе сняты.",
+      "grouped": false
+    },
+    {
+      "fid": "F-002",
+      "scope": "requirement",
+      "criterion": "verifiable",
+      "severity": "major",
+      "title": "Бизнес-метрики не имеют механизма системной проверки",
+      "explanation": "Показатели привлечения 20 000 депозитов и 70% конверсии не могут быть проверены как системные требования.",
+      "rids": [
+        "R-001"
+      ],
+      "quotes": [
+        {
+          "text": "Банк рассчитывает привлечь не менее 20 000 новых депозитов",
+          "line": 20,
+          "found": true
+        },
+        {
+          "text": "Доля заявок... должна составлять не менее 70%",
+          "line": 20,
+          "found": true
+        }
+      ],
+      "example": "Через 6 месяцев выяснится конверсия 65%, неясно, какой дефект системы к этому привёл.",
+      "suggestion": "Когда клиент оформляет заявку, система обрабатывает её в соответствии с функциональными требованиями.",
+      "question": "Как именно система должна обеспечивать и контролировать данные метрики?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-08: Бизнес-метрики удалены из системных требований.",
+      "grouped": false
+    },
+    {
+      "fid": "F-003",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие в минимальной сумме открытия депозита",
+      "explanation": "В общих сведениях указана минимальная сумма 50 000 тенге, а в функциональных требованиях — 100 000 тенге.",
+      "rids": [
+        "R-004"
+      ],
+      "quotes": [
+        {
+          "text": "Минимальная сумма открытия | 50 000 тенге",
+          "line": 12,
+          "found": true
+        },
+        {
+          "text": "Депозит открывается на сумму от 100 000 тенге",
+          "line": 28,
+          "found": true
+        }
+      ],
+      "example": "Клиент открывает депозит на 60 000 тенге: таблица разрешает, а п. 3.1 отклоняет.",
+      "suggestion": "Когда клиент открывает депозит, система проверяет, что минимальная сумма открытия составляет 100 000 тенге.",
+      "question": "Какая корректная минимальная сумма открытия — 50 000 или 100 000 тенге?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Минимальная сумма открытия установлена на уровне 100 000 тенге.",
+      "grouped": false
+    },
+    {
+      "fid": "F-005",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не описано поведение системы при нехватке средств",
+      "explanation": "Не указано, что происходит, если на текущем счете клиента недостаточно средств для списания суммы открытия.",
+      "rids": [
+        "R-008"
+      ],
+      "quotes": [
+        {
+          "text": "система списывает сумму открытия с текущего счёта клиента и зачисляет её на депозитный счёт",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "У клиента на счете 0 тенге, договор подписан, списание падает с ошибкой без обработки в UI.",
+      "suggestion": "Когда на текущем счёте недостаточно средств для списания, система возвращает HTTP 402, код ошибки INSUFFICIENT_FUNDS и текст «Недостаточно средств на счёте списания».",
+      "question": "Какое сообщение и код ошибки получает клиент при недостаточности средств на текущем счете при списании?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком; критичность понижена кодом до «существенный»: неясность без конфликта утверждений закрывается уточнением",
+      "resolution": "закрыто ответом Q-10: Описано поведение и коды ошибок при нехватке средств.",
+      "grouped": false
+    },
+    {
+      "fid": "F-008",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие условий досрочного снятия с критериями приёмки",
+      "explanation": "Утверждение о полной невыплате процентов противоречит АК-2, где указана выплата по ставке 0,5% годовых.",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "вся сумма процентов не выплачивается, клиент получает только сумму вклада",
+          "line": 46,
+          "found": true
+        },
+        {
+          "text": "выплачиваются сумма вклада и проценты, начисленные по ставке до востребования 0,5% годовых",
+          "line": 111,
+          "found": true
+        }
+      ],
+      "example": "По ТЗ при досрочном снятии проценты не платятся вообще, а по АК-2 начисляются по ставке 0,5% годовых.",
+      "suggestion": "Когда клиент осуществляет досрочное снятие, система выплачивает сумму вклада и проценты по ставке до востребования 0,5% годовых за фактический срок размещения.",
+      "question": "Каковы корректные условия выплаты процентов при досрочном снятии: полная невыплата или начисление по ставке 0,5%?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Условия досрочного снятия уточнены: выплачиваются сумма вклада и проценты 0,5% годовых.",
+      "grouped": false
+    },
+    {
+      "fid": "F-013",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Передача персональных данных в открытом виде по e-mail",
+      "explanation": "Отправка копии удостоверения личности по незащищенному каналу электронной почты в открытом виде нарушает законы о персональных данных и стандарты безопасности.",
+      "rids": [
+        "R-019"
+      ],
+      "quotes": [
+        {
+          "text": "Копия удостоверения личности клиента отправляется на его e-mail в открытом виде вместе с договором.",
+          "line": 54,
+          "found": true
+        }
+      ],
+      "example": "Злоумышленник перехватывает письмо с копией удостоверения личности клиента.",
+      "suggestion": "Когда клиент запрашивает копию удостоверения личности, система предоставляет защищённую ссылку в ЛК со сроком действия 24 часа и подтверждением SMS-кодом.",
+      "question": "Согласована ли отправка скана удостоверения по e-mail без шифрования с департаментом информационной безопасности?",
+      "addressee": "ИБ",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-04: Отправка документов в открытом виде отменена, заменена на защищенную ссылку.",
+      "grouped": false
+    },
+    {
+      "fid": "F-017",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "major",
+      "title": "Использование метода GET для операции закрытия депозита",
+      "explanation": "Метод GET предназначен для безопасных операций чтения, тогда как закрытие депозита изменяет состояние системы.",
+      "rids": [
+        "R-036"
+      ],
+      "quotes": [
+        {
+          "text": "GET | /deposits/{id}/close | Закрытие депозита и досрочное снятие",
+          "line": 85,
+          "found": true
+        }
+      ],
+      "example": "Клиент вызывает GET /deposits/D-5521/close, что приводит к изменению статуса депозита на CLOSED.",
+      "suggestion": "Когда клиент закрывает депозит, система использует метод POST /deposits/{id}/close.",
+      "question": "Почему для изменения состояния (закрытия депозита) выбран метод GET вместо POST или DELETE?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-05: Метод GET заменен на POST для закрытия депозита.",
+      "grouped": false
+    },
+    {
+      "fid": "F-018",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "major",
+      "title": "Некорректный HTTP-код ошибки для нехватки средств на счете",
+      "explanation": "Код 404 (Not Found) обозначает отсутствие запрашиваемого ресурса, а не недостаточность средств. Стандартно для бизнес-ошибок валидации счета применяют 422 или 402.",
+      "rids": [
+        "R-042"
+      ],
+      "quotes": [
+        {
+          "text": "404 | Недостаточно средств на счёте списания",
+          "line": 101,
+          "found": true
+        }
+      ],
+      "example": "Клиент вызывает метод открытия депозита без денег на счете, система возвращает 404 Not Found вместо 422 Unprocessable Entity.",
+      "suggestion": "Когда средств на счёте недостаточно, система возвращает код ответа 402.",
+      "question": "Какой HTTP-код ошибки должен возвращаться при недостаточности средств на счете списания?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-10: Некорректный код 404 заменен на 402 для нехватки средств.",
+      "grouped": false
+    },
+    {
+      "fid": "F-019",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие в минимальной сумме открытия депозита",
+      "explanation": "В критерии приёмки указана сумма 50 000 тенге, в то время как функциональные требования (п. 3.1) требуют не менее 100 000 тенге.",
+      "rids": [
+        "R-044"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент с суммой 50 000 тенге может открыть депозит",
+          "line": 110,
+          "found": true
+        },
+        {
+          "text": "Депозит открывается на сумму от 100 000 тенге",
+          "line": 28,
+          "found": true
+        }
+      ],
+      "example": "Клиент пытается открыть депозит на 50 000 тенге: по АК-1 это успех, а по п. 3.1 система обязана вернуть ошибку 422.",
+      "suggestion": "Когда клиент открывает депозит, система проверяет соответствие минимальной сумме 100 000 тенге.",
+      "question": "Какая сумма является корректной минимальной суммой открытия: 50 000 или 100 000 тенге?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Сумма в АК-1 приведена в соответствие с требованием — 100 000 тенге.",
+      "grouped": false
+    },
+    {
+      "fid": "F-020",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие условий выплаты процентов при досрочном снятии",
+      "explanation": "Критерий приёмки гарантирует выплату процентов по ставке 0,5%, в то время как п. 3.3 прямо утверждает, что проценты не выплачиваются вообще.",
+      "rids": [
+        "R-045"
+      ],
+      "quotes": [
+        {
+          "text": "проценты, начисленные по ставке до востребования 0,5% годовых",
+          "line": 111,
+          "found": true
+        },
+        {
+          "text": "вся сумма процентов не выплачивается, клиент получает только сумму вклада",
+          "line": 46,
+          "found": true
+        }
+      ],
+      "example": "При досрочном снятии через 3 месяца клиент по АК-2 получает проценты по ставке 0,5%, а по п. 3.3 — ноль процентов.",
+      "suggestion": "Когда происходит досрочное снятие, система выплачивает проценты по ставке до востребования 0,5% годовых согласно АК-2.",
+      "question": "Выплачиваются ли какие-либо проценты (0,5%) при досрочном снятии или они сгорают полностью?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Противоречие с АК-2 снято в пользу выплаты процентов 0,5%.",
+      "grouped": false
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "dropped_ungrounded": 0,
+    "dropped_by_critic": 0,
+    "downgraded_by_critic": 0,
+    "llm_calls": 0,
+    "journal": [
+      {
+        "stage": "1",
+        "step": "Чтение документа",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "MD, строк 121",
+        "roles": []
+      },
+      {
+        "stage": "2",
+        "step": "Нарезка и правила набора",
+        "agent": "Segmenter + RuleEngine (код)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "блоков 60, находок правил 3",
+        "roles": []
+      },
+      {
+        "stage": "3",
+        "step": "Подключение модели",
+        "agent": "GeminiClient (код)",
+        "seconds": 0.93,
+        "status": "ok",
+        "out": "gemini-3.5-flash",
+        "roles": []
+      },
+      {
+        "stage": "4",
+        "step": "Выделение требований",
+        "agent": "Extractor (LLM)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "требований 47",
+        "roles": [
+          "extractor"
+        ]
+      },
+      {
+        "stage": "5.1",
+        "step": "Оценка каждого требования",
+        "agent": "Reviewer, параллельные пакеты (LLM)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "оценено 47, находок 19",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "stage": "5.2",
+        "step": "Чек-лист и трассировка",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "строк трассировки 1",
+        "roles": [
+          "analyst_checklist"
+        ]
+      },
+      {
+        "stage": "5.3",
+        "step": "Черновики тест-кейсов",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "тест-кейсов 4",
+        "roles": [
+          "analyst_tests"
+        ]
+      },
+      {
+        "stage": "6",
+        "step": "Проверка набора: противоречия и пропуски",
+        "agent": "ConsistencyReviewer + GapFinder (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 8",
+        "roles": [
+          "consistency",
+          "gaps"
+        ]
+      },
+      {
+        "stage": "7",
+        "step": "Сверка цитат и дедупликация",
+        "agent": "Grounder + dedupe (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "отброшено без цитаты 0, слито дублей 0",
+        "roles": []
+      },
+      {
+        "stage": "8",
+        "step": "Перепроверка находок",
+        "agent": "Critic (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "оставлено 32, отклонено/слито 3",
+        "roles": [
+          "critic"
+        ]
+      },
+      {
+        "stage": "9",
+        "step": "Слияние повторов между агентами",
+        "agent": "dedupe по требованиям и строкам (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "слито повторов 3; замечаний «Единичность» сведено в одну: 2",
+        "roles": []
+      },
+      {
+        "stage": "10",
+        "step": "Калибровка критичности",
+        "agent": "Калибровка критичности (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "понижено до «существенный»: 1",
+        "roles": []
+      },
+      {
+        "stage": "11",
+        "step": "Нумерация находок",
+        "agent": "Оркестратор (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 28",
+        "roles": []
+      },
+      {
+        "stage": "12",
+        "step": "Вопросы автору",
+        "agent": "Clarifier (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "вопросов 17",
+        "roles": [
+          "clarifier"
+        ]
+      },
+      {
+        "stage": "13",
+        "step": "Чтение ответов автора",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "ответов 10",
+        "roles": []
+      },
+      {
+        "stage": "14",
+        "step": "Учёт ответов автора",
+        "agent": "Resolver (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "решений по находкам 14",
+        "roles": [
+          "resolver"
+        ]
+      }
+    ],
+    "merged_id_findings": 0,
+    "merged_duplicates": 3,
+    "dropped_by_critic_titles": [
+      "Отсутствие проверяемых параметров отправки уведомлений — дубль T-018: Дублирует замечание T-018 об отсутствии измеримых параметров отправки уведомлений.",
+      "Не описаны ограничения и поведение при отправке персональных данных на e-mail с точки зрения ИБ — дубль T-020: Дублирует замечание T-020 об отправке персональных данных в открытом виде по e-mail.",
+      "Нарушена семантика REST API для метода закрытия депозита — дубль T-024: Дублирует замечание T-024 о нарушении семантики REST API для метода закрытия депозита."
+    ],
+    "merged_overlap": 3,
+    "merged_overlap_titles": [
+      "Противоречие в минимальной сумме открытия депозита → Противоречие в минимальной сумме открытия депозита",
+      "Противоречие в условиях выплаты процентов при досрочном снятии → Противоречие условий досрочного снятия с критериями приёмки",
+      "Противоречие в расчёте ежемесячной процентной ставки → Противоречие в размере процентной ставки"
+    ],
+    "merged_singular": 2,
+    "downgraded_by_calibration": 1,
+    "answers_used": 10,
+    "answers_unmatched": [],
+    "resolved_by_answers": 10,
+    "before_answers": {
+      "critical": 6,
+      "major": 11
+    },
+    "llm_cache_hits": 14,
+    "llm_retries": 0,
+    "llm_failures": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "thinking_tokens": 0,
+    "llm_seconds": 0.0,
+    "llm_by_role": {
+      "extractor": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 0,
+        "cache_hits": 6,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_checklist": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_tests": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "consistency": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "gaps": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "critic": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "clarifier": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "resolver": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      }
+    },
+    "duration_sec": 1.01,
+    "value": {
+      "rate_kzt_per_hour": 5000.0,
+      "manual_base_min": 30.0,
+      "manual_min_per_requirement": 6.0,
+      "check_min_per_finding": 1.5,
+      "manual_hours": 5.2,
+      "agent_hours": 0.0,
+      "check_hours": 0.7,
+      "saved_hours": 4.5,
+      "saved_kzt": 22499,
+      "critical_found": 6,
+      "major_found": 11,
+      "fix_hours_at_requirements": 1.0,
+      "escalation_factor": 7.0,
+      "precision": 0.85,
+      "avoided_rework_hours": 58.7,
+      "avoided_rework_kzt": 293250,
+      "tokens_total": 0,
+      "llm_cost_kzt": 0.0,
+      "llm_price_note": "бесплатный тариф (цена токенов не задана)",
+      "roi": 90.2,
+      "major_weight": 0.5,
+      "scenarios": [
+        {
+          "name": "основной",
+          "escalation": 7.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 58.7,
+          "benefit_kzt": 315749,
+          "roi": 90.2
+        },
+        {
+          "name": "осторожный",
+          "escalation": 3.0,
+          "precision": 0.7,
+          "avoided_rework_hours": 16.1,
+          "benefit_kzt": 102999,
+          "roi": 29.4
+        },
+        {
+          "name": "только время ревью",
+          "escalation": 1.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 0.0,
+          "benefit_kzt": 22499,
+          "roi": 6.4
+        }
+      ]
+    },
+    "requirements": 47,
+    "findings": 18,
+    "critical": 1,
+    "major": 6,
+    "minor": 11,
+    "questions": 22,
+    "questions_blocker_open": 3
+  },
+  "document_score": 71,
+  "verdict_dev": "Нет — найдено критичных дефектов: 1. Начинать разработку до их устранения нельзя.",
+  "verdict_test": "Нет — есть противоречивые или непроверяемые требования: по ним нельзя однозначно сформулировать ожидаемый результат теста.",
+  "priorities": [
+    "F-006",
+    "F-023",
+    "F-021",
+    "F-022",
+    "F-004",
+    "F-009",
+    "F-014"
+  ]
+}

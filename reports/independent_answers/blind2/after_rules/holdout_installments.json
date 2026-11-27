@@ -1,0 +1,4423 @@
+{
+  "document": {
+    "path": "eval_holdout\\holdout_installments.md",
+    "name": "holdout_installments.md",
+    "title": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение",
+    "fmt": "md",
+    "sha256": "6e5875af52e6e6f00b907b0914477032883bfbd3f69d052ddadef7826b529319",
+    "size_bytes": 7703,
+    "pages": null
+  },
+  "passport": {
+    "document_title": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение",
+    "file": "holdout_installments.md",
+    "input_path": "eval_holdout/holdout_installments.md",
+    "run_at": "2026-11-27T16:56:55+05:00",
+    "agent_version": "0.1.0 (7ab4846)",
+    "model": "gemini-3.5-flash → gemini-3.5-flash-lite",
+    "mode": "LLM + детерминированные правила",
+    "standards": "ISO/IEC/IEEE 29148:2018 (п. 5.2.5, 5.2.6); IEEE Std 830-1998 (п. 4.3)",
+    "format": "MD",
+    "sha256": "6e5875af52e6e6f00b907b0914477032883bfbd3f69d052ddadef7826b529319",
+    "size_bytes": 7703,
+    "lines": 104,
+    "pages": null,
+    "segmentation": "структура документа + LLM (Extractor), цитаты сверены с исходником",
+    "answers_file": "reports/independent_answers/blind2/holdout_installments_answers.md",
+    "duration_sec": 1.39,
+    "report_questions_file": "holdout_installments_questions.md"
+  },
+  "requirements": [
+    {
+      "rid": "R-001",
+      "source_id": "ФТ-1",
+      "source_id_assigned": false,
+      "summary": "Выбор рассрочки 0-0-12 на экране оплаты",
+      "quote": "ФТ-1. Клиент выбирает рассрочку 0-0-12 на экране оплаты после сканирования QR-кода магазина-партнёра.",
+      "line_start": 24,
+      "line_end": 24,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-012"
+      ]
+    },
+    {
+      "rid": "R-002",
+      "source_id": "ФТ-2",
+      "source_id_assigned": false,
+      "summary": "Расчет ежемесячного платежа",
+      "quote": "ФТ-2. Система рассчитывает ежемесячный платёж как сумму покупки, делённую на 12.",
+      "line_start": 25,
+      "line_end": 25,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-013"
+      ]
+    },
+    {
+      "rid": "R-003",
+      "source_id": "ФТ-3",
+      "source_id_assigned": false,
+      "summary": "Максимальная сумма покупки",
+      "quote": "ФТ-3. Максимальная сумма покупки в рассрочку составляет 1 000 000 тенге.",
+      "line_start": 26,
+      "line_end": 26,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-014"
+      ]
+    },
+    {
+      "rid": "R-004",
+      "source_id": "ФТ-4",
+      "source_id_assigned": false,
+      "summary": "Проверка кредитного лимита",
+      "quote": "ФТ-4. Система проверяет кредитный лимит клиента и при необходимости запрашивает дополнительные документы.",
+      "line_start": 27,
+      "line_end": 27,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-015"
+      ]
+    },
+    {
+      "rid": "R-005",
+      "source_id": "ФТ-5",
+      "source_id_assigned": false,
+      "summary": "Запрос отчета, скоринг и пуш-уведомление",
+      "quote": "ФТ-5. Система запрашивает кредитный отчёт клиента в кредитном бюро, рассчитывает скоринговый балл и отправляет клиенту push-уведомление о решении.",
+      "line_start": 28,
+      "line_end": 28,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-016"
+      ]
+    },
+    {
+      "rid": "R-006",
+      "source_id": "ФТ-6",
+      "source_id_assigned": false,
+      "summary": "Автоматический запрос в бюро",
+      "quote": "ФТ-6. Запрос в кредитное бюро выполняется автоматически при выборе рассрочки, отдельное согласие клиента не запрашивается.",
+      "line_start": 29,
+      "line_end": 29,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-017"
+      ]
+    },
+    {
+      "rid": "R-007",
+      "source_id": "ФТ-7",
+      "source_id_assigned": false,
+      "summary": "Срок выдачи решения по заявке",
+      "quote": "ФТ-7. Решение по заявке выдаётся клиенту не позднее чем через 30 секунд после отправки заявки.",
+      "line_start": 30,
+      "line_end": 30,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-018"
+      ]
+    },
+    {
+      "rid": "R-008",
+      "source_id": "ФТ-8",
+      "source_id_assigned": false,
+      "summary": "Подтверждение рассрочки по SMS",
+      "quote": "ФТ-8. Клиент подтверждает рассрочку вводом одноразового кода из SMS, срок действия кода составляет 5 минут, допускается не более 3 попыток ввода.",
+      "line_start": 31,
+      "line_end": 31,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-019"
+      ]
+    },
+    {
+      "rid": "R-009",
+      "source_id": "ФТ-9",
+      "source_id_assigned": false,
+      "summary": "Начисление пени за просрочку",
+      "quote": "ФТ-9. За просрочку начисляется пеня 0,5% в день от суммы платежа, предельный размер пени составляет 10% годовых от суммы покупки.",
+      "line_start": 32,
+      "line_end": 32,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-020"
+      ]
+    },
+    {
+      "rid": "R-010",
+      "source_id": "ФТ-10",
+      "source_id_assigned": false,
+      "summary": "Отмена рассрочки при возврате товара",
+      "quote": "ФТ-10. При возврате товара магазин-партнёр инициирует отмену рассрочки.",
+      "line_start": 33,
+      "line_end": 33,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-021"
+      ]
+    },
+    {
+      "rid": "R-011",
+      "source_id": "ФТ-11",
+      "source_id_assigned": false,
+      "summary": "Досрочное погашение рассрочки",
+      "quote": "ФТ-11. Клиент может погасить рассрочку досрочно, полностью или частично, в любой момент без комиссии и штрафов.",
+      "line_start": 34,
+      "line_end": 34,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-022"
+      ]
+    },
+    {
+      "rid": "R-012",
+      "source_id": "ФТ-12",
+      "source_id_assigned": false,
+      "summary": "Списание ежемесячного платежа",
+      "quote": "ФТ-12. Ежемесячный платёж списывается со счёта клиента в конце дня 25 числа каждого месяца.",
+      "line_start": 35,
+      "line_end": 35,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "functional",
+      "block_ids": [
+        "B-023"
+      ]
+    },
+    {
+      "rid": "R-013",
+      "source_id": "ФТ-13",
+      "source_id_assigned": false,
+      "summary": "Хранение данных заявок в БД",
+      "quote": "ФТ-13. Данные заявок хранятся в базе данных PostgreSQL 14 в таблице installment_orders.",
+      "line_start": 36,
+      "line_end": 36,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 3. Функциональные требования",
+      "kind": "data",
+      "block_ids": [
+        "B-024"
+      ]
+    },
+    {
+      "rid": "R-014",
+      "source_id": "НФТ-1",
+      "source_id_assigned": false,
+      "summary": "Производительность при пиковой нагрузке",
+      "quote": "НФТ-1. Система должна работать быстро при пиковой нагрузке.",
+      "line_start": 40,
+      "line_end": 40,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-025"
+      ]
+    },
+    {
+      "rid": "R-015",
+      "source_id": "НФТ-2",
+      "source_id_assigned": false,
+      "summary": "Доступность сервиса",
+      "quote": "НФТ-2. Доступность сервиса оформления рассрочки составляет не менее 99,9% в календарный месяц, измеряется системой мониторинга.",
+      "line_start": 41,
+      "line_end": 41,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-026"
+      ]
+    },
+    {
+      "rid": "R-016",
+      "source_id": "НФТ-3",
+      "source_id_assigned": false,
+      "summary": "Время ответа API расчёта",
+      "quote": "НФТ-3. Время ответа API расчёта графика платежей не превышает 2 секунд (95-й перцентиль) при нагрузке 500 запросов в секунду.",
+      "line_start": 42,
+      "line_end": 42,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-027"
+      ]
+    },
+    {
+      "rid": "R-017",
+      "source_id": "НФТ-4",
+      "source_id_assigned": false,
+      "summary": "Логирование номера карты",
+      "quote": "НФТ-4. Номер карты клиента записывается в журнал событий целиком для упрощения разбора инцидентов.",
+      "line_start": 43,
+      "line_end": 43,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 4. Нефункциональные требования",
+      "kind": "nonfunctional",
+      "block_ids": [
+        "B-028"
+      ]
+    },
+    {
+      "rid": "R-018",
+      "source_id": "НФТ-5",
+      "source_id_assigned": false,
+      "summary": "Поддерживаемые версии ОС",
+      "quote": "НФТ-5. Мобильное приложение поддерживает iOS 15 и выше, Android 9 и выше.",
+      "line_start": 44,
+      "line_end": 44,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 4. Нефункциональные требования",
+      "kind": "ui",
+      "block_ids": [
+        "B-029"
+      ]
+    },
+    {
+      "rid": "R-019",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр order_id",
+      "quote": "Поле: order_id; Тип: string; Описание: Идентификатор заявки",
+      "line_start": 50,
+      "line_end": 50,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-030"
+      ]
+    },
+    {
+      "rid": "R-020",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр partner_id",
+      "quote": "Поле: partner_id; Тип: string; Описание: Идентификатор магазина-партнёра",
+      "line_start": 51,
+      "line_end": 51,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-031"
+      ]
+    },
+    {
+      "rid": "R-021",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр amount",
+      "quote": "Поле: amount; Тип: integer; Описание: Сумма покупки в тенге",
+      "line_start": 52,
+      "line_end": 52,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-032"
+      ]
+    },
+    {
+      "rid": "R-022",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр term_months",
+      "quote": "Поле: term_months; Тип: integer; Описание: Срок рассрочки в месяцах",
+      "line_start": 53,
+      "line_end": 53,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-033"
+      ]
+    },
+    {
+      "rid": "R-023",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр monthly_payment",
+      "quote": "Поле: monthly_payment; Тип: integer; Описание: Ежемесячный платёж",
+      "line_start": 54,
+      "line_end": 54,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-034"
+      ]
+    },
+    {
+      "rid": "R-024",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр status",
+      "quote": "Поле: status; Тип: string; Описание: Статус заявки: NEW, APPROVED, CONFIRMED, REJECTED, CANCELLED, CLOSED",
+      "line_start": 55,
+      "line_end": 55,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-035"
+      ]
+    },
+    {
+      "rid": "R-025",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Параметр created_at",
+      "quote": "Поле: created_at; Тип: datetime; Описание: Дата и время создания заявки",
+      "line_start": 56,
+      "line_end": 56,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 5. Данные",
+      "kind": "data",
+      "block_ids": [
+        "B-036"
+      ]
+    },
+    {
+      "rid": "R-026",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Базовый путь и формат API",
+      "quote": "Базовый путь API: /api/v1. Формат обмена: JSON, кодировка UTF-8.",
+      "line_start": 60,
+      "line_end": 60,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-037"
+      ]
+    },
+    {
+      "rid": "R-027",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Метод POST /installments/quote",
+      "quote": "Метод: POST; Путь: /installments/quote; Назначение: Расчёт графика платежей",
+      "line_start": 64,
+      "line_end": 64,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-038"
+      ]
+    },
+    {
+      "rid": "R-028",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Метод POST /installments",
+      "quote": "Метод: POST; Путь: /installments; Назначение: Создание заявки на рассрочку",
+      "line_start": 65,
+      "line_end": 65,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-039"
+      ]
+    },
+    {
+      "rid": "R-029",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Метод GET /installments/{id}/confirm",
+      "quote": "Метод: GET; Путь: /installments/{id}/confirm; Назначение: Подтверждение заявки кодом из SMS",
+      "line_start": 66,
+      "line_end": 66,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-040"
+      ]
+    },
+    {
+      "rid": "R-030",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Метод GET /installments/{id}",
+      "quote": "Метод: GET; Путь: /installments/{id}; Назначение: Получение статуса заявки",
+      "line_start": 67,
+      "line_end": 67,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-041"
+      ]
+    },
+    {
+      "rid": "R-031",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Метод POST /installments/{id}/cancel",
+      "quote": "Метод: POST; Путь: /installments/{id}/cancel; Назначение: Отмена заявки до подтверждения",
+      "line_start": 68,
+      "line_end": 68,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-042"
+      ]
+    },
+    {
+      "rid": "R-032",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 200",
+      "quote": "Код: 200; Описание: Запрос выполнен успешно",
+      "line_start": 80,
+      "line_end": 80,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-046"
+      ]
+    },
+    {
+      "rid": "R-033",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 400",
+      "quote": "Код: 400; Описание: Некорректные параметры запроса",
+      "line_start": 81,
+      "line_end": 81,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-047"
+      ]
+    },
+    {
+      "rid": "R-034",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 404",
+      "quote": "Код: 404; Описание: Заявка не найдена",
+      "line_start": 82,
+      "line_end": 82,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-048"
+      ]
+    },
+    {
+      "rid": "R-035",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 409",
+      "quote": "Код: 409; Описание: Заявка уже подтверждена",
+      "line_start": 83,
+      "line_end": 83,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-049"
+      ]
+    },
+    {
+      "rid": "R-036",
+      "source_id": "",
+      "source_id_assigned": true,
+      "summary": "Код ответа 429",
+      "quote": "Код: 429; Описание: Превышен лимит запросов",
+      "line_start": 84,
+      "line_end": 84,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 6. Интеграция и REST API",
+      "kind": "api",
+      "block_ids": [
+        "B-050"
+      ]
+    },
+    {
+      "rid": "R-037",
+      "source_id": "АК-1",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки: время решения",
+      "quote": "АК-1. Решение по заявке выдаётся клиенту в течение 60 секунд после отправки заявки.",
+      "line_start": 92,
+      "line_end": 92,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-052"
+      ]
+    },
+    {
+      "rid": "R-038",
+      "source_id": "АК-2",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки: расчет платежа",
+      "quote": "АК-2. При покупке на 120 000 тенге ежемесячный платёж равен 10 000 тенге, переплата равна 0 тенге.",
+      "line_start": 93,
+      "line_end": 93,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-053"
+      ]
+    },
+    {
+      "rid": "R-039",
+      "source_id": "АК-3",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки: неверный ввод SMS",
+      "quote": "АК-3. После трёх неверных вводов SMS-кода заявка переходит в статус REJECTED, повторный ввод невозможен.",
+      "line_start": 94,
+      "line_end": 94,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-054"
+      ]
+    },
+    {
+      "rid": "R-040",
+      "source_id": "АК-4",
+      "source_id_assigned": false,
+      "summary": "Критерий приёмки: отмена подтвержденной заявки",
+      "quote": "АК-4. Вызов POST /installments/{id}/cancel для подтверждённой заявки возвращает код 409.",
+      "line_start": 95,
+      "line_end": 95,
+      "section": "ТЗ: Рассрочка 0-0-12 при оплате в магазине-партнёре через мобильное приложение › 8. Критерии приёмки",
+      "kind": "acceptance",
+      "block_ids": [
+        "B-055"
+      ]
+    }
+  ],
+  "assessments": {
+    "R-001": {
+      "rid": "R-001",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-002": {
+      "rid": "R-002",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-003": {
+      "rid": "R-003",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-01: Автор указал актуальное значение максимальной суммы и потребовал обновить раздел 1.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-004": {
+      "rid": "R-004",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Размытая формулировка условий запроса документов"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 72,
+      "light": "yellow"
+    },
+    "R-005": {
+      "rid": "R-005",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт содержит несколько независимых действий"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-006": {
+      "rid": "R-006",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-007": {
+      "rid": "R-007",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Автор подтвердил целевое время 30 секунд и необходимость исправления АК-1.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-008": {
+      "rid": "R-008",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Пункт объединяет подтверждение, срок действия и лимит попыток"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-009": {
+      "rid": "R-009",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-05: Автор уточнил базу для расчета пени и размер. Новую формулировку модель предложила с расхождением )"
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Нет ограничения максимальной суммы пени за весь период"
+        },
+        {
+          "criterion": "singular",
+          "status": "violation",
+          "comment": "Содержит два независимых правила: расчет пени в день и предельный размер пени"
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 87,
+      "light": "green"
+    },
+    "R-010": {
+      "rid": "R-010",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не описан механизм и интерфейс взаимодействия магазина с банком для отмены"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-06: Автор описал способ отмены через API и действия системы.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Нет ожидаемого результата для системы банка (какой статус или событие фиксируется)"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-011": {
+      "rid": "R-011",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Не описан порядок пересчета графика при частичном досрочном погашении"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 80,
+      "light": "green"
+    },
+    "R-012": {
+      "rid": "R-012",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Не определено поведение системы, если 25 число является выходным или праздничным днем"
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-08: Автор описал фиксацию просрочки и повторное списание для F-008.)"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 95,
+      "light": "green"
+    },
+    "R-013": {
+      "rid": "R-013",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "violation",
+          "comment": "Навязан конкретный выбор СУБД на уровне бизнес-требований функционала"
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 92,
+      "light": "green"
+    },
+    "R-014": {
+      "rid": "R-014",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "violation",
+          "comment": "Использована расплывчатая формулировка 'работать быстро' без измеримых метрик"
+        },
+        {
+          "criterion": "complete",
+          "status": "violation",
+          "comment": "Отсутствуют конкретные значения пиковой нагрузки и времени отклика"
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "violation",
+          "comment": "Невозможно проверить выполнение неизмеримого требования"
+        },
+        {
+          "criterion": "verifiable",
+          "status": "violation",
+          "comment": "Нет измеримого критерия успешности выполнения"
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 57,
+      "light": "yellow"
+    },
+    "R-015": {
+      "rid": "R-015",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-016": {
+      "rid": "R-016",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-017": {
+      "rid": "R-017",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-03: Автор подтвердил отказ от логирования номеров карт в пользу order_id и client_id.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-018": {
+      "rid": "R-018",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-019": {
+      "rid": "R-019",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-020": {
+      "rid": "R-020",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-021": {
+      "rid": "R-021",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-022": {
+      "rid": "R-022",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-023": {
+      "rid": "R-023",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-024": {
+      "rid": "R-024",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор требования в документе."
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор требования для трассировки."
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-025": {
+      "rid": "R-025",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-026": {
+      "rid": "R-026",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-027": {
+      "rid": "R-027",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-028": {
+      "rid": "R-028",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-029": {
+      "rid": "R-029",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "violation",
+          "comment": "Метод GET используется для изменения состояния"
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 85,
+      "light": "green"
+    },
+    "R-030": {
+      "rid": "R-030",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-031": {
+      "rid": "R-031",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-032": {
+      "rid": "R-032",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Отсутствует идентификатор и шаблон"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-033": {
+      "rid": "R-033",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Оформлено в виде строки таблицы, а не по шаблону требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-034": {
+      "rid": "R-034",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Оформлено в виде строки таблицы, а не по шаблону требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-035": {
+      "rid": "R-035",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Оформлено в виде строки таблицы, а не по шаблону требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-036": {
+      "rid": "R-036",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "violation",
+          "comment": "Оформлено в виде строки таблицы, а не по шаблону требования"
+        },
+        {
+          "criterion": "traceable",
+          "status": "violation",
+          "comment": "Отсутствует уникальный идентификатор в документе"
+        }
+      ],
+      "score": 90,
+      "light": "green"
+    },
+    "R-037": {
+      "rid": "R-037",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": "закрыто ответом автора (закрыто ответом Q-02: Автор подтвердил целевое время 30 секунд и необходимость исправления АК-1.)"
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-038": {
+      "rid": "R-038",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-039": {
+      "rid": "R-039",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    },
+    "R-040": {
+      "rid": "R-040",
+      "marks": [
+        {
+          "criterion": "necessary",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "appropriate",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "unambiguous",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "complete",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "singular",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "feasible",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "verifiable",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "correct",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "conforming",
+          "status": "ok",
+          "comment": ""
+        },
+        {
+          "criterion": "traceable",
+          "status": "ok",
+          "comment": ""
+        }
+      ],
+      "score": 100,
+      "light": "green"
+    }
+  },
+  "findings": [
+    {
+      "fid": "F-002",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неопределенность условий запроса дополнительных документов",
+      "explanation": "Формулировка «при необходимости» размыта и не содержит критериев, когда именно и какие документы требуются от клиента.",
+      "rids": [
+        "R-004"
+      ],
+      "quotes": [
+        {
+          "text": "и при необходимости запрашивает дополнительные документы.",
+          "line": 27,
+          "found": true
+        }
+      ],
+      "example": "Клиент запрашивает сумму 500 000 тенге с достаточным лимитом, непонятно, будет ли система запрашивать документы.",
+      "suggestion": "Когда кредитного лимита недостаточно, система должна запросить у клиента справку о доходах.",
+      "question": "При каких точных условиях и какие именно дополнительные документы запрашиваются системой?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-04 не снимает дефект: Ответ не содержит конкретных условий и откладывает решение на будущее.",
+      "grouped": false
+    },
+    {
+      "fid": "F-003",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «при необходимости»",
+      "explanation": "Слово «при необходимости» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-004"
+      ],
+      "quotes": [
+        {
+          "text": "при необходимости",
+          "line": 27,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «при необходимости» в ФТ-4? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-007",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не определен порядок пересчета графика при частичном досрочном погашении",
+      "explanation": "Не указано, уменьшается ли при частичном погашении срок рассрочки или размер ежемесячного платежа.",
+      "rids": [
+        "R-011"
+      ],
+      "quotes": [
+        {
+          "text": "Клиент может погасить рассрочку досрочно, полностью или частично",
+          "line": 34,
+          "found": true
+        }
+      ],
+      "example": "Клиент вносит досрочно 50 000 тенге, система продолжает списывать старый ежемесячный платеж вместо сокращения срока или суммы.",
+      "suggestion": "Когда клиент производит частичное досрочное погашение, система должна пересчитать график платежей в сторону уменьшения ежемесячного платежа при сохранении срока 12 месяцев.",
+      "question": "Как пересчитывается график при частичном досрочном погашении: сокращается срок или уменьшается ежемесячный платёж?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-07 не снимает дефект: ответ противоречит сам себе: «При частичном досрочном погашении уменьшаем ежемесячный платёж, срок остаётся 12 месяцев» и «Оставшийся срок при этом сокращается, например до 8 месяцев»",
+      "grouped": false
+    },
+    {
+      "fid": "F-009",
+      "scope": "requirement",
+      "criterion": "appropriate",
+      "severity": "minor",
+      "title": "Избыточная техническая детализация в функциональных требованиях",
+      "explanation": "Выбор конкретной СУБД (PostgreSQL 14) и имени таблицы относится к архитектурному решению, а не к бизнес-требованиям функционала.",
+      "rids": [
+        "R-013"
+      ],
+      "quotes": [
+        {
+          "text": "Данные заявок хранятся в базе данных PostgreSQL 14 в таблице installment_orders.",
+          "line": 36,
+          "found": true
+        }
+      ],
+      "example": "При миграции на другую СУБД требование потребует формального пересмотра, хотя бизнес-логика не изменится.",
+      "suggestion": "Система должна обеспечивать персистентное хранение данных заявок на рассрочку.",
+      "question": "Почему выбор конкретной СУБД зафиксирован в функциональных требованиях, а не в архитектурной документации?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-010",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неизмеримая формулировка нефункционального требования",
+      "explanation": "Фраза «работать быстро» субъективна и не позволяет объективно проверить соответствие системы требованиям.",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "Система должна работать быстро при пиковой нагрузке.",
+          "line": 40,
+          "found": true
+        }
+      ],
+      "example": "Система отвечает за 5 секунд, разработчики считают это быстрым, а бизнес — медленным.",
+      "suggestion": "Время ответа ключевых экранов системы не должно превышать 1 секунды при пиковой нагрузке 1000 пользователей в секунду.",
+      "question": "Какие конкретные метрики времени отклика и пороговые значения пиковой нагрузки имеются в виду под «быстро»?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком; критичность понижена кодом до «существенный»: неясность без конфликта утверждений закрывается уточнением",
+      "resolution": "ответ Q-09 не снимает дефект: Метрики и пороговые значения нагрузки не определены, ответ ссылается на неопределенное будущее.",
+      "grouped": false
+    },
+    {
+      "fid": "F-011",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "minor",
+      "title": "Размытая формулировка «быстро»",
+      "explanation": "Слово «быстро» допускает разное толкование и не задаёт измеримого критерия.",
+      "rids": [
+        "R-014"
+      ],
+      "quotes": [
+        {
+          "text": "быстро",
+          "line": 40,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Заменить на измеримое значение или явное условие.",
+      "question": "Что именно означает «быстро» в НФТ-1? Укажите измеримое значение.",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-014",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Не указан часовой пояс для списания ежемесячных платежей",
+      "explanation": "В требовании о списании платежа не указан часовой пояс, по которому определяется «конец дня 25 числа», что критично для клиентов в разных часовых поясах.",
+      "rids": [
+        "R-012"
+      ],
+      "quotes": [
+        {
+          "text": "Ежемесячный платёж списывается со счёта клиента в конце дня 25 числа каждого месяца.",
+          "line": 35,
+          "found": true
+        }
+      ],
+      "example": "Списание может произойти раньше или позже ожидаемого времени для клиентов из регионов с отличным от столицы часовым поясом.",
+      "suggestion": "Указать конкретный часовой пояс (например, UTC+6) для регламентных задач списания.",
+      "question": "По какому часовому поясу запускается процесс списания ежемесячных платежей?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "ответ Q-08 не снимает дефект: Ответ не содержит информации о часовом поясе для определения конца дня 25 числа.",
+      "grouped": false
+    },
+    {
+      "fid": "F-015",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Не описан алгоритм округления при расчете ежемесячного платежа",
+      "explanation": "При делении суммы покупки на 12 могут получаться нецелые числа (копейки), но правило округления и распределения остатка не задано.",
+      "rids": [
+        "R-002"
+      ],
+      "quotes": [
+        {
+          "text": "Система рассчитывает ежемесячный платёж как сумму покупки, делённую на 12.",
+          "line": 25,
+          "found": true
+        }
+      ],
+      "example": "Сумма 25 000 тенге при делении на 12 дает 2083.333... тенге. Неясно, как округлять и куда направлять остаток копеек.",
+      "suggestion": "Описать математическое правило округления до целых тенге и порядок учета копеечного остатка в последнем платеже.",
+      "question": "Как именно система должна округлять ежемесячный платёж и куда списывается возникающий остаток?",
+      "addressee": "Разработка",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-016",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "major",
+      "title": "Отсутствует ключ идемпотентности для создания заявки",
+      "explanation": "Для метода создания заявки не предусмотрен ключ дедупликации, что может привести к созданию дубликатов при повторных запросах из-за сбоев сети.",
+      "rids": [
+        "R-028"
+      ],
+      "quotes": [
+        {
+          "text": "| POST | /installments | Создание заявки на рассрочку |",
+          "line": 65,
+          "found": true
+        }
+      ],
+      "example": "При сетевом таймауте клиент повторит нажатие, и система создаст две одинаковые активные заявки на рассрочку.",
+      "suggestion": "Добавить заголовок или поле для передачи ключа идемпотентности в запросе POST /installments.",
+      "question": "Какой механизм защиты от дублирования используется при повторной отправке запроса создания заявки?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-017",
+      "scope": "set",
+      "criterion": "set_traceable",
+      "severity": "minor",
+      "title": "18 из 40 требований без идентификатора в документе",
+      "explanation": "На требования без номера нельзя однозначно сослаться в задачах, тестах и при изменениях: R-019, R-020, R-021, R-022, R-023, R-024, R-025, R-026, R-027, R-028, R-029, R-030, R-031, R-032, R-033, R-034, R-035, R-036.",
+      "rids": [
+        "R-019",
+        "R-020",
+        "R-021",
+        "R-022",
+        "R-023",
+        "R-024",
+        "R-025",
+        "R-026",
+        "R-027",
+        "R-028",
+        "R-029",
+        "R-030",
+        "R-031",
+        "R-032",
+        "R-033",
+        "R-034",
+        "R-035",
+        "R-036"
+      ],
+      "quotes": [
+        {
+          "text": "Поле: order_id; Тип: string; Описание: Идентификатор заявки",
+          "line": 50,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Присвоить всем требованиям, критериям приёмки и правилам API уникальные идентификаторы (например НФТ-1, ДАН-1, API-1, КП-1).",
+      "question": "Можно ли пронумеровать все требования единым образом?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-018",
+      "scope": "set",
+      "criterion": "modifiable",
+      "severity": "minor",
+      "title": "Не указаны версия и дата документа",
+      "explanation": "Без версии нельзя понять, какую редакцию согласовали и проверяли (управление изменениями).",
+      "rids": [],
+      "quotes": [
+        {
+          "text": "| Владелец документа | Продуктовая команда POS-кредитования |",
+          "line": 14,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Добавить в шапку версию, дату и историю изменений.",
+      "question": "Какая версия и дата у этой редакции документа?",
+      "addressee": "Аналитик",
+      "source": "rule",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-019",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "minor",
+      "title": "Не указан срок хранения данных заявок в базе данных",
+      "explanation": "В требованиях к хранению данных не определен срок хранения записей в таблице installment_orders и правила их архивации.",
+      "rids": [
+        "R-013"
+      ],
+      "quotes": [
+        {
+          "text": "Данные заявок хранятся в базе данных PostgreSQL 14 в таблице installment_orders.",
+          "line": 36,
+          "found": true
+        }
+      ],
+      "example": "Со временем размер таблицы будет неконтролируемо расти, что приведет к снижению производительности СУБД.",
+      "suggestion": "Добавить требования по срокам операционного хранения и архивации данных заявок.",
+      "question": "Какой установлен срок хранения данных в таблице installment_orders до их архивации или удаления?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-020",
+      "scope": "set",
+      "criterion": "set_complete",
+      "severity": "minor",
+      "title": "Отсутствует текст и содержание push-уведомления",
+      "explanation": "Упоминается отправка push-уведомления клиенту о решении по заявке, но не описан текст сообщения, шаблоны и переменные.",
+      "rids": [
+        "R-005"
+      ],
+      "quotes": [
+        {
+          "text": "отправляет клиенту push-уведомление о решении.",
+          "line": 28,
+          "found": true
+        }
+      ],
+      "example": "Разработчики и тестировщики не знают, какие именно данные (сумма, график, причины отказа) должны отображаться в уведомлении.",
+      "suggestion": "Описать тексты push-уведомлений для успешного одобрения и для отказа по заявке.",
+      "question": "Какой текст и набор параметров должен содержаться в push-уведомлении для клиента?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": false
+    },
+    {
+      "fid": "F-021",
+      "scope": "set",
+      "criterion": "singular",
+      "severity": "minor",
+      "title": "Неатомарные требования: 3 (в одном пункте несколько действий или условий)",
+      "explanation": "Такой пункт приходится делить при оценке, реализации и тестировании. По пунктам: R-005 — Нарушение атомарности (единичности) требования; R-008 — Нарушение атомарности (единичности) требования; R-009 — Требование объединяет расчет пени и лимит пени.",
+      "rids": [
+        "R-005",
+        "R-008",
+        "R-009"
+      ],
+      "quotes": [
+        {
+          "text": "Система запрашивает кредитный отчёт клиента в кредитном бюро, рассчитывает скоринговый балл и отправляет клиенту push-уведомление о решении.",
+          "line": 28,
+          "found": true
+        },
+        {
+          "text": "срок действия кода составляет 5 минут, допускается не более 3 попыток ввода.",
+          "line": 31,
+          "found": true
+        },
+        {
+          "text": "За просрочку начисляется пеня 0,5% в день от суммы платежа, предельный размер пени составляет 10% годовых от суммы покупки.",
+          "line": 32,
+          "found": true
+        }
+      ],
+      "example": "",
+      "suggestion": "Разбить каждый пункт на отдельные требования с собственными идентификаторами. Варианты: R-005: Когда рассчитан скоринговый балл, система должна отправить клиенту push-уведомление о решении.; R-008: Когда отправлен SMS-код, система должна ограничивать срок его действия 5 минутами.; R-009: Разделить на два отдельных требования: одно для ставки пени, другое для ограничения максимального размера.",
+      "question": "Можно ли разбить пункты R-005, R-008, R-009 на отдельные требования, по одному действию или условию в каждом?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "",
+      "resolution": "",
+      "grouped": true
+    }
+  ],
+  "set_marks": [
+    {
+      "criterion": "set_complete",
+      "status": "violation",
+      "comment": "В разделе 7 присутствует метка TBD (ТБД, содержание раздела не определено), что нарушает полноту набора."
+    },
+    {
+      "criterion": "set_consistent",
+      "status": "violation",
+      "comment": "Обнаружены противоречия между максимальной суммой, таймингами решения и именами параметров в API."
+    },
+    {
+      "criterion": "set_feasible",
+      "status": "ok",
+      "comment": "Набор в целом реализуем, хотя НФТ-4 содержит риски нарушения стандартов безопасности (PCI DSS)."
+    },
+    {
+      "criterion": "set_comprehensible",
+      "status": "ok",
+      "comment": "Назначение системы и структура данных понятны."
+    },
+    {
+      "criterion": "set_validatable",
+      "status": "ok",
+      "comment": "Критерии приёмки присутствуют и измеримы, за исключением внутренних расхождений."
+    },
+    {
+      "criterion": "ranked",
+      "status": "violation",
+      "comment": "У требований в функциональных и нефункциональных разделах полностью отсутствуют приоритеты."
+    },
+    {
+      "criterion": "modifiable",
+      "status": "ok",
+      "comment": "Структура документа и нумерация позволяют вносить изменения."
+    },
+    {
+      "criterion": "set_traceable",
+      "status": "violation",
+      "comment": "Нет явных идентификаторов или матриц трассировки между целями, требованиями и критериями приёмки."
+    }
+  ],
+  "checklist": [],
+  "tests": [
+    {
+      "rid": "R-003",
+      "title": "Максимальная сумма покупки",
+      "given": "Клиент оформляет рассрочку на сумму 1 000 001 тенге",
+      "when": "Клиент отправляет заявку на рассрочку",
+      "then": "поведение не определено документом — требуется уточнение (см. вопрос автору)"
+    },
+    {
+      "rid": "R-009",
+      "title": "Начисление пени за просрочку",
+      "given": "Сумма ежемесячного платежа составляет 10 000 тенге, сумма покупки 120 000 тенге",
+      "when": "Наступает просрочка платежа на 1 день",
+      "then": "Начисляется пеня 0,5% в день от суммы платежа (50 тенге), при этом предельный размер пени составляет 10% годовых от суммы покупки"
+    },
+    {
+      "rid": "R-011",
+      "title": "Досрочное погашение рассрочки",
+      "given": "У клиента оформлена рассрочка на 12 месяцев",
+      "when": "Клиент погашает рассрочку досрочно в любой момент",
+      "then": "Погашение происходит полностью или частично без комиссии и штрафов"
+    },
+    {
+      "rid": "R-012",
+      "title": "Списание ежемесячного платежа",
+      "given": "У клиента оформлена рассрочка с ежемесячным платежом",
+      "when": "Наступает конец дня 25 числа месяца",
+      "then": "Ежемесячный платёж списывается со счёта клиента"
+    },
+    {
+      "rid": "R-004",
+      "title": "Проверка кредитного лимита",
+      "given": "Клиент запрашивает рассрочку на сумму в пределах лимита",
+      "when": "Система проверяет кредитный лимит клиента",
+      "then": "Дополнительные документы не запрашиваются, заявка проходит дальше"
+    }
+  ],
+  "trace": [
+    {
+      "rid": "R-001",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-002",
+      "acceptance": [
+        "R-038"
+      ],
+      "api": [
+        "R-027"
+      ],
+      "note": "проверяется критерием приёмки АК-2, реализуется через POST /installments/quote"
+    },
+    {
+      "rid": "R-003",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-004",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-005",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-006",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-007",
+      "acceptance": [
+        "R-037"
+      ],
+      "api": [
+        "R-028"
+      ],
+      "note": "проверяется критерием приёмки АК-1, реализуется через POST /installments"
+    },
+    {
+      "rid": "R-008",
+      "acceptance": [
+        "R-039"
+      ],
+      "api": [
+        "R-029"
+      ],
+      "note": "проверяется критерием приёмки АК-3, реализуется через GET /installments/{id}/confirm"
+    },
+    {
+      "rid": "R-009",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-010",
+      "acceptance": [],
+      "api": [
+        "R-031"
+      ],
+      "note": "нет критерия приёмки, реализуется через POST /installments/{id}/cancel"
+    },
+    {
+      "rid": "R-011",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-012",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-013",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-014",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-015",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-016",
+      "acceptance": [],
+      "api": [
+        "R-027"
+      ],
+      "note": "нет критерия приёмки, реализуется через POST /installments/quote"
+    },
+    {
+      "rid": "R-017",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    },
+    {
+      "rid": "R-018",
+      "acceptance": [],
+      "api": [],
+      "note": "нет критерия приёмки и метода API"
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q-01",
+      "text": "Какое значение максимальной суммы является актуальным: 1 000 000 тенге (строка 26) или 1 500 000 тенге (строка 11)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Противоречие в лимитах суммы покупки приведет к отклонению валидных заявок или финансовым убыткам банка.",
+      "options": [
+        "1 000 000 тенге — снижает кредитный риск по операциям",
+        "1 500 000 тенге — соответствует общим сведениям и планам продаж"
+      ],
+      "assumption": "Принять минимальный лимит 1 000 000 тенге как более строгий для снижения рисков.",
+      "fids": [
+        "F-001"
+      ],
+      "lines": [
+        11,
+        26
+      ],
+      "source": "llm",
+      "answer": "Максимальная сумма покупки 1 000 000 тенге (ФТ-3). В разделе 1 заменить 1 500 000 на 1 000 000 тенге.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-02",
+      "text": "Какое целевое время выдачи решения является корректным: 30 секунд (строка 30) или 60 секунд (строка 92)?",
+      "priority": "blocker",
+      "addressee": "Бизнес-заказчик",
+      "why": "Рассинхронизация функционального требования и критерия приемки сделает невозможной успешную сдачу тестов.",
+      "options": [
+        "30 секунд — жесткий лимит для высокой конверсии",
+        "60 секунд — с учетом задержек внешних интеграций"
+      ],
+      "assumption": "Использовать 60 секунд из критериев приемки АК-1 как достижимый показатель.",
+      "fids": [
+        "F-004"
+      ],
+      "lines": [
+        30,
+        92
+      ],
+      "source": "llm",
+      "answer": "Решение выдаётся не позднее 30 секунд. АК-1 исправить с 60 на 30 секунд, замер по 95-му перцентилю от отправки заявки до push.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-03",
+      "text": "Как требование о логировании полного номера карты (строка 43) согласуется со стандартом PCI DSS?",
+      "priority": "blocker",
+      "addressee": "ИБ",
+      "why": "Нарушение стандартов информационной безопасности грозит отзывом лицензии и крупными штрафами регулятора.",
+      "options": [
+        "Маскировать PAN (сохранять только первые 6 и последние 4 цифры)",
+        "Исключить номер карты из логов полностью"
+      ],
+      "assumption": "Логировать только маскированный номер карты.",
+      "fids": [
+        "F-012"
+      ],
+      "lines": [
+        43
+      ],
+      "source": "llm",
+      "answer": "Вариант (2): номер карты в журнал не пишется вообще, в логах только order_id и client_id. НФТ-4 переписать, соответствие PCI DSS подтверждает ИБ.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-04",
+      "text": "При каких точных условиях и какие именно дополнительные документы запрашиваются системой?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Формулировка «при необходимости» размыта и не содержит критериев, когда именно и какие документы требуются от клиента.",
+      "options": [
+        "Принять исправление: Когда кредитного лимита недостаточно, система должна запросить у клиента справку о доходах",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-002"
+      ],
+      "lines": [
+        27
+      ],
+      "source": "findings",
+      "answer": "Перечень документов зависит от ситуации, определим позже вместе с рисками.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-05",
+      "text": "Какая база используется для расчета 10% годовых пени: первоначальная сумма покупки или текущий остаток долга?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Формулировка «от суммы покупки» может трактоваться как от первоначальной суммы или от остатка задолженности, что приведет к неверному начислению.",
+      "options": [
+        "Принять исправление: Когда наступает просрочка, система должна начислять пеню 0,5% в день от суммы просроченного платежа, но не более 10% годовых от первоначальной суммы покупки",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-005"
+      ],
+      "lines": [
+        32
+      ],
+      "source": "findings",
+      "answer": "Пеня 0,5% в день от суммы просроченного платежа, суммарно не более 10% годовых от первоначальной суммы покупки. ФТ-9 переписать именно так.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-06",
+      "text": "Каким способом магазин-партнёр передает информацию об отмене рассрочки в банк?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Отсутствует информация о том, как именно магазин инициирует отмену (API или бэк-офис) и какие действия выполняет система банка при получении запроса.",
+      "options": [
+        "Принять исправление: Когда магазин-партнёр инициирует отмену рассрочки через API, система должна перевести заявку в статус CANCELLED и остановить списание платежей",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-006"
+      ],
+      "lines": [
+        33
+      ],
+      "source": "findings",
+      "answer": "Магазин отменяет рассрочку через API банка: POST /installments/{id}/cancel с partner_id; система переводит заявку в CANCELLED и останавливает списания. Ответственный: команда интеграций, ФТ-10 дополнить.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-07",
+      "text": "Как пересчитывается график при частичном досрочном погашении: сокращается срок или уменьшается ежемесячный платёж?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "Не указано, уменьшается ли при частичном погашении срок рассрочки или размер ежемесячного платежа.",
+      "options": [
+        "Принять исправление: Когда клиент производит частичное досрочное погашение, система должна пересчитать график платежей в сторону уменьшения ежемесячного платежа при сохранении срока 12 месяцев",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-007"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "findings",
+      "answer": "При частичном досрочном погашении уменьшаем ежемесячный платёж, срок остаётся 12 месяцев. Оставшийся срок при этом сокращается, например до 8 месяцев.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-08",
+      "text": "Что происходит, если на счете клиента 25 числа недостаточно средств для погашения ежемесячного платежа?",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "Требование фиксирует дату списания, но не указывает, когда и как фиксируется просрочка при нулевом балансе.",
+      "options": [
+        "Принять исправление: Когда наступает конец дня 25 числа месяца, система должна списать ежемесячный платёж; при недостатке средств зафиксировать просрочку и начислить пеню",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-008",
+        "F-014"
+      ],
+      "lines": [
+        35
+      ],
+      "source": "findings",
+      "answer": "Если 25 числа средств нет, просрочка фиксируется в конце этого дня, пеня 1% в день от суммы платежа, платёж списывается повторно при пополнении счёта.",
+      "outcome": "закрыто находок: 1 из 2"
+    },
+    {
+      "qid": "Q-09",
+      "text": "Какие конкретные метрики времени отклика и пороговые значения пиковой нагрузки имеются в виду под «быстро»?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Фраза «работать быстро» субъективна и не позволяет объективно проверить соответствие системы требованиям.",
+      "options": [
+        "Принять исправление: Время ответа ключевых экранов системы не должно превышать 1 секунды при пиковой нагрузке 1000 пользователей в секунду",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-010"
+      ],
+      "lines": [
+        40
+      ],
+      "source": "findings",
+      "answer": "Пока непонятно, под «быстро» подразумеваем как у конкурентов, цифры определим позже.",
+      "outcome": "закрыто находок: 0 из 1"
+    },
+    {
+      "qid": "Q-10",
+      "text": "Какое имя параметра должно быть утверждено в контракте API: term_months или installment_months?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "В таблице данных срок рассрочки обозначен как term_months, тогда как в примере запроса используется ключ installment_months.",
+      "options": [
+        "Принять исправление: Использовать идентичные имена полей в модели данных и примерах API контракта",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-013"
+      ],
+      "lines": [
+        53,
+        73
+      ],
+      "source": "findings",
+      "answer": "Утверждено term_months. В примере запроса заменить installment_months на term_months, во всех контрактах API одно имя.",
+      "outcome": "закрыто находок: 1 из 1"
+    },
+    {
+      "qid": "Q-11",
+      "text": "Как именно система должна округлять ежемесячный платёж и куда списывается возникающий остаток?",
+      "priority": "important",
+      "addressee": "Разработка",
+      "why": "При делении суммы покупки на 12 могут получаться нецелые числа (копейки), но правило округления и распределения остатка не задано.",
+      "options": [
+        "Принять исправление: Описать математическое правило округления до целых тенге и порядок учета копеечного остатка в последнем платеже",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-015"
+      ],
+      "lines": [
+        25
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-12",
+      "text": "Какой механизм защиты от дублирования используется при повторной отправке запроса создания заявки?",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "Для метода создания заявки не предусмотрен ключ дедупликации, что может привести к созданию дубликатов при повторных запросах из-за сбоев сети.",
+      "options": [
+        "Принять исправление: Добавить заголовок или поле для передачи ключа идемпотентности в запросе POST /installments",
+        "Оставить как есть: пояснить, почему это не дефект"
+      ],
+      "assumption": "До ответа в тест-кейсах ожидаемый результат помечается как «требует уточнения».",
+      "fids": [
+        "F-016"
+      ],
+      "lines": [
+        65
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-13",
+      "text": "Мелкие замечания (8: F-003, F-009, F-011, F-017, F-018, F-019, F-020, F-021): принять предложенные исправления или оставить формулировки документа?",
+      "priority": "clarify",
+      "addressee": "Аналитик",
+      "why": "Мелкие неточности формулировок копятся и замедляют тест-дизайн; ответ позволяет закрыть их одним решением.",
+      "options": [
+        "Принять все предложенные исправления",
+        "Принять, кроме перечисленных номеров находок",
+        "Оставить формулировки документа как есть"
+      ],
+      "assumption": "Команда применяет предложенные исправления и фиксирует это в протоколе ревью.",
+      "fids": [
+        "F-003",
+        "F-009",
+        "F-011",
+        "F-017",
+        "F-018",
+        "F-019",
+        "F-020",
+        "F-021"
+      ],
+      "lines": [
+        14,
+        27,
+        28,
+        31,
+        32,
+        36,
+        40,
+        50
+      ],
+      "source": "findings",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-04.1",
+      "text": "Уточните конкретные критерии и перечень документов, запрашиваемых системой при необходимости.",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-002"
+      ],
+      "lines": [
+        27
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-07.1",
+      "text": "В ответе два несовместимых утверждения: «При частичном досрочном погашении уменьшаем ежемесячный платёж, срок остаётся 12 месяцев» и «Оставшийся срок при этом сокращается, например до 8 месяцев». Какое из них верно?",
+      "priority": "important",
+      "addressee": "Бизнес-заказчик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-007"
+      ],
+      "lines": [
+        34
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-08.1",
+      "text": "Уточните часовой пояс, по которому определяется 'конец дня 25 числа' для списания платежей.",
+      "priority": "important",
+      "addressee": "Аналитик",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-014"
+      ],
+      "lines": [
+        35
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    },
+    {
+      "qid": "Q-09.1",
+      "text": "Уточните конкретные числовые метрики времени отклика и пороговые значения пиковой нагрузки для НФТ-1.",
+      "priority": "important",
+      "addressee": "Архитектор",
+      "why": "",
+      "options": [],
+      "assumption": "",
+      "fids": [
+        "F-010"
+      ],
+      "lines": [
+        40
+      ],
+      "source": "resolver",
+      "answer": "",
+      "outcome": ""
+    }
+  ],
+  "resolved": [
+    {
+      "fid": "F-001",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие максимальной суммы покупки с разделом 1",
+      "explanation": "Требование ограничивает сумму 1 000 000 тенге, хотя в общих сведениях раздела 1 указан верхний предел 1 500 000 тенге.",
+      "rids": [
+        "R-003"
+      ],
+      "quotes": [
+        {
+          "text": "Максимальная сумма покупки в рассрочку составляет 1 000 000 тенге.",
+          "line": 26,
+          "found": true
+        },
+        {
+          "text": "от 15 000 до 1 500 000 тенге",
+          "line": 11,
+          "found": true
+        }
+      ],
+      "example": "Покупка на 1 200 000 тенге будет отклонена по ФТ-3, но разрешена по таблице общих сведений (до 1 500 000 тенге).",
+      "suggestion": "Максимальная сумма покупки в рассрочку составляет 1 000 000 тенге.",
+      "question": "Какое значение максимальной суммы является актуальным: 1 000 000 или 1 500 000 тенге?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-01: Автор указал актуальное значение максимальной суммы и потребовал обновить раздел 1.",
+      "grouped": false
+    },
+    {
+      "fid": "F-004",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Противоречие времени выдачи решения с критерием приёмки АК-1",
+      "explanation": "Функциональное требование устанавливает лимит 30 секунд, тогда как критерий приёмки АК-1 задает ограничение в 60 секунд.",
+      "rids": [
+        "R-007",
+        "R-037"
+      ],
+      "quotes": [
+        {
+          "text": "не позднее чем через 30 секунд после отправки заявки.",
+          "line": 30,
+          "found": true
+        },
+        {
+          "text": "Решение по заявке выдаётся клиенту в течение 60 секунд после отправки заявки.",
+          "line": 92,
+          "found": true
+        },
+        {
+          "text": "Решение по заявке выдаётся клиенту не позднее чем через 30 секунд после отправки заявки.",
+          "line": 30,
+          "found": true
+        }
+      ],
+      "example": "Заявка обработана за 45 секунд: тест по АК-1 будет успешным, но требование ФТ-7 будет нарушено.",
+      "suggestion": "Решение по заявке выдаётся клиенту не позднее чем через 30 секунд после отправки заявки.",
+      "question": "Какое целевое время выдачи решения является корректным: 30 или 60 секунд?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-02: Автор подтвердил целевое время 30 секунд и необходимость исправления АК-1.",
+      "grouped": false
+    },
+    {
+      "fid": "F-005",
+      "scope": "requirement",
+      "criterion": "unambiguous",
+      "severity": "major",
+      "title": "Неоднозначная база для расчета годового предельного размера пени",
+      "explanation": "Формулировка «от суммы покупки» может трактоваться как от первоначальной суммы или от остатка задолженности, что приведет к неверному начислению.",
+      "rids": [
+        "R-009"
+      ],
+      "quotes": [
+        {
+          "text": "предельный размер пени составляет 10% годовых от суммы покупки",
+          "line": 32,
+          "found": true
+        }
+      ],
+      "example": "При покупке 120 000 тенге неясно, берется ли 10% от 120 000 или от текущего долга.",
+      "suggestion": "Когда наступает просрочка, система должна начислять пеню 0,5% в день от суммы просроченного платежа, но не более 10% годовых от первоначальной суммы покупки.",
+      "question": "Какая база используется для расчета 10% годовых пени: первоначальная сумма покупки или текущий остаток долга?",
+      "addressee": "Бизнес-заказчик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-05: Автор уточнил базу для расчета пени и размер. Новую формулировку модель предложила с расхождением с ответом автора, она отклонена кодом.",
+      "grouped": false
+    },
+    {
+      "fid": "F-006",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не описаны последствия и статусы при отмене рассрочки магазином",
+      "explanation": "Отсутствует информация о том, как именно магазин инициирует отмену (API или бэк-офис) и какие действия выполняет система банка при получении запроса.",
+      "rids": [
+        "R-010"
+      ],
+      "quotes": [
+        {
+          "text": "При возврате товара магазин-партнёр инициирует отмену рассрочки.",
+          "line": 33,
+          "found": true
+        }
+      ],
+      "example": "Магазин отменяет товар на 120 000 тенге, но система банка не меняет статус заявки и продолжает списывать ежемесячный платёж.",
+      "suggestion": "При возврате товара магазин-партнёр инициирует отмену рассрочки запросом POST /installments/{id}/cancel с partner_id, после чего система переводит заявку в CANCELLED и останавливает списания.",
+      "question": "Каким способом магазин-партнёр передает информацию об отмене рассрочки в банк?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком; критичность понижена кодом до «существенный»: неясность без конфликта утверждений закрывается уточнением",
+      "resolution": "закрыто ответом Q-06: Автор описал способ отмены через API и действия системы.",
+      "grouped": false
+    },
+    {
+      "fid": "F-008",
+      "scope": "requirement",
+      "criterion": "complete",
+      "severity": "major",
+      "title": "Не описано поведение системы при нехватке средств для ежемесячного платежа",
+      "explanation": "Требование фиксирует дату списания, но не указывает, когда и как фиксируется просрочка при нулевом балансе.",
+      "rids": [
+        "R-012"
+      ],
+      "quotes": [
+        {
+          "text": "Ежемесячный платёж списывается со счёта клиента в конце дня 25 числа каждого месяца.",
+          "line": 35,
+          "found": true
+        }
+      ],
+      "example": "25 числа на счете клиента нет денег, система не списывает платёж и не фиксирует просрочку до конца дня.",
+      "suggestion": "Если 25 числа средств недостаточно, в конце этого дня фиксируется просрочка, начисляется пеня 1% в день от суммы платежа, а платёж списывается повторно при пополнении счёта.",
+      "question": "Что происходит, если на счете клиента 25 числа недостаточно средств для погашения ежемесячного платежа?",
+      "addressee": "Аналитик",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-08: Автор описал фиксацию просрочки и повторное списание для F-008.",
+      "grouped": false
+    },
+    {
+      "fid": "F-012",
+      "scope": "requirement",
+      "criterion": "correct",
+      "severity": "critical",
+      "title": "Логирование полного номера карты нарушает стандарты информационной безопасности",
+      "explanation": "Запись полного номера карты в журнал событий противоречит требованиям безопасности и стандартам PCI DSS, создавая критический риск утечки персональных данных.",
+      "rids": [
+        "R-017"
+      ],
+      "quotes": [
+        {
+          "text": "Номер карты клиента записывается в журнал событий целиком",
+          "line": 43,
+          "found": true
+        }
+      ],
+      "example": "В лог попадает запись card_number=4000123456789010, что позволяет злоумышленникам получить полный PAN при компрометации логов.",
+      "suggestion": "Номер карты клиента не записывается в журнал событий, в логах фиксируются только order_id и client_id.",
+      "question": "Как требование о логировании полного номера карты согласуется с политикой информационной безопасности и стандартом PCI DSS?",
+      "addressee": "ИБ",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-03: Автор подтвердил отказ от логирования номеров карт в пользу order_id и client_id.",
+      "grouped": false
+    },
+    {
+      "fid": "F-013",
+      "scope": "set",
+      "criterion": "set_consistent",
+      "severity": "major",
+      "title": "Рассинхронизация наименований параметров в модели данных и примере API",
+      "explanation": "В таблице данных срок рассрочки обозначен как term_months, тогда как в примере запроса используется ключ installment_months.",
+      "rids": [
+        "R-022"
+      ],
+      "quotes": [
+        {
+          "text": "term_months | integer | Срок рассрочки в месяцах",
+          "line": 53,
+          "found": true
+        },
+        {
+          "text": "{\"partner_id\": \"P-1042\", \"amount\": 250000, \"installment_months\": 12, \"client_id\": \"C-77\"}",
+          "line": 73,
+          "found": true
+        },
+        {
+          "text": "\"installment_months\"",
+          "line": 73,
+          "found": true
+        },
+        {
+          "text": "term_months",
+          "line": 53,
+          "found": true
+        }
+      ],
+      "example": "Клиентское приложение при отправке запроса по спецификации передаст поле installment_months, которое не найдет соответствия в модели данных term_months.",
+      "suggestion": "В модели данных и примерах запросов API используется параметр term_months для обозначения срока рассрочки.",
+      "question": "Какое имя параметра должно быть утверждено в контракте API: term_months или installment_months?",
+      "addressee": "Архитектор",
+      "source": "llm",
+      "verified": true,
+      "critic": "подтверждено критиком",
+      "resolution": "закрыто ответом Q-10: Автор утвердил единое наименование параметра term_months.",
+      "grouped": false
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "dropped_ungrounded": 1,
+    "dropped_by_critic": 0,
+    "downgraded_by_critic": 0,
+    "llm_calls": 0,
+    "journal": [
+      {
+        "stage": "1",
+        "step": "Чтение документа",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "MD, строк 104",
+        "roles": []
+      },
+      {
+        "stage": "2",
+        "step": "Нарезка и правила набора",
+        "agent": "Segmenter + RuleEngine (код)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "блоков 60, находок правил 2",
+        "roles": []
+      },
+      {
+        "stage": "3",
+        "step": "Подключение модели",
+        "agent": "GeminiClient (код)",
+        "seconds": 1.27,
+        "status": "ok",
+        "out": "gemini-3.5-flash",
+        "roles": []
+      },
+      {
+        "stage": "4",
+        "step": "Выделение требований",
+        "agent": "Extractor (LLM)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "требований 40",
+        "roles": [
+          "extractor"
+        ]
+      },
+      {
+        "stage": "5.1",
+        "step": "Оценка каждого требования",
+        "agent": "Reviewer, параллельные пакеты (LLM)",
+        "seconds": 0.01,
+        "status": "ok",
+        "out": "оценено 40, находок 15",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "stage": "5.2",
+        "step": "Чек-лист и трассировка",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "строк трассировки 18",
+        "roles": [
+          "analyst_checklist"
+        ]
+      },
+      {
+        "stage": "5.3",
+        "step": "Черновики тест-кейсов",
+        "agent": "Analyst (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "тест-кейсов 5",
+        "roles": [
+          "analyst_tests"
+        ]
+      },
+      {
+        "stage": "6",
+        "step": "Проверка набора: противоречия и пропуски",
+        "agent": "ConsistencyReviewer + GapFinder (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 8",
+        "roles": [
+          "consistency",
+          "gaps"
+        ]
+      },
+      {
+        "stage": "7",
+        "step": "Сверка цитат и дедупликация",
+        "agent": "Grounder + dedupe (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "отброшено без цитаты 1, слито дублей 0",
+        "roles": []
+      },
+      {
+        "stage": "8",
+        "step": "Перепроверка находок",
+        "agent": "Critic (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "оставлено 24, отклонено/слито 3",
+        "roles": [
+          "critic"
+        ]
+      },
+      {
+        "stage": "9",
+        "step": "Слияние повторов между агентами",
+        "agent": "dedupe по требованиям и строкам (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "слито повторов 1; замечаний «Единичность» сведено в одну: 3",
+        "roles": []
+      },
+      {
+        "stage": "10",
+        "step": "Калибровка критичности",
+        "agent": "Калибровка критичности (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "понижено до «существенный»: 2",
+        "roles": []
+      },
+      {
+        "stage": "11",
+        "step": "Нумерация находок",
+        "agent": "Оркестратор (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "находок 21",
+        "roles": []
+      },
+      {
+        "stage": "12",
+        "step": "Вопросы автору",
+        "agent": "Clarifier (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "вопросов 12",
+        "roles": [
+          "clarifier"
+        ]
+      },
+      {
+        "stage": "13",
+        "step": "Чтение ответов автора",
+        "agent": "Loader (код)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "ответов 10",
+        "roles": []
+      },
+      {
+        "stage": "14",
+        "step": "Учёт ответов автора",
+        "agent": "Resolver (LLM)",
+        "seconds": 0.0,
+        "status": "ok",
+        "out": "решений по находкам 11",
+        "roles": [
+          "resolver"
+        ]
+      }
+    ],
+    "merged_id_findings": 0,
+    "merged_duplicates": 3,
+    "dropped_by_critic_titles": [
+      "Противоречие во времени выдачи решения между ФТ-7 и АК-1 — дубль T-009: Дублирует находку T-009 о противоречии между ФТ-7 и АК-1.",
+      "Противоречие в максимальной сумме покупки — дубль T-006: Дублирует находку T-006 о противоречии максимальной суммы покупки.",
+      "Противоречие во времени выдачи решения по заявке — дубль T-009: Дублирует находку T-009 о противоречии во времени выдачи решения."
+    ],
+    "merged_overlap": 1,
+    "merged_overlap_titles": [
+      "Поле «installment_months» в примере не совпадает с описанием API → Рассинхронизация наименований параметров в модели данных и примере API"
+    ],
+    "merged_singular": 3,
+    "downgraded_by_calibration": 2,
+    "answers_used": 10,
+    "answers_unmatched": [],
+    "resolved_by_answers": 7,
+    "before_answers": {
+      "critical": 3,
+      "major": 10
+    },
+    "llm_cache_hits": 13,
+    "llm_retries": 0,
+    "llm_failures": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "thinking_tokens": 0,
+    "llm_seconds": 0.0,
+    "llm_by_role": {
+      "extractor": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "reviewer": {
+        "calls": 0,
+        "cache_hits": 5,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_checklist": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "analyst_tests": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "consistency": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "gaps": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "critic": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "clarifier": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      },
+      "resolver": {
+        "calls": 0,
+        "cache_hits": 1,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "seconds": 0.0
+      }
+    },
+    "duration_sec": 1.39,
+    "value": {
+      "rate_kzt_per_hour": 5000.0,
+      "manual_base_min": 30.0,
+      "manual_min_per_requirement": 6.0,
+      "check_min_per_finding": 1.5,
+      "manual_hours": 4.5,
+      "agent_hours": 0.0,
+      "check_hours": 0.53,
+      "saved_hours": 3.97,
+      "saved_kzt": 19873,
+      "critical_found": 3,
+      "major_found": 10,
+      "fix_hours_at_requirements": 1.0,
+      "escalation_factor": 7.0,
+      "precision": 0.85,
+      "avoided_rework_hours": 40.8,
+      "avoided_rework_kzt": 204000,
+      "tokens_total": 0,
+      "llm_cost_kzt": 0.0,
+      "llm_price_note": "бесплатный тариф (цена токенов не задана)",
+      "roi": 85.3,
+      "major_weight": 0.5,
+      "scenarios": [
+        {
+          "name": "основной",
+          "escalation": 7.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 40.8,
+          "benefit_kzt": 223873,
+          "roi": 85.3
+        },
+        {
+          "name": "осторожный",
+          "escalation": 3.0,
+          "precision": 0.7,
+          "avoided_rework_hours": 11.2,
+          "benefit_kzt": 75873,
+          "roi": 28.9
+        },
+        {
+          "name": "только время ревью",
+          "escalation": 1.0,
+          "precision": 0.85,
+          "avoided_rework_hours": 0.0,
+          "benefit_kzt": 19873,
+          "roi": 7.6
+        }
+      ]
+    },
+    "requirements": 40,
+    "findings": 14,
+    "critical": 0,
+    "major": 6,
+    "minor": 8,
+    "questions": 17,
+    "questions_blocker_open": 0
+  },
+  "document_score": 76,
+  "verdict_dev": "Условно — критичных дефектов нет, но есть существенные (6); разработку можно начинать после их уточнения.",
+  "verdict_test": "Условно — тест-дизайн можно начинать, но часть ожидаемых результатов требует уточнения.",
+  "priorities": [
+    "F-014",
+    "F-015",
+    "F-016",
+    "F-002",
+    "F-007",
+    "F-010"
+  ]
+}
