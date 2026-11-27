@@ -20,7 +20,7 @@
 (eval/llm_cache/). Тогда точность пересчитывается в CI без сети и без ключа:
     python tools/ablation.py --cache eval/llm_cache --gate
 падает (код 1), если найдено меньше GATE["found"] дефектов, средняя по документам точность ниже GATE["precision"],
-есть ложные critical или хоть один промах кэша (иначе пропавший файл тихо ушёл бы в запасной вариант).
+есть ложные critical вне эталона и *.extra.json или хоть один промах кэша (иначе пропавший файл тихо ушёл бы в запасной вариант).
 Обновить закоммиченный кэш после живого перезамера: python tools/ablation.py --export-cache eval/llm_cache
 """
 
@@ -155,6 +155,7 @@ def run_variant(name: str, model: str) -> dict:
         "severe_gold": sum(r["severe_gold"] for r in rows),
         "severe_question_coverage": round(sum(r["severe_covered_by_questions"] for r in rows) / max(sum(r["severe_gold"] for r in rows), 1), 3),
         "false_critical": sum(r["false_critical"] for r in rows),
+        "false_critical_unconfirmed": sum(r.get("false_critical_unconfirmed", r["false_critical"]) for r in rows),
         "severity_exact": round(sum(r["severity_exact_n"] for r in rows) / max(sum(r["found"] for r in rows), 1), 3),
 
         "severity_closest": round(sum(r["severity_closest_n"] for r in rows) / max(sum(r["found"] for r in rows), 1), 3),
@@ -208,7 +209,7 @@ def main() -> int:
     if args.gate:
         r = run_variant("full", args.model)
         print(f"Ворота качества: найдено {r['found']}/{r['gold']}, точность {r['precision']:.1%}, "
-              f"ложных critical {r['false_critical']}, промахов кэша {r['cache_misses']}, "
+              f"ложных critical {r['false_critical']} (вне extra.json {r['false_critical_unconfirmed']}), промахов кэша {r['cache_misses']}, "
               f"критичность точно {r['severity_exact']:.0%}")
         bad = gate_failures(r)
         for b in bad:

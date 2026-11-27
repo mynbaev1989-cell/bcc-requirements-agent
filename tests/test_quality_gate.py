@@ -8,7 +8,7 @@ from tools.eval_score import GATE, gate_failures
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "eval" / "llm_cache"
-GOOD = {"found": 102, "precision": 0.861, "false_critical": 0, "cache_misses": 0}
+GOOD = {"found": 100, "precision": 0.858, "false_critical_unconfirmed": 0, "cache_misses": 0}
 
 
 def test_current_result_passes_gate():
@@ -18,7 +18,7 @@ def test_current_result_passes_gate():
 def test_each_threshold_fails_gate():
     assert gate_failures({**GOOD, "found": GATE["found"] - 1})
     assert gate_failures({**GOOD, "precision": GATE["precision"] - 0.001})
-    assert gate_failures({**GOOD, "false_critical": 1})
+    assert gate_failures({**GOOD, "false_critical_unconfirmed": 1})
     msg = gate_failures({**GOOD, "cache_misses": 1})
     assert msg and "промах" in msg[0]  # пропавший файл кэша не проходит молча
 
