@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import os
 import sys
 from pathlib import Path
@@ -183,8 +184,8 @@ def export_cache(model: str, dest: Path) -> int:
     used = set().union(*_USED) if _USED else set()
     dest.mkdir(parents=True, exist_ok=True)
     for old in dest.glob("*.json"):
-        if old not in {dest / p.name for p in used}:
-            old.unlink()
+        if re.fullmatch(r"[0-9a-f]{64}", old.stem) and old not in {dest / p.name for p in used}:
+            old.unlink()  # чужие json в папке назначения не трогаем
     for p in sorted(used):
         shutil.copyfile(p, dest / p.name)
     size = sum(f.stat().st_size for f in dest.glob("*.json"))

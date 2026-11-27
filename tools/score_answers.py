@@ -31,7 +31,10 @@ def score_folder(folder: Path) -> dict:
     for key_path in sorted(folder.glob("*_answers_key.json")):
         name = key_path.name[: -len("_answers_key.json")]
         key = json.loads(key_path.read_text(encoding="utf-8"))
-        report = json.loads((folder / f"{name}.json").read_text(encoding="utf-8"))
+        report_path = folder / f"{name}.json"
+        if not report_path.exists():
+            raise SystemExit(f"Нет отчёта {report_path}: соберите его с --answers {name}_answers.md")
+        report = json.loads(report_path.read_text(encoding="utf-8"))
         qmap = {q["qid"]: q for q in report.get("questions", [])}
         rows = []
         for a in key.get("answers", []):

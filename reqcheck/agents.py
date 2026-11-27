@@ -315,8 +315,9 @@ class Reviewer:
         if isinstance(max_calls, int) and calls >= max_calls:
             return True
         low = self._last_error.lower()
-        markers = ("квот", "лимит вызовов", "api key", "api_key", "permission", "unauthorized", "401", "403", "400")
-        return any(m in low for m in markers)
+        markers = ("квот", "лимит вызовов", "api key", "api_key", "permission", "unauthorized")
+        # Коды HTTP — отдельным числом: «14003 мс» или «1400 строк» в тексте ошибки не останавливают повторы
+        return any(m in low for m in markers) or re.search(r"(?<!\d)(?:400|401|403)(?!\d)", low) is not None
 
     def _collect(self, data: Any, accept: set[str], line_of: dict[str, int],
                  assessments: dict[str, RequirementAssessment], findings: list[Finding]) -> None:

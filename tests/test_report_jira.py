@@ -36,3 +36,19 @@ def test_no_questions_no_file(tmp_path):
     r.questions = []
     written, _ = write_outputs(r, str(tmp_path / "s.md"), ("md", "csv"))
     assert not any(p.endswith("_jira.csv") for p in written)
+
+
+def test_formula_cells_are_neutralised():
+    r = _result()
+    r.questions[0].addressee = '=HYPERLINK("http://e","x")'
+    r.questions[1].text = "+1 сумма?"
+    rows = list(csv.reader(io.StringIO(render_jira_csv(r).lstrip("\ufeff"))))
+    assert rows[1][4].startswith("'=")  # метка из ответа модели не станет формулой
+    assert all(not c.startswith(("=", "+", "-", "@")) for row in rows[1:] for c in row)
+
+
+def test_dotted_output_name_keeps_stem(tmp_path):
+    r = _result()
+    written, _ = write_outputs(r, str(tmp_path / "report.v2.md"), ("md", "json", "csv"))
+    names = {p.replace("\\", "/").rsplit("/", 1)[-1] for p in written}
+    assert {"report.v2.md", "report.v2.json", "report.v2_jira.csv"} <= names and "report.json" not in names

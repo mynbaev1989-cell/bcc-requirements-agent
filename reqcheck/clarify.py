@@ -356,28 +356,17 @@ def self_contradictions(data, answer_by_q: dict[str, str]) -> dict[str, tuple[st
 
 
 # --- Проверки ответа кодом, без модели --------------------------------------------------------------
-# Модель решает, закрывает ли ответ дефект; два вида противоречий она пропускает почти всегда, и их ловит код:
-# автор выбрал одну сторону противоречия, а вторую прямо оставил, и одна величина с двумя значениями в ответе.
+# Модель решает, закрывает ли ответ дефект; один вид противоречия она пропускает почти всегда, и его ловит код:
+# автор выбрал одну сторону противоречия, а вторую прямо оставил «как есть». Проверку «одна величина — два значения»
+# мы пробовали и убрали: ответ «срок рассмотрения 5 дней, срок исполнения 10 дней» она принимала за противоречие.
 _KEEP_AS_IS = re.compile(r"как есть|не трога|без изменени|не меня", re.I)
+_OTHER_MATTER = re.compile(r"друг(?:ой|ого|ая|ое|ие|их)\b|отдельн|не связан", re.I)
 _REWRITE = re.compile(r"замен|исправ|удал|убра|исключ|вместо|отмен|перепис|привест|привед", re.I)
-_CONDITION = re.compile(r"(?<![А-Яа-яЁё])(?:для|если|при|кроме)(?![А-Яа-яЁё])", re.I)
-_QUANTITY = re.compile(r"(\d+(?:[.,]\d+)?)\s*(%|[А-Яа-яЁё]+)(?:\s+(?!(?:в|за)\s)([А-Яа-яЁё]+))?(?:\s+(?:в|за)\s+(день|месяц|год|сутки|час))?")
-_ADJ_UNIT = ("рабоч", "календ", "банков")  # «5 рабочих дней»: единица — следующее слово
-_UNIT_ROOTS = (("дн", "день"), ("ден", "день"), ("сут", "сутки"), ("мес", "месяц"), ("год", "год"), ("лет", "год"),
-               ("час", "час"), ("мин", "минута"), ("сек", "секунда"), ("тенг", "тенге"), ("тг", "тенге"),
-               ("процент", "%"), ("раз", "раз"))
-_CTX_STOP = {"после", "через", "более", "менее", "например", "также", "только", "этого", "этом", "каждый", "всех",
-             "одновременно", "тоже", "этот", "этой", "будет", "должен", "должна", "может"}
-
-
-def _plain_numbers(text: str) -> str:
-    """«1 500 000» → «1500000»: пробел между разрядами не делит число."""
-    return re.sub(r"(?<=\d)[  ](?=\d{3}(?!\d))", "", text)
 
 
 def _clauses(text: str) -> list[str]:
     """Части ответа: предложения и части через запятую («1,5» без пробела не делится)."""
-    return [s.strip() for s in re.split(r"(?<=[.!?;,])\s+", text) if s.strip()]
+    return [s.strip(" .,;") for s in re.split(r"(?<=[.!?;,])\s+|\n+", text) if s.strip(" .,;")]
 
 
 def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
@@ -396,7 +385,9 @@ def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
     sents = _clauses(answer)
     for i, side in enumerate(sides):
         own = side - set().union(*(s for j, s in enumerate(sides) if j != i))
-        kept = [s for s in sents if _KEEP_AS_IS.search(s) and not _REWRITE.search(s) and _numbers(s) & own]
+        # «оставили, потому что это другое» — автор спорит с находкой, а не оставляет противоречие
+        kept = [s for s in sents if _KEEP_AS_IS.search(s) and not _REWRITE.search(s) and not _OTHER_MATTER.search(s)
+                and _numbers(s) & own]
         if not kept:
             continue
         for j, other in enumerate(sides):
@@ -407,52 +398,12 @@ def kept_conflict(answer: str, finding: Finding) -> tuple[str, str] | None:
     return None
 
 
-def _unit(word: str, nxt: str, per: str) -> str:
-    w = word.lower()
-    if w.startswith(_ADJ_UNIT) and nxt:
-        w = nxt.lower()
-    root = next((name for prefix, name in _UNIT_ROOTS if w.startswith(prefix)), w[:4])
-    return f"{root}/{per}" if per else root
-
-
-def value_clash(answer: str) -> tuple[str, str] | None:
-    """Одна и та же величина с двумя разными значениями в одном ответе: (часть 1, часть 2).
-
-    Величина — число с единицей (и периодом: «в день», «в месяц»); «та же» — если в предложении перед числами
-    (после предыдущего числа) есть общее содержательное слово («срок», «пеня»). Не противоречие: диапазон
-    «от … до …» и значения для разных условий (обе части через запятую с «для» / «если» / «при»)."""
-    sentences = [s.strip() for s in re.split(r"(?<=[.!?;])\s+", _plain_numbers(answer)) if s.strip()]
-    facts = []
-    for si, sent in enumerate(sentences):
-        start = 0
-        for m in _QUANTITY.finditer(sent):
-            words = re.findall(r"[А-Яа-яЁё]{4,}", sent[start:m.start()])
-            ctx = {w.lower()[:5] for w in words if w.lower() not in _CTX_STOP}
-            left, right = sent.rfind(", ", 0, m.start()), sent.find(", ", m.end())
-            clause = sent[left + 2 if left >= 0 else 0: right if right >= 0 else len(sent)]
-            if not m.group(2).lower().startswith("числ"):  # «25 числа» — дата, а не величина
-                facts.append((si, m.group(1).replace(".", ","), _unit(m.group(2), m.group(3) or "", m.group(4) or ""),
-                              ctx, clause))
-            start = m.end()
-    for x, (s1, n1, u1, ctx1, cl1) in enumerate(facts):
-        for s2, n2, u2, ctx2, cl2 in facts[x + 1:]:
-            if u1 != u2 or n1 == n2 or not ctx1 & ctx2:
-                continue
-            if s1 == s2 and re.search(rf"(?<![\d,])от\s+{re.escape(n1)}\b.*\bдо\s+{re.escape(n2)}\b", sentences[s1]):
-                continue
-            if _CONDITION.search(cl1) and _CONDITION.search(cl2):
-                continue
-            # Автору показываем целые предложения; если оба значения в одном — части через запятую
-            a, b = (cl1, cl2) if s1 == s2 else (sentences[s1], sentences[s2])
-            return a.rstrip(".;,"), b.rstrip(".;,")
-    return None
-
-
 class Resolver:
     """Учёт ответов автора: какие находки ответ закрыл, какие частично, какие остались (с новым вопросом)."""
 
     def __init__(self, llm: JsonLLM, doc: Document):
         self.llm, self.doc = llm, doc
+        self._asked: set[str] = set()  # ответы, по которым уже задано уточнение (одно на ответ и при переспросе)
 
     @staticmethod
     def _key(q: Question | None, a: dict) -> str:
@@ -518,10 +469,7 @@ class Resolver:
         # прошлого прогона (без пары) — любую находку из списка, переданного модели
         allowed = {q.qid: set(q.fids) for q, _ in pairs if q}
         clash = self_contradictions(data, answer_by_q)
-        for k, text in answer_by_q.items():
-            if k not in clash and (vc := value_clash(text)):
-                clash[k] = vc  # одна величина с двумя значениями — нашёл код, модель такое пропускает
-        asked: set[str] = set()
+        asked = self._asked
         effects = []
         for e in _list(data.get("effects") if isinstance(data, dict) else data):
             if not isinstance(e, dict):

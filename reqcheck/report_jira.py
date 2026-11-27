@@ -23,6 +23,12 @@ def _label(text: str) -> str:
     return "_".join((text or "Аналитик").split())
 
 
+def _cell(value: str) -> str:
+    """Защита от формульной инъекции: ячейку, которая начинается с = + - @ (или табуляции/CR), Excel выполнит
+    как формулу. Текст приходит из документа и ответа модели, поэтому такой ячейке ставится ведущий апостроф."""
+    return "'" + value if value[:1] in ("=", "+", "-", "@", "\t", "\r") else value
+
+
 def render_jira_csv(result: RunResult) -> str:
     """CSV с вопросами автору; пустая строка, если вопросов нет."""
     if not result.questions:
@@ -52,6 +58,6 @@ def render_jira_csv(result: RunResult) -> str:
             lines.append(f"{fid} ({f.severity}): {f.title}" + (f" — строки {where}" if where else ""))
             for x in f.quotes[:2]:
                 lines.append(f"  «{x.text}»")
-        w.writerow([summary, "Task", JIRA_PRIORITY.get(q.priority, "Medium"), "reqcheck",
-                    _label(q.addressee), "\n".join(lines)])
+        w.writerow([_cell(c) for c in (summary, "Task", JIRA_PRIORITY.get(q.priority, "Medium"), "reqcheck",
+                                        _label(q.addressee), "\n".join(lines))])
     return "﻿" + buf.getvalue()

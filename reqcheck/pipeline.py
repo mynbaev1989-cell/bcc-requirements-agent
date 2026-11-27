@@ -230,7 +230,7 @@ def write_outputs(result: RunResult, output_path: str, formats: tuple[str, ...])
         result.passport["report_questions_file"] = Path(f"{stem}_questions.md").name
     md_text = render_markdown(result)
     for fmt in wanted:
-        target = out if fmt == main_ext and out.suffix else stem.with_suffix("." + fmt)
+        target = out if fmt == main_ext and out.suffix else Path(f"{stem}.{fmt}")  # точка в имени не теряется
         if fmt in ("csv", "jira"):  # вопросы автору для импорта в Jira — отдельный файл <отчёт>_jira.csv
             if not result.questions:
                 continue

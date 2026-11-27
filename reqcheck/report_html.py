@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from collections import Counter
 
 from reqcheck import criteria
@@ -63,7 +64,9 @@ def _json_safe(data: dict) -> str:
 def render_html(result: RunResult) -> str:
     data = _data(result)
     title = html.escape(data["title"])
-    return _TEMPLATE.replace("{{TITLE}}", title).replace("{{DATA}}", _json_safe(data))
+    # Один проход: «{{DATA}}» в названии документа не подставит весь JSON в <title>, и наоборот
+    parts = {"{{TITLE}}": title, "{{DATA}}": _json_safe(data)}
+    return re.sub(r"\{\{(?:TITLE|DATA)\}\}", lambda m: parts[m.group(0)], _TEMPLATE)
 
 
 _TEMPLATE = r"""<!doctype html>

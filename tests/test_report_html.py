@@ -70,3 +70,11 @@ def test_findings_go_from_critical_to_minor(sample_md):
                                    explanation=""))
     out = render_html(result)
     assert out.index('"F-CRIT"') < out.index('"F-MIN"')
+
+
+def test_placeholder_in_title_is_not_substituted(sample_md):
+    result = _result(sample_md)
+    result.passport["document_title"] = "ТЗ {{DATA}} {{TITLE}}"
+    out = render_html(result)
+    title = out[out.index("<title>"):out.index("</title>")]
+    assert "{" not in title.replace("{{DATA}}", "").replace("{{TITLE}}", "") and len(title) < 300

@@ -5,7 +5,7 @@
 (совпадение строк ±1). Модель, температура и документ с номерами строк — те же, что у агентов reqcheck.
 
     python tools/baseline_single_prompt.py                     # живой прогон (7 запросов) или ответы из кэша
-    python tools/baseline_single_prompt.py --cache eval/llm_cache_baseline   # без сети, из закоммиченного кэша
+    python tools/baseline_single_prompt.py --cache eval/llm_cache_baseline   # без ключа: без сети, из закоммиченного кэша
 
 Строка находки — строка её цитаты, найденной в документе кодом (Grounder); если цитаты в документе нет,
 берётся номер строки, который назвала модель, и находка считается непроверенной (доля таких — отдельная метрика).
@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -23,7 +24,7 @@ sys.path.insert(0, str(ROOT))
 
 from reqcheck.agents import numbered_document  # noqa: E402
 from reqcheck.grounding import Grounder  # noqa: E402
-from reqcheck.llm import GeminiClient  # noqa: E402
+from reqcheck.llm import GeminiClient, _load_dotenv  # noqa: E402
 from reqcheck.loaders import load_document  # noqa: E402
 from tools.eval_score import _lines_of, load_extra  # noqa: E402
 
@@ -94,7 +95,14 @@ def main() -> int:
     ap.add_argument("--cache", type=Path, default=ROOT / ".reqcheck_cache", help="папка кэша ответов модели")
     ap.add_argument("--out", type=Path, default=ROOT / "eval" / "baseline_single_prompt.json")
     args = ap.parse_args()
+    _load_dotenv()
+    offline = not os.environ.get("GEMINI_API_KEY")
+    if offline:  # без ключа — только ответы из кэша, в сеть не ходим (README: воспроизведение замера)
+        os.environ["GEMINI_API_KEY"] = "cache-only"
     llm = GeminiClient(model=args.model, cache_dir=str(args.cache))
+    if offline:
+        from tools.ablation import _NoNetwork
+        llm._client = _NoNetwork()
     rows = []
     for md in documents():
         doc, _ = load_document(md)

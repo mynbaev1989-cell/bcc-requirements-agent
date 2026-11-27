@@ -1,13 +1,12 @@
-"""Проверки ответа автора кодом, без модели.
+"""Проверка ответа автора кодом, без модели (kept_conflict).
 
-1. kept_conflict: вопрос о противоречии, автор выбрал значение одной стороны и прямо оставил вторую
-   («как есть», «не трогаем») — после ответа документ всё ещё противоречив, закрывать нельзя.
-2. value_clash: в одном ответе одна и та же величина с двумя разными значениями.
-Обе проверки должны молчать на честных ответах: диапазон, разные условия, замена старого значения.
+Вопрос о противоречии, автор выбрал значение одной стороны и прямо оставил вторую («как есть», «не трогаем»):
+после ответа документ всё ещё противоречив, закрывать нельзя. Молчит на честных ответах: замена старого значения,
+сужение области, «это другое» (автор спорит с находкой).
 """
 
 from helpers import _doc
-from reqcheck.clarify import Resolver, kept_conflict, value_clash
+from reqcheck.clarify import Resolver, kept_conflict
 from reqcheck.llm import FakeLLM
 from reqcheck.models import Finding, Question, Quote
 
@@ -53,33 +52,13 @@ def test_no_conflict_for_single_side_finding():
     assert kept_conflict("30 суток оставить как есть, 45 не нужно.", f) is None
 
 
-# --- value_clash -----------------------------------------------------------------------------------
-
-def test_value_clash_same_quantity_two_values():
-    hit = value_clash("Платёж уменьшаем, срок остаётся 12 месяцев. Оставшийся срок при этом сокращается до 8 месяцев.")
-    assert hit is not None and "12 месяцев" in hit[0] and "8 месяцев" in hit[1]
+def test_kept_conflict_parts_without_punctuation_and_split_by_lines():
+    hit = kept_conflict("Принимаем 45 суток,\n30 суток оставить как есть.", _contradiction())
+    assert hit == ("Принимаем 45 суток", "30 суток оставить как есть")
 
 
-def test_value_clash_across_clauses():
-    assert value_clash("Срок выпуска — не более 5 рабочих дней для всех каналов; оператору сообщать срок до 7 рабочих дней.")
-
-
-def test_no_clash_for_range():
-    assert value_clash("Сумма покупки от 15 000 до 1 500 000 тенге, сумма считается без комиссии.") is None
-
-
-def test_no_clash_for_different_conditions():
-    assert value_clash("Срок 2 рабочих дня для физических лиц, срок 5 рабочих дней для юридических лиц.") is None
-
-
-def test_no_clash_for_different_periods_or_quantities():
-    assert value_clash("Лимит 50 000 тенге в день и лимит 500 000 тенге в месяц.") is None
-    assert value_clash("Ставка 12% годовых, комиссия за обслуживание 1% от суммы.") is None
-    assert value_clash("Платёж списывается 25 числа, напоминание за 3 дня до списания.") is None
-
-
-def test_no_clash_when_values_equal():
-    assert value_clash("Срок 5 рабочих дней. Повторный срок тоже 5 рабочих дней.") is None
+def test_no_conflict_when_author_says_it_is_another_matter():
+    assert kept_conflict("Принимаем 45 суток. Срок 30 суток для другого процесса, не трогаем.", _contradiction()) is None
 
 
 # --- в Resolver ------------------------------------------------------------------------------------
@@ -98,11 +77,42 @@ def test_resolver_keeps_finding_open_when_other_side_kept(tmp_path):
     assert "30 суток" in e["follow_up"]
 
 
-def test_resolver_keeps_finding_open_on_value_clash(tmp_path):
-    [e] = _resolve(tmp_path, "Храним 45 суток, после удаления черновик хранится в архиве ещё 30 суток.")
-    assert e["status"] == "open" and "противоречит сам себе" in e["comment"]
+def test_resolver_closes_answer_with_two_different_quantities(tmp_path):
+    # «срок рассмотрения 5 дней, срок исполнения 10 дней» — две величины, а не противоречие: код не вмешивается
+    [e] = _resolve(tmp_path, "Храним 45 суток. Срок рассмотрения заявки 5 дней, срок исполнения 10 дней.")
+    assert e["status"] == "resolved"
+
+
+def test_one_follow_up_per_answer_even_after_retry(tmp_path):
+    doc = _doc(tmp_path, "# ТЗ\n\nЧерновик хранится 30 суток\n\nЧерновик удаляется через 45 суток\n")
+    f1, f2 = _contradiction(), _contradiction()
+    f2 = Finding(fid="F-002", scope=f1.scope, criterion=f1.criterion, severity=f1.severity, title=f1.title,
+                 explanation="", quotes=f1.quotes)
+    q = Question(qid="Q-01", text="Сколько хранить?", priority="blocker", fids=["F-001", "F-002"])
+    calls = []
+
+    def reply(prompt):  # первый запрос решает только F-001, переспрос — F-002
+        calls.append(1)
+        fid = "F-001" if len(calls) == 1 else "F-002"
+        return {"effects": [{"fid": fid, "qid": "Q-01", "status": "resolved", "comment": "выбрано"}]}
+
+    effects = Resolver(FakeLLM({"resolver": reply}), doc).run(
+        [(q, {"qid": "Q-01", "question": q.text, "answer": "Берём 45 суток. Строку про 30 суток оставьте как есть."})],
+        [f1, f2])
+    assert len(calls) == 2 and all(e["status"] == "open" for e in effects)
+    assert sum(bool(e["follow_up"]) for e in effects) == 1
 
 
 def test_resolver_closes_on_honest_answer(tmp_path):
     [e] = _resolve(tmp_path, "Берём 45 суток, строку про 30 суток исправить на 45.")
     assert e["status"] == "resolved"
+
+
+def test_reviewer_stops_only_on_http_codes_as_numbers():
+    from reqcheck.agents import Reviewer
+    r = Reviewer.__new__(Reviewer)  # нужен только разбор текста ошибки
+    r.llm = FakeLLM()
+    r._last_error = "Таймаут: ответ через 14003 мс, 1400 строк"
+    assert not r._no_more_requests()
+    r._last_error = "HTTP 403 Forbidden"
+    assert r._no_more_requests()
