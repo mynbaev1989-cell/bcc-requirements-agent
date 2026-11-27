@@ -69,3 +69,17 @@ def test_question_quality_duplicates():
     assert q["with_options"] == round(1 / 3, 3) and q["with_assumption"] == round(1 / 3, 3)
     assert q["with_addressee"] == round(2 / 3, 3)
     assert question_quality([])["n"] == 0
+
+
+def test_question_quality_clarification_metrics():
+    from reqcheck.models import Question
+
+    qs = [Question("Q1", "Какой лимит на перевод в сутки?", priority="blocker", addressee="Продукт", options=["50 000", "100 000"]),
+          Question("Q2", "Какой лимит на перевод в сутки ?", priority="blocker"),
+          Question("Q3", "Кто подписывает акт приёмки?", priority="clarify", addressee="Аналитик")]
+    q = question_quality(qs)
+    assert q["blockers"] == 2 and q["blockers_with_options"] == 0.5
+    assert q["routed_addressee"] == round(1 / 3, 3)
+    assert q["text_duplicate_pairs"] == 1
+    empty = question_quality([])
+    assert empty["blockers"] == 0 and empty["blockers_with_options"] == 0.0 and empty["text_duplicate_pairs"] == 0

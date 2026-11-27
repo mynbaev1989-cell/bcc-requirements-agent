@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,6 +86,8 @@ def question_quality(questions: list) -> dict:
         if q.lines:
             key = frozenset(q.lines)
             groups[key] = groups.get(key, 0) + 1
+    blockers = [q for q in questions if q.priority == "blocker"]
+    texts = [normalize(q.text or "") for q in questions]
     return {
         "n": n,
         "with_addressee": share(sum(1 for q in questions if (q.addressee or "").strip())),
@@ -92,6 +95,14 @@ def question_quality(questions: list) -> dict:
         "with_assumption": share(sum(1 for q in questions if (q.assumption or "").strip())),
         "with_line": share(sum(1 for q in questions if q.lines or _LINE_IN_TEXT.search(q.text or ""))),
         "duplicate_pairs": sum(c * (c - 1) // 2 for c in groups.values()),  # одинаковый набор строк
+        # Вопрос-блокер без вариантов ответа автор закрывает дольше: ему приходится формулировать решение самому
+        "blockers": len(blockers),
+        "blockers_with_options": round(sum(1 for q in blockers if q.options) / len(blockers), 3) if blockers else 0.0,
+        # Адресат не «Аналитик» (значение по умолчанию): вопрос направлен тому, кто реально решает
+        "routed_addressee": share(sum(1 for q in questions if (q.addressee or "").strip() not in ("", "Аналитик"))),
+        # Почти одинаковые формулировки (сходство текста > 0,8) — дубль, даже если строки разные
+        "text_duplicate_pairs": sum(1 for i in range(n) for j in range(i + 1, n)
+                                    if SequenceMatcher(None, texts[i], texts[j]).ratio() > 0.8),
     }
 
 
@@ -168,6 +179,7 @@ def score_document(md_path: Path, labels: dict, opts: Options, llm=None, extra: 
         "precision_items": round(len(matched_items) / max(len(items), 1), 3),
         "false_major_on_clean": len(false_on_clean),
         "questions": len(result.questions),
+        "questions_per_found_defect": round(len(result.questions) / max(len(hit_gold), 1), 3),
         "gold_covered_by_questions": len(gold_asked),
         "question_coverage": round(len(gold_asked) / max(len(gold), 1), 3),
         "severe_gold": severe_gold,
@@ -228,6 +240,11 @@ def main(argv: list[str]) -> int:
         print(f"Качество вопросов ({qn}): адресат {qshare('with_addressee')}, варианты {qshare('with_options')}, "
               f"допущение {qshare('with_assumption')}, строка {qshare('with_line')}; "
               f"пар-дублей: {sum(r['question_quality']['duplicate_pairs'] for r in ok)}")
+        bl = sum(r["question_quality"]["blockers"] for r in ok)
+        bl_opt = sum(r["question_quality"]["blockers_with_options"] * r["question_quality"]["blockers"] for r in ok)
+        print(f"Уточнение: вопросов на найденный дефект {qn / max(tot_found, 1):.2f}; блокеров с вариантами "
+              f"{bl_opt / max(bl, 1):.0%} ({round(bl_opt)}/{bl}); адресат не «Аналитик» {qshare('routed_addressee')}; "
+              f"почти одинаковых формулировок: {sum(r['question_quality']['text_duplicate_pairs'] for r in ok)}")
     out = folder / "eval_results.json"
     out.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Результаты: {out}")

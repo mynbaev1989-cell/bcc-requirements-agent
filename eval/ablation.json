@@ -32,6 +32,7 @@
         "precision_items": 0.929,
         "false_major_on_clean": 0,
         "questions": 12,
+        "questions_per_found_defect": 0.857,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -48,7 +49,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.333,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -103,6 +108,7 @@
         "precision_items": 0.731,
         "false_major_on_clean": 2,
         "questions": 15,
+        "questions_per_found_defect": 1.154,
         "gold_covered_by_questions": 13,
         "question_coverage": 1.0,
         "severe_gold": 10,
@@ -119,7 +125,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 5,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.8,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -192,6 +202,7 @@
         "precision_items": 0.84,
         "false_major_on_clean": 0,
         "questions": 16,
+        "questions_per_found_defect": 1.143,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -208,7 +219,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.562,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -272,6 +287,7 @@
         "precision_items": 0.786,
         "false_major_on_clean": 0,
         "questions": 14,
+        "questions_per_found_defect": 0.933,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -288,7 +304,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.286,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -371,6 +391,7 @@
         "precision_items": 0.96,
         "false_major_on_clean": 1,
         "questions": 19,
+        "questions_per_found_defect": 1.188,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -387,7 +408,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.789,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -435,6 +460,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 1,
         "questions": 13,
+        "questions_per_found_defect": 0.929,
         "gold_covered_by_questions": 14,
         "question_coverage": 0.875,
         "severe_gold": 10,
@@ -451,7 +477,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.462,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -535,6 +565,7 @@
         "precision_items": 0.846,
         "false_major_on_clean": 2,
         "questions": 20,
+        "questions_per_found_defect": 1.25,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -551,7 +582,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.45,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -663,6 +698,7 @@
         "precision_items": 0.929,
         "false_major_on_clean": 0,
         "questions": 12,
+        "questions_per_found_defect": 0.857,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -679,7 +715,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.333,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -734,6 +774,7 @@
         "precision_items": 0.741,
         "false_major_on_clean": 2,
         "questions": 18,
+        "questions_per_found_defect": 1.385,
         "gold_covered_by_questions": 13,
         "question_coverage": 1.0,
         "severe_gold": 10,
@@ -750,7 +791,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 2,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.778,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -823,6 +868,7 @@
         "precision_items": 0.84,
         "false_major_on_clean": 0,
         "questions": 16,
+        "questions_per_found_defect": 1.143,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -839,7 +885,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.562,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -903,6 +953,7 @@
         "precision_items": 0.806,
         "false_major_on_clean": 0,
         "questions": 18,
+        "questions_per_found_defect": 1.2,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -919,7 +970,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.389,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1002,6 +1057,7 @@
         "precision_items": 0.962,
         "false_major_on_clean": 1,
         "questions": 17,
+        "questions_per_found_defect": 1.062,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1018,7 +1074,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 3,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.765,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1066,6 +1126,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 1,
         "questions": 13,
+        "questions_per_found_defect": 0.929,
         "gold_covered_by_questions": 14,
         "question_coverage": 0.875,
         "severe_gold": 10,
@@ -1082,7 +1143,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.462,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -1166,6 +1231,7 @@
         "precision_items": 0.846,
         "false_major_on_clean": 2,
         "questions": 20,
+        "questions_per_found_defect": 1.25,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1182,7 +1248,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.45,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1277,6 +1347,7 @@
         "precision_items": 0.897,
         "false_major_on_clean": 0,
         "questions": 16,
+        "questions_per_found_defect": 1.143,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -1293,7 +1364,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 0.938,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.625,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -1355,6 +1430,7 @@
         "precision_items": 0.667,
         "false_major_on_clean": 2,
         "questions": 20,
+        "questions_per_found_defect": 1.538,
         "gold_covered_by_questions": 11,
         "question_coverage": 0.846,
         "severe_gold": 10,
@@ -1371,7 +1447,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 0.85,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 2,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.75,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1465,6 +1545,7 @@
         "precision_items": 0.75,
         "false_major_on_clean": 0,
         "questions": 18,
+        "questions_per_found_defect": 1.286,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -1481,7 +1562,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 0.889,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 8,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.722,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -1566,6 +1651,7 @@
         "precision_items": 0.806,
         "false_major_on_clean": 0,
         "questions": 18,
+        "questions_per_found_defect": 1.2,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1582,7 +1668,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.389,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1665,6 +1755,7 @@
         "precision_items": 0.926,
         "false_major_on_clean": 1,
         "questions": 18,
+        "questions_per_found_defect": 1.125,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1681,7 +1772,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 0.944,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 3,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.778,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1736,6 +1831,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 1,
         "questions": 13,
+        "questions_per_found_defect": 0.929,
         "gold_covered_by_questions": 14,
         "question_coverage": 0.875,
         "severe_gold": 10,
@@ -1752,7 +1848,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.462,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -1836,6 +1936,7 @@
         "precision_items": 0.815,
         "false_major_on_clean": 2,
         "questions": 20,
+        "questions_per_found_defect": 1.25,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -1852,7 +1953,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 0.95,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.45,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -1954,6 +2059,7 @@
         "precision_items": 0.929,
         "false_major_on_clean": 0,
         "questions": 15,
+        "questions_per_found_defect": 1.071,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -1970,7 +2076,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 3,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.667,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -2025,6 +2135,7 @@
         "precision_items": 0.731,
         "false_major_on_clean": 1,
         "questions": 17,
+        "questions_per_found_defect": 1.308,
         "gold_covered_by_questions": 13,
         "question_coverage": 1.0,
         "severe_gold": 10,
@@ -2041,7 +2152,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 2,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.824,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2114,6 +2229,7 @@
         "precision_items": 0.826,
         "false_major_on_clean": 0,
         "questions": 14,
+        "questions_per_found_defect": 1.077,
         "gold_covered_by_questions": 13,
         "question_coverage": 0.929,
         "severe_gold": 10,
@@ -2130,7 +2246,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.714,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -2196,6 +2316,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 0,
         "questions": 19,
+        "questions_per_found_defect": 1.267,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -2212,7 +2333,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 3
+          "duplicate_pairs": 3,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.737,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2295,6 +2420,7 @@
         "precision_items": 0.958,
         "false_major_on_clean": 1,
         "questions": 15,
+        "questions_per_found_defect": 1.0,
         "gold_covered_by_questions": 15,
         "question_coverage": 0.938,
         "severe_gold": 12,
@@ -2311,7 +2437,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.733,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2361,6 +2491,7 @@
         "precision_items": 0.783,
         "false_major_on_clean": 1,
         "questions": 15,
+        "questions_per_found_defect": 1.071,
         "gold_covered_by_questions": 14,
         "question_coverage": 0.875,
         "severe_gold": 10,
@@ -2377,7 +2508,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.6,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -2461,6 +2596,7 @@
         "precision_items": 0.84,
         "false_major_on_clean": 2,
         "questions": 18,
+        "questions_per_found_defect": 1.125,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -2477,7 +2613,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 5,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.389,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2572,6 +2712,7 @@
         "precision_items": 0.92,
         "false_major_on_clean": 0,
         "questions": 14,
+        "questions_per_found_defect": 1.0,
         "gold_covered_by_questions": 14,
         "question_coverage": 1.0,
         "severe_gold": 11,
@@ -2588,7 +2729,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.643,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -2643,6 +2788,7 @@
         "precision_items": 0.75,
         "false_major_on_clean": 2,
         "questions": 16,
+        "questions_per_found_defect": 1.231,
         "gold_covered_by_questions": 13,
         "question_coverage": 1.0,
         "severe_gold": 10,
@@ -2659,7 +2805,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 5,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.75,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2723,6 +2873,7 @@
         "precision_items": 0.826,
         "false_major_on_clean": 0,
         "questions": 15,
+        "questions_per_found_defect": 1.154,
         "gold_covered_by_questions": 13,
         "question_coverage": 0.929,
         "severe_gold": 10,
@@ -2739,7 +2890,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 1
+          "duplicate_pairs": 1,
+          "blockers": 5,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.667,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -2805,6 +2960,7 @@
         "precision_items": 0.821,
         "false_major_on_clean": 0,
         "questions": 19,
+        "questions_per_found_defect": 1.267,
         "gold_covered_by_questions": 15,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -2821,7 +2977,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 2,
+          "blockers": 7,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.684,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2895,6 +3055,7 @@
         "precision_items": 0.952,
         "false_major_on_clean": 1,
         "questions": 14,
+        "questions_per_found_defect": 0.933,
         "gold_covered_by_questions": 15,
         "question_coverage": 0.938,
         "severe_gold": 11,
@@ -2911,7 +3072,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 2
+          "duplicate_pairs": 2,
+          "blockers": 6,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.786,
+          "text_duplicate_pairs": 1
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -2961,6 +3126,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 1,
         "questions": 13,
+        "questions_per_found_defect": 0.929,
         "gold_covered_by_questions": 14,
         "question_coverage": 0.875,
         "severe_gold": 10,
@@ -2977,7 +3143,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.462,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -3061,6 +3231,7 @@
         "precision_items": 0.87,
         "false_major_on_clean": 1,
         "questions": 16,
+        "questions_per_found_defect": 1.0,
         "gold_covered_by_questions": 16,
         "question_coverage": 1.0,
         "severe_gold": 12,
@@ -3077,7 +3248,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 4,
+          "blockers_with_options": 1.0,
+          "routed_addressee": 0.375,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -3163,6 +3338,7 @@
         "precision_items": 0.667,
         "false_major_on_clean": 0,
         "questions": 3,
+        "questions_per_found_defect": 0.3,
         "gold_covered_by_questions": 10,
         "question_coverage": 0.714,
         "severe_gold": 7,
@@ -3179,7 +3355,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.667,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "2/2",
@@ -3248,6 +3428,7 @@
         "precision_items": 0.667,
         "false_major_on_clean": 0,
         "questions": 4,
+        "questions_per_found_defect": 1.0,
         "gold_covered_by_questions": 4,
         "question_coverage": 0.308,
         "severe_gold": 3,
@@ -3264,7 +3445,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.5,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -3329,6 +3514,7 @@
         "precision_items": 0.571,
         "false_major_on_clean": 0,
         "questions": 3,
+        "questions_per_found_defect": 0.6,
         "gold_covered_by_questions": 5,
         "question_coverage": 0.357,
         "severe_gold": 3,
@@ -3345,7 +3531,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.667,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/2",
@@ -3419,6 +3609,7 @@
         "precision_items": 0.875,
         "false_major_on_clean": 0,
         "questions": 3,
+        "questions_per_found_defect": 0.429,
         "gold_covered_by_questions": 7,
         "question_coverage": 0.467,
         "severe_gold": 5,
@@ -3435,7 +3626,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.667,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -3490,6 +3685,7 @@
         "precision_items": 0.8,
         "false_major_on_clean": 0,
         "questions": 2,
+        "questions_per_found_defect": 0.333,
         "gold_covered_by_questions": 6,
         "question_coverage": 0.375,
         "severe_gold": 4,
@@ -3506,7 +3702,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.5,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "1/1",
@@ -3565,6 +3765,7 @@
         "precision_items": 0.833,
         "false_major_on_clean": 0,
         "questions": 3,
+        "questions_per_found_defect": 0.6,
         "gold_covered_by_questions": 5,
         "question_coverage": 0.312,
         "severe_gold": 2,
@@ -3581,7 +3782,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.333,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "0/2",
@@ -3638,6 +3843,7 @@
         "precision_items": 0.5,
         "false_major_on_clean": 0,
         "questions": 2,
+        "questions_per_found_defect": 2.0,
         "gold_covered_by_questions": 1,
         "question_coverage": 0.062,
         "severe_gold": 0,
@@ -3654,7 +3860,11 @@
           "with_options": 1.0,
           "with_assumption": 1.0,
           "with_line": 1.0,
-          "duplicate_pairs": 0
+          "duplicate_pairs": 0,
+          "blockers": 0,
+          "blockers_with_options": 0.0,
+          "routed_addressee": 0.0,
+          "text_duplicate_pairs": 0
         },
         "by_type": {
           "ambiguity": "0/1",
