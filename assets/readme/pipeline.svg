@@ -84,7 +84,7 @@
     <text x="978" y="538" font-size="22" font-weight="700" fill="#f4f1ea">Отчёт</text>
     <text x="978" y="570" font-size="18" fill="#c9d4e3">вердикт, баллы</text>
     <text x="978" y="596" font-size="18" fill="#c9d4e3">MD · PDF · JSON</text>
-    <text x="978" y="622" font-size="18" fill="#c9d4e3">файл вопросов</text>
+    <text x="978" y="622" font-size="18" fill="#c9d4e3">HTML · CSV Jira</text>
 
     <!-- Стрелки -->
     <g stroke="#5b6b82" stroke-width="2.5" fill="none" marker-end="url(#a)">

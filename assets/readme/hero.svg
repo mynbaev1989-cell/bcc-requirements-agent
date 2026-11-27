@@ -9,7 +9,7 @@
     <text x="56" y="194" font-size="30" font-weight="600" fill="#f4f1ea">Ревью требований</text>
     <text x="56" y="234" font-size="30" font-weight="600" fill="#f4f1ea">до начала разработки</text>
     <text x="56" y="290" font-size="20" fill="#9fb0c8">ISO/IEC/IEEE 29148 · IEEE 830</text>
-    <text x="56" y="320" font-size="20" fill="#9fb0c8">MD · PDF · DOCX → отчёт MD + PDF + JSON</text>
+    <text x="56" y="320" font-size="20" fill="#9fb0c8">PDF · DOCX → отчёт MD · PDF · HTML</text>
     <text x="56" y="368" font-size="20" fill="#3fb68b">✓ каждая цитата сверена с документом</text>
 
     <!-- Фрагмент документа -->
