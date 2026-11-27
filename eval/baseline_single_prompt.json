@@ -1,0 +1,101 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "requests": 7,
+  "total": {
+    "gold_defects": 104,
+    "found": 53,
+    "findings": 48,
+    "false_critical": 0,
+    "false_critical_unconfirmed": 0,
+    "precision": 0.941,
+    "precision_with_extra": 0.962,
+    "quotes_found_in_document": 0.939,
+    "with_question": 1.0
+  },
+  "docs": [
+    {
+      "document": "autopay_utilities.md",
+      "gold_defects": 14,
+      "found": 11,
+      "findings": 10,
+      "precision": 0.9,
+      "precision_with_extra": 0.9,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    },
+    {
+      "document": "credit_card_application.md",
+      "gold_defects": 13,
+      "found": 7,
+      "findings": 6,
+      "precision": 1.0,
+      "precision_with_extra": 1.0,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    },
+    {
+      "document": "p2p_phone.md",
+      "gold_defects": 14,
+      "found": 7,
+      "findings": 7,
+      "precision": 0.857,
+      "precision_with_extra": 1.0,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    },
+    {
+      "document": "holdout_deposit.md",
+      "gold_defects": 15,
+      "found": 5,
+      "findings": 6,
+      "precision": 0.833,
+      "precision_with_extra": 0.833,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    },
+    {
+      "document": "holdout_installments.md",
+      "gold_defects": 16,
+      "found": 8,
+      "findings": 7,
+      "precision": 1.0,
+      "precision_with_extra": 1.0,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 0.571,
+      "with_question": 1.0
+    },
+    {
+      "document": "blind_card_block.md",
+      "gold_defects": 16,
+      "found": 7,
+      "findings": 7,
+      "precision": 1.0,
+      "precision_with_extra": 1.0,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    },
+    {
+      "document": "blind_payroll.md",
+      "gold_defects": 16,
+      "found": 8,
+      "findings": 5,
+      "precision": 1.0,
+      "precision_with_extra": 1.0,
+      "false_critical": 0,
+      "false_critical_unconfirmed": 0,
+      "quotes_found_in_document": 1.0,
+      "with_question": 1.0
+    }
+  ]
+}
