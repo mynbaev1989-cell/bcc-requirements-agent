@@ -34,7 +34,7 @@ def test_html_has_all_ids(sample_md):
 def test_html_escapes_model_text(sample_md):
     out = render_html(_result(sample_md))
     assert "<script>alert" not in out and "<img src=x" not in out
-    assert out.count("</script>") == 2  # только свои закрывающие теги (данные и код)
+    assert out.count("</script>") == 1  # только свой закрывающий тег: данные — литерал внутри кода
 
 
 def test_html_has_no_external_resources(sample_md):
